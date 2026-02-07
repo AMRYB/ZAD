@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إنشاء حساب</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body
+    class="min-h-screen bg-cover bg-center relative flex items-center justify-center font-['Aref_Ruqaa']"
+    
+  >
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 w-[92%] max-w-sm text-center text-white">
+      <!-- Title -->
+      <h1 class="text-4xl mb-8 drop-shadow-lg mt-10">تسجيل الدخول</h1>
+
+      <!-- Form -->
+      <form class="space-y-4">
+        <!-- First Name -->
+        <input
+          type="text"
+          placeholder="الاسم كامل"
+          class="w-full  p-4 rounded-full bg-white/10 border text-xl border-white/20 text-white placeholder-white/70 outline-none focus:border-yellow-400 transition"
+        />
+
+
+
+        <!-- Password -->
+        <input
+          type="password"
+          placeholder="كلمة السر"
+          class="w-full p-4 rounded-full bg-white/10 border text-xl border-white/20 text-white placeholder-white/70 outline-none focus:border-yellow-400 transition"
+        />
+
+
+        <!-- Submit -->
+        <button
+          class="w-[85%] mx-auto py-4 rounded-full border-[3px] border-yellow-400 bg-transparent text-yellow-300 text-xl font-bold flex items-center justify-center shadow-[0_0_18px_rgba(255,215,0,0.6)] hover:scale-105 hover:shadow-[0_0_35px_rgba(255,215,0,1)] active:scale-95 active:shadow-[0_0_10px_rgba(255,215,0,0.4)] transition"
+        >
+          <span class="text-3xl">دخول</span>
+        </button>
+        
+      </form>
+
+
+    </div>
+
+
+    </div>
+
+
+  </body>
+</html>
