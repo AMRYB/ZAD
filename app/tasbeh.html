@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسبيح - Tasbih</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/tasbeh.css">
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="p-6 flex justify-between items-center text-[#25291C]">
+        <a href="../index.html" class="text-2xl"><i class="fa-solid fa-chevron-right"></i></a>
+        <div class="text-center">
+            <h1 class="text-xl font-bold">Tasbih</h1>
+            <p class="text-xs text-gray-400">1/12</p>
+        </div>
+        <div class="flex gap-4 text-xl">
+            <i class="fa-solid fa-rotate-right" id="reset-all" style="cursor: pointer;"></i>
+            <i class="fa-solid fa-square-full opacity-20"></i>
+            <i class="fa-solid fa-ellipsis"></i>
+        </div>
+    </header>
+
+    <!-- Dhikr Card -->
+    <div class="px-6 mt-4">
+        <div class="dhikr-card p-10 text-center relative overflow-hidden">
+            <div
+                class="absolute top-0 left-0 w-16 h-16 border-l-4 border-t-4 border-[#f5e0d5] rounded-tl-2xl opacity-50">
+            </div>
+            <div
+                class="absolute bottom-0 right-0 w-16 h-16 border-r-4 border-b-4 border-[#f5e0d5] rounded-br-2xl opacity-50">
+            </div>
+
+            <h2 class="text-3xl mb-6 font-bold text-[#2d3436]" id="arabic-text">سُبْحَانَ اللَّهِ</h2>
+            <div class="border-t border-dashed border-gray-300 my-4 w-3/4 mx-auto"></div>
+            <p class="text-xl text-gray-700 mb-2 font-medium" id="phonetic-text">subhana lah</p>
+            <div class="border-t border-dashed border-gray-300 my-4 w-3/4 mx-auto"></div>
+            <p class="text-xl text-gray-500 italic" id="translation-text">Glorified is Allah</p>
+        </div>
+    </div>
+
+    <!-- Counter Section -->
+    <div class="flex-grow flex flex-col items-start px-10 pt-16">
+        <div class="flex items-baseline gap-1">
+            <span class="text-7xl font-bold" id="counter">0</span>
+            <span class="text-4xl text-gray-400">/33</span>
+        </div>
+        <p class="text-xl text-gray-500 mt-2" id="rounds">Rounds: 0</p>
+    </div>
+
+    <!-- Beads Area -->
+    <div class="relative h-64 overflow-hidden mt-auto mb-20" id="beads-area">
+        <div class="bead-string"></div>
+        <div id="beads-container" class="relative w-full h-full">
+            <!-- Beads will be generated here -->
+        </div>
+    </div>
+
+    <div class="text-center text-gray-400 mb-20 animate-pulse">
+        Click or swipe to count
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="fixed bottom-10 left-10 z-50">
+        <button id="theme-btn"
+            class="w-14 h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center text-2xl text-gray-600 hover:scale-110 transition-transform">
+            <i class="fa-solid fa-palette"></i>
+        </button>
+        <div id="theme-menu"
+            class="hidden absolute bottom-16 left-0 bg-white p-3 rounded-2xl shadow-xl flex flex-col gap-3">
+            <div class="theme-option active" style="background-color: #11ce9b;" data-primary="#11ce9b"
+                data-secondary="#0a8e6b"></div>
+            <div class="theme-option" style="background-color: #3498db;" data-primary="#3498db"
+                data-secondary="#2980b9"></div>
+            <div class="theme-option" style="background-color: #e67e22;" data-primary="#e67e22"
+                data-secondary="#d35400"></div>
+            <div class="theme-option" style="background-color: #9b59b6;" data-primary="#9b59b6"
+                data-secondary="#8e44ad"></div>
+            <div class="theme-option" style="background-color: #e74c3c;" data-primary="#e74c3c"
+                data-secondary="#c0392b"></div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-10 right-10">
+        <button
+            class="w-14 h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center text-2xl text-gray-600">
+            <i class="fa-solid fa-pencil"></i>
+        </button>
+    </div>
+
+    <script src="../javaScript/tasbeh.js"></script>
+</body>
+
+</html>

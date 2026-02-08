@@ -1,0 +1,60 @@
+        :root {
+            --bead-primary: #11ce9b;
+            --bead-secondary: #0a8e6b;
+            --card-bg: #fff5f0;
+        }
+
+        body {
+            font-family: 'Inter', 'Amiri', serif;
+            background-color: #fcfcfc;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .dhikr-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .bead {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--bead-primary), var(--bead-secondary));
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .bead-string {
+            height: 4px;
+            background: #e2e8f0;
+            width: 120%;
+            position: absolute;
+            top: 50%;
+            left: -10%;
+            transform: translateY(-50%) rotate(-5deg);
+            z-index: 0;
+        }
+
+        .theme-option {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-option.active {
+            border: 2px solid #000;
+        }
+
+        /* Mobile fixes */
+        @media (max-width: 640px) {
+            .bead {
+                width: 40px;
+                height: 40px;
+            }
+        }
