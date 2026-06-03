@@ -51,7 +51,7 @@ export function Meter({value,total}: {value:number;total:number}) {
 }
 export function Stat({label,value}: {label:string;value:string|number}) {
   const {colors}=useApp();
-  return <Card style={{flex:1,minWidth:120}}><Txt size={30} bold style={{color:colors.primary}}>{value}</Txt><Txt muted size={13}>{label}</Txt></Card>;
+  return <Card style={{flex:1,minWidth:120}}><Txt size={30} bold style={{color:colors.primary,writingDirection:'ltr'}}>{value}</Txt><Txt muted size={13}>{label}</Txt></Card>;
 }
 export function Choice<T extends string>({value,options,onChange}: {value:T;options:{value:T;label:string}[];onChange:(value:T)=>void}) {
   const {colors}=useApp();
