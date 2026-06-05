@@ -1,0 +1,56 @@
+# Ramadan Journey
+
+Arabic-first Expo / React Native application, built from the supplied Ramadan Journey product plan. The referenced earlier prototype was not included, so this repository was created from a real Expo TypeScript template and the KSU evidence captured in this conversation.
+
+## Implemented application
+
+- Arabic first launch, English setting, explicit RTL/LTR layout, persisted system/light/dark appearance.
+- Cairo Regular/Bold bundled with the app; Emerald Light and Navy/Gold Dark palettes.
+- Local onboarding, dashboard with reconciled counts, five prayer records, fasting status, private daily notes, recurring daily habits.
+- Editable daily records, bounded personal goal counters, multiple independent reading plans, explicit page completion, undo, and catch-up assignments.
+- Configurable 29/30-day season and calendar; no invented Ramadan date; date/timezone and Arabic-number input handling.
+- KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, Husary ayah playback and repeat, safe plain-text Saadi tafsir.
+- Native SQLite persistence. Browser preview uses localStorage as a separate adapter.
+- JSON backup export and validated import, with confirmation before replacing device records.
+
+## Run
+
+Node.js 24 is the tested runtime. Install the exact dependency tree:
+
+```bash
+npm ci
+npm run typecheck
+npm run lint
+npm test
+npm run doctor
+npm run web
+```
+
+Open the URL printed by Expo. The development web preview includes a strictly allowlisted KSU relay because KSU `interface.php` does not send CORS headers. Native Android calls the original KSU endpoints directly. See [API_CONTRACT.md](docs/API_CONTRACT.md).
+
+```bash
+# Native debug build, when an Android device/emulator is available:
+npx expo run:android
+
+# Hosted internal APK build; requires your own Expo account/project:
+npx eas-cli@latest build --platform android --profile preview
+```
+
+For Windows local release building, see [ANDROID_BUILD.md](docs/ANDROID_BUILD.md). The repository contains reproducible source/configuration; generated `android/`, `node_modules/`, database test files and credentials are excluded from Git and the source archive.
+
+## Database
+
+The running app stores private data locally without an account. `supabase/migrations/20261023000100_private_core.sql` additionally prepares a cloud database foundation: own-user RLS, revision-based snapshot sync, server-controlled participation XP, capped/deduplicated awards, opt-in leaderboard projection, blocks, and account-data deletion. These SQL behaviors are tested with PostgreSQL via PGlite, using a test-only Auth shim.
+
+**No Supabase project has been provisioned. No live sign-in, cloud synchronization, challenge service, or social mobile UI is claimed to be working.** Those later-phase flows remain hidden; there are no placeholder social tabs. Read [DATABASE.md](docs/DATABASE.md) for the exact tables, RPC contracts, and remaining integration work.
+
+## Verification and scope
+
+- [QA_REPORT.md](docs/QA_REPORT.md): actual checks, browser evidence, native-build/device status and limitations.
+- [DELIVERY_PLAN.md](docs/DELIVERY_PLAN.md): corrected IDs, first-preview scope, later phases and truthful status.
+- [SCREEN_MATRIX.md](docs/SCREEN_MATRIX.md): actual routes and sheets.
+- [DESIGN.md](docs/DESIGN.md): typography, tokens, directional layout and interaction choices.
+- [CHANGELOG.md](CHANGELOG.md): implemented changes.
+- [Third-party notices](THIRD_PARTY_NOTICES.md).
+
+This is a private development preview, not a declaration that every future feature in the master plan has shipped. Reviewed adhkar/lesson content, prayer-time authority integration, notifications, social challenges, Family and optional AI are not bundled as fake completed features. Public distribution also requires the KSU usage review specified in the supplied plan.

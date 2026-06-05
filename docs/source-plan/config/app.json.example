@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "Ramadan Journey",
+    "slug": "ramadan-journey",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "ramadanjourney",
+    "android": {
+      "package": "com.example.ramadanjourney",
+      "versionCode": 1
+    },
+    "plugins": [
+      [
+        "expo-localization",
+        {
+          "supportedLocales": [
+            "ar",
+            "en"
+          ],
+          "supportsRTL": true
+        }
+      ]
+    ]
+  }
+}
