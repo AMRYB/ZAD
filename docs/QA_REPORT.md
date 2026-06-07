@@ -29,6 +29,7 @@ The application was exercised at localhost using a 390 × 844 viewport. Records 
 - KSU page 1: 14 selectable rectangles; selected 1:4; original Saadi text loads. Audio advanced from 1:4 to 1:5 and stopped through its control.
 - KSU page 3: 26 rectangles; selecting a multiline 2:9 rectangle selects ayah 9.
 - KSU page 604: 22 rectangles spanning surahs 112–114; selected 114:6; saved bookmark; next-page control disabled.
+- Additional bounded live checks: page 301 (Al-Kahf 18:62, 28 rectangles), page 50 (Aal-Imran 3:1, 20 rectangles), and page 4 (Al-Baqara 2:17, 21 rectangles). Each original KSU PNG loaded with nonzero natural dimensions and its hilites produced selectable overlays. These checks verify loading/navigation; they are not pixel-by-pixel audits of every verse on those pages.
 - An actual same-origin relay GET returned the original KSU JSON. The original `interface.php` response lacked a CORS allow-origin header; Android uses the original URL directly.
 - Two actual local HTTP requests attempting an arbitrary destination and page `9999` both returned `400 Invalid KSU request`; rejected requests are not forwarded to KSU.
 
