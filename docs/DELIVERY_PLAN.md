@@ -26,6 +26,19 @@ Scope: foundation/CI, design/locale, onboarding, local daily tracking and habits
 
 ## Phase B: cloud release
 
+## Reader revision 0.2
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-012 | Actual Git delivery log | Existing history published; no synthetic dates/counts |
+| RJ-013 | KSU Hafs reciter catalogue and Arabic tafsir allowlist | 41 observed recordings, 5 authors; 4 bounded audio samples 206, 4 new tafsir samples 200 |
+| RJ-014 | Persist selected reciter/author/display mode | In progress |
+| RJ-015 | Complete-page geometry and immersive presentation | Planned for this revision |
+| RJ-016 | Compact reader controls and selection sheets | Planned for this revision |
+| RJ-017 | Reader browser QA and updated APK | Planned for this revision |
+
+## Phase B: cloud release
+
 Database core migration and PostgreSQL security tests are implemented. Live Auth, private per-account sync/outbox/conflict resolution, achievements, challenges, social UI, moderation and seasonal boards remain planned. No hosted credentials/project were available. SQL tests do not promote these whole epics to TESTED.
 
 ## Later content and optional features

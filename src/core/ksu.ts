@@ -1,4 +1,5 @@
 import { quran } from '../data/quran.ts';
+import { reciterById,tafsirById } from '../data/ksu-readers.ts';
 export const BASE = 'https://quran.ksu.edu.sa';
 export type Aya = readonly [number, number];
 export type Coordinates = Record<string, [number, number]>;
@@ -22,15 +23,24 @@ export function pageImage(page: number): string {
   return `${BASE}/ayat/safahat1/${integer(page, 1, 604)}.png`;
 }
 export function husaryAudio(sura: number, verse: number): string {
+  return recitationUrl('husary',sura,verse);
+}
+export function recitationUrl(reciterId:string,sura:number,verse:number):string {
   aya(sura, verse);
-  return `${BASE}/ayat/mp3/Husary_64kbps/${String(sura).padStart(3, '0')}${String(verse).padStart(3, '0')}.mp3`;
+  const reciter=reciterById(reciterId);
+  if(!reciter)throw new RangeError('UNKNOWN_KSU_RECITER');
+  return `${BASE}/ayat/mp3/${reciter.folder}/${String(sura).padStart(3, '0')}${String(verse).padStart(3, '0')}.mp3`;
 }
 export function hilitesUrl(page: number): string {
   return api({ do: 'hilites', mosshaf: 'hafs', t: 28, page: integer(page, 1, 604) });
 }
 export function saadieTafsirUrl(sura: number, verse: number): string {
+  return tafsirUrl('sa3dy',sura,verse);
+}
+export function tafsirUrl(author:string,sura:number,verse:number):string {
   aya(sura, verse);
-  return api({ do: 'tafsir', author: 'sa3dy', sura, aya: verse });
+  if(!tafsirById(author))throw new RangeError('UNKNOWN_KSU_TAFSIR');
+  return api({ do: 'tafsir', author, sura, aya: verse });
 }
 export function translationUrl(begin: Aya, endExclusive: Aya): string {
   aya(...begin);
