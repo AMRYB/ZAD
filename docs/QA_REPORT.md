@@ -6,7 +6,7 @@
 |---|---|---|
 | TypeScript `npm run typecheck` | PASS | Strict application types, API routes and tests |
 | ESLint `npm run lint` | PASS | Expo/React rules |
-| `npm test` | PASS, 17 tests | Domain behavior, captured KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization |
+| `npm test` | PASS, 23 tests | Domain behavior, captured KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization |
 | `npx expo-doctor` | PASS, 20/20 | SDK dependencies and application configuration |
 | `npm run build:web` | PASS | Production web bundles and the allowlisted API route exported |
 
@@ -14,7 +14,7 @@ The PostgreSQL test executes the migration on PGlite with a test-only Supabase A
 
 SQLite tests execute the application's migration/upsert SQL against a real file, close and reopen it, and validate the restored snapshot. Native Expo bridge verification is a separate device gate.
 
-## Actual browser checks
+## Actual browser checks — 0.1 baseline
 
 The application was exercised at localhost using a 390 × 844 viewport. Records used for these checks were synthetic. Browser localStorage is separate from Android SQLite.
 
@@ -49,3 +49,23 @@ Screenshots in `screenshots/` are captured running UI, not concept designs. Earl
 See `ANDROID_BUILD.md` for the actual build command and `ANDROID_APK_RELEASE.md` for artifact/device status. Browser success does not count as an installed Android smoke test. Device font scaling, TalkBack, rotation, native audio interruptions and force-stop/reopen persistence require Android verification.
 
 No hosted Auth, cloud sync, challenge/social UI, prayer-time authority, notifications, reviewed lesson/adhkar corpus, Family or AI flow has been declared complete. The source plan and future requirements remain preserved. Dependency advisory and KSU distribution reviews remain open in `../THIRD_PARTY_NOTICES.md`.
+
+## Revision 0.2 checks
+
+Typecheck/lint and 23 tests PASS, including provider validation, backup migration and complete-page geometry. Production web export PASS. Four additional tafsir HTTP samples returned 200, four bounded reciter ranges returned 206, and the local relay accepted Ibn Kathir/Al-Baghawi while rejecting an unknown author with 400. See `READER_V0_2_DESIGN.md`.
+
+The stale error tab was left alone after the browser safety gate rejected its internal protocol. The development server was found to bind only IPv6 localhost; restarting it with process-local `NODE_OPTIONS=--dns-result-order=ipv4first` restored IPv4 loopback access. The user opened a valid HTTP tab and confirmed that the Mushaf appeared. The checks below used that valid tab, without a browser-policy workaround.
+
+Actual revision checks at 390 × 844:
+
+- Chose Mishary Al-Afasy through reciter search; reloaded and confirmed the choice persisted.
+- Changed Al-Saadi to Ibn Kathir inside the tafsir sheet. Actual Ibn Kathir text loaded for 2:17 and 1:5; the chosen author survived reload.
+- Selected Al-Faatiha and ayah 4. Al-Afasy playback advanced automatically from 1:4 to 1:5, moved the highlight, and displayed `0:01 / 0:06` with progressing playback. Pause stopped at `0:05 / 0:06`. This is browser audio behavior, not a native interruption test.
+- Complete-page and immersive modes displayed the original page with its frame. Immersive mode removed all five application tabs; document dimensions remained 390 × 844 with no page overflow.
+- Zoom changed the image plane from 374 to 561 CSS pixels (150%). Tapping the 1:4 overlay selected that ayah; reset returned to complete-page mode.
+- Fill-width selected-state persisted after reload alongside Al-Afasy and Ibn Kathir; reset returned to complete-page.
+- English/dark reader labels, player and full page were visually reviewed. Arabic/light was restored afterward.
+- At 844 × 390 in immersive mode, the original page fit the 252.5 px tall stage (253 px rendered plane after fractional layout rounding), with no document overflow. This is responsive browser geometry, not Android rotation.
+- Per the user's subsequent request, removed provider-brand text and source-link controls from onboarding, settings, reciter/tafsir sheets, reading tools and error messages in both languages. Actual Arabic/English settings and the Arabic reader/reciter sheet contained no KSU/King Saud University label. Attribution, HTTP evidence and the exclusive KSU implementation remain in repository documentation.
+
+New captures: `reader-v0.2-ar.png`, `reciter-picker-v0.2-ar.png`, `tafsir-ibnkathir-v0.2-ar.png`, `immersive-v0.2-ar.png`, `reader-v0.2-en-dark.png`, and `immersive-v0.2-landscape.png` in `screenshots/`. The captured browser log contained the expected Metro-disconnect warning during the explicit development-server restart; no application error was captured in the final log review. The viewport override was reset after checks. No installation on Android has been performed. See `ANDROID_APK_RELEASE.md` for verified file/build status.

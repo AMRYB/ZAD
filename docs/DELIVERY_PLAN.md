@@ -8,7 +8,7 @@ Use `EPIC-01` ... `EPIC-28` for product areas, and `RJ-001` ... for implementati
 
 ## First preview: local complete flows
 
-Scope: foundation/CI, design/locale, onboarding, local daily tracking and habits, seasonal calendar, dashboard, goals, independent reading plans, KSU reader, settings/privacy/source credits, Android preview build and its release checks. Social/Auth/AI are not fake placeholders in this preview.
+Scope: foundation/CI, design/locale, onboarding, local daily tracking and habits, seasonal calendar, dashboard, goals, independent reading plans, KSU reader, settings/privacy and repository source credits, Android preview build and its release checks. Social/Auth/AI are not fake placeholders in this preview.
 
 | Ticket | Delivered slice | Evidence state |
 |---|---|---|
@@ -24,18 +24,17 @@ Scope: foundation/CI, design/locale, onboarding, local daily tracking and habits
 | RJ-010 | KSU reader, geometry, audio, tafsir/bookmarks | 52 reference rectangles + live web flow; native QA pending |
 | RJ-011 | APK build and device release gate | See QA_REPORT; no installed-device claim without evidence |
 
-## Phase B: cloud release
-
 ## Reader revision 0.2
 
 | Ticket | Slice | Evidence state |
 |---|---|---|
-| RJ-012 | Actual Git delivery log | Existing history published; no synthetic dates/counts |
+| RJ-012 | Actual Git delivery log | Existing history documented; no synthetic dates/counts |
 | RJ-013 | KSU Hafs reciter catalogue and Arabic tafsir allowlist | 41 observed recordings, 5 authors; 4 bounded audio samples 206, 4 new tafsir samples 200 |
-| RJ-014 | Persist selected reciter/author/display mode | In progress |
-| RJ-015 | Complete-page geometry and immersive presentation | Planned for this revision |
-| RJ-016 | Compact reader controls and selection sheets | Planned for this revision |
-| RJ-017 | Reader browser QA and updated APK | Planned for this revision |
+| RJ-014 | Persist selected reciter/author/display mode | Restore/migration tests PASS; reciter/author persistence verified in browser |
+| RJ-015 | Complete-page geometry and immersive presentation | Geometry tests and portrait/landscape browser containment PASS; native QA pending |
+| RJ-016 | Compact reader controls and selection sheets | Implemented; typecheck/lint and browser interaction/visual checks PASS |
+| RJ-017 | Reader browser QA and updated APK | Web export and local arm64 build PASS; manifest/signature/source comparison PASS; Android installation pending |
+| RJ-018 | Repository-only source attribution in both UI languages | User-requested UI copy verified; documentation and original KSU integration retained |
 
 ## Phase B: cloud release
 

@@ -8,7 +8,10 @@
 | Quran picker: surah | Arabic or transliterated names, search | Captured KSU metadata |
 | Quran picker: page | Validated 1–604 input | Captured KSU metadata |
 | Quran picker: ayah | Chapter-specific bounds | Captured KSU metadata |
-| Quran tafsir sheet | Safe source text | KSU Saadi endpoint |
+| Quran tafsir sheet and author picker | Five Arabic authors; safe source text | Allowlisted KSU tafsir endpoint |
+| Quran reciter picker | Searchable Hafs catalogue, selection persists | Captured KSU mapping and original audio URLs |
+| Quran reading settings | Full-page/fill-width, zoom/reset, immersive toggle | Local preferences + transient viewport state |
+| Quran tools sheet | Bookmarks and explicit plan page confirmation | Local records |
 | `/day` and `?date=` | Prayer/fasting, daily habits, private note | SQLite / browser adapter |
 | `/progress` | Actual aggregates, personal goal counters | Local records |
 | `/plans` | Independent page plans, explicit completion/undo | Local records |
