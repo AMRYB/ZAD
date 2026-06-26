@@ -13,10 +13,10 @@ export function IconButton({icon,label,onPress,active,disabled=false,prominent=f
     <Ionicons name={icon} size={prominent?25:22} color={prominent?colors.onPrimary:active?colors.primary:colors.text}/>
   </Pressable>;
 }
-export function ReaderChip({label,icon,onPress,selected=false}:{label:string;icon?:ReaderIcon;onPress:()=>void;selected?:boolean}){
+export function ReaderChip({label,icon,onPress,selected=false,large=false}:{label:string;icon?:ReaderIcon;onPress:()=>void;selected?:boolean;large?:boolean}){
   const {colors,rtl}=useApp();
-  return <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress} style={({pressed})=>({minHeight:48,maxWidth:'100%',borderRadius:24,paddingHorizontal:15,backgroundColor:selected?colors.primary:colors.soft,flexDirection:rtl?'row-reverse':'row',alignItems:'center',justifyContent:'center',gap:7,opacity:pressed?.7:1})}>
-    {icon?<Ionicons name={icon} size={18} color={selected?colors.onPrimary:colors.primary}/>:null}<Txt size={13} bold numberOfLines={1} style={{color:selected?colors.onPrimary:colors.primary,flexShrink:1}}>{label}</Txt>
+  return <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress} style={({pressed})=>({minHeight:large?56:48,maxWidth:'100%',borderRadius:28,paddingHorizontal:large?22:15,backgroundColor:selected?colors.primary:colors.soft,flexDirection:rtl?'row-reverse':'row',alignItems:'center',justifyContent:'center',gap:7,opacity:pressed?.7:1})}>
+    {icon?<Ionicons name={icon} size={18} color={selected?colors.onPrimary:colors.primary}/>:null}<Txt size={large?17:13} bold numberOfLines={1} style={{color:selected?colors.onPrimary:colors.primary,flexShrink:1}}>{label}</Txt>
   </Pressable>;
 }
 export function OptionRow({title,detail,selected,onPress,icon='musical-notes-outline'}:{title:string;detail?:string;selected?:boolean;onPress:()=>void;icon?:ReaderIcon}){

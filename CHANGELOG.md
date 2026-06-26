@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 — direct reader gestures
+
+- Added two-finger focal zoom, one-finger bounded panning, and directional page swipes at normal size; pinches and zoomed pans cannot accidentally turn pages.
+- Added a player/navigation card stack that cycles upward with a drag, including reduced-motion handling and an accessible grab-handle alternative.
+- Moved surah/ayah/page selection into the navigation card. Removed visible card titles/switch buttons, used a text-only surah label, and enlarged the page selector at the user’s request.
+- Kept images and all ayah overlays on the same transformed source plane and retained manual zoom options for accessibility.
+- Added five gesture regression tests (28 total tests). Browser and native-test limits are recorded separately.
+
 ## 0.2.0 — reader revision
 
 - Added a sourced catalogue of 41 Hafs recording choices and five Arabic tafsirs with persisted preferences.
