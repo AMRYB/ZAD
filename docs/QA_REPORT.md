@@ -6,7 +6,7 @@
 |---|---|---|
 | TypeScript `npm run typecheck` | PASS | Strict application types, API routes and tests |
 | ESLint `npm run lint` | PASS | Expo/React rules |
-| `npm test` | PASS, 23 tests | Domain behavior, captured KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization |
+| `npm test` | PASS, 28 tests | Domain behavior, captured KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization |
 | `npx expo-doctor` | PASS, 20/20 | SDK dependencies and application configuration |
 | `npm run build:web` | PASS | Production web bundles and the allowlisted API route exported |
 
@@ -69,3 +69,10 @@ Actual revision checks at 390 × 844:
 - Per the user's subsequent request, removed provider-brand text and source-link controls from onboarding, settings, reciter/tafsir sheets, reading tools and error messages in both languages. Actual Arabic/English settings and the Arabic reader/reciter sheet contained no KSU/King Saud University label. Attribution, HTTP evidence and the exclusive KSU implementation remain in repository documentation.
 
 New captures: `reader-v0.2-ar.png`, `reciter-picker-v0.2-ar.png`, `tafsir-ibnkathir-v0.2-ar.png`, `immersive-v0.2-ar.png`, `reader-v0.2-en-dark.png`, and `immersive-v0.2-landscape.png` in `screenshots/`. The captured browser log contained the expected Metro-disconnect warning during the explicit development-server restart; no application error was captured in the final log review. The viewport override was reset after checks. No installation on Android has been performed. See `ANDROID_APK_RELEASE.md` for verified file/build status.
+
+
+## Revision 0.3 checks
+
+See `READER_GESTURES_V0_3.md` for the exact interaction evidence and repaired short-handle responder issue. Current typecheck/lint, 28 tests, Expo Doctor 20/20 and production web export PASS. Actual browser checks cover forward/backward page dragging, the first-page boundary, 150% bounded panning without navigation, ayah selection, repeated upward card cycling, the final text-only surah label and larger page picker. Audio advanced while navigation was in front and paused on route exit.
+
+Two-finger pinch was tested as deterministic gesture-controller input, not as injected browser multitouch or physical Android input. Native installation/multitouch remains unverified. The v0.3 screenshots represent this version, whereas v0.2 screenshots remain versioned baseline evidence.

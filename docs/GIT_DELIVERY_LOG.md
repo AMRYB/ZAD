@@ -45,3 +45,13 @@ eb7d09e | 2026-10-23T11:35:54+03:00 | feat(quran): redesign reader controls shee
 ```
 
 The latest user request moves provider branding out of the application interface. Source attribution and the verified HTTP/API evidence remain in the repository for GitHub documentation; no remote publication has been performed.
+
+## Executed gesture revision commits
+
+```text
+0224134 | 2026-10-23T12:26:40+03:00 | feat(quran): model focal pinch pan and deliberate page swipes
+c7c99d1 | 2026-10-23T12:37:04+03:00 | feat(quran): add touch canvas and upward cycling reader cards
+5ab9a68 | 2026-10-23T12:37:04+03:00 | chore(release): version gesture reader preview as 0.3.0
+```
+
+The upward card interaction and final labels reflect the user’s live corrections. Physical Android multitouch remains an explicit verification gate; no synthetic test date or installation claim is used.
