@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Ramadan Journey",
-    "slug": "ramadan-journey",
-    "version": "0.3.0",
+    "name": "ZAD",
+    "slug": "zad",
+    "version": "0.3.1",
     "orientation": "default",
     "icon": "./assets/brand-icon.png",
     "userInterfaceStyle": "automatic",
@@ -17,7 +17,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.ramadanjourney.preview",
-      "versionCode": 3,
+      "versionCode": 4,
       "allowBackup": false,
       "permissions": [],
       "blockedPermissions": [

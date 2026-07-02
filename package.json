@@ -1,6 +1,6 @@
 {
-  "name": "ramadan-journey",
-  "version": "0.3.0",
+  "name": "zad",
+  "version": "0.3.1",
   "main": "expo-router/entry",
   "dependencies": {
     "@expo-google-fonts/cairo": "^0.4.2",

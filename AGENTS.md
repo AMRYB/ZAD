@@ -1,6 +1,6 @@
 # AGENTS.md — Codex Working Agreement
 
-You are implementing **Ramadan Journey**, a large Arabic-first Ramadan Android application, from `docs/source-plan/docs/MASTER_PLAN.md` and `docs/source-plan/docs/FEATURE_BACKLOG.md`. Track implementation evidence in `docs/DELIVERY_PLAN.md`. Do not silently rewrite the requirements.
+You are implementing **ZAD (زاد)**, formerly Ramadan Journey, a large Arabic-first Ramadan Android application, from `docs/source-plan/docs/MASTER_PLAN.md` and `docs/source-plan/docs/FEATURE_BACKLOG.md`. Track implementation evidence in `docs/DELIVERY_PLAN.md`. Do not silently rewrite the requirements.
 
 ## Language contract
 - **Talk to the user only in Arabic** for progress, explanations, completed actions, errors, questions and task handoffs. Egyptian Arabic is fine if natural.

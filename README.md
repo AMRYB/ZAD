@@ -1,6 +1,12 @@
-# Ramadan Journey
+# ZAD | زاد
 
-Arabic-first Expo / React Native application, built from the supplied Ramadan Journey product plan. The referenced earlier prototype was not included, so this repository was created from a real Expo TypeScript template and the KSU evidence captured in this conversation.
+Arabic-first Expo / React Native application, formerly Ramadan Journey, built from the supplied Ramadan Journey product plan. The referenced earlier prototype was not included, so this repository was created from a real Expo TypeScript template and the KSU evidence captured in this conversation.
+
+## Current source and release status
+
+Current source: **0.3.1**, branded ZAD / زاد. The last compiled and inspected Android preview is **0.3.0**, before this rename; its original build evidence remains in `docs/BUILD_METADATA.json`. No renamed APK or physical Android multitouch test is claimed here.
+
+The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. The original supplied plan remains unchanged in `docs/source-plan/`.
 
 ## Implemented application
 

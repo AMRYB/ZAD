@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 — ZAD source rename
+
+- Renamed the application display name/project slug to ZAD and the Arabic interface brand to زاد.
+- Updated backup export names while preserving the original Android package, deep-link scheme, SQLite filename, web storage key and backup format for compatibility with installed previews.
+- The last verified APK is the earlier 0.3.0 build; this source branding revision has not been rebuilt or installed on Android.
+
 ## 0.3.0 — direct reader gestures
 
 - Added two-finger focal zoom, one-finger bounded panning, and directional page swipes at normal size; pinches and zoomed pans cannot accidentally turn pages.

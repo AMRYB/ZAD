@@ -1,6 +1,7 @@
 import { openDatabaseAsync } from 'expo-sqlite';
 import { initialState, restoreState, type State } from '../core/model';
 import {MIGRATION_SQL,UPSERT_SQL} from './schema';
+// Keep the existing database filename so the ZAD rename preserves installed users' data.
 const database = openDatabaseAsync('ramadan-journey.db');
 let initialized: Promise<void> | undefined;
 function ready() {

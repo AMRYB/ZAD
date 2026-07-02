@@ -9,7 +9,7 @@ export function Onboarding(){
   return <Screen title={t('خطوات صغيرة، رحلة أعمق','Small steps. A meaningful journey.')} subtitle={t('مساحة هادئة لوردك ويومك وأهدافك','A quiet space for your reading, day, and goals')}>
     <LinearGradient colors={dark?['#1C3048','#15223A']:['#176B57','#0C4639']} style={{padding:30,borderRadius:26,gap:14}}>
       <Txt size={70} style={{color:'#E4BC74',textAlign:'center'}}>☾</Txt>
-      <Txt size={24} bold style={{color:'#FFFFFF'}}>{t('أهلًا بك في رحلة رمضان','Welcome to Ramadan Journey')}</Txt>
+      <Txt size={24} bold style={{color:'#FFFFFF'}}>{t('أهلًا بك في زاد','Welcome to ZAD')}</Txt>
       <Txt style={{color:'#E0EEE7'}}>{t('تابع يومك بهدوء، واقرأ من المصحف الأصلي، وابنِ خطة تناسب وقتك. يمكنك استخدام التطبيق طوال العام.','Track your day, read the original Mushaf, and build a plan that fits your time. Your journey continues throughout the year.')}</Txt>
     </LinearGradient>
     <Card><Txt bold>{t('اللغة','Language')}</Txt><Choice value={state.locale} options={[{value:'ar',label:'العربية'},{value:'en',label:'English'}]} onChange={locale=>dispatch({type:'settings',locale})}/>

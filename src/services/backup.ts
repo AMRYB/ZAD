@@ -3,8 +3,8 @@ import * as Sharing from 'expo-sharing';
 import {File,Paths} from 'expo-file-system';
 export async function exportBackup(text:string):Promise<void>{
   if(!await Sharing.isAvailableAsync())throw new Error('SHARING_UNAVAILABLE');
-  const file=new File(Paths.cache,'ramadan-journey-backup.json');file.create({overwrite:true});file.write(text);
-  await Sharing.shareAsync(file.uri,{mimeType:'application/json',dialogTitle:'Ramadan Journey'});
+  const file=new File(Paths.cache,'zad-backup.json');file.create({overwrite:true});file.write(text);
+  await Sharing.shareAsync(file.uri,{mimeType:'application/json',dialogTitle:'ZAD'});
 }
 export async function chooseBackup():Promise<string|null>{
   const result=await DocumentPicker.getDocumentAsync({type:['application/json','text/plain'],copyToCacheDirectory:true});

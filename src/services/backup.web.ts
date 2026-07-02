@@ -1,6 +1,6 @@
 export async function exportBackup(text:string):Promise<void>{
   const url=URL.createObjectURL(new Blob([text],{type:'application/json'}));
-  const link=document.createElement('a');link.href=url;link.download='ramadan-journey-backup.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  const link=document.createElement('a');link.href=url;link.download='zad-backup.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 export async function chooseBackup():Promise<string|null>{
   return new Promise((resolve,reject)=>{
