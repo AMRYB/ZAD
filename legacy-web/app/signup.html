@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إنشاء حساب</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body
+    class="min-h-screen bg-cover bg-center relative flex items-center justify-center font-['Aref_Ruqaa']"
+    style="background-image: url('../images/signup-bg.png')"
+  >
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 w-[92%] max-w-sm text-center text-white">
+      <!-- Title -->
+      <h1 class="text-4xl mb-8 drop-shadow-lg">إنشاء حساب</h1>
+
+      <!-- Form -->
+      <form class="space-y-4">
+        <!-- First Name -->
+        <input
+          type="text"
+          placeholder="الاسم الأول"
+          class="w-full p-4 rounded-full bg-white/10 border text-xl border-white/20 text-white placeholder-white/70 outline-none focus:border-yellow-400 transition"
+        />
+
+        <!-- Last Name -->
+        <input
+          type="text"
+          placeholder="الاسم الثاني"
+          class="w-full p-4 rounded-full bg-white/10 border text-xl border-white/20 text-white placeholder-white/70 outline-none focus:border-yellow-400 transition"
+        />
+
+        <!-- Password -->
+        <input
+          type="password"
+          placeholder="كلمة السر"
+          class="w-full p-4 rounded-full bg-white/10 border text-xl border-white/20 text-white placeholder-white/70 outline-none focus:border-yellow-400 transition"
+        />
+
+        <!-- Avatar -->
+        <button
+          type="button"
+          id="openAvatar"
+          class="w-full text-xl p-4 rounded-full bg-white/10 border border-white/20 hover:border-yellow-400 transition"
+        >
+          اختيار صورة شخصية
+        </button>
+
+        <!-- Submit -->
+        <button
+          class="w-[85%] mx-auto py-4 rounded-full border-[3px] border-yellow-400 bg-transparent text-yellow-300 text-xl font-bold flex items-center justify-center shadow-[0_0_18px_rgba(255,215,0,0.6)] hover:scale-105 hover:shadow-[0_0_35px_rgba(255,215,0,1)] active:scale-95 active:shadow-[0_0_10px_rgba(255,215,0,0.4)] transition"
+        >
+          <span class="text-3xl">إنشاء الحساب</span>
+        </button>
+      </form>
+
+      <!-- Login -->
+      <p class="mt-6 text-sm">
+        لديك حساب بالفعل؟
+        <a href="login.html" class="text-yellow-400 font-bold underline">
+          تسجيل الدخول
+        </a>
+      </p>
+    </div>
+
+    <!-- Avatar Modal -->
+    <div
+      id="avatarModal"
+      class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+    >
+      <div class="bg-[#1f2937] p-5 rounded-2xl w-[90%] max-w-xs">
+        <p class="text-white text-center mb-4">اختر الصورة</p>
+
+        <div class="flex justify-center gap-3">
+          <img
+            src="../images/a1.png"
+            class="w-14 h-14 rounded-full cursor-pointer hover:scale-110 transition"
+          />
+          <img
+            src="../images/a2.png"
+            class="w-14 h-14 rounded-full cursor-pointer hover:scale-110 transition"
+          />
+          <img
+            src="../images/a3.png"
+            class="w-14 h-14 rounded-full cursor-pointer hover:scale-110 transition"
+          />
+          <img
+            src="../images/a4.png"
+            class="w-14 h-14 rounded-full cursor-pointer hover:scale-110 transition"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+      const openBtn = document.getElementById('openAvatar');
+      const modal = document.getElementById('avatarModal');
+
+      openBtn.onclick = () => {
+        modal.classList.remove('hidden');
+      };
+
+      modal.onclick = () => {
+        modal.classList.add('hidden');
+      };
+    </script>
+  </body>
+</html>

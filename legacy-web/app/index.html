@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curved Bottom Nav</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body class="bg-[#d6dce2] min-h-screen">
+    <main class="min-h-screen flex items-center justify-center text-gray-500">
+      <h1 class="text-xl">Content Area</h1>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav
+      class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-[78px] bg-[#25291C] shadow-2xl"
+    >
+      <ul class="flex w-full h-full relative">
+        <!-- اقراء -->
+        <li
+          class="list flex-1 flex flex-col items-center justify-center text-white gap-1"
+        >
+          <i class="icon fa-solid fa-book-open text-[22px]"></i>
+          <span class="label text-[11px]">اقرأ</span>
+        </li>
+
+        <!-- تسبيح -->
+        <li
+          class="list flex-1 flex flex-col items-center justify-center text-white gap-1"
+        >
+          <i class="icon fa-solid fa-hands-praying text-[22px]"></i>
+          <span class="label text-[11px]">تسبيح</span>
+        </li>
+
+        <!-- Home -->
+        <li
+          class="list active flex-1 flex flex-col items-center justify-center text-white gap-1"
+        >
+          <i class="icon fa-solid fa-house text-[22px]"></i>
+          <span class="label text-[11px]">Home</span>
+        </li>
+
+        <!-- انجازات -->
+        <li
+          class="list flex-1 flex flex-col items-center justify-center text-white gap-1"
+        >
+          <i class="icon fa-solid fa-trophy text-[22px]"></i>
+          <span class="label text-[11px]">انجازات</span>
+        </li>
+
+        <!-- الاعدادات -->
+        <li
+          class="list flex-1 flex flex-col items-center justify-center text-white gap-1"
+        >
+          <i class="icon fa-solid fa-gear text-[22px]"></i>
+          <span class="label text-[11px]">الاعدادات</span>
+        </li>
+
+        <!-- Indicator -->
+        <div
+          class="indicator absolute -top-[40%] w-[64px] h-[64px] bg-[#989C94] rounded-full border-[3px] border-[#d6dce2] flex items-center justify-center transition-all duration-500"
+        >
+          <i
+            id="activeIcon"
+            class="fa-solid fa-house text-white text-[24px]"
+          ></i>
+        </div>
+      </ul>
+    </nav>
+
+    <script src="../javaScript/index.js"></script>
+  </body>
+</html>

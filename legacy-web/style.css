@@ -1,0 +1,20 @@
+.indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -18px;
+  width: 18px;
+  height: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 -9px 0 0 #d6dce2;
+}
+.indicator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -18px;
+  width: 18px;
+  height: 18px;
+  border-top-left-radius: 18px;
+  box-shadow: 0 -9px 0 0 #d6dce2;
+}
