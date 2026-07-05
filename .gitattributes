@@ -1,0 +1,2 @@
+# Preserve the original archived website blobs, including their historical line endings.
+legacy-web/** -text
