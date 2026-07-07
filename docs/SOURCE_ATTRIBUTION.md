@@ -14,4 +14,4 @@ The university/provider name is documented here instead of the application inter
 
 Observed requests and catalogue entries are distinguished from untested coverage in those documents. KSU website endpoints are internal interfaces, not a claimed official supported third-party API. No cookie, token or private user record is required in this documentation. Preserve these attribution and provenance files when publishing the source on GitHub.
 
-No GitHub repository URL or remote has been configured for this delivery. These files are prepared locally; this record does not claim that a push or public release happened.
+Repository destination: [AMRYB/ZAD](https://github.com/AMRYB/ZAD), selected by the owner on 23 October 2026. Source documentation preserves provenance; publishing source does not assert upstream content redistribution permission or a production mobile release.

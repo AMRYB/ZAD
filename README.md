@@ -1,12 +1,16 @@
 # ZAD | زاد
 
-Arabic-first Expo / React Native application, formerly Ramadan Journey, built from the supplied Ramadan Journey product plan. The referenced earlier prototype was not included, so this repository was created from a real Expo TypeScript template and the KSU evidence captured in this conversation.
+Arabic-first Expo / React Native application, formerly Ramadan Journey, built from the supplied Ramadan Journey product plan. The supplied planning archive did not include the referenced earlier mobile prototype. The existing GitHub website has since been preserved under `legacy-web/` while retaining its original Git history; the maintained mobile implementation uses an Expo TypeScript template and verified KSU captures.
 
 ## Current source and release status
 
 Current source: **0.3.1**, branded ZAD / زاد. The last compiled and inspected Android preview is **0.3.0**, before this rename; its original build evidence remains in `docs/BUILD_METADATA.json`. No renamed APK or physical Android multitouch test is claimed here.
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. The original supplied plan remains unchanged in `docs/source-plan/`.
+
+## Repository and history
+
+[GitHub: AMRYB/ZAD](https://github.com/AMRYB/ZAD). The root is the maintained mobile project; [legacy-web](legacy-web/) preserves the original 16 website files and seven February commits. [2026 history](docs/HISTORY_2026.md) separates the requested April–October retrospective storyboard from actual dated commits. No synthetic dates/authors or forced history replacement are used.
 
 ## Implemented application
 
@@ -60,6 +64,7 @@ The running app stores private data locally without an account. `supabase/migrat
 - [DESIGN.md](docs/DESIGN.md): typography, tokens, directional layout and interaction choices.
 - [Reader revision](docs/READER_V0_2_DESIGN.md): reference research, layout, source catalogue and verification limits.
 - [Gesture revision](docs/READER_GESTURES_V0_3.md): interactions, final card design and actual verification limits.
+- [Original website preservation](docs/LEGACY_WEB.md): original tree and merge provenance.
 - [Authentic Git history](docs/GIT_DELIVERY_LOG.md): actual commits and delivery provenance.
 - [CHANGELOG.md](CHANGELOG.md): implemented changes.
 - [Source attribution and API provenance](docs/SOURCE_ATTRIBUTION.md): maintained for GitHub/project documentation.

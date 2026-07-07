@@ -27,7 +27,7 @@ git log --format=fuller
 git show <commit> --stat
 ```
 
-A Git bundle accompanies source deliveries so recipients can clone the real history, rather than relying only on a source ZIP. No remote push has been performed; a GitHub destination was not supplied.
+A Git bundle accompanies source deliveries so recipients can clone the real history, rather than relying only on a source ZIP. At the 0.3 handoff no GitHub destination had been supplied. The owner subsequently selected `https://github.com/AMRYB/ZAD`; the original website history is now merged and its files are archived without rewriting old commits.
 
 ## Executed reader revision commits
 
@@ -44,7 +44,7 @@ eb7d09e | 2026-10-23T11:35:54+03:00 | feat(quran): redesign reader controls shee
 2478a49 | 2026-10-23T11:50:50+03:00 | fix(ui): keep provider attribution in repository documentation
 ```
 
-The latest user request moves provider branding out of the application interface. Source attribution and the verified HTTP/API evidence remain in the repository for GitHub documentation; no remote publication has been performed.
+The latest user request moves provider branding out of the application interface. Source attribution and the verified HTTP/API evidence remain in the repository for GitHub documentation; source attribution remains present during the ZAD repository integration.
 
 ## Executed gesture revision commits
 
@@ -55,3 +55,17 @@ c7c99d1 | 2026-10-23T12:37:04+03:00 | feat(quran): add touch canvas and upward c
 ```
 
 The upward card interaction and final labels reflect the user’s live corrections. Physical Android multitouch remains an explicit verification gate; no synthetic test date or installation claim is used.
+
+## ZAD repository integration — 23 October 2026
+
+The owner selected `AMRYB/ZAD` and renamed the current project to ZAD / زاد. The fetched main was `438e8ff`, with seven authentic February commits. Its 16 files were archived byte-for-byte and its original tip was retained as a merge parent. Contributor branches were not changed. The April–October context and authentic commit lists are in `HISTORY_2026.md`; April–September phases are explicitly retrospective, not backdated Git records.
+
+Current source is 0.3.1; the last inspected APK is the pre-rename 0.3.0 artifact. The new name has not been claimed as an installed/rebuilt APK.
+
+```text
+3fb0a1b | feat(brand): rename project and interface to ZAD
+7b2d915 | chore(repo): merge original ZAD history and preserve legacy web files
+1d3adfd | chore(repo): preserve original legacy file bytes and line endings
+```
+
+Before publication, 188 historical text blobs were checked for private-key, GitHub-token, AWS-key and JWT patterns; no matches were found. This is a bounded credential-pattern check, not a claim of a complete security audit.

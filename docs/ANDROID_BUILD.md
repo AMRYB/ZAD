@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Expo SDK 58.0.17, React Native 0.88.0, Node 24, Java from Android Studio, and Android SDK/NDK versions resolved by the generated Expo/Gradle project. Package: `com.ramadanjourney.preview`; version `0.3.0`, versionCode `3`. Generated native directories are not hand maintained or included in the source archive.
+Expo SDK 58.0.17, React Native 0.88.0, Node 24, Java from Android Studio, and Android SDK/NDK versions resolved by the generated Expo/Gradle project. Package: `com.ramadanjourney.preview`; current ZAD source version `0.3.1`, versionCode `4` (the last built preview is the pre-rename `0.3.0` / code `3`). Generated native directories are not hand maintained or included in the source archive.
 
 `eas.json` separates an internal APK profile from the production AAB profile. A hosted EAS build needs the owner's Expo account/project; no account or cloud build was created here.
 

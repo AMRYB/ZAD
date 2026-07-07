@@ -55,3 +55,11 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-019 | Focal pinch zoom, bounded pan, swipe intent and boundary rules | Five gesture regression tests PASS; 28 total tests PASS |
 | RJ-020 | Direct-touch canvas and stacked player/navigation cards | Browser next/previous swipes, zoomed pan, ayah taps and repeated upward card cycling PASS; native multitouch pending |
 | RJ-021 | Updated Android preview and delivery evidence | Local build, signature, manifest and 44-file source comparison PASS; native installation/two-finger interaction pending |
+
+## ZAD naming and repository delivery
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-022 | ZAD branding with storage identity compatibility | Source 0.3.1; typecheck/lint and 28 tests PASS; renamed APK not built |
+| RJ-023 | Preserve and merge original GitHub website history | Original main retained as ancestor; 16 legacy file blobs identical |
+| RJ-024 | Publish source and authentic 2026 history to owner-selected repository | Prepared for AMRYB/ZAD main; remote upload is verified separately against the local commit SHA |

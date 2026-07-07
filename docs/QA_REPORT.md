@@ -76,3 +76,10 @@ New captures: `reader-v0.2-ar.png`, `reciter-picker-v0.2-ar.png`, `tafsir-ibnkat
 See `READER_GESTURES_V0_3.md` for the exact interaction evidence and repaired short-handle responder issue. Current typecheck/lint, 28 tests, Expo Doctor 20/20 and production web export PASS. Actual browser checks cover forward/backward page dragging, the first-page boundary, 150% bounded panning without navigation, ayah selection, repeated upward card cycling, the final text-only surah label and larger page picker. Audio advanced while navigation was in front and paused on route exit.
 
 Two-finger pinch was tested as deterministic gesture-controller input, not as injected browser multitouch or physical Android input. Native installation/multitouch remains unverified. The v0.3 screenshots represent this version, whereas v0.2 screenshots remain versioned baseline evidence.
+
+
+## ZAD source rename and repository import
+
+Current source is 0.3.1, branded ZAD / زاد. The Android package, deep-link scheme, SQLite filename and web storage key were retained. Typecheck/lint and all 28 tests passed after the branding edits and legacy import; the ZAD production web export also passed. No new Android binary or installed-device result is claimed for the rename. The existing 0.3 APK metadata continues to identify its original compiled commit.
+
+The original ZAD website was imported as an ancestor and archived under `legacy-web/`. All 16 committed file blobs matched the original remote tree byte-for-byte. That archive is excluded from current Expo lint; it is not active application code. Historical dates are separated from retrospective planning in `HISTORY_2026.md`.
