@@ -1,4 +1,4 @@
-# Verification record — 23 October 2026
+# Verification report
 
 ## Executed automated checks
 
@@ -81,5 +81,3 @@ Two-finger pinch was tested as deterministic gesture-controller input, not as in
 ## ZAD source rename and repository import
 
 Current source is 0.3.1, branded ZAD / زاد. The Android package, deep-link scheme, SQLite filename and web storage key were retained. Typecheck/lint and all 28 tests passed after the branding edits and legacy import; the ZAD production web export also passed. No new Android binary or installed-device result is claimed for the rename. The existing 0.3 APK metadata continues to identify its original compiled commit.
-
-The original ZAD website was imported as an ancestor and archived under `legacy-web/`. All 16 committed file blobs matched the original remote tree byte-for-byte. That archive is excluded from current Expo lint; it is not active application code. Historical dates are separated from retrospective planning in `HISTORY_2026.md`.

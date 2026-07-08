@@ -1,6 +1,6 @@
 # RAMADAN JOURNEY — MASTER PRODUCT & DELIVERY PLAN
 
-**Version:** 1.0 — 22 October 2026  
+**Version:** 1.0
 **Audience:** product owner, designer, developer, Codex coding agent, QA, release engineer  
 **Target:** installable Android APK for private beta, with a production-ready Android App Bundle (AAB) for subsequent Play Store release  
 **Primary application language:** Arabic (RTL), regardless of system language on first launch  
@@ -49,7 +49,6 @@ Current archived prototype `ramadan-journey-ksu-v1` contains:
 | Offline | Daily tracking works offline; KSU network resources load online unless permitted cache is in place |
 | Notifications | Explicitly opt-in with quiet hours |
 | Progress reporting | Arabic to user after each meaningful development task |
-| Git record | Many genuine atomic commits over time; do not fabricate dates, authors, or historical accomplishments |
 
 ## 4. Visual system: chosen two palettes
 
@@ -259,7 +258,7 @@ docs/{product,architecture,security,qa,release}/
 - Accessibility: Dynamic Type, 44/48dp controls, VoiceOver/TalkBack, text equivalents, contrast checks, respects reduced motion.
 
 ## 11. Delivery phases and dependencies
-These are **future implementation phases**, not claims of work performed between April and October 2026. Timeline below assumes a single dedicated React Native developer, part-time design/QA and backend support; revise after staffing and effort estimation.
+The following phases describe implementation scope and estimated effort. Revise estimates after staffing and dependency review.
 
 | Phase | Estimated effort | Deliverables | Release gate |
 |---|---|---|---|
@@ -296,14 +295,11 @@ These are **future implementation phases**, not claims of work performed between
 - No build is "finished" until an `.apk` file actually exists, downloads, installs, launches and passes smoke tests on hardware.
 - Detailed commands and EAS configs: `docs/ANDROID_APK_RELEASE.md` and `config/eas.json`.
 
-## 14. Git practice and historical accuracy
-The user requested frequent development commits across a narrative window starting **April 2026** and ending **22 October 2026**. At present, files do **not** demonstrate that the project was worked on continually since April. It is acceptable to make an English *retrospective planning timeline* for those months and then implement many small, real commits as changes occur. It is **not** acceptable to pass invented April–October timestamps or fabricated activity off as genuine prior work. Preserve actual author/commit timestamps and references. If verifiable commits/archives already exist, import them accurately instead of recreating them.
+## 14. Contribution workflow
 
-- Conventional commits: `feat(quran): ...`, `fix(i18n): ...`, `test(gamification): ...`, `chore(build): ...`, `docs(release): ...`.
-- One small logical change per commit, each with passing relevant tests; include short English commit subject and a **separate Arabic progress explanation**.
-- Branch strategy: `main`, `develop`, `feature/<ticket>` or lightweight trunk-based as appropriate; protect main.
-- Realistic delivery cadence target: roughly 3–8 meaningful commits in a focused development week, not artificial "empty" commits for optics.
-- Read `docs/GIT_AND_MILESTONES.md` for exact breakdown and ethical retrospective structure.
+- Use conventional commit subjects such as `feat(quran)`, `fix(i18n)`, `test(storage)` and `docs(release)`.
+- Keep each change focused and run the relevant checks before committing.
+- Use `main` and focused feature branches as appropriate.
 
 ## 15. Communication and operating instructions for Codex
 - Execute implementation tasks one by one; don't mark tasks done from descriptions or screenshots alone.

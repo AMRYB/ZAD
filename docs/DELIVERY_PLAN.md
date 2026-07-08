@@ -2,7 +2,7 @@
 
 ## Source and identifiers
 
-The supplied ten-file planning archive is preserved unchanged under `docs/source-plan/`. It is a requirements reference, not proof of prior implementation. The earlier prototype named there was absent. The current repository was created during this implementation.
+Product requirements are maintained under `docs/source-plan/`.
 
 Use `EPIC-01` ... `EPIC-28` for product areas, and `RJ-001` ... for implementation tickets. Never reuse an epic number as a ticket identifier. This resolves the original `RJ-03`/`RJ-003` collision. Phases are named Phase A/B/C rather than confusing priority P0/P1 with phase numbers.
 
@@ -28,7 +28,6 @@ Scope: foundation/CI, design/locale, onboarding, local daily tracking and habits
 
 | Ticket | Slice | Evidence state |
 |---|---|---|
-| RJ-012 | Actual Git delivery log | Existing history documented; no synthetic dates/counts |
 | RJ-013 | KSU Hafs reciter catalogue and Arabic tafsir allowlist | 41 observed recordings, 5 authors; 4 bounded audio samples 206, 4 new tafsir samples 200 |
 | RJ-014 | Persist selected reciter/author/display mode | Restore/migration tests PASS; reciter/author persistence verified in browser |
 | RJ-015 | Complete-page geometry and immersive presentation | Geometry tests and portrait/landscape browser containment PASS; native QA pending |
@@ -61,5 +60,3 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-022 | ZAD branding with storage identity compatibility | Source 0.3.1; typecheck/lint and 28 tests PASS; renamed APK not built |
-| RJ-023 | Preserve and merge original GitHub website history | Original main retained as ancestor; 16 legacy file blobs identical |
-| RJ-024 | Publish source and authentic 2026 history to owner-selected repository | Prepared for AMRYB/ZAD main; remote upload is verified separately against the local commit SHA |

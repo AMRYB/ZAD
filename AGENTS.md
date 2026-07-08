@@ -27,7 +27,7 @@ You are implementing **ZAD (زاد)**, formerly Ramadan Journey, a large Arabic-
 3. Implement one vertical slice with TypeScript types and feature-level tests.
 4. Run applicable typecheck, lint, unit/integration tests; perform manual mobile test when possible.
 5. Document what was and was not actually verified.
-6. Make one or more **genuine, atomic conventional Git commits** with English messages and actual time of implementation. Do not backdate, manufacture prior milestones, use fake authors or empty vanity commits.
+6. Make small conventional Git commits with English messages, grouped by the completed change.
 7. **Arabic after-action message:** what changed, tests with actual PASS/FAIL, outstanding issues, commit hash, next ticket.
 8. Update the English backlog status and changelog faithfully.
 

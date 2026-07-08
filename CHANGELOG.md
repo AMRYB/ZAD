@@ -20,7 +20,7 @@
 - Added safe migration of earlier version-1 snapshots without losing private records.
 - Replaced the reader’s large action stack with a compact player, circular transport actions and searchable bottom sheets.
 - Added complete-page/fill-width geometry, uniform image/overlay zoom, and immersive reading with a compact toolbar.
-- Added authentic Git delivery documentation and provider/layout verification; native/browser release gates are recorded separately.
+- Added provider/layout verification; native/browser release gates are recorded separately.
 
 - Moved provider attribution out of application copy into repository documentation at the user’s request; retained original endpoints, evidence and content integrity.
 - Verified the revised browser reader and signed arm64 APK (installation remains a separate gate).
