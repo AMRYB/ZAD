@@ -1,21 +1,20 @@
 {
-  "version": "0.4.0",
-  "versionCode": 5,
+  "version": "0.4.1",
+  "versionCode": 6,
   "package": "com.ramadanjourney.preview",
   "displayName": "ZAD",
   "architecture": "arm64-v8a",
   "minSdk": 24,
   "targetSdk": 36,
   "compileSdk": 37,
-  "codeRevision": "a1e6ef89bb46cb8a01b080c4389d8cf0195fe6a7",
-  "artifact": "../ZAD_v0.4.0_arm64.apk",
-  "bytes": 32882338,
-  "sha256": "7b8bf6d9b948ac1679e84025a67905100b3f96bb8959fc3285e474066caaa157",
+  "codeRevision": "d7479030d364f0e3f06e38ee3bfc1407ac382f1a",
+  "artifact": "../ZAD_v0.4.1_arm64.apk",
+  "bytes": 32888010,
+  "sha256": "80858c992f689b770bf5120b543afe5b163c26ab5578f7b8c506eb760eb892b6",
   "signatureVerified": true,
   "signing": "Android debug certificate; private preview",
   "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
-  "sameSignerAsVersion03": true,
-  "runtimeSourceAndAssetFilesCompared": 64,
+  "runtimeSourceAndAssetFilesCompared": 66,
   "sourceMatchesBuild": true,
   "automaticAndroidBackup": false,
   "iconConfiguration": {
@@ -31,11 +30,13 @@
   "verification": {
     "typecheck": true,
     "lint": true,
-    "testsPassed": 30,
+    "testsPassed": 33,
     "expoDoctor": "20/20",
     "webExport": true,
-    "androidBuild": "PASS in 11m 19s"
+    "androidBuild": "PASS; final incremental build 30s"
   },
-  "deviceInstallationTest": "Not performed. Native two-finger interaction, three-button navigation, TalkBack and Android smoke require a real device.",
-  "recordedAt": "2026-10-23T18:23:55.396Z"
+  "deviceInstallationTest": "Not performed. Physical Android sheet drags, native list/keyboard coordination, hardware back, system navigation, TalkBack and reduced-motion settings require device smoke testing.",
+  "recordedAt": "2026-10-23T19:07:07.059Z",
+  "sameSignerAsVersion04": true,
+  "compiledSourceMapMatchesFinalReaderFiles": true
 }

@@ -4,7 +4,7 @@ ZAD is an Arabic-first Expo / React Native application for private daily trackin
 
 ## Current source and release status
 
-Current source and inspected private Android preview: **0.4.0**, branded ZAD / زاد. The arm64 APK build, v2 signature, manifest, packaged Pro Light font and 64 runtime source/asset files were verified. Actual Android installation and physical gesture/navigation testing remain pending. See `docs/ANDROID_APK_RELEASE.md` and `docs/BUILD_METADATA.json`.
+Current source and inspected private Android preview: **0.4.1**, branded ZAD / زاد. The arm64 APK build, v2 signature, manifest, packaged Pro Light font and 66 runtime source/asset files were verified. Actual Android installation and physical gesture/navigation testing remain pending. See `docs/ANDROID_APK_RELEASE.md` and `docs/BUILD_METADATA.json`.
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. Product requirements are available in `docs/source-plan/`.
 
@@ -21,7 +21,7 @@ The private preview uses locally supplied Font Awesome Pro 7.3.1 Light icons. Li
 - Local onboarding, dashboard with reconciled counts, five prayer records, fasting status, private daily notes, recurring daily habits.
 - Editable daily records, bounded personal goal counters, multiple independent reading plans, explicit page completion, undo, and catch-up assignments.
 - Configurable 29/30-day season and calendar; no invented Ramadan date; date/timezone and Arabic-number input handling.
-- KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, direct pinch zoom/pan, deliberate page swipes, sideways cycling control cards and immersive mode.
+- KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, direct pinch zoom/pan, deliberate page swipes, sideways cycling control cards, freely resizable/dismissible reader sheets and split immersive controls.
 - Native SQLite persistence. Browser preview uses localStorage as a separate adapter.
 - JSON backup export and validated import, with confirmation before replacing device records.
 
