@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs><mask id="crescent"><rect width="1024" height="1024" fill="black"/><circle cx="480" cy="462" r="218" fill="white"/><circle cx="564" cy="410" r="186" fill="black"/></mask></defs>
+  <rect width="1024" height="1024" rx="180" fill="#176B57"/>
+  <circle cx="512" cy="512" r="348" fill="none" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="3"/>
+  <rect width="1024" height="1024" fill="#E4BC74" mask="url(#crescent)"/>
+  <path d="M673 340l14 36 36 14-36 14-14 36-14-36-36-14 36-14z" fill="#E4BC74"/>
+  <path d="M327 736c66-28 126-28 185-6 59-22 119-22 185 6M512 731v51" fill="none" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="13" stroke-linecap="round"/>
+</svg>

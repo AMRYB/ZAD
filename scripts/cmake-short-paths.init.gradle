@@ -1,0 +1,9 @@
+// Optional Windows build workaround. Does not change generated native sources.
+// CMake hashes long object paths instead of relying on Windows long-path support.
+allprojects { project ->
+  project.afterEvaluate {
+    if (project.plugins.hasPlugin('com.android.library') || project.plugins.hasPlugin('com.android.application')) {
+      project.extensions.getByName('android').defaultConfig.externalNativeBuild.cmake.arguments.add('-DCMAKE_OBJECT_PATH_MAX=250')
+    }
+  }
+}
