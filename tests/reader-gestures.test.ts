@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ReaderGesture,containTransform,swipePage,upwardCardDrag} from '../src/core/reader-gestures.ts';
+import {ReaderGesture,containTransform,swipePage,sidewaysCardDrag} from '../src/core/reader-gestures.ts';
 const bounds={width:400,height:600,pageWidth:400,pageHeight:600};
 test('pinch anchors the source pixel, clamps scale, and never flips after lifting one finger',()=>{
   const g=new ReaderGesture();g.configure(bounds);
@@ -35,13 +35,13 @@ test('touch-count transitions rebase without jumping and reset clears stale pan'
   g.configure({width:800,height:300,pageWidth:200,pageHeight:300});assert.deepEqual(g.value,{zoom:1,x:0,y:0});
 });
 
-test('a short grab handle captures an upward drag before the pointer leaves and rejects accidental swaps',()=>{
-  const handle={top:726,height:24},startY=738;
-  const firstMoveY=startY-11;
-  assert.ok(firstMoveY>handle.top);
-  assert.equal(upwardCardDrag(0,firstMoveY-startY),true);
-  assert.equal(upwardCardDrag(0,-11,true),false);
-  assert.equal(upwardCardDrag(0,-80,true),true);
-  assert.equal(upwardCardDrag(0,80,true),false);
-  assert.equal(upwardCardDrag(90,-20,true),false);
+test('card swipes cycle in either lateral direction and reject short or vertical drags',()=>{
+  assert.equal(sidewaysCardDrag(12,2),true);
+  assert.equal(sidewaysCardDrag(-12,2),true);
+  assert.equal(sidewaysCardDrag(12,2,true),false);
+  assert.equal(sidewaysCardDrag(80,20,true),true);
+  assert.equal(sidewaysCardDrag(-80,-20,true),true);
+  assert.equal(sidewaysCardDrag(0,-100,true),false);
+  assert.equal(sidewaysCardDrag(70,65,true),false);
+  assert.equal(sidewaysCardDrag(0,0),false);
 });

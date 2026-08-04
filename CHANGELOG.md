@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 — reader controls and icon polish
+
+- Unified UI icons through Font Awesome 7.3.1; the private build uses locally supplied Pro Classic Light 300. Public source includes Free fallback fonts and a local installer for licensed assets.
+- Changed control-card cycling to either lateral direction with simultaneous outgoing/incoming animation and guards against presses during transitions. Removed the visible grab-line and its reserved row.
+- Added audio-progress spacing, a five-column immersive toolbar with centered playback, and separate image/safe-area gaps outside the clipped zoom canvas.
+- Restored the upper surah dropdown arrow and selection in normal and immersive modes.
+- Added real font glyph/weight checks and lateral-gesture regression coverage; release evidence is recorded separately.
+
 ## 0.3.1 — ZAD source rename
 
 - Renamed the application display name/project slug to ZAD and the Arabic interface brand to زاد.

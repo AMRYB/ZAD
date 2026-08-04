@@ -60,3 +60,11 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-022 | ZAD branding with storage identity compatibility | Source 0.3.1; typecheck/lint and 28 tests PASS; renamed APK not built |
+
+## Reader polish 0.4
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-023 | Font Awesome 7.3.1 shared icon component and local Pro Light configuration | Typecheck/lint and 30 tests PASS; paid font excluded from public repository |
+| RJ-024 | Sideways card stack, grab-line removal and transition input guard | Gesture regression and browser lateral/short/vertical/rapid-cycle checks PASS |
+| RJ-025 | Centered immersive controls, safe-area separation and restored surah dropdown | Browser portrait/landscape and 200% zoom checks PASS; native release build in progress |

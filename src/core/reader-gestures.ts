@@ -74,7 +74,7 @@ export class ReaderGesture {
   }
 }
 
-// Capture before a finger leaves the 24px grab handle; commit only a deliberate upward pull.
-export function upwardCardDrag(dx:number,dy:number,released=false){
-  return dy< -(released?44:6)&&Math.abs(dy)>Math.abs(dx)*1.2;
+// Both lateral directions cycle cards. Vertical movement belongs to the child controls.
+export function sidewaysCardDrag(dx:number,dy:number,released=false){
+  return Math.abs(dx)>(released?64:9)&&Math.abs(dx)>Math.abs(dy)*1.35;
 }
