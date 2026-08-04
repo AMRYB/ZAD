@@ -1,26 +1,27 @@
-# Private Android preview release record — 0.3.0
+# Private Android preview release record — 0.4.0
 
-Package `com.ramadanjourney.preview`, version `0.3.0` / code `3`.
+Package `com.ramadanjourney.preview`, display name **ZAD**, version `0.4.0` / code `5`.
 
 | Gate | Actual status |
 |---|---|
-| Typecheck / lint / 28 tests | PASS |
+| Typecheck / lint / 30 local tests | PASS, including actual Pro Light 300 glyph checks |
 | Expo Doctor | PASS, 20/20 |
-| Production web export | PASS |
-| Browser page drag, zoomed pan and upward card cycles | PASS for the checks in READER_GESTURES_V0_3 |
-| Local arm64 release build | PASS — initial 5m 49s; final source revision 51s |
+| Production web export with local Light font | PASS |
+| Browser reader controls, lateral cards and zoomed immersive layout | PASS; see READER_POLISH_V0_4.md |
+| Local arm64 release build | PASS, 11m 19s |
 | APK v2 signature / manifest / minimal permissions | PASS |
-| Source/config compared to actual build workspace | PASS — all 44 files match |
-| Update signing identity | Same certificate/package as 0.2; version code increased |
-| Actual Android install / two-finger touch / native smoke | Not performed |
+| Runtime source/config/assets compared to build workspace | PASS, 64 files match; documentation is outside this comparison |
+| Packaged Pro Light font compared to local font | PASS, byte-identical; font family also present in bundled JS |
+| Update signing identity | Same package/certificate as 0.3, higher version code |
+| Actual Android install / native gestures / three-button navigation / TalkBack | Not performed |
 | Public release / Play Store | Not performed |
 
-Artifact: `../Ramadan_Journey_v0.3.0_arm64.apk`, **32617422 bytes**. Requires Android 7.0+ on 64-bit ARM.
+Artifact, relative to repository root: `../ZAD_v0.4.0_arm64.apk`, **32882338 bytes**. Android 7.0+ on 64-bit ARM.
 
-SHA256: `ec70fff305d2db315522004ac797bea91fe7c4f2323248e7435f92e028347255`.
+SHA256: `7b8bf6d9b948ac1679e84025a67905100b3f96bb8959fc3285e474066caaa157`.
 
-Compiled code revision: `5ab9a688c56ee2a3d4a0cf9e2f3f59b1ca639a21`. See `BUILD_METADATA.json`. The source was compared after all final card-label and drag-threshold changes; temporary gesture diagnostics are absent. Manifest inspection confirms backup disabled and no microphone, storage, overlay or vibration permissions.
+Compiled runtime revision: `a1e6ef89bb46cb8a01b080c4389d8cf0195fe6a7`, with the separately supplied local Pro icon configuration described in `assets/fonts/README.md`. The public checkout contains Free fallback fonts and the installer, while this private APK uses **Font Awesome Pro 7.3.1 Classic Light 300**. R8 resource optimization names the packaged font `res/7V.otf`; its bytes match local SHA256 `46e24a495ff52fdbb821cfaf1a6eb033a81ecd63c3e2cb99bd14789810190392`.
 
-The APK uses the existing Android debug certificate for this private preview and bundles JS/assets without requiring Metro. Quran content requires internet access. Browser drag checks and gesture-controller tests do not constitute a physical Android multitouch or installation test.
+The build bundles JS/fonts/assets and does not require Metro. Quran content requires internet. The existing Android debug signing identity is retained for this private preview. Manifest inspection confirms backup disabled and no microphone, storage, overlay or vibration permissions. Browser geometry does not substitute for Android system-navigation testing.
 
-Historical evidence: `ANDROID_APK_RELEASE_v0.2.md`, `BUILD_METADATA_v0.2.json`, and `BUILD_METADATA_v0.1.json`.
+Previous release records: `ANDROID_APK_RELEASE_v0.3.md`, `BUILD_METADATA_v0.3.json`, and the earlier versioned records.

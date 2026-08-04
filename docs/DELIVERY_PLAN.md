@@ -67,4 +67,5 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 |---|---|---|
 | RJ-023 | Font Awesome 7.3.1 shared icon component and local Pro Light configuration | Typecheck/lint and 30 tests PASS; paid font excluded from public repository |
 | RJ-024 | Sideways card stack, grab-line removal and transition input guard | Gesture regression and browser lateral/short/vertical/rapid-cycle checks PASS |
-| RJ-025 | Centered immersive controls, safe-area separation and restored surah dropdown | Browser portrait/landscape and 200% zoom checks PASS; native release build in progress |
+| RJ-025 | Centered immersive controls, safe-area separation and restored surah dropdown | Browser portrait/landscape and 200% zoom checks PASS; arm64 build/signature/font/source verification PASS; actual Android installation pending |
+| RJ-026 | ZAD 0.4.0 Android artifact and delivery evidence | Build PASS in 11m 19s; signature/manifest/embedded Light font and 64 runtime files match; native install pending |

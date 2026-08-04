@@ -1,0 +1,21 @@
+{
+  "version": "0.3.0",
+  "versionCode": 3,
+  "package": "com.ramadanjourney.preview",
+  "architecture": "arm64-v8a",
+  "minSdk": 24,
+  "targetSdk": 36,
+  "compileSdk": 37,
+  "codeRevision": "5ab9a688c56ee2a3d4a0cf9e2f3f59b1ca639a21",
+  "bytes": 32617422,
+  "sha256": "ec70fff305d2db315522004ac797bea91fe7c4f2323248e7435f92e028347255",
+  "signatureVerified": true,
+  "signing": "Android debug certificate; private preview",
+  "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+  "sameSignerAsVersion02": true,
+  "sourceFilesCompared": 44,
+  "sourceMatchesBuild": true,
+  "automaticAndroidBackup": false,
+  "deviceInstallationTest": "Not performed. Native two-finger interaction and release smoke require a real Android device.",
+  "recordedAt": "2026-10-23T09:38:06.238Z"
+}

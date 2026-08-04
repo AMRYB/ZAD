@@ -13,11 +13,12 @@ The surah name and chevron open surah selection in normal and immersive layouts.
 - Typecheck/lint: PASS.
 - Unit/integration suite: **30 PASS**, including actual Free glyph coverage, actual local Pro weight 300/glyph coverage, and sideways gesture intent/cancellation.
 - Expo Doctor: **20/20 PASS**.
+- Production web export with the actual local Pro Light asset: PASS.
 - Browser: Pro Light font family rendered in controls/tabs; surah dropdown opens and selects Al-Baqarah; lateral card cycles both directions; short/vertical drags do not cycle; rapid repeated drags do not open the page picker accidentally.
 - Browser fullscreen at **390×844**, **360×800**, **844×390**: no horizontal overflow. Play-slot center differs from card center by less than **0.01 logical pixel**.
 - At 200% zoom and after one-finger pan: stage clips the image, the image-to-card gap remains **14 pixels**, and portrait bottom clearance remains **20 pixels** at zero browser safe inset. Landscape measured ~19.6 pixels due browser rounding.
 - Browser audio: a bounded Al-Baqarah 2:1 sample kept playing across a card cycle with repeat enabled; playback and repeat were then stopped.
-- Screenshots: `screenshots/reader-v0.4-navigation-ar.png`, `screenshots/reader-v0.4-fullscreen-zoom-ar.png`.
+- Screenshots: `screenshots/reader-v0.4-player-ar.png`, `screenshots/reader-v0.4-navigation-ar.png`, `screenshots/reader-v0.4-fullscreen-zoom-ar.png`.
 
 ## Limits
 
