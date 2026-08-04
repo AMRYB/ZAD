@@ -3,8 +3,8 @@ import {ActivityIndicator,BackHandler,Pressable,View} from 'react-native';
 import {useFocusEffect} from 'expo-router';
 import {useQuery} from '@tanstack/react-query';
 import {StatusBar} from 'expo-status-bar';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import {SafeAreaView,useSafeAreaInsets} from 'react-native-safe-area-context';
+import {AppIcon} from '../ui/AppIcon';
 import {adjacentAya,hilitesUrl,pageStart,plainTafsir,splitTafsir,tafsirUrl,versePage,type Coordinates} from '../core/ksu';
 import {normalizeDigits} from '../core/calendar';
 import {quran,surahEnglish} from '../data/quran';
@@ -27,6 +27,7 @@ const clock=(seconds:number)=>`${Math.floor(seconds/60)}:${String(Math.floor(sec
 
 export function Quran(){
   const {state,dispatch,t,rtl,dark,colors,saveError,retrySave,readerImmersive,setReaderImmersive}=useApp();
+  const insets=useSafeAreaInsets();
   const [selection,setSelection]=useState(state.lastRead);
   const [sheet,setSheet]=useState<Sheet>(null);
   const [search,setSearch]=useState('');
@@ -70,16 +71,16 @@ export function Quran(){
   const sheetTitles={surah:t('اختيار السورة','Choose a surah'),page:t('الانتقال إلى صفحة','Go to page'),aya:t('اختيار الآية','Choose an ayah'),settings:t('إعدادات القراءة','Reading settings'),reciter:t('اختيار القارئ','Choose a reciter'),'tafsir-choice':t('اختيار التفسير','Choose a tafsir'),tafsir:t('التفسير','Tafsir'),tools:t('أدوات القراءة','Reading tools')};
   const progress=audio.duration?Math.min(100,100*audio.currentTime/audio.duration):0;
 
-  return <SafeAreaView edges={readerImmersive?['left','right','bottom']:['top','left','right']} style={{flex:1,backgroundColor:colors.background,direction:'ltr'}}>
+  return <SafeAreaView edges={readerImmersive?['left','right']:['top','left','right']} style={{flex:1,backgroundColor:colors.background,direction:'ltr'}}>
     <StatusBar hidden={readerImmersive} style={dark?'light':'dark'}/>
     <View style={{flex:1,width:'100%',maxWidth:1100,alignSelf:'center'}}>
       <Row style={{paddingHorizontal:14,paddingVertical:6,flexWrap:'nowrap',gap:8}}>
-        <Pressable accessibilityRole={readerImmersive?"button":"header"} accessibilityLabel={t(`السورة: ${name}`,`Surah: ${name}`)} disabled={!readerImmersive} onPress={()=>open('surah')} style={{flex:1,minHeight:48,justifyContent:'center'}}>
+        <Pressable accessibilityRole="button" accessibilityLabel={t(`السورة: ${name}`,`Surah: ${name}`)} onPress={()=>open('surah')} style={{flex:1,minHeight:48,justifyContent:'center'}}>
           <Txt muted size={10}>{readerImmersive?t(`القرآن الكريم · صفحة ${page}`,`THE HOLY QURAN · PAGE ${page}`):t('القرآن الكريم · حفص عن عاصم','THE HOLY QURAN · HAFS')}</Txt>
-          <Row style={{gap:7}}><Txt bold size={20}>{name}</Txt>{readerImmersive?<Ionicons name="chevron-down" size={15} color={colors.primary}/>:null}</Row>
+          <Row style={{gap:7}}><Txt bold size={20}>{name}</Txt><AppIcon name="chevron-down" size={15} color={colors.primary}/></Row>
         </Pressable>
-        <IconButton icon="options-outline" label={t('إعدادات القراءة','Reading settings')} onPress={()=>open('settings')}/>
-        <IconButton icon={readerImmersive?'contract-outline':'expand-outline'} label={readerImmersive?t('إنهاء ملء الشاشة','Exit full screen'):t('ملء الشاشة','Full screen')} onPress={()=>setReaderImmersive(!readerImmersive)}/>
+        <IconButton icon="sliders" label={t('إعدادات القراءة','Reading settings')} onPress={()=>open('settings')}/>
+        <IconButton icon={readerImmersive?'compress':'expand'} label={readerImmersive?t('إنهاء ملء الشاشة','Exit full screen'):t('ملء الشاشة','Full screen')} onPress={()=>setReaderImmersive(!readerImmersive)}/>
       </Row>
       {saveError?<Row style={{paddingHorizontal:14}}><Txt size={12} style={{color:colors.danger}}>{t('لم تُحفظ التغييرات بعد','Changes have not been saved')}</Txt><ReaderChip label={t('إعادة الحفظ','Retry saving')} onPress={retrySave}/></Row>:null}
       <View style={{flex:1,marginHorizontal:8}}>
@@ -87,29 +88,31 @@ export function Quran(){
         {pageQuery.isPending?<View pointerEvents="none" style={{position:'absolute',top:10,left:0,right:0,alignItems:'center'}}><View style={{padding:8,borderRadius:20,backgroundColor:colors.surface}}><ActivityIndicator color={colors.primary}/></View></View>:null}
         {imageFailed?<View style={{position:'absolute',top:0,bottom:0,left:0,right:0,justifyContent:'center',padding:20}}><Card><Txt>{t('تعذّر تحميل صورة الصفحة.','Could not load the page image.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Card></View>:null}
       </View>
-      {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="refresh" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
-      {readerImmersive?<View style={{marginBottom:8,paddingHorizontal:10,paddingVertical:5,borderRadius:26,borderWidth:1,borderColor:colors.border,backgroundColor:colors.surface,maxWidth:620,width:'96%',alignSelf:'center'}}>
-        <Row style={{flexWrap:'nowrap',justifyContent:'space-between',gap:1}}>
-          <IconButton icon="chevron-forward" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
-          <ReaderChip label={t(`صفحة ${page}`,`Page ${page}`)} onPress={()=>open('page')}/>
-          <IconButton icon="chevron-back" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
-          <IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/>
-          <ReaderChip icon="book-outline" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
-        </Row>
+      {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="rotate-right" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
+      {readerImmersive?<View testID="reader-immersive-footer" style={{paddingTop:14,paddingBottom:Math.max(insets.bottom,12)+8,paddingHorizontal:12}}>
+        <View testID="reader-immersive-card" style={{paddingHorizontal:6,paddingVertical:9,borderRadius:28,borderWidth:1,borderColor:colors.border,backgroundColor:colors.surface,maxWidth:620,width:'100%',alignSelf:'center'}}>
+          <Row style={{flexWrap:'nowrap',gap:0}}>
+            <View style={{flex:1,alignItems:'center'}}><IconButton icon="chevron-right" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/></View>
+            <View style={{flex:1,alignItems:'center'}}><ReaderChip compact label={t(`صفحة ${page}`,`Page ${page}`)} onPress={()=>open('page')}/></View>
+            <View testID="reader-immersive-play" style={{flex:1,alignItems:'center'}}><IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/></View>
+            <View style={{flex:1,alignItems:'center'}}><IconButton icon="book-open" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/></View>
+            <View style={{flex:1,alignItems:'center'}}><IconButton icon="chevron-left" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/></View>
+          </Row>
+        </View>
       </View>:<ReaderDeck player={<>
         <Row style={{flexWrap:'nowrap',gap:7}}>
-          <Pressable accessibilityRole="button" accessibilityLabel={t(`القارئ: ${reciterName}`,`Reciter: ${reciterName}`)} onPress={()=>open('reciter')} style={{flex:1,minHeight:44,justifyContent:'center'}}><Row style={{flexWrap:'nowrap',gap:8}}><Ionicons name="headset-outline" size={18} color={colors.primary}/><View style={{flex:1}}><Txt size={12} bold numberOfLines={1}>{reciterName}</Txt><Txt muted size={10}>{t('تغيير القارئ','Change reciter')}</Txt></View></Row></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={t(`القارئ: ${reciterName}`,`Reciter: ${reciterName}`)} onPress={()=>open('reciter')} style={{flex:1,minHeight:44,justifyContent:'center'}}><Row style={{flexWrap:'nowrap',gap:8}}><AppIcon name="headphones" size={18} color={colors.primary}/><View style={{flex:1}}><Txt size={12} bold numberOfLines={1}>{reciterName}</Txt><Txt muted size={10}>{t('تغيير القارئ','Change reciter')}</Txt></View></Row></Pressable>
           <Txt muted size={11} style={{writingDirection:'ltr'}}>{clock(audio.currentTime)} / {clock(audio.duration)}</Txt>
-          <IconButton icon={bookmarked?'bookmark':'bookmark-outline'} label={bookmarked?t('إزالة العلامة','Remove bookmark'):t('حفظ علامة','Save bookmark')} active={bookmarked} onPress={()=>dispatch({type:'bookmark',...selection})}/>
-          <IconButton icon="ellipsis-horizontal" label={t('أدوات القراءة','Reading tools')} onPress={()=>open('tools')}/>
+          <IconButton icon={bookmarked?'bookmark':'bookmark'} label={bookmarked?t('إزالة العلامة','Remove bookmark'):t('حفظ علامة','Save bookmark')} active={bookmarked} onPress={()=>dispatch({type:'bookmark',...selection})}/>
+          <IconButton icon="ellipsis" label={t('أدوات القراءة','Reading tools')} onPress={()=>open('tools')}/>
         </Row>
-        <View accessibilityRole="progressbar" accessibilityLabel={t('تقدم التلاوة','Recitation progress')} accessibilityValue={{min:0,max:100,now:progress}} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} style={{height:3,marginHorizontal:8,borderRadius:3,backgroundColor:colors.soft,overflow:'hidden',direction:'ltr'}}><View style={{height:3,width:`${progress}%`,backgroundColor:colors.primary}}/></View>
-        <Row style={{justifyContent:'space-between',gap:1,flexWrap:'nowrap',paddingTop:4}}>
+        <View accessibilityRole="progressbar" accessibilityLabel={t('تقدم التلاوة','Recitation progress')} accessibilityValue={{min:0,max:100,now:progress}} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} style={{height:3,marginVertical:7,marginHorizontal:8,borderRadius:3,backgroundColor:colors.soft,overflow:'hidden',direction:'ltr'}}><View style={{height:3,width:`${progress}%`,backgroundColor:colors.primary}}/></View>
+        <Row style={{justifyContent:'space-between',gap:1,flexWrap:'nowrap',paddingTop:6}}>
           <IconButton icon="repeat" label={t('تكرار الآية','Repeat ayah')} active={audio.repeat} onPress={()=>audio.setRepeat(!audio.repeat)}/>
-          <IconButton icon="play-skip-forward" label={t('الآية التالية','Next ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,1))}/>
+          <IconButton icon="forward-step" label={t('الآية التالية','Next ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,1))}/>
           {audio.loading?<Pressable accessibilityRole="button" accessibilityLabel={t('إيقاف التحميل والتلاوة','Stop loading and playback')} onPress={audio.pause} style={{width:56,height:56,borderRadius:28,backgroundColor:colors.primary,alignItems:'center',justifyContent:'center'}}><ActivityIndicator color={colors.onPrimary}/></Pressable>:<IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/>}
-          <IconButton icon="play-skip-back" label={t('الآية السابقة','Previous ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,-1))}/>
-          <ReaderChip icon="book-outline" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
+          <IconButton icon="backward-step" label={t('الآية السابقة','Previous ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,-1))}/>
+          <ReaderChip icon="book-open" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
         </Row>
       </>} navigation={<>
         <Row style={{flexWrap:'nowrap',gap:8,paddingVertical:3}}>
@@ -117,34 +120,34 @@ export function Quran(){
           <ReaderChip label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')}/>
         </Row>
         <Row style={{justifyContent:'space-between',flexWrap:'nowrap',gap:4}}>
-          <IconButton icon="chevron-forward" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
+          <IconButton icon="chevron-right" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
           <View style={{flex:1}}><ReaderChip large label={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} onPress={()=>open('page')}/></View>
-          <IconButton icon="chevron-back" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
+          <IconButton icon="chevron-left" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
         </Row>
       </>}/>}
       {audio.error?<Txt size={12} style={{color:colors.danger}}>{t('تعذّر تشغيل هذا التسجيل. جرّب مجددًا أو اختر قارئًا آخر.','This recording could not play. Retry or choose another reciter.')}</Txt>:null}
     </View>
     <ReaderSheet visible={sheet!==null} title={sheet?sheetTitles[sheet]:''} subtitle={sheet==='reciter'?t('اختر التلاوة التي تفضّلها','Choose your preferred recitation'):sheet==='tafsir'?`${name} · ${t('الآية','Ayah')} ${selection.aya}`:undefined} onClose={()=>setSheet(null)}>
       {sheet==='settings'?<>
-        <OptionRow title={t('القارئ','Reciter')} detail={reciterName} icon="headset-outline" onPress={()=>open('reciter')}/>
-        <OptionRow title={t('التفسير','Tafsir')} detail={authorName} icon="book-outline" onPress={()=>{setReturnToTafsir(false);open('tafsir-choice');}}/>
+        <OptionRow title={t('القارئ','Reciter')} detail={reciterName} icon="headphones" onPress={()=>open('reciter')}/>
+        <OptionRow title={t('التفسير','Tafsir')} detail={authorName} icon="book-open" onPress={()=>{setReturnToTafsir(false);open('tafsir-choice');}}/>
         <Txt bold size={15}>{t('عرض صفحة المصحف','Mushaf page display')}</Txt>
         <Choice value={state.reader.fit} options={[{value:'page',label:t('الصفحة كاملة','Complete page')},{value:'width',label:t('ملء العرض','Fill width')}]} onChange={fit=>{dispatch({type:'readerSettings',fit});setZoom(1);}}/>
         <Txt muted size={12}>{t('كبّر بإصبعين وحرّك الصفحة بإصبع واحد. عند الحجم الطبيعي اسحب يمينًا للصفحة التالية ويسارًا للسابقة.','Pinch with two fingers to zoom and drag with one finger to pan. At normal size, swipe left for the next page and right for the previous page.')}</Txt>
-        <Row><ReaderChip icon="remove" label={t('تصغير','Zoom out')} onPress={()=>setZoom(value=>Math.max(1,value-.5))}/><Txt bold style={{writingDirection:'ltr'}}>{Math.round(zoom*100)}%</Txt><ReaderChip icon="add" label={t('تكبير','Zoom in')} onPress={()=>setZoom(value=>Math.min(3,value+.5))}/></Row>
-        <ReaderChip icon="scan-outline" label={t('إعادة ضبط العرض','Reset page view')} onPress={()=>{setZoom(1);dispatch({type:'readerSettings',fit:'page'});}}/>
-        <OptionRow title={t('الانتقال إلى صفحة','Go to page')} detail={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} icon="document-outline" onPress={()=>open('page')}/>
-        <OptionRow title={t('العلامات وخطط القراءة','Bookmarks and reading plans')} icon="bookmark-outline" onPress={()=>open('tools')}/>
+        <Row><ReaderChip icon="minus" label={t('تصغير','Zoom out')} onPress={()=>setZoom(value=>Math.max(1,value-.5))}/><Txt bold style={{writingDirection:'ltr'}}>{Math.round(zoom*100)}%</Txt><ReaderChip icon="plus" label={t('تكبير','Zoom in')} onPress={()=>setZoom(value=>Math.min(3,value+.5))}/></Row>
+        <ReaderChip icon="expand" label={t('إعادة ضبط العرض','Reset page view')} onPress={()=>{setZoom(1);dispatch({type:'readerSettings',fit:'page'});}}/>
+        <OptionRow title={t('الانتقال إلى صفحة','Go to page')} detail={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} icon="file" onPress={()=>open('page')}/>
+        <OptionRow title={t('العلامات وخطط القراءة','Bookmarks and reading plans')} icon="bookmark" onPress={()=>open('tools')}/>
       </>:null}
       {sheet==='reciter'?<>
         <Field label={t('ابحث عن قارئ','Search reciters')} value={search} onChangeText={setSearch}/>
-        {KSU_RECITERS.filter(item=>`${item.nameAr} ${item.nameEn}`.toLowerCase().includes(search.toLowerCase())).map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} detail={item.lowData?t('توفير البيانات','Lower data use'):undefined} selected={item.id===reciter.id} icon="headset-outline" onPress={()=>{dispatch({type:'readerSettings',reciter:item.id});setSheet(null);}}/>)}
+        {KSU_RECITERS.filter(item=>`${item.nameAr} ${item.nameEn}`.toLowerCase().includes(search.toLowerCase())).map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} detail={item.lowData?t('توفير البيانات','Lower data use'):undefined} selected={item.id===reciter.id} icon="headphones" onPress={()=>{dispatch({type:'readerSettings',reciter:item.id});setSheet(null);}}/>)}
         <Txt muted size={11}>{t('قد يتعذر تسجيل بعينه مؤقتًا. يمكنك اختيار قارئ آخر.','Individual recordings may be temporarily unavailable. You can choose another reciter.')}</Txt>
       </>:null}
-      {sheet==='tafsir-choice'?KSU_TAFSIRS.map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} selected={item.id===author.id} icon="book-outline" onPress={()=>{dispatch({type:'readerSettings',tafsir:item.id});setSheet(returnToTafsir?'tafsir':'settings');}}/>):null}
+      {sheet==='tafsir-choice'?KSU_TAFSIRS.map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} selected={item.id===author.id} icon="book-open" onPress={()=>{dispatch({type:'readerSettings',tafsir:item.id});setSheet(returnToTafsir?'tafsir':'settings');}}/>):null}
       {sheet==='surah'?<>
         <Field label={t('ابحث عن سورة أو رقمها','Search by surah name or number')} value={search} onChangeText={text=>setSearch(normalizeDigits(text))}/>
-        {quran.Sura.map((item,i)=>item?.name&&i<=114&&(!search||item.name.includes(search)||surahEnglish[i].toLowerCase().includes(search.toLowerCase())||String(i)===search)?<OptionRow key={i} title={`${i}. ${rtl?item.name:surahEnglish[i]}`} detail={t(`${item.ayas} آية`,`${item.ayas} ayahs`)} selected={selection.sura===i} icon="book-outline" onPress={()=>{select({sura:i,aya:1});setSheet(null);}}/>:null)}
+        {quran.Sura.map((item,i)=>item?.name&&i<=114&&(!search||item.name.includes(search)||surahEnglish[i].toLowerCase().includes(search.toLowerCase())||String(i)===search)?<OptionRow key={i} title={`${i}. ${rtl?item.name:surahEnglish[i]}`} detail={t(`${item.ayas} آية`,`${item.ayas} ayahs`)} selected={selection.sura===i} icon="book-open" onPress={()=>{select({sura:i,aya:1});setSheet(null);}}/>:null)}
       </>:null}
       {sheet==='page'||sheet==='aya'?<>
         <Field label={sheet==='page'?t('رقم الصفحة (1–604)','Page number (1–604)'):t(`رقم الآية (1–${quran.Sura[selection.sura]!.ayas})`,`Ayah number (1–${quran.Sura[selection.sura]!.ayas})`)} value={number} onChangeText={text=>setNumber(normalizeDigits(text))} keyboardType="number-pad"/>
@@ -159,7 +162,7 @@ export function Quran(){
       </>:null}
       {sheet==='tools'?<>
         <Txt bold>{t('علاماتي المرجعية','My bookmarks')}</Txt>
-        {state.bookmarks.length?state.bookmarks.map(bookmark=><OptionRow key={`${bookmark.sura}_${bookmark.aya}`} title={`${rtl?quran.Sura[bookmark.sura]?.name:surahEnglish[bookmark.sura]} · ${bookmark.aya}`} icon="bookmark-outline" onPress={()=>{select(bookmark);setSheet(null);}}/>):<Txt muted>{t('احفظ موضعك بزر العلامة في شريط التلاوة.','Save a position with the bookmark button in the player.')}</Txt>}
+        {state.bookmarks.length?state.bookmarks.map(bookmark=><OptionRow key={`${bookmark.sura}_${bookmark.aya}`} title={`${rtl?quran.Sura[bookmark.sura]?.name:surahEnglish[bookmark.sura]} · ${bookmark.aya}`} icon="bookmark" onPress={()=>{select(bookmark);setSheet(null);}}/>):<Txt muted>{t('احفظ موضعك بزر العلامة في شريط التلاوة.','Save a position with the bookmark button in the player.')}</Txt>}
         {selectedPlan?<Card><Txt bold>{t('تأكيد القراءة في خطة','Confirm reading in a plan')}</Txt><Choice value={selectedPlan.id} options={state.plans.map(plan=>({value:plan.id,label:plan.title}))} onChange={setPlanId}/><Button disabled={page>selectedPlan.target||selectedPlan.pages.includes(page)} label={selectedPlan.pages.includes(page)?t('الصفحة مسجلة في الخطة','Page already recorded'):t(`أؤكد قراءة الصفحة ${page}`,`Confirm reading page ${page}`)} onPress={()=>dispatch({type:'planPage',id:selectedPlan.id,page,completed:true})}/>{page>selectedPlan.target?<Txt muted size={12}>{t('هذه الصفحة خارج هدف الخطة المحددة.','This page is outside the selected plan’s target.')}</Txt>:null}</Card>:null}
         <Txt muted size={12}>{t('تتوقف التلاوة عند مغادرة القارئ أو وضع التطبيق في الخلفية.','Recitation pauses when leaving the reader or backgrounding the app.')}</Txt>
       </>:null}

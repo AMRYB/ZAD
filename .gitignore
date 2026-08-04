@@ -42,3 +42,10 @@ yarn-error.*
 .test-output/
 artifacts/
 .env
+
+# Licensed Pro fonts are supplied locally and embedded only in the private app build.
+/assets/private/
+/src/ui/icon-fonts.native.ts
+/src/ui/icon-fonts.web.ts
+
+.font-env/
