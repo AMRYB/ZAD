@@ -12,7 +12,8 @@ import {KSU_RECITERS,KSU_TAFSIRS,reciterById,tafsirById} from '../data/ksu-reade
 import {readKsuText} from '../services/ksu';
 import {useApp} from '../state/AppContext';
 import {Button,Card,Choice,Field,Row,Txt} from '../ui/components';
-import {IconButton,OptionRow,ReaderChip,ReaderSheet} from './quran/ReaderControls';
+import {IconButton,OptionRow,ReaderChip} from './quran/ReaderControls';
+import {ReaderSheet} from './quran/ReaderSheet';
 import {MushafCanvas} from './quran/MushafCanvas';
 import {useAyahAudio} from './quran/useAyahAudio';
 import {ReaderDeck} from './quran/ReaderDeck';
@@ -91,12 +92,12 @@ export function Quran(){
       {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="rotate-right" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
       {readerImmersive?<View testID="reader-immersive-footer" style={{paddingTop:14,paddingBottom:Math.max(insets.bottom,12)+8,paddingHorizontal:12}}>
         <View testID="reader-immersive-card" style={{paddingHorizontal:6,paddingVertical:9,borderRadius:28,borderWidth:1,borderColor:colors.border,backgroundColor:colors.surface,maxWidth:620,width:'100%',alignSelf:'center'}}>
-          <Row style={{flexWrap:'nowrap',gap:0}}>
-            <View style={{flex:1,alignItems:'center'}}><IconButton icon="chevron-right" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/></View>
-            <View style={{flex:1,alignItems:'center'}}><ReaderChip compact label={t(`صفحة ${page}`,`Page ${page}`)} onPress={()=>open('page')}/></View>
-            <View testID="reader-immersive-play" style={{flex:1,alignItems:'center'}}><IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/></View>
-            <View style={{flex:1,alignItems:'center'}}><IconButton icon="book-open" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/></View>
-            <View style={{flex:1,alignItems:'center'}}><IconButton icon="chevron-left" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/></View>
+          <Row style={{flexWrap:'nowrap',gap:10,paddingHorizontal:8}}>
+            <View testID="reader-immersive-ayah" style={{flex:1}}><ReaderChip large label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')}/></View>
+            <View testID="reader-immersive-actions" style={{flex:1}}><Row style={{flexWrap:'nowrap',gap:4,justifyContent:'space-between'}}>
+              <View testID="reader-immersive-play"><IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/></View>
+              <ReaderChip compact icon="book-open" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
+            </Row></View>
           </Row>
         </View>
       </View>:<ReaderDeck player={<>

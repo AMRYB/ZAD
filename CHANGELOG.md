@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1 — draggable reader sheets
+
+- Split the immersive card into equal sections: ayah selection on the Arabic right, playback and tafsir on the left; removed the page chip and page arrows from this card.
+- Added a directly draggable sheet handle for all reader pickers, free intermediate heights, downward dismissal, list-scroll arbitration and viewport bounds. Close/backdrop controls remain available.
+- Added accessible height actions, web keyboard resize/close support, and regression coverage for drag, cancellation, dismissal and scroll ownership.
+
 ## 0.4.0 — reader controls and icon polish
 
 - Unified UI icons through Font Awesome 7.3.1; the private build uses locally supplied Pro Classic Light 300. Public source includes Free fallback fonts and a local installer for licensed assets.

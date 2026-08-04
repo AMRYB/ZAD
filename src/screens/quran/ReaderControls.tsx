@@ -1,9 +1,8 @@
 import React from 'react';
-import {Modal,Pressable,ScrollView,View} from 'react-native';
+import {Pressable,View} from 'react-native';
 import {AppIcon,type AppIconName} from '../../ui/AppIcon';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useApp} from '../../state/AppContext';
-import {Row,Txt} from '../../ui/components';
+import {Txt} from '../../ui/components';
 
 export type ReaderIcon=AppIconName;
 export function IconButton({icon,label,onPress,active,disabled=false,prominent=false}:{icon:ReaderIcon;label:string;onPress:()=>void;active?:boolean;disabled?:boolean;prominent?:boolean}){
@@ -26,17 +25,4 @@ export function OptionRow({title,detail,selected,onPress,icon='music'}:{title:st
     <View style={{flex:1,gap:1}}><Txt bold size={15}>{title}</Txt>{detail?<Txt muted size={12}>{detail}</Txt>:null}</View>
     <AppIcon regular={selected===false} name={selected?'circle-check':selected===undefined?(rtl?'chevron-left':'chevron-right'):'circle'} size={21} color={selected?colors.primary:colors.muted}/>
   </Pressable>;
-}
-export function ReaderSheet({visible,title,subtitle,onClose,children}:{visible:boolean;title:string;subtitle?:string;onClose:()=>void;children:React.ReactNode}){
-  const {colors,t}=useApp();const insets=useSafeAreaInsets();
-  return <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
-    <View style={{flex:1,justifyContent:'flex-end',alignItems:'center',backgroundColor:'rgba(4,13,12,0.48)',direction:'ltr'}}>
-      <Pressable accessibilityRole="button" accessibilityLabel={t('إغلاق اللوحة','Close panel')} onPress={onClose} style={{position:'absolute',top:0,bottom:0,left:0,right:0}}/>
-      <View accessibilityViewIsModal role="dialog" aria-modal style={{width:'100%',maxWidth:680,maxHeight:'88%',backgroundColor:colors.surface,borderTopLeftRadius:30,borderTopRightRadius:30,paddingBottom:Math.max(insets.bottom,16),paddingTop:10}}>
-        <View style={{alignSelf:'center',width:36,height:4,borderRadius:4,backgroundColor:colors.border,marginBottom:5}}/>
-        <Row style={{paddingHorizontal:20,justifyContent:'space-between',flexWrap:'nowrap'}}><View style={{flex:1}}><Txt bold size={23} accessibilityRole="header">{title}</Txt>{subtitle?<Txt muted size={12}>{subtitle}</Txt>:null}</View><IconButton icon="xmark" label={t('إغلاق','Close')} onPress={onClose}/></Row>
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{padding:20,gap:12}} style={{flexShrink:1}}>{children}</ScrollView>
-      </View>
-    </View>
-  </Modal>;
 }
