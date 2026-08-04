@@ -1,0 +1,479 @@
+[
+  {
+    "page": 2,
+    "coordinates": {
+      "2_1": [
+        283,
+        324
+      ],
+      "2_2": [
+        284,
+        352
+      ],
+      "2_3": [
+        231,
+        380
+      ],
+      "2_4": [
+        138,
+        405
+      ],
+      "2_5": [
+        191,
+        457
+      ]
+    },
+    "dom": [
+      {
+        "id": "2_1__hilite_1",
+        "top": 270,
+        "left": 80,
+        "width": 296,
+        "height": 20
+      },
+      {
+        "id": "2_1__hilite_2",
+        "top": 314,
+        "left": 278,
+        "width": 98,
+        "height": 20
+      },
+      {
+        "id": "2_1__hilite_3",
+        "top": 290,
+        "left": 80,
+        "width": 296,
+        "height": 24
+      },
+      {
+        "id": "2_2__hilite_1",
+        "top": 314,
+        "left": 80,
+        "width": 198,
+        "height": 20
+      },
+      {
+        "id": "2_2__hilite_2",
+        "top": 342,
+        "left": 279,
+        "width": 97,
+        "height": 20
+      },
+      {
+        "id": "2_3__hilite_1",
+        "top": 342,
+        "left": 80,
+        "width": 199,
+        "height": 20
+      },
+      {
+        "id": "2_3__hilite_2",
+        "top": 370,
+        "left": 226,
+        "width": 150,
+        "height": 20
+      },
+      {
+        "id": "2_4__hilite_1",
+        "top": 370,
+        "left": 80,
+        "width": 146,
+        "height": 20
+      },
+      {
+        "id": "2_4__hilite_2",
+        "top": 395,
+        "left": 133,
+        "width": 243,
+        "height": 20
+      },
+      {
+        "id": "2_5__hilite_1",
+        "top": 395,
+        "left": 80,
+        "width": 53,
+        "height": 20
+      },
+      {
+        "id": "2_5__hilite_2",
+        "top": 447,
+        "left": 186,
+        "width": 190,
+        "height": 20
+      },
+      {
+        "id": "2_5__hilite_3",
+        "top": 415,
+        "left": 80,
+        "width": 296,
+        "height": 32
+      }
+    ]
+  },
+  {
+    "page": 1,
+    "coordinates": {
+      "1_1": [
+        181,
+        301
+      ],
+      "1_2": [
+        159,
+        325
+      ],
+      "1_3": [
+        243,
+        353
+      ],
+      "1_4": [
+        138,
+        352
+      ],
+      "1_5": [
+        173,
+        378
+      ],
+      "1_6": [
+        227,
+        406
+      ],
+      "1_7": [
+        191,
+        459
+      ]
+    },
+    "dom": [
+      {
+        "id": "1_1__hilite_1",
+        "top": 270,
+        "left": 80,
+        "width": 296,
+        "height": 20
+      },
+      {
+        "id": "1_1__hilite_2",
+        "top": 291,
+        "left": 176,
+        "width": 200,
+        "height": 20
+      },
+      {
+        "id": "1_2__hilite_1",
+        "top": 291,
+        "left": 80,
+        "width": 96,
+        "height": 20
+      },
+      {
+        "id": "1_2__hilite_2",
+        "top": 315,
+        "left": 154,
+        "width": 222,
+        "height": 20
+      },
+      {
+        "id": "1_3__hilite_1",
+        "top": 315,
+        "left": 80,
+        "width": 74,
+        "height": 20
+      },
+      {
+        "id": "1_3__hilite_2",
+        "top": 343,
+        "left": 238,
+        "width": 138,
+        "height": 20
+      },
+      {
+        "id": "1_4__hilite_1",
+        "top": 342,
+        "left": 133,
+        "width": 105,
+        "height": 20
+      },
+      {
+        "id": "1_5__hilite_1",
+        "top": 342,
+        "left": 80,
+        "width": 53,
+        "height": 20
+      },
+      {
+        "id": "1_5__hilite_2",
+        "top": 368,
+        "left": 168,
+        "width": 208,
+        "height": 20
+      },
+      {
+        "id": "1_6__hilite_1",
+        "top": 368,
+        "left": 80,
+        "width": 88,
+        "height": 20
+      },
+      {
+        "id": "1_6__hilite_2",
+        "top": 396,
+        "left": 222,
+        "width": 154,
+        "height": 20
+      },
+      {
+        "id": "1_7__hilite_1",
+        "top": 396,
+        "left": 80,
+        "width": 142,
+        "height": 20
+      },
+      {
+        "id": "1_7__hilite_2",
+        "top": 449,
+        "left": 186,
+        "width": 190,
+        "height": 20
+      },
+      {
+        "id": "1_7__hilite_3",
+        "top": 416,
+        "left": 80,
+        "width": 296,
+        "height": 33
+      }
+    ]
+  },
+  {
+    "page": 3,
+    "coordinates": {
+      "2_6": [
+        335,
+        106
+      ],
+      "2_7": [
+        148,
+        146
+      ],
+      "2_8": [
+        59,
+        185
+      ],
+      "2_9": [
+        314,
+        263
+      ],
+      "2_10": [
+        136,
+        302
+      ],
+      "2_11": [
+        117,
+        340
+      ],
+      "2_12": [
+        149,
+        380
+      ],
+      "2_13": [
+        112,
+        460
+      ],
+      "2_14": [
+        223,
+        537
+      ],
+      "2_15": [
+        260,
+        579
+      ],
+      "2_16": [
+        60,
+        616
+      ]
+    },
+    "dom": [
+      {
+        "id": "2_6__hilite_1",
+        "top": 37,
+        "left": 40,
+        "width": 376,
+        "height": 30
+      },
+      {
+        "id": "2_6__hilite_2",
+        "top": 91,
+        "left": 325,
+        "width": 91,
+        "height": 30
+      },
+      {
+        "id": "2_6__hilite_3",
+        "top": 67,
+        "left": 40,
+        "width": 376,
+        "height": 24
+      },
+      {
+        "id": "2_7__hilite_1",
+        "top": 91,
+        "left": 40,
+        "width": 285,
+        "height": 30
+      },
+      {
+        "id": "2_7__hilite_2",
+        "top": 131,
+        "left": 138,
+        "width": 278,
+        "height": 30
+      },
+      {
+        "id": "2_8__hilite_1",
+        "top": 131,
+        "left": 40,
+        "width": 98,
+        "height": 30
+      },
+      {
+        "id": "2_8__hilite_2",
+        "top": 170,
+        "left": 49,
+        "width": 367,
+        "height": 30
+      },
+      {
+        "id": "2_9__hilite_1",
+        "top": 170,
+        "left": 40,
+        "width": 9,
+        "height": 30
+      },
+      {
+        "id": "2_9__hilite_2",
+        "top": 248,
+        "left": 304,
+        "width": 112,
+        "height": 30
+      },
+      {
+        "id": "2_9__hilite_3",
+        "top": 200,
+        "left": 40,
+        "width": 376,
+        "height": 48
+      },
+      {
+        "id": "2_10__hilite_1",
+        "top": 248,
+        "left": 40,
+        "width": 264,
+        "height": 30
+      },
+      {
+        "id": "2_10__hilite_2",
+        "top": 287,
+        "left": 126,
+        "width": 290,
+        "height": 30
+      },
+      {
+        "id": "2_11__hilite_1",
+        "top": 287,
+        "left": 40,
+        "width": 86,
+        "height": 30
+      },
+      {
+        "id": "2_11__hilite_2",
+        "top": 325,
+        "left": 107,
+        "width": 309,
+        "height": 30
+      },
+      {
+        "id": "2_12__hilite_1",
+        "top": 325,
+        "left": 40,
+        "width": 67,
+        "height": 30
+      },
+      {
+        "id": "2_12__hilite_2",
+        "top": 365,
+        "left": 139,
+        "width": 277,
+        "height": 30
+      },
+      {
+        "id": "2_13__hilite_1",
+        "top": 365,
+        "left": 40,
+        "width": 99,
+        "height": 30
+      },
+      {
+        "id": "2_13__hilite_2",
+        "top": 445,
+        "left": 102,
+        "width": 314,
+        "height": 30
+      },
+      {
+        "id": "2_13__hilite_3",
+        "top": 395,
+        "left": 40,
+        "width": 376,
+        "height": 50
+      },
+      {
+        "id": "2_14__hilite_1",
+        "top": 445,
+        "left": 40,
+        "width": 62,
+        "height": 30
+      },
+      {
+        "id": "2_14__hilite_2",
+        "top": 522,
+        "left": 213,
+        "width": 203,
+        "height": 30
+      },
+      {
+        "id": "2_14__hilite_3",
+        "top": 475,
+        "left": 40,
+        "width": 376,
+        "height": 47
+      },
+      {
+        "id": "2_15__hilite_1",
+        "top": 522,
+        "left": 40,
+        "width": 173,
+        "height": 30
+      },
+      {
+        "id": "2_15__hilite_2",
+        "top": 564,
+        "left": 250,
+        "width": 166,
+        "height": 30
+      },
+      {
+        "id": "2_16__hilite_1",
+        "top": 564,
+        "left": 40,
+        "width": 210,
+        "height": 30
+      },
+      {
+        "id": "2_16__hilite_2",
+        "top": 601,
+        "left": 50,
+        "width": 366,
+        "height": 30
+      }
+    ]
+  }
+]
