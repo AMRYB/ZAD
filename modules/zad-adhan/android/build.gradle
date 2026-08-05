@@ -1,0 +1,16 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+group = 'expo.modules.zadadhan'
+version = '0.1.0'
+android {
+  namespace 'expo.modules.zadadhan'
+  testBuildType 'release'
+  defaultConfig { versionCode 1; versionName '0.1.0' }
+  sourceSets.test.resources.srcDir('../../../tests/fixtures/esa')
+}
+dependencies {
+  implementation 'androidx.core:core-ktx:1.15.0'
+  testImplementation 'junit:junit:4.13.2'
+}

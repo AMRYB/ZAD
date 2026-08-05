@@ -68,3 +68,11 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 
 ## Sample progress report in Arabic (the agent must follow)
 "النهارده خلصت RJ-014: أضفت تغيير اللغة من الإعدادات، وضبطت اتجاه الواجهة. الملفات: ... . الاختبارات: ... نجحت و... لم أختبره بعد. الـ Commit: abc1234. الخطوة التالية: ... ."
+# User-requested extension — official Egyptian Adhan
+
+- RJ-030: Reader card balance and arrow removal — implemented; browser evidence in `docs/ADHAN_VERIFICATION.md`.
+- RJ-031: ESA-only prayer timetable contract and validation — implemented with captured public fixtures and strict city/date checks.
+- RJ-032: Native Android prayer reminders and Egyptian Adhan audio — implemented; isolated real-device background and cold-start checks executed.
+- RJ-033: More → Adhan, saved city and dated timetable, setup/status UI — implemented; bilingual browser flow checked.
+- Product APK build/installation evidence is maintained in `docs/ANDROID_APK_RELEASE.md`; a module test is not equivalent to a full product install.
+

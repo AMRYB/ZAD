@@ -1,0 +1,14 @@
+plugins { id 'com.android.application' version '9.2.1' }
+android {
+  namespace 'expo.modules.zadadhan'
+  compileSdk 37
+  defaultConfig { applicationId 'com.zad.adhanharness'; minSdk 24; targetSdk 36; versionCode 1; versionName '1.0' }
+  sourceSets.main.kotlin.directories.add('build/generated/zad-adhan')
+  compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+dependencies { implementation 'androidx.core:core-ktx:1.15.0' }
+def productionSources = tasks.register('syncAdhanProduction', Sync) {
+  from('../../modules/zad-adhan/android/src/main/java') { exclude '**/ZadAdhanModule.kt' }
+  into(layout.buildDirectory.dir('generated/zad-adhan'))
+}
+tasks.matching { it.name.startsWith('compile') && it.name.endsWith('Kotlin') }.configureEach { dependsOn(productionSources) }

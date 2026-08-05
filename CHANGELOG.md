@@ -5,6 +5,9 @@
 - Centered immersive playback exactly between equal-width ayah and text-only tafsir controls; removed the tafsir icon from this card.
 - Removed navigation-card page arrows and aligned surah, ayah and page chips at a shared height. Existing page swipes and the upper surah dropdown remain available.
 - Added an ESA-only monthly timetable parser and bounded web relay, 82 authoritative city options with bilingual display names, Cairo timezone/DST conversion, strict response validation and migration-safe Adhan settings.
+- Added More → Adhan with saved city selection, today/tomorrow/week and custom-date views, next-prayer emphasis, optional reminders and Egyptian Adhan preview.
+- Added a local Android module for exact prayer alarms, ten-minute reminders, offline verified Mohamed Rifaat audio, foreground playback with notification stop, daily source refresh and boot/time-change restoration.
+- Added explicit notification/exact-alarm setup, a muted-alarm-volume warning, safe cancellation on settings changes and a separate reproducible hardware-test APK. Real-phone background/stop/cancellation and cold-process playback were tested; the user confirmed audible playback after raising the phone's alarm volume.
 
 ## 0.4.1 — draggable reader sheets
 

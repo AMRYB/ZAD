@@ -49,3 +49,10 @@ artifacts/
 /src/ui/icon-fonts.web.ts
 
 .font-env/
+
+# Reproducible Android hardware harness outputs (sources remain tracked).
+/tests/android-harness/.gradle/
+/tests/android-harness/.kotlin/
+/tests/android-harness/build/
+/tests/android-harness/local.properties
+/modules/*/android/build/
