@@ -1,6 +1,7 @@
 import { addDays, dateInZone, parseDate } from './calendar.ts';
 import { quran } from '../data/quran.ts';
 import {reciterById,tafsirById,type ReciterId,type TafsirId} from '../data/ksu-readers.ts';
+import {defaultAdhan,validAdhan,type AdhanPreferences} from './adhan.ts';
 export type Locale = 'ar' | 'en';
 export type ThemeMode = 'system' | 'light' | 'dark';
 export const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
@@ -19,15 +20,17 @@ export interface State {
   days: Record<string, DayRecord>; goals: Goal[]; plans: ReadingPlan[]; habits: Habit[];
   bookmarks: Bookmark[]; lastRead: Bookmark;
   reader: ReaderPreferences;
+  adhan:AdhanPreferences;
 }
 export function initialState(): State {
   return { version: 1, onboarded: false, locale: 'ar', theme: 'system',
-    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'} };
+    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan} };
 }
 export function emptyDay(): DayRecord { return { prayers: {}, fast: 'unlogged', note: '' }; }
 export type Action =
   | { type: 'settings'; locale?: Locale; theme?: ThemeMode }
   | { type: 'onboard' }
+  | {type:'adhanSettings';value:AdhanPreferences}
   | {type:'readerSettings';reciter?:ReciterId;tafsir?:TafsirId;fit?:'page'|'width'}
   | { type: 'season'; start: string | null; length: 29 | 30; adjustment: number }
   | { type: 'prayer'; date: string; prayer: Prayer; status: PrayerStatus }
@@ -48,6 +51,7 @@ function positive(value: number, max: number): boolean { return Number.isInteger
 function validVerse(sura:number,aya:number):boolean { return positive(sura,114)&&positive(aya,quran.Sura[sura]?.ayas??0); }
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case 'adhanSettings':return validAdhan(action.value)?{...state,adhan:action.value}:state;
     case 'settings': return { ...state, locale: action.locale ?? state.locale, theme: action.theme ?? state.theme };
     case 'readerSettings': {
       const reader={reciter:action.reciter??state.reader.reciter,tafsir:action.tafsir??state.reader.tafsir,fit:action.fit??state.reader.fit};
@@ -94,6 +98,8 @@ export function restoreState(text: string): State {
   const value = JSON.parse(text);
   if(value&&value.version===1&&value.habits===undefined)value.habits=[];
   if(value&&value.version===1&&value.reader===undefined)value.reader=initialState().reader;
+  if(value&&value.version===1&&value.adhan===undefined)value.adhan={...defaultAdhan};
+  if(value&&!validAdhan(value.adhan))throw new Error('INVALID_STORAGE');
   if (!value || value.version !== 1 || !['ar','en'].includes(value.locale) || !['system','light','dark'].includes(value.theme)
     || typeof value.onboarded !== 'boolean' || !value.season || ![29,30].includes(value.season.length)
     || !Number.isInteger(value.season.adjustment) || Math.abs(value.season.adjustment) > 2

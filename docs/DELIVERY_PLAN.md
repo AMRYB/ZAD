@@ -83,3 +83,4 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-030 | Equal-sided immersive controls and arrow-free navigation card | Browser 390px geometry PASS: card and play centers both 195.2px; ayah on physical right, text-only tafsir on left; navigation chips have no page arrows. Typecheck/lint PASS; 39 existing/new TS tests PASS |
+| RJ-031 | Official ESA request contract, monthly parser and city catalogue | Live GET/POST and web relay PASS; 82 captured options and complete October table fixtures; 40 TS tests PASS including wrong city/year, DST, deduplication and backup migration |
