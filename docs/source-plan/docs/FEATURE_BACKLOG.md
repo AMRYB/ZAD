@@ -74,5 +74,6 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 - RJ-031: ESA-only prayer timetable contract and validation — implemented with captured public fixtures and strict city/date checks.
 - RJ-032: Native Android prayer reminders and Egyptian Adhan audio — implemented; isolated real-device background and cold-start checks executed.
 - RJ-033: More → Adhan, saved city and dated timetable, setup/status UI — implemented; bilingual browser flow checked.
-- Product APK build/installation evidence is maintained in `docs/ANDROID_APK_RELEASE.md`; a module test is not equivalent to a full product install.
+- RJ-034: ZAD 0.5.0 private APK and final device acceptance — built, signed and installed over 0.4.1; user completed city/permission setup and confirmed test notification plus audible Adhan with screen locked. 40 TypeScript and six native parser tests passed; Expo Doctor 19/20 patch advisory remains.
+- Product APK build/installation evidence is maintained in `docs/ANDROID_APK_RELEASE.md`; isolated module tests and final product tests are documented separately.
 

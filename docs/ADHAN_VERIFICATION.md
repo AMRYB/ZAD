@@ -6,6 +6,8 @@
 - `npm run typecheck` and `npm run lint`: PASS.
 - Native release-variant JUnit: 6 PASS, covering actual source rows, full-month/date/city validation, Arabic AM/PM parsing and Cairo DST conversion.
 - Expo autolinking: `expo.modules.zadadhan.ZadAdhanModule` discovered as the local `zad-adhan` Android module.
+- Expo Doctor: **19/20**. The remaining check recommends newly available patch versions (`expo` 58.0.19, `expo-file-system` 58.0.11, `expo-font` 58.0.10, `expo-router` 58.0.26, `expo-sqlite` 58.0.14). This preview retains its existing locked SDK 58 patch versions; this advisory is not counted as a pass.
+- Production web export: PASS, including all three API routes.
 - Browser at 390×844: More → Adhan, initial city sheet, city search, Cairo, Alexandria, today/tomorrow, 2026-10-30 clock-change times, English/LTR and dark theme checked. Source errors remain explicit. Fullscreen play center equals card center (195.2px); ayah is physically right and text-only tafsir left. Reader page arrows are absent from the navigation card.
 - App audio relay: HTTP 200, `audio/mpeg`, 407,680 bytes and expected SHA-256 verified.
 
@@ -61,4 +63,8 @@ Only inspect this test package. Do not dump unrelated notifications, accounts, d
 
 ## Product APK
 
-Final APK build, signature/manifest/source checks and installation results are recorded in `ANDROID_APK_RELEASE.md` and `BUILD_METADATA.json`. Hardware module verification alone is not a claim that the final ZAD APK was already installed.
+The final **ZAD 0.5.0 / code 7** arm64 APK was installed successfully over 0.4.1 on the same Android 16 phone and cold-launched into Adhan. The user confirmed the timetable appeared, selected a city and enabled Adhan. Notification permission was granted. After opening the app's Alarms & reminders setup, granting access and returning, the user confirmed the scheduled-alert message. Read-only package checks independently confirmed exact-alarm access and registered alarms/refresh work.
+
+The user then pressed the final product APK's test button and locked the screen for a minute. The user explicitly confirmed **both the notification and audible Adhan worked from ZAD**. This is final-product end-to-end evidence, separate from the isolated harness checks above. The test uses +30s/+60s; the real ten-minute prayer reminder lead is independently covered by timestamp checks. USB was connected, so this does not establish deep-Doze or long-term battery behavior.
+
+Signature/manifest checks, all 91 runtime source/config/asset comparisons, six compiled JavaScript source comparisons, exact packaged-font verification and artifact hash/size are recorded in `ANDROID_APK_RELEASE.md` and `BUILD_METADATA.json`. The test harness was excluded from the product and uninstalled. The user's actual Adhan settings and scheduled prayers were retained.

@@ -8,6 +8,7 @@
 - Added More → Adhan with saved city selection, today/tomorrow/week and custom-date views, next-prayer emphasis, optional reminders and Egyptian Adhan preview.
 - Added a local Android module for exact prayer alarms, ten-minute reminders, offline verified Mohamed Rifaat audio, foreground playback with notification stop, daily source refresh and boot/time-change restoration.
 - Added explicit notification/exact-alarm setup, a muted-alarm-volume warning, safe cancellation on settings changes and a separate reproducible hardware-test APK. Real-phone background/stop/cancellation and cold-process playback were tested; the user confirmed audible playback after raising the phone's alarm volume.
+- Built and verified the private arm64 APK, installed it over 0.4.1 and completed the final product's city/permission/scheduling flow. The user confirmed the test notification and audible Adhan with the screen locked. Release metadata distinguishes this from remaining deep-Doze/reboot and reader-device gates.
 
 ## 0.4.1 — draggable reader sheets
 

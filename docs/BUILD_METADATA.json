@@ -1,22 +1,44 @@
 {
-  "version": "0.4.1",
-  "versionCode": 6,
+  "version": "0.5.0",
+  "versionCode": 7,
   "package": "com.ramadanjourney.preview",
   "displayName": "ZAD",
   "architecture": "arm64-v8a",
   "minSdk": 24,
   "targetSdk": 36,
   "compileSdk": 37,
-  "codeRevision": "d7479030d364f0e3f06e38ee3bfc1407ac382f1a",
-  "artifact": "../ZAD_v0.4.1_arm64.apk",
-  "bytes": 32888010,
-  "sha256": "80858c992f689b770bf5120b543afe5b163c26ab5578f7b8c506eb760eb892b6",
+  "codeRevision": "ec4118b29dde146561ea1b897a4326e637054a21",
+  "artifact": "../ZAD_v0.5.0_arm64.apk",
+  "bytes": 32939242,
+  "sha256": "e28ed63eb6dc82f891acb3d95eccee2dd8a0c626575bc454cd717ebf3576b893",
   "signatureVerified": true,
+  "signatureScheme": "v2",
   "signing": "Android debug certificate; private preview",
   "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
-  "runtimeSourceAndAssetFilesCompared": 66,
+  "sameSignerAsVersion041": true,
+  "runtimeSourceAndAssetFilesCompared": 91,
   "sourceMatchesBuild": true,
+  "compiledSourcesMatched": [
+    "src/screens/Quran.tsx",
+    "src/screens/Adhan.tsx",
+    "src/screens/Settings.tsx",
+    "src/state/AdhanCoordinator.tsx",
+    "src/core/adhan.ts",
+    "src/services/adhan-native.ts"
+  ],
   "automaticAndroidBackup": false,
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.MODIFY_AUDIO_SETTINGS",
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.WAKE_LOCK",
+    "android.permission.SCHEDULE_EXACT_ALARM",
+    "android.permission.POST_NOTIFICATIONS",
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+    "android.permission.RECEIVE_BOOT_COMPLETED",
+    "com.ramadanjourney.preview.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
   "iconConfiguration": {
     "version": "7.3.1",
     "style": "Pro Classic Light",
@@ -30,13 +52,58 @@
   "verification": {
     "typecheck": true,
     "lint": true,
-    "testsPassed": 33,
-    "expoDoctor": "20/20",
+    "testsPassed": 40,
+    "nativeParserTestsPassed": 6,
+    "expoDoctor": "19/20",
+    "expoDoctorAdvisory": "Newer SDK 58 patch versions recommended; current tested lockfile retained",
+    "recommendedPatches": {
+      "expo": "58.0.19",
+      "expo-file-system": "58.0.11",
+      "expo-font": "58.0.10",
+      "expo-router": "58.0.26",
+      "expo-sqlite": "58.0.14"
+    },
     "webExport": true,
-    "androidBuild": "PASS; final incremental build 30s"
+    "exportedApiRoutes": [
+      "/api/ksu",
+      "/api/esa",
+      "/api/adhan-audio"
+    ],
+    "androidBuild": "PASS; 7m 22s",
+    "nativeAdhanPresent": true,
+    "testHarnessExcluded": true
   },
-  "deviceInstallationTest": "Not performed. Physical Android sheet drags, native list/keyboard coordination, hardware back, system navigation, TalkBack and reduced-motion settings require device smoke testing.",
-  "recordedAt": "2026-10-23T19:07:07.059Z",
-  "sameSignerAsVersion04": true,
-  "compiledSourceMapMatchesFinalReaderFiles": true
+  "deviceInstallationTest": {
+    "status": "PASS",
+    "androidVersion": "16",
+    "deviceModel": "23117RA68G",
+    "updatedFrom": "0.4.1",
+    "coldLaunch": true,
+    "cityAndTimetableConfirmedByUser": true,
+    "notificationPermissionGrantedByUser": true,
+    "exactAlarmAccessGrantedByUser": true,
+    "scheduleConfirmedByUser": true,
+    "finalProductLockedScreenTest": {
+      "reminderAfterSeconds": 30,
+      "adhanAfterSeconds": 60,
+      "notificationAndAudibleAdhanConfirmedByUser": true
+    },
+    "isolatedProductionKotlinChecks": [
+      "ESA HTTPS requests and private cache",
+      "Audio SHA-256 verification",
+      "Exact alarms and ten-minute timestamp lead",
+      "Screen-off foreground playback",
+      "Notification stop and settings cancellation",
+      "Cold-process restart with user-confirmed audible playback"
+    ],
+    "testHarnessRemoved": true,
+    "usbConnected": true,
+    "remainingDeviceGates": [
+      "Physical reader multitouch and TalkBack",
+      "Deep Doze and OEM long-term battery restrictions",
+      "Reboot restoration and long-term timetable refresh",
+      "DND and audio interruption behavior"
+    ]
+  },
+  "recordedAt": "2026-10-24T03:12:52Z"
 }

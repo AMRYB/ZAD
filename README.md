@@ -4,7 +4,7 @@ ZAD is an Arabic-first Expo / React Native application for private daily trackin
 
 ## Current source and release status
 
-Current source and inspected private Android preview: **0.4.1**, branded ZAD / زاد. The arm64 APK build, v2 signature, manifest, packaged Pro Light font and 66 runtime source/asset files were verified. Actual Android installation and physical gesture/navigation testing remain pending. See `docs/ANDROID_APK_RELEASE.md` and `docs/BUILD_METADATA.json`.
+Current source and inspected private Android preview: **0.5.0**, branded ZAD / زاد. The arm64 APK build, v2 signature, manifest, packaged Pro Light font and 91 source/config/asset files were verified. The APK was installed over 0.4.1 and cold-launched on an Android 16 phone. The user completed city/permission setup and confirmed the final product's test notification and audible Adhan with the screen locked. Separate native checks covered source requests, stop/cancellation and cold-process playback. See `docs/ANDROID_APK_RELEASE.md`, `docs/BUILD_METADATA.json` and `docs/ADHAN_VERIFICATION.md` for exact limits, including the Expo Doctor 19/20 patch-version advisory.
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. Product requirements are available in `docs/source-plan/`.
 
@@ -23,6 +23,7 @@ The private preview uses locally supplied Font Awesome Pro 7.3.1 Light icons. Li
 - Configurable 29/30-day season and calendar; no invented Ramadan date; date/timezone and Arabic-number input handling.
 - KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, direct pinch zoom/pan, deliberate page swipes, sideways cycling control cards, freely resizable/dismissible reader sheets and split immersive controls.
 - Native SQLite persistence. Browser preview uses localStorage as a separate adapter.
+- More → Adhan: 82 saved city choices from the Egyptian Survey Authority, today/tomorrow/week and custom-date timetables, native exact prayer alarms, ten-minute reminders, offline Mohamed Rifaat Adhan and notification stop. The screen exposes permission, volume and schedule-coverage status.
 - JSON backup export and validated import, with confirmation before replacing device records.
 
 ## Run
@@ -41,6 +42,8 @@ npm run web
 On this Windows host, a loopback-only web preview was started with `$env:NODE_OPTIONS="--dns-result-order=ipv4first"; npx.cmd expo start --web --localhost --port 8082`. This is a process-local IPv4 binding fix, not a public network exposure.
 
 Open the URL printed by Expo. The development web preview includes a strictly allowlisted KSU relay because KSU `interface.php` does not send CORS headers. Native Android calls the original KSU endpoints directly. See [API_CONTRACT.md](docs/API_CONTRACT.md).
+
+Prayer times come exclusively from ESA's [official page](https://www.esa.gov.eg/praytimes.aspx), using its linked monthly form; there is no local astronomical or alternate-provider fallback. Android calls ESA directly and refreshes cached months through its local module. Web uses a fixed-source relay. Read [ESA_API_DOCUMENTATION.md](docs/ESA_API_DOCUMENTATION.md). Background Adhan requires the Android build, notification permission and Alarms & reminders access; it does not run from browser timers.
 
 ```bash
 # Native debug build, when an Android device/emulator is available:
@@ -70,4 +73,4 @@ The running app stores private data locally without an account. `supabase/migrat
 - [Source attribution and API provenance](docs/SOURCE_ATTRIBUTION.md): maintained for GitHub/project documentation.
 - [Third-party notices](THIRD_PARTY_NOTICES.md).
 
-This is a private development preview, not a declaration that every future feature in the master plan has shipped. Reviewed adhkar/lesson content, prayer-time authority integration, notifications, social challenges, Family and optional AI are not bundled as fake completed features. Public distribution also requires the KSU usage review specified in the supplied plan.
+This is a private development preview, not a declaration that every future feature in the master plan has shipped. Reviewed adhkar/lesson content, social challenges, Family and optional AI remain later work. Adhan-specific notifications are implemented; general habit/reminder campaigns remain separate. Public distribution also requires the KSU usage review specified in the supplied plan.

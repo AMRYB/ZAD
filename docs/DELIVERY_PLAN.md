@@ -41,7 +41,7 @@ Database core migration and PostgreSQL security tests are implemented. Live Auth
 
 ## Later content and optional features
 
-Reviewed adhkar/dua and lessons require source/editorial decisions. Prayer times require a chosen calculation authority and comparison fixtures. Notifications require device timing tests. Charity, Family and optional AI remain separate later-phase work. They are not beta promises.
+Reviewed adhkar/dua and lessons require source/editorial decisions. Prayer times and Adhan-specific notifications were added in 0.5 using the user-selected ESA authority, captured fixtures and real-device timing checks below. General reminder campaigns, Charity, Family and optional AI remain separate later-phase work. They are not beta promises.
 
 ## Release rule
 
@@ -86,3 +86,4 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-031 | Official ESA request contract, monthly parser and city catalogue | Live GET/POST and web relay PASS; 82 captured options and complete October table fixtures; 40 TS tests PASS including wrong city/year, DST, deduplication and backup migration |
 | RJ-032 | Native exact prayer alarms, private offline audio and stoppable foreground playback | Six native parser tests PASS; isolated real Android 16 tests PASS for source requests, reminders, screen-off playback service, notification stop and cancellation; cold-process restart and audibility confirmed separately |
 | RJ-033 | More → Adhan city/day/settings UI and sound-volume warning | Browser Arabic/English, light/dark, today/tomorrow/date and city changes PASS; typecheck/lint PASS; final product APK installation recorded separately |
+| RJ-034 | ZAD 0.5.0 APK, actual installation and final product alarm test | Build/signature/91 source files/six compiled sources/font PASS; update over 0.4.1 and cold launch PASS; user completed permissions/scheduling and confirmed notification plus audible Adhan with screen locked. 40 TS + 6 native tests PASS; Expo Doctor 19/20 patch advisory retained |

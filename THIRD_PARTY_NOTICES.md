@@ -6,6 +6,8 @@
 - Quran navigation metadata and transliterated names were captured from KSU's `js/quran-data.js`. That source includes the notice `Copyright (C) 2008 tanzil.info, Licenced Under GPL`. The metadata's upstream source attribution is preserved; no alternate Quran service was queried. Public distribution/license compatibility requires review rather than assuming that the app's template license covers this dataset.
 - KSU report/source hashes and original HTTP samples: `docs/KSU_API_DOCUMENTATION.md` and `docs/ksu-network-evidence.json`.
 - The crescent/book brand mark is code-native SVG created in this repository, distinct from Quran artwork. Generated PNGs have the SVG as their editable source.
+- Prayer timetables: fetched exclusively from the Egyptian Survey Authority's official `praytimes.aspx` page and linked `monthlymwaket.aspx` form. Public city/table fixtures are preserved for parser tests. No claim is made that these website form endpoints are a supported public API. See `docs/ESA_API_DOCUMENTATION.md`.
+- Adhan only: Cairo Adhan by Mohamed Rifaat, as identified on Islamweb's publisher page (audio ID 122665). The app downloads a hash-verified recording to private device files; the recording is not included in Git or the APK. Source availability does not establish redistribution licensing. Quran audio still comes exclusively from KSU.
 
 ## Dependency advisory review
 

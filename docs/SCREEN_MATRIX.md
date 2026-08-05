@@ -15,11 +15,13 @@
 | `/day` and `?date=` | Prayer/fasting, daily habits, private note | SQLite / browser adapter |
 | `/progress` | Actual aggregates, personal goal counters | Local records |
 | `/plans` | Independent page plans, explicit completion/undo | Local records |
-| `/more` | Locale/theme, season setup, JSON export/import confirmation, source credits | Local preferences / native file/share adapter or browser file adapter |
+| `/more` | Adhan entry, locale/theme, season setup, JSON export/import confirmation, privacy/about | Local preferences / native file/share adapter or browser file adapter |
+| `/adhan` | Saved city, today/tomorrow/week/date timetables, next prayer, permissions and audio controls | ESA monthly source, private cache and native Android exact alarms |
+| Adhan city sheet | Search 82 authoritative city options; freely resize/dismiss sheet | Captured ESA selectors and local preferences |
 | `/calendar` | Configured 29/30-day grid and day links | Local season + date-keyed records |
 
 The original master plan's approximately 70 destinations refer to the full future product. They are not presented as 70 implemented screens. No sign-in, leaderboard, challenges, Family or AI placeholder route is shown.
 
 ## Reader 0.3 interaction changes
 
-The normal reader uses two upward-cycling control cards; the navigation face contains the text-only surah, ayah and enlarged page pickers. Original page overlays live on a pinch/pan transform plane. Horizontal page swipes apply at normal size. See `READER_GESTURES_V0_3.md` for interaction rules and tested limits.
+The current reader uses two sideways-cycling control cards; its arrow-free navigation face contains aligned surah, ayah and enlarged page pickers. Immersive mode centers playback between ayah on the right and text-only tafsir on the left. Original page overlays live on a pinch/pan transform plane. Horizontal page swipes apply at normal size. See `ADHAN_VERIFICATION.md` for the current revision and earlier reader reports for gesture history and tested limits.

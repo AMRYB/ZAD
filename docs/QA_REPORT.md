@@ -6,9 +6,12 @@
 |---|---|---|
 | TypeScript `npm run typecheck` | PASS | Strict application types, API routes and tests |
 | ESLint `npm run lint` | PASS | Expo/React rules |
-| `npm test` | PASS, 28 tests | Domain behavior, captured KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization |
-| `npx expo-doctor` | PASS, 20/20 | SDK dependencies and application configuration |
-| `npm run build:web` | PASS | Production web bundles and the allowlisted API route exported |
+| `npm test` | PASS, 40 tests | Domain behavior, KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization, ESA source/date/DST and Adhan migration |
+| Native release parser tests | PASS, 6 tests | Captured ESA table, dates, wall-clock parsing and Cairo DST |
+| `npx expo-doctor` | 19/20, patch-version advisory | Five newer SDK 58 patch packages are recommended; not counted as a pass. See ADHAN_VERIFICATION.md |
+| `npm run build:web` | PASS | Production web bundles and all three fixed-source API routes exported |
+
+The current 0.5.0 Android release build, signature and 91 source/config/asset comparisons passed. The product APK was installed over 0.4.1 and cold-launched on a real Android 16 phone. The user completed city/permission setup and confirmed the final product's test notification and audible Adhan with the screen locked. Background Adhan, notification stop/cancellation and cold-process playback were also tested through a disposable harness compiling production Kotlin sources. See `ADHAN_VERIFICATION.md` and `ANDROID_APK_RELEASE.md` for exact scenario boundaries and remaining gates.
 
 The PostgreSQL test executes the migration on PGlite with a test-only Supabase Auth shim. It checks own-user RLS, forbidden direct writes, stale revision rejection, award idempotency and daily cap, consented leaderboard projection, and deletion cascade. It does not test a deployed Supabase instance.
 
@@ -48,7 +51,7 @@ Screenshots in `screenshots/` are captured running UI, not concept designs. Earl
 
 See `ANDROID_BUILD.md` for the actual build command and `ANDROID_APK_RELEASE.md` for artifact/device status. Browser success does not count as an installed Android smoke test. Device font scaling, TalkBack, rotation, native audio interruptions and force-stop/reopen persistence require Android verification.
 
-No hosted Auth, cloud sync, challenge/social UI, prayer-time authority, notifications, reviewed lesson/adhkar corpus, Family or AI flow has been declared complete. The source plan and future requirements remain preserved. Dependency advisory and KSU distribution reviews remain open in `../THIRD_PARTY_NOTICES.md`.
+Hosted Auth, cloud sync, challenge/social UI, reviewed lesson/adhkar content, Family and AI remain unimplemented. Prayer times and Adhan-specific notifications are implemented in 0.5.0 using ESA; general reminder campaigns remain separate. The source plan and future requirements remain preserved. Dependency advisory and KSU distribution reviews remain open in `../THIRD_PARTY_NOTICES.md`.
 
 ## Revision 0.2 checks
 
