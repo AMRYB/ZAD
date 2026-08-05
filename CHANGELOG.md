@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0 — reader balance and Egyptian prayer times
+
+- Centered immersive playback exactly between equal-width ayah and text-only tafsir controls; removed the tafsir icon from this card.
+- Removed navigation-card page arrows and aligned surah, ayah and page chips at a shared height. Existing page swipes and the upper surah dropdown remain available.
+
 ## 0.4.1 — draggable reader sheets
 
 - Split the immersive card into equal sections: ayah selection on the Arabic right, playback and tafsir on the left; removed the page chip and page arrows from this card.

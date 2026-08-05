@@ -77,3 +77,9 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-027 | Split immersive ayah/actions card without page arrows | Browser RTL geometry, ayah selection and 360/390 portrait plus landscape PASS |
 | RJ-028 | Finger-controlled sheet height and downward dismissal | Browser surah/reciter resizing, dismissal and list scroll PASS; three new gesture-policy tests PASS |
 | RJ-029 | Updated private APK and verification evidence | Build, signature, manifest, Light font, 66 runtime files and compiled reader sources PASS; native device testing pending |
+
+## Reader and Adhan 0.5
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-030 | Equal-sided immersive controls and arrow-free navigation card | Browser 390px geometry PASS: card and play centers both 195.2px; ayah on physical right, text-only tafsir on left; navigation chips have no page arrows. Typecheck/lint PASS; 39 existing/new TS tests PASS |

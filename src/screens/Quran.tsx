@@ -92,13 +92,11 @@ export function Quran(){
       {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="rotate-right" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
       {readerImmersive?<View testID="reader-immersive-footer" style={{paddingTop:14,paddingBottom:Math.max(insets.bottom,12)+8,paddingHorizontal:12}}>
         <View testID="reader-immersive-card" style={{paddingHorizontal:6,paddingVertical:9,borderRadius:28,borderWidth:1,borderColor:colors.border,backgroundColor:colors.surface,maxWidth:620,width:'100%',alignSelf:'center'}}>
-          <Row style={{flexWrap:'nowrap',gap:10,paddingHorizontal:8}}>
-            <View testID="reader-immersive-ayah" style={{flex:1}}><ReaderChip large label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')}/></View>
-            <View testID="reader-immersive-actions" style={{flex:1}}><Row style={{flexWrap:'nowrap',gap:4,justifyContent:'space-between'}}>
-              <View testID="reader-immersive-play"><IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/></View>
-              <ReaderChip compact icon="book-open" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
-            </Row></View>
-          </Row>
+          <View style={{flexDirection:'row-reverse',alignItems:'center',gap:10,paddingHorizontal:8}}>
+            <View testID="reader-immersive-ayah" style={{flex:1}}><ReaderChip label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')}/></View>
+            <View testID="reader-immersive-play"><IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/></View>
+            <View testID="reader-immersive-tafsir" style={{flex:1}}><ReaderChip label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/></View>
+          </View>
         </View>
       </View>:<ReaderDeck player={<>
         <Row style={{flexWrap:'nowrap',gap:7}}>
@@ -117,13 +115,11 @@ export function Quran(){
         </Row>
       </>} navigation={<>
         <Row style={{flexWrap:'nowrap',gap:8,paddingVertical:3}}>
-          <View style={{flex:1}}><ReaderChip label={t(`سورة ${name}`,`Surah ${name}`)} onPress={()=>open('surah')}/></View>
-          <ReaderChip label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')}/>
+          <View style={{flex:1.5}}><ReaderChip large label={t(`سورة ${name}`,`Surah ${name}`)} onPress={()=>open('surah')}/></View>
+          <View style={{flex:1}}><ReaderChip large label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')}/></View>
         </Row>
         <Row style={{justifyContent:'space-between',flexWrap:'nowrap',gap:4}}>
-          <IconButton icon="chevron-right" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
           <View style={{flex:1}}><ReaderChip large label={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} onPress={()=>open('page')}/></View>
-          <IconButton icon="chevron-left" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
         </Row>
       </>}/>}
       {audio.error?<Txt size={12} style={{color:colors.danger}}>{t('تعذّر تشغيل هذا التسجيل. جرّب مجددًا أو اختر قارئًا آخر.','This recording could not play. Retry or choose another reciter.')}</Txt>:null}
