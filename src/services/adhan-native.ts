@@ -1,7 +1,7 @@
 import {Platform} from 'react-native';
 import {requireOptionalNativeModule} from 'expo';
 import type {AdhanPreferences,PrayerMonth} from '../core/adhan';
-export interface AdhanStatus {available:boolean;exact:boolean;notifications:boolean;audio:boolean;count:number;until:string;error:string;playing:boolean;enabled:boolean;alarmVolume:number;alarmMuted:boolean}
+export interface AdhanStatus {available:boolean;exact:boolean;notifications:boolean;audio:boolean;count:number;until:string;error:string;playing:boolean;clip:string;enabled:boolean;alarmVolume:number;alarmMuted:boolean}
 interface AdhanModule {
   month(city:string,month:string):Promise<string>;
   configure(settings:string):AdhanStatus;
@@ -11,12 +11,12 @@ interface AdhanModule {
   openExactSettings():void;
   openNotificationSettings():void;
   openSoundSettings():void;
-  preview():Promise<void>;
+  preview(date:string,prayer:string):Promise<void>;
   stop():void;
-  testAlarm():Promise<void>;
+  testAlarm(date:string,prayer:string):Promise<void>;
 }
 export const adhanNative=Platform.OS==='android'?requireOptionalNativeModule<AdhanModule>('ZadAdhan'):null;
-export const unavailableAdhan:AdhanStatus={available:false,exact:false,notifications:false,audio:false,count:0,until:'',error:'',playing:false,enabled:false,alarmVolume:0,alarmMuted:false};
+export const unavailableAdhan:AdhanStatus={available:false,exact:false,notifications:false,audio:false,count:0,until:'',error:'',playing:false,clip:'',enabled:false,alarmVolume:0,alarmMuted:false};
 export async function configureAdhan(settings:AdhanPreferences,locale:string){
   if(!adhanNative)return unavailableAdhan;
   // Apply cancellation synchronously; an older network task cannot re-enable stale settings.

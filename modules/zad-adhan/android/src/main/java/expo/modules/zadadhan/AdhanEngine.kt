@@ -40,7 +40,7 @@ object AdhanEngine {
     val next=JSONObject(settings);val city=next.optString("city");require(city.length<=80);require(!next.getBoolean("enabled")||city.isNotEmpty()&&city!="null")
     synchronized(lock){
       val old=config(c);if(old.optString("city")!=city||old.optBoolean("enabled")!=next.getBoolean("enabled")||old.optBoolean("reminder",true)!=next.getBoolean("reminder")){
-        cancel(c);c.stopService(Intent(c,AdhanPlaybackService::class.java));prefs(c).edit().putLong("generation",prefs(c).getLong("generation",0)+1).apply()
+        cancel(c);AdhanPlaybackService.stop(c);prefs(c).edit().putLong("generation",prefs(c).getLong("generation",0)+1).apply()
       }
       prefs(c).edit().putString("config",next.toString()).apply();channels(c);installJob(c)
     }
@@ -55,7 +55,7 @@ object AdhanEngine {
     val snapshot=config(c);if(!snapshot.optBoolean("enabled"))return
     val generation=prefs(c).getLong("generation",0);val city=snapshot.getString("city");val month=EsaParser.today().take(7)
     var error=""
-    try{EsaClient.ensureAudio(c)}catch(_:Exception){error="AUDIO_UNAVAILABLE"}
+    try{AdhanAudio.ensureAll(c)}catch(_:Exception){error="AUDIO_UNAVAILABLE"}
     try{EsaClient.month(c,city,month)}catch(_:Exception){error="ESA_UNAVAILABLE"}
     val next=EsaParser.nextMonth(month)
     // The official monthly form has no year selector; never relabel last year's January.
@@ -83,9 +83,9 @@ object AdhanEngine {
     catch(_:SecurityException){cancel(c);prefs(c).edit().putString("error","EXACT_ALARM_DENIED").apply()}
   }}
   fun validEvent(c:Context,event:JSONObject):Boolean {val settings=config(c);return settings.optBoolean("enabled")&&event.optLong("generation",-1)==prefs(c).getLong("generation",0)&&event.optString("city")==settings.optString("city")&&System.currentTimeMillis()-event.getLong("at") in -1000L..120000L}
-  fun status(c:Context):Map<String,Any>{val events=JSONArray(prefs(c).getString("alarms","[]")!!);val now=System.currentTimeMillis();val audio=c.getSystemService(AudioManager::class.java);val future=(0 until events.length()).map {events.getJSONObject(it)}.filter { it.optLong("at")>now };return mapOf("available" to true,"exact" to exact(c),"notifications" to notifications(c),"audio" to EsaClient.audioFile(c).exists(),"count" to future.size,"until" to (future.maxByOrNull {it.getLong("at")}?.optString("date")?:""),"error" to prefs(c).getString("error","")!!,"playing" to AdhanPlaybackService.playing,"enabled" to config(c).optBoolean("enabled"),"alarmVolume" to audio.getStreamVolume(AudioManager.STREAM_ALARM),"alarmMuted" to audio.isStreamMute(AudioManager.STREAM_ALARM))}
-  fun test(c:Context){synchronized(lock){require(exact(c)&&notifications(c)&&EsaClient.audioFile(c).exists()&&config(c).optBoolean("enabled"));val now=System.currentTimeMillis();val events=JSONArray(prefs(c).getString("alarms","[]")!!)
-    for(reminder in listOf(true,false)){val event=JSONObject().put("id","test:$reminder").put("at",now+if(reminder)30000 else 60000).put("date",EsaParser.today()).put("city",config(c).getString("city")).put("prayer","test").put("reminder",reminder).put("generation",prefs(c).getLong("generation",0));events.put(event)}
+  fun status(c:Context):Map<String,Any>{val events=JSONArray(prefs(c).getString("alarms","[]")!!);val now=System.currentTimeMillis();val audio=c.getSystemService(AudioManager::class.java);val future=(0 until events.length()).map {events.getJSONObject(it)}.filter { it.optLong("at")>now };return mapOf("available" to true,"exact" to exact(c),"notifications" to notifications(c),"audio" to AdhanAudio.ready(c),"count" to future.size,"until" to (future.maxByOrNull {it.getLong("at")}?.optString("date")?:""),"error" to prefs(c).getString("error","")!!,"playing" to AdhanPlaybackService.playing,"clip" to AdhanPlaybackService.currentClip,"enabled" to config(c).optBoolean("enabled"),"alarmVolume" to audio.getStreamVolume(AudioManager.STREAM_ALARM),"alarmMuted" to audio.isStreamMute(AudioManager.STREAM_ALARM))}
+  fun test(c:Context,date:String=EsaParser.today(),prayer:String="maghrib"){synchronized(lock){AdhanSequence.slot(date,prayer);require(exact(c)&&notifications(c)&&AdhanAudio.ready(c)&&config(c).optBoolean("enabled"));val now=System.currentTimeMillis();val events=JSONArray(prefs(c).getString("alarms","[]")!!)
+    for(reminder in listOf(true,false)){val event=JSONObject().put("id","test:$reminder").put("test",true).put("at",now+if(reminder)30000 else 60000).put("date",date).put("city",config(c).getString("city")).put("prayer",prayer).put("reminder",reminder).put("generation",prefs(c).getLong("generation",0));events.put(event)}
     prefs(c).edit().putString("alarms",events.toString()).commit();val manager=c.getSystemService(AlarmManager::class.java);for(i in events.length()-2 until events.length()){val event=events.getJSONObject(i);manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,event.getLong("at"),requireNotNull(pending(c,event)))}
   }}
 }

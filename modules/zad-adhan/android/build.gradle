@@ -14,3 +14,10 @@ dependencies {
   implementation 'androidx.core:core-ktx:1.15.0'
   testImplementation 'junit:junit:4.13.2'
 }
+def audioAssets = tasks.register('prepareAdhanAudioAssets', Sync) {
+  from('../../../src/data/adhan-audio.json') { into 'zad-adhan'; rename { 'catalogue.json' } }
+  from('../../../assets/private/adhan') { include '*.mp3'; into 'zad-adhan' }
+  into(layout.buildDirectory.dir('generated/adhan-assets'))
+}
+android.sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/adhan-assets').get().asFile)
+tasks.named('preBuild').configure { dependsOn(audioAssets) }

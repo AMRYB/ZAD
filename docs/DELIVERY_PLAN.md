@@ -93,3 +93,4 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-035 | Fixed per-prayer/Friday audio catalogue and Cairo-date selection | Twelve source/hash/duration records; 44 TypeScript tests and 11 native parser/sequence tests PASS; exact user-selected intro/Friday IDs retained |
+| RJ-036 | Native intro/Adhan queue, private assets and per-prayer preview UI | Android 16: six sequences/all twelve files and intro-stop PASS; rapid stop/start race repaired; twelve HTTP hash checks and Arabic/English light/dark browser checks PASS |

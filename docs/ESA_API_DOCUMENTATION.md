@@ -69,7 +69,9 @@ At prayer time a `mediaPlayback` foreground service plays the downloaded recordi
 
 The observed monthly form has no year selector. The parser never relabels January of one year as January of the next; unpublished future-year responses fail closed. Coverage depends on the authority publishing that year and a later refresh. No unsupported year query parameter is invented.
 
-## Egyptian Adhan recording
+## Egyptian Adhan recording — original 0.5 evidence
+
+Version 0.6 supersedes the single-recording delivery below with prayer-specific private audio files and intros. See [ADHAN_AUDIO_V0_6.md](ADHAN_AUDIO_V0_6.md) for the exact source list, local packaging, hashes, clip selector and Friday policy. ESA timetable requests and authority remain unchanged. The following captures describe the 0.5 recording contract.
 
 Publisher page: [Cairo Adhan — Mohamed Rifaat](https://audio.islamweb.net/audio/index.php?audioid=122665&page=audioinfo). Its observed `contentUrl` is `https://quran-fjamfcbbeybteyat.z01.azurefd.net/Audio3/Adan/1027.mp3`.
 

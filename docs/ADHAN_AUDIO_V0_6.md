@@ -86,4 +86,6 @@ The separate hardware APK compiles the production Kotlin sources and private ass
 - Typecheck and lint: PASS.
 - Local HTTP: all twelve clips returned 200 `audio/mpeg` with exact catalogue hashes; malformed/duplicate/extra selectors returned 400.
 - Browser Arabic: normal voices, Friday replacement, actual Maghrib intro → Rifaat and Friday intro → Al-Azhar transitions, and stop checked.
-- Current native hardware playback/build/device delivery results will be appended after execution. The earlier 0.5.0 locked-screen result is not counted as a 0.6.0 playback test.
+- Android 16 isolated hardware APK: all six complete intro → Adhan transitions PASS, exercising all twelve files, and notification stop during an intro prevented its queued Adhan from starting. The harness also stopped each playing Adhan through its notification.
+- Found and repaired a real Android lifecycle race: a new preview could arrive after `stopSelf` but before `onDestroy`, and the old instance would then destroy the new audio. New starts received while stopping are retained until destruction finishes; cancellation generations invalidate waiting requests. Stale audio-focus callbacks are ignored after release. The six-case run passed after the fix.
+- Arabic normal/Friday and English/dark layouts were reviewed and screenshots saved. Final product APK build/installation/locked-screen results are recorded separately after execution; the earlier 0.5.0 result is not counted as a 0.6.0 playback test.

@@ -6,6 +6,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useApp} from '../state/AppContext';
 import {addDays,dateInZone,normalizeDigits,parseDate} from '../core/calendar';
 import {cairoTimestamp,prayerKeys,type TimeKey} from '../core/adhan';
+import {adhanPrayers,adhanSequence,adhanClips,audioSlot,type AdhanPrayer,type ClipId} from '../core/adhan-sequence';
 import {cityName,esaCities,esaCity} from '../data/esa-cities';
 import {adhanNative,configureAdhan,loadPrayerMonth,unavailableAdhan} from '../services/adhan-native';
 import {Button,Card,Field,Row,Screen,Txt} from '../ui/components';
@@ -28,13 +29,26 @@ export function Adhan(){
   const day=query.data?.days.find(d=>d.date===date);
   const next=day&&date===today?prayerKeys.find(p=>p!=='sunrise'&&cairoTimestamp(date,day.times[p])>now):undefined;
   const player=useAudioPlayer(null);const audio=useAudioPlayerStatus(player);
-  useEffect(()=>{const listener=player.addListener('playbackStatusUpdate',event=>{if(event.error)setMessage(t('تعذّر تشغيل التسجيل. أعد المحاولة.','The recording could not play. Please retry.'));});return()=>listener.remove();},[player,t]);
+  const [previewPrayer,setPreviewPrayer]=useState<AdhanPrayer>('maghrib');
+  const [webClip,setWebClip]=useState<ClipId|null>(null);
+  const webQueue=useRef<{ids:readonly ClipId[];index:number}|null>(null);
+  const nativePreview=useRef(false);
+  useEffect(()=>{const listener=player.addListener('playbackStatusUpdate',event=>{
+    if(event.error){webQueue.current=null;setWebClip(null);setMessage(t('تعذّر تشغيل التسجيل. أعد المحاولة.','The recording could not play. Please retry.'));return;}
+    const queue=webQueue.current;
+    // Ignore late completion events from a replaced intro when its Adhan is already loading.
+    if(event.didJustFinish&&queue&&Math.abs(event.duration-adhanClips[queue.ids[queue.index]].duration)<1){
+      const next=queue.index+1;
+      if(next<queue.ids.length){queue.index=next;setWebClip(queue.ids[next]);player.replace('/api/adhan-audio?clip='+queue.ids[next]);player.play();}
+      else {webQueue.current=null;setWebClip(null);}
+    }
+  });return()=>listener.remove();},[player,t]);
   useEffect(()=>{const timer=setInterval(()=>setNow(Date.now()),30000);return()=>clearInterval(timer);},[]);
   useFocusEffect(useCallback(()=>{
     const refresh=()=>setStatus(adhanNative?.status()??unavailableAdhan);refresh();
-    const timer=setInterval(refresh,2500);return()=>{clearInterval(timer);try{player.pause();}catch{}};
+    const timer=setInterval(refresh,2500);return()=>{clearInterval(timer);webQueue.current=null;try{player.pause();if(nativePreview.current){adhanNative?.stop();nativePreview.current=false;}}catch{}};
   },[player]));
-  const dateChange=(value:string)=>{setDate(value);setDateInput(value);};
+  const dateChange=(value:string)=>{if(nativePreview.current||webQueue.current)stopAudio();setDate(value);setDateInput(value);};
   const save=(value:typeof adhan)=>dispatch({type:'adhanSettings',value});
   const enable=async(value:boolean)=>{
     setMessage('');if(!value){save({...adhan,enabled:false});return;}
@@ -48,10 +62,13 @@ export function Adhan(){
       const result=await configureAdhan({...adhan,enabled:true},locale);setStatus(result);
     }catch{setMessage(t('تعذّر تجهيز الأذان. تحقق من الإنترنت ثم أعد المحاولة.','Adhan could not be prepared. Check your connection and retry.'));}finally{setBusy(false);}
   };
-  const preview=async()=>{setMessage('');try{
-    if(adhanNative){if(status.playing){adhanNative.stop();}else await adhanNative.preview();setStatus(adhanNative.status());}
-    else{if(audio.playing)player.pause();else{player.replace('/api/adhan-audio');player.play();}}
-  }catch{setMessage(t('تعذّر تشغيل التسجيل. أعد المحاولة.','The recording could not play. Please retry.'));}};
+  const stopAudio=()=>{webQueue.current=null;setWebClip(null);player.pause();adhanNative?.stop();nativePreview.current=false;if(adhanNative)setStatus(adhanNative.status());};
+  const preview=async(prayer:AdhanPrayer)=>{setMessage('');setBusy(true);try{
+    if(previewPrayer===prayer&&audio.playing||status.playing&&adhanSequence(date,prayer).includes(status.clip as ClipId)){stopAudio();return;}
+    setPreviewPrayer(prayer);
+    if(adhanNative){nativePreview.current=true;await adhanNative.preview(date,prayer);setStatus(adhanNative.status());}
+    else{player.pause();const ids=adhanSequence(date,prayer);webQueue.current={ids,index:0};setWebClip(ids[0]);player.replace('/api/adhan-audio?clip='+ids[0]);player.play();}
+  }catch{webQueue.current=null;setMessage(t('تعذّر تشغيل التسجيل. أعد المحاولة.','The recording could not play. Please retry.'));}finally{setBusy(false);}};
   const filtered=esaCities.filter(c=>c.name.replace(/[أإآ]/g,'ا').includes(search.replace(/[أإآ]/g,'ا').replace(/ـ/g,'').trim())||c.en.toLowerCase().includes(search.trim().toLowerCase()));
   const chosenDayLabel=date===today?t('النهارده','Today'):date===addDays(today,1)?t('بكرة','Tomorrow'):new Intl.DateTimeFormat(locale,{weekday:'long',timeZone:'UTC'}).format(new Date(`${date}T12:00:00Z`));
   return <Screen title={t('الأذان','Adhan')} subtitle={t('مواقيت مدينتك، في وقتها','Your city’s prayer times')} trailing={<IconButton icon="xmark" label={t('العودة للمزيد','Back to more')} onPress={()=>router.canGoBack()?router.back():router.replace('/more')}/>}>
@@ -66,16 +83,19 @@ export function Adhan(){
       <Card><Txt bold>{t('يوم آخر','Another day')}</Txt><Field label={t('التاريخ — YYYY-MM-DD','Date — YYYY-MM-DD')} value={dateInput} onChangeText={v=>setDateInput(normalizeDigits(v))} autoCapitalize="none"/><Button secondary label={t('عرض المواقيت','Show times')} onPress={()=>{try{parseDate(dateInput);dateChange(dateInput);setMessage('');}catch{setMessage(t('اكتب تاريخًا صحيحًا بالشكل YYYY-MM-DD.','Enter a valid date as YYYY-MM-DD.'));}}}/></Card>
     </>:<Card><Txt>{t('اختار المحافظة أو أقرب مدينة من قائمة الهيئة لعرض مواقيتها وحفظ اختيارك.','Choose your city from the authority’s list to view and save its timetable.')}</Txt><Button label={t('اختيار المدينة','Choose city')} onPress={()=>setCityPicker(true)}/></Card>}
     <Card><Txt bold size={20}>{t('التنبيه والصوت','Alerts & sound')}</Txt><Preference title={t('تشغيل الأذان في موعده','Play Adhan at prayer time')} detail={t('للصلوات الخمس، بعد السماح بالإشعارات والمنبهات','For the five prayers, with notification and alarm permission')} value={adhan.enabled} disabled={busy} onChange={value=>void enable(value)}/><Preference title={t('تذكير قبل الأذان بعشر دقائق','Reminder 10 minutes before Adhan')} detail={t('إشعار قصير قبل كل صلاة عند تفعيل الأذان','A short notification before each prayer when Adhan is enabled')} value={adhan.reminder} onChange={value=>save({...adhan,reminder:value})}/>
-      <Txt muted size={12}>{t('الصوت: أذان القاهرة — الشيخ محمد رفعت. يُحمّل مرة واحدة للتشغيل دون إنترنت.','Voice: Cairo Adhan — Sheikh Mohamed Rifaat. Downloaded once for offline playback.')}</Txt>
-      <Button secondary label={status.playing||audio.playing?t('إيقاف الصوت','Stop audio'):t('اسمع صوت الأذان','Preview Adhan')} onPress={()=>void preview()}/>
+      <Txt muted size={12}>{t('عند الموعد: فاصل الصلاة ثم الأذان. التسجيلات متاحة دون إنترنت في النسخة الخاصة.','At prayer time: the prayer intro, then Adhan. Recordings are available offline in the private build.')}</Txt>
+      <Txt muted size={12}>{t('ظهر الجمعة: فاصل الجمعة ثم أذان الأزهر. باقي الأيام بصوت شعيشع.','Friday Dhuhr: the Friday intro, then Al-Azhar Adhan. Other days use Shuaisha.')}</Txt>
+      <View style={{gap:4}}>{adhanPrayers.map(prayer=>{const ids=adhanSequence(date,prayer);const clip=adhanClips[ids[1]];const friday=audioSlot(date,prayer)==='friday';const active=previewPrayer===prayer&&audio.playing||status.playing&&ids.includes(status.clip as ClipId);return <View key={prayer} testID={`adhan-voice-${prayer}`}><Row style={{flexWrap:'nowrap',justifyContent:'space-between'}}><View style={{flex:1,gap:2}}><Txt bold>{friday?t('الجمعة','Friday'):t(...names[prayer])}</Txt><Txt muted size={12}>{locale==='ar'?clip.ar:clip.en}</Txt></View><IconButton icon={active?'pause':'play'} active={active} disabled={busy} label={t(`${active?'إيقاف':'سماع'} فاصل وأذان ${friday?'الجمعة':names[prayer][0]}`,`${active?'Stop':'Preview'} ${friday?'Friday':names[prayer][1]} intro and Adhan`)} onPress={()=>void preview(prayer)}/></Row></View>;})}</View>
+      {status.playing||audio.playing?<Button secondary label={t('إيقاف الصوت','Stop audio')} onPress={stopAudio}/>:null}
+      {audio.playing?<Txt muted size={11} accessibilityLiveRegion="polite">{webClip?`${locale==='ar'?adhanClips[webClip].ar:adhanClips[webClip].en} · ${Math.floor(audio.currentTime)} / ${Math.floor(audio.duration)}`:''}</Txt>:null}
       {busy?<ActivityIndicator color={colors.primary}/>:null}
       {adhan.enabled&&adhanNative?<>
         {status.available&&(status.alarmMuted||status.alarmVolume===0)?<><Txt style={{color:colors.danger}}>{t('صوت المنبه في الهاتف مكتوم أو على صفر. ارفعه عشان تسمع الأذان.','The phone’s alarm volume is muted or zero. Raise it to hear Adhan.')}</Txt><Button secondary label={t('فتح إعدادات الصوت','Open sound settings')} onPress={()=>adhanNative?.openSoundSettings()}/></>:null}
         {!status.exact?<><Txt style={{color:colors.danger}}>{t('الجدولة متوقفة حتى تسمح بالمنبهات والتذكيرات الدقيقة.','Scheduling is paused until you allow exact alarms & reminders.')}</Txt><Button label={t('السماح بالمنبهات والتذكيرات','Allow alarms & reminders')} onPress={()=>adhanNative?.openExactSettings()}/></>:null}
         {!status.notifications?<Button secondary label={t('فتح إعدادات الإشعارات','Open notification settings')} onPress={()=>adhanNative?.openNotificationSettings()}/>:null}
-        {status.error?<><Txt style={{color:colors.danger}}>{t('تعذّر تحديث الجدولة أو تنزيل الصوت.','Scheduling or audio download could not be updated.')}</Txt><Button secondary label={t('إعادة تجهيز الأذان','Retry Adhan setup')} onPress={()=>void enable(true)}/></>:null}
+        {status.error?<><Txt style={{color:colors.danger}}>{t('تعذّر تحديث الجدولة أو تجهيز الصوت.','Scheduling or audio preparation could not be completed.')}</Txt><Button secondary label={t('إعادة تجهيز الأذان','Retry Adhan setup')} onPress={()=>void enable(true)}/></>:null}
         {status.count>0?<Txt size={12} style={{color:colors.primary}}>{t(`تمت جدولة ${status.count} تنبيه حتى ${status.until}.`,`Scheduled ${status.count} alerts through ${status.until}.`)}</Txt>:null}
-        <Button secondary label={t('اختبار: إشعار بعد 30 ثانية وأذان بعد دقيقة','Test: reminder in 30 seconds, Adhan in one minute')} disabled={!status.exact||!status.notifications||!status.audio} onPress={()=>{void adhanNative?.testAlarm().then(()=>setMessage(t('تم ضبط الاختبار. يمكنك قفل الشاشة وتجربته.','Test scheduled. You can lock the screen to try it.'))).catch(()=>setMessage(t('تعذّر جدولة الاختبار.','The test could not be scheduled.')));}}/>
+        <Button secondary label={t('اختبار: إشعار بعد 30 ثانية والفاصل ثم الأذان بعد دقيقة','Test: reminder in 30 seconds, intro then Adhan in one minute')} disabled={!status.exact||!status.notifications||!status.audio} onPress={()=>{void adhanNative?.testAlarm(date,previewPrayer).then(()=>setMessage(t('تم ضبط الاختبار. يمكنك قفل الشاشة وتجربته.','Test scheduled. You can lock the screen to try it.'))).catch(()=>setMessage(t('تعذّر جدولة الاختبار.','The test could not be scheduled.')));}}/>
       </>:Platform.OS==='web'?<Txt muted size={12}>{t('إشعارات الخلفية والصوت التلقائي يُختبران في نسخة Android.','Background alerts and automatic audio require the Android build.')}</Txt>:null}
       <Txt muted size={11}>{t('مستوى الصوت يتبع صوت المنبه في الهاتف، ويحترم وضع عدم الإزعاج.','Playback uses the phone’s alarm volume and respects Do Not Disturb.')}</Txt>
       {message?<Txt accessibilityLiveRegion="polite" style={{color:colors.primary}}>{message}</Txt>:null}

@@ -9,7 +9,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import org.json.JSONObject
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -18,6 +17,7 @@ object AdhanNotification {
   fun title(c:Context,event:JSONObject?):String {
     val en=AdhanEngine.config(c).optString("locale")=="en"
     val key=event?.optString("prayer")?:"test"
+    if(key=="dhuhr"&&event!=null&&AdhanSequence.slot(event.getString("date"),key)=="friday")return if(en)"Friday prayer" else "صلاة الجمعة"
     val names=mapOf("fajr" to "الفجر","dhuhr" to "الظهر","asr" to "العصر","maghrib" to "المغرب","isha" to "العشاء")
     return if(key=="test"){if(en)"Adhan preview" else "تجربة الأذان"}else if(en)"${key.replaceFirstChar {it.uppercase()}} prayer" else "صلاة ${names[key]?:""}"
   }
@@ -28,7 +28,7 @@ object AdhanNotification {
   fun reminder(c:Context,event:JSONObject){
     val en=AdhanEngine.config(c).optString("locale")=="en"
     val n=NotificationCompat.Builder(c,AdhanEngine.REMINDER_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_idle_alarm).setContentTitle(title(c,event))
-      .setContentText(if(en)"In 10 minutes · ${EsaParser.normalize(event.getString("city"))}" else "بعد عشر دقائق · ${EsaParser.normalize(event.getString("city"))}")
+      .setContentText(if(event.optBoolean("test")){if(en)"Adhan audio test" else "اختبار صوت الأذان"}else if(en)"In 10 minutes · ${EsaParser.normalize(event.getString("city"))}" else "بعد عشر دقائق · ${EsaParser.normalize(event.getString("city"))}")
       .setContentIntent(open(c)).setAutoCancel(true).setCategory(NotificationCompat.CATEGORY_REMINDER).setVisibility(NotificationCompat.VISIBILITY_PRIVATE).build()
     if(AdhanEngine.notifications(c))try{NotificationManagerCompat.from(c).notify(event.getString("id").hashCode(),n)}catch(_:SecurityException){}
   }
@@ -39,7 +39,7 @@ class AdhanAlarmReceiver:BroadcastReceiver(){override fun onReceive(context:Cont
     if(!AdhanEngine.validEvent(context,event)||!AdhanEngine.notifications(context))return
     AdhanEngine.channels(context)
     if(event.getBoolean("reminder"))AdhanNotification.reminder(context,event)
-    else ContextCompat.startForegroundService(context,Intent(context,AdhanPlaybackService::class.java).putExtra("event",event.toString()))
+    else AdhanPlaybackService.start(context,Intent(context,AdhanPlaybackService::class.java).putExtra("event",event.toString()))
   }catch(_:Exception){AdhanEngine.prefs(context).edit().putString("error","ALARM_DELIVERY_FAILED").apply()}
 }}
 class AdhanRestoreReceiver:BroadcastReceiver(){override fun onReceive(context:Context,intent:Intent){

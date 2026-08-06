@@ -10,8 +10,6 @@ import java.security.MessageDigest
 
 object EsaClient {
   const val SOURCE="https://www.esa.gov.eg/monthlymwaket.aspx"
-  const val AUDIO="https://quran-fjamfcbbeybteyat.z01.azurefd.net/Audio3/Adan/1027.mp3"
-  const val AUDIO_SHA="39964e1b6df88cfc30e66ca18cbc8efe5829fbf82d24210ebddc3d435eebd96c"
   private fun sha(bytes: ByteArray)=MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) }
   private fun request(url: String, body: String?=null, referer: String?=null, limit: Int=1000000): ByteArray {
     val connection=URL(url).openConnection() as HttpURLConnection
@@ -49,13 +47,5 @@ object EsaClient {
       dir.listFiles()?.filter { it.name.endsWith(".json") }?.sortedByDescending { it.lastModified() }?.drop(24)?.forEach { it.delete() }
       return result
     }catch(e:Exception){if(cached!=null)return cached;throw e}
-  }
-  fun audioFile(context: Context)=File(context.filesDir,"adhan-rifaat.mp3")
-  @Synchronized fun ensureAudio(context: Context): File {
-    val file=audioFile(context)
-    if(file.exists()&&sha(file.readBytes())==AUDIO_SHA)return file
-    val bytes=request(AUDIO,referer="https://audio.islamweb.net/",limit=2000000)
-    require(sha(bytes)==AUDIO_SHA) { "AUDIO_CHANGED" }
-    val temp=File(context.filesDir,"adhan-rifaat.tmp");temp.writeBytes(bytes);check(temp.renameTo(file));return file
   }
 }

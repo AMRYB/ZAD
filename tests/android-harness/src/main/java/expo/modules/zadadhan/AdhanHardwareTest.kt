@@ -19,6 +19,29 @@ class AdhanHardwareTest:Instrumentation(){
   private fun report(text:String){sendStatus(0,Bundle().apply {putString("stream","$text\n")})}
   override fun onStart(){
     val c=targetContext;val result=Bundle();var passed=false
+    if(mode=="sequences"){
+      try{
+        AdhanAudio.ensureAll(c)
+        val cases=listOf("2026-10-24" to "fajr","2026-10-24" to "dhuhr","2026-10-24" to "asr","2026-10-24" to "maghrib","2026-10-24" to "isha","2026-10-23" to "dhuhr")
+        for((date,prayer) in cases){
+          val sequence=AdhanAudio.sequence(c,date,prayer)
+          AdhanPlaybackService.start(c,Intent(c,AdhanPlaybackService::class.java).putExtra("preview",true).putExtra("date",date).putExtra("prayer",prayer))
+          fun awaitClip(id:String){val deadline=SystemClock.elapsedRealtime()+16000;while(AdhanPlaybackService.currentClip!=id&&SystemClock.elapsedRealtime()<deadline)Thread.sleep(100);check(AdhanPlaybackService.currentClip==id){"Expected clip $id; got ${AdhanPlaybackService.currentClip}; error=${AdhanEngine.prefs(c).getString("error","")}"}}
+          awaitClip(sequence[0]);awaitClip(sequence[1]);report("PASS: $date $prayer -> ${sequence.joinToString(" then ")}")
+          val manager=c.getSystemService(NotificationManager::class.java)
+          manager.activeNotifications.first {it.notification.channelId==AdhanEngine.PLAYBACK_CHANNEL}.notification.actions.first().actionIntent.send()
+          Thread.sleep(300);check(!AdhanPlaybackService.playing)
+        }
+        // Stop during an intro must never start its queued Adhan later.
+        AdhanPlaybackService.start(c,Intent(c,AdhanPlaybackService::class.java).putExtra("preview",true).putExtra("date","2026-10-23").putExtra("prayer","dhuhr"))
+        val deadline=SystemClock.elapsedRealtime()+5000;while(AdhanPlaybackService.currentClip!="intro-friday"&&SystemClock.elapsedRealtime()<deadline)Thread.sleep(100)
+        check(AdhanPlaybackService.currentClip=="intro-friday")
+        c.getSystemService(NotificationManager::class.java).activeNotifications.first {it.notification.channelId==AdhanEngine.PLAYBACK_CHANNEL}.notification.actions.first().actionIntent.send()
+        Thread.sleep(12000);check(!AdhanPlaybackService.playing&&AdhanPlaybackService.currentClip.isEmpty())
+        report("PASS: stopping intro prevents queued Adhan; all twelve pinned files played")
+        finish(Activity.RESULT_OK,Bundle().apply {putString("stream","Six playback sequences and intro-stop passed\n")})
+      }catch(e:Throwable){AdhanPlaybackService.stop(c);finish(Activity.RESULT_CANCELED,Bundle().apply {putString("failure",e.toString())})};return
+    }
     if(mode=="audio-status"){
       val audio=c.getSystemService(AudioManager::class.java)
       result.putInt("alarmVolume",audio.getStreamVolume(AudioManager.STREAM_ALARM));result.putInt("alarmMaximum",audio.getStreamMaxVolume(AudioManager.STREAM_ALARM));result.putBoolean("alarmMuted",audio.isStreamMute(AudioManager.STREAM_ALARM))
@@ -28,7 +51,7 @@ class AdhanHardwareTest:Instrumentation(){
       try{val config=JSONObject().put("city","القـاهـرة").put("locale","ar").put("enabled",true).put("reminder",true);AdhanEngine.configure(c,config.toString());AdhanEngine.test(c);result.putString("stream","Cold-start test armed: reminder +30 seconds; Adhan +60 seconds\n");finish(Activity.RESULT_OK,result)}catch(e:Exception){result.putString("failure",e.message);finish(Activity.RESULT_CANCELED,result)};return
     }
     if(mode=="cleanup"){
-      AdhanEngine.configure(c,AdhanEngine.config(c).put("enabled",false).toString());c.stopService(Intent(c,AdhanPlaybackService::class.java));finish(Activity.RESULT_OK,Bundle());return
+      AdhanEngine.configure(c,AdhanEngine.config(c).put("enabled",false).toString());AdhanPlaybackService.stop(c);finish(Activity.RESULT_OK,Bundle());return
     }
     try{
       check(AdhanEngine.exact(c)) {"Exact alarm test permission is missing"}
@@ -63,6 +86,6 @@ class AdhanHardwareTest:Instrumentation(){
       report("PASS: disable cancels alarms/job and rejects stale generation")
       result.putInt("sourceDays",month.getJSONArray("days").length());result.putInt("checks",6);passed=true
     }catch(e:Throwable){result.putString("failure",e.javaClass.simpleName+": "+e.message);report("FAIL: "+e.message)}
-    finally{try{val off=AdhanEngine.config(c).put("enabled",false);AdhanEngine.configure(c,off.toString());c.stopService(Intent(c,AdhanPlaybackService::class.java))}catch(_:Exception){};result.putString("stream",if(passed)"Hardware checks passed\n" else "Hardware checks failed\n");finish(if(passed)Activity.RESULT_OK else Activity.RESULT_CANCELED,result)}
+    finally{try{val off=AdhanEngine.config(c).put("enabled",false);AdhanEngine.configure(c,off.toString());AdhanPlaybackService.stop(c)}catch(_:Exception){};result.putString("stream",if(passed)"Hardware checks passed\n" else "Hardware checks failed\n");finish(if(passed)Activity.RESULT_OK else Activity.RESULT_CANCELED,result)}
   }
 }

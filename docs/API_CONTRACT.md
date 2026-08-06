@@ -34,6 +34,10 @@ Native Android uses the KSU URL directly; it does not require this web server to
 
 See [DATABASE.md](DATABASE.md). The RPC signatures are implemented in the migration and exercised by local PostgreSQL tests. They are not claimed as live network endpoints. No fake project URL or secret is supplied.
 
+## Adhan preview audio — 0.6
+
+`GET /api/adhan-audio?clip=<allowlisted-id>` serves a locally prepared private MP3 after size/SHA-256 verification. All twelve catalogue IDs were exercised: 200 `audio/mpeg`. Missing/unknown/duplicate/extra selectors: 400. Missing/changed local media: 503. No arbitrary URL/path or third-party extraction is accepted. The browser plays a prayer intro and then its matching Adhan; Android uses the same catalogue with private bundled assets, without this server. See [ADHAN_AUDIO_V0_6.md](ADHAN_AUDIO_V0_6.md). ESA remains the exclusive timetable authority; KSU remains the exclusive Quran provider.
+
 ## Revision 0.2 provider verification
 
 The recording catalogue contains 41 Hafs options observed in KSU’s DOM and captured `quraa_map`. The Arabic tafsir allowlist is `sa3dy`, `baghawy`, `katheer`, `qortoby`, `tabary`. Original author/folder identifiers are preserved; arbitrary strings or destinations are rejected. See `ksu-evidence/reader-catalog-20261023.json` and `provider-http-samples-v0.2.json` in that folder for exact method/URL/status/type samples. The live local relay returned 200 for Ibn Kathir and Al-Baghawi and 400 for an unknown author. No claim is made that every file in every recording was fetched.

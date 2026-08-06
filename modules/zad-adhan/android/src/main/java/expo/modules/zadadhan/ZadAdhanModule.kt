@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import androidx.core.content.ContextCompat
 import expo.modules.interfaces.permissions.Permissions
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.functions.Coroutine
@@ -15,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ZadAdhanModule:Module(){
+  private val previewVersion=java.util.concurrent.atomic.AtomicInteger()
   private val context get()=requireNotNull(appContext.reactContext)
   override fun definition()=ModuleDefinition {
     Name("ZadAdhan")
@@ -30,8 +30,8 @@ class ZadAdhanModule:Module(){
     Function("openExactSettings") {if(Build.VERSION.SDK_INT>=31)context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,Uri.parse("package:${context.packageName}")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))}
     Function("openNotificationSettings"){context.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE,context.packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))}
     Function("openSoundSettings"){context.startActivity(Intent(Settings.ACTION_SOUND_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))}
-    AsyncFunction("preview") Coroutine { -> withContext(Dispatchers.IO){EsaClient.ensureAudio(context);ContextCompat.startForegroundService(context,Intent(context,AdhanPlaybackService::class.java).putExtra("preview",true));Unit}}
-    Function("stop"){context.stopService(Intent(context,AdhanPlaybackService::class.java));Unit}
-    AsyncFunction("testAlarm"){AdhanEngine.test(context)}
+    AsyncFunction("preview") Coroutine {date:String,prayer:String->val version=previewVersion.incrementAndGet();withContext(Dispatchers.IO){AdhanAudio.sequence(context,date,prayer).forEach {AdhanAudio.ensure(context,it)};if(version==previewVersion.get())AdhanPlaybackService.start(context,Intent(context,AdhanPlaybackService::class.java).putExtra("preview",true).putExtra("date",date).putExtra("prayer",prayer));Unit}}
+    Function("stop"){previewVersion.incrementAndGet();AdhanPlaybackService.stop(context);Unit}
+    AsyncFunction("testAlarm"){date:String,prayer:String->AdhanEngine.test(context,date,prayer)}
   }
 }

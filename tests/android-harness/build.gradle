@@ -12,3 +12,10 @@ def productionSources = tasks.register('syncAdhanProduction', Sync) {
   into(layout.buildDirectory.dir('generated/zad-adhan'))
 }
 tasks.matching { it.name.startsWith('compile') && it.name.endsWith('Kotlin') }.configureEach { dependsOn(productionSources) }
+def audioAssets = tasks.register('prepareAdhanAudioAssets', Sync) {
+  from('../../src/data/adhan-audio.json') { into 'zad-adhan'; rename { 'catalogue.json' } }
+  from('../../assets/private/adhan') { include '*.mp3'; into 'zad-adhan' }
+  into(layout.buildDirectory.dir('generated/adhan-assets'))
+}
+android.sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/adhan-assets').get().asFile)
+tasks.named('preBuild').configure { dependsOn(audioAssets) }
