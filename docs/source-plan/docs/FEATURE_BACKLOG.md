@@ -77,3 +77,5 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 - RJ-034: ZAD 0.5.0 private APK and final device acceptance — built, signed and installed over 0.4.1; user completed city/permission setup and confirmed test notification plus audible Adhan with screen locked. 40 TypeScript and six native parser tests passed; Expo Doctor 19/20 patch advisory remains.
 - Product APK build/installation evidence is maintained in `docs/ANDROID_APK_RELEASE.md`; isolated module tests and final product tests are documented separately.
 
+
+- RJ-035: Prayer-specific voices, MBC intros and Friday Al-Azhar selection — catalogue and Cairo-date policies implemented; mapping/boundary tests pass. See `docs/ADHAN_AUDIO_V0_6.md`.

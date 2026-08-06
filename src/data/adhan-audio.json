@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "clips": {
+    "intro-fajr": {
+      "source": "https://www.youtube.com/watch?v=KTPAoW-gSyo",
+      "title": "حصرياً - يرفع الآن اذان الفجر بتوقيت القاهرة (خير من النوم) قناة أمبيسي مصر 2 المصرية - 2007-2014",
+      "channel": "CN APPLEJACK ",
+      "sha256": "773e621fb15943fd3531654a5f609f138b034e47d1b8911de8c3115a97a112e4",
+      "bytes": 132014,
+      "duration": 10.936599,
+      "kind": "intro",
+      "ar": "فاصل الفجر",
+      "en": "Fajr intro"
+    },
+    "intro-dhuhr": {
+      "source": "https://www.youtube.com/watch?v=pZtoj-X0Sec",
+      "title": "حـصـرياً - يرفع الآن اذان الظهر بتوقيت القاهرة (أقـم صلاتك) قناة أمبيسي مصر 2 المصرية - 2007-2014",
+      "channel": "CN APPLEJACK ",
+      "sha256": "efad7852ff030d678a56f410da389f081a12e5159171a906797d1eb995442af8",
+      "bytes": 131701,
+      "duration": 10.913379,
+      "kind": "intro",
+      "ar": "فاصل الظهر",
+      "en": "Dhuhr intro"
+    },
+    "intro-asr": {
+      "source": "https://www.youtube.com/watch?v=7U0paamyfeU",
+      "title": "حـصـرياً - يرفع الآن اذان العصر بتوقيت القاهرة (أقـم صلاتك) قناة أمبيسي مصر 2 المصرية - 2007-2014",
+      "channel": "CN APPLEJACK ",
+      "sha256": "eb0ea2a93d0bb3fd5b8d061b1815b7815d658ef19d414d878b704fdb6347ef93",
+      "bytes": 131701,
+      "duration": 10.913379,
+      "kind": "intro",
+      "ar": "فاصل العصر",
+      "en": "Asr intro"
+    },
+    "intro-maghrib": {
+      "source": "https://www.youtube.com/watch?v=6fCjW6uuyDg",
+      "title": "حـصـرياً - يرفع الآن اذان المغرب بتوقيت القاهرة (أقـم صلاتك) قناة أمبيسي مصر 2 المصرية - 2007-2014",
+      "channel": "CN APPLEJACK ",
+      "sha256": "35a51fa49ad814e2a26eb2b4ce1f184660b1e75d2c558cb1bd966dba214c3f14",
+      "bytes": 131701,
+      "duration": 10.913379,
+      "kind": "intro",
+      "ar": "فاصل المغرب",
+      "en": "Maghrib intro"
+    },
+    "intro-isha": {
+      "source": "https://www.youtube.com/watch?v=jBI7eJ8rObU",
+      "title": "حـصـرياً - يرفع الآن اذان العشاء بتوقيت القاهرة (أقـم صلاتك) قناة أمبيسي مصر 2 المصرية - 2007-2014",
+      "channel": "CN APPLEJACK ",
+      "sha256": "c378b08e1860d0e1396681b9b5ca11a9457c1503336c128384c5e14221edf60f",
+      "bytes": 132014,
+      "duration": 10.936599,
+      "kind": "intro",
+      "ar": "فاصل العشاء",
+      "en": "Isha intro"
+    },
+    "intro-friday": {
+      "source": "https://www.youtube.com/watch?v=H6X_oDODWZU",
+      "title": "حصريًا ولأول مرة - فاصل آذان الظهر مع صلاة الجمعة من mbc masr",
+      "channel": "Fahad_1000",
+      "sha256": "db296029fb19d6e23ad02f3768fff5bcabf1aa6b2dbe7054d163b9cbdd907cfb",
+      "bytes": 121356,
+      "duration": 10.05424,
+      "kind": "intro",
+      "ar": "فاصل الجمعة",
+      "en": "Friday intro"
+    },
+    "tobar-fajr": {
+      "source": "https://www.youtube.com/watch?v=zzu2MUktkbs",
+      "title": "آذان الفجر بصوت الشيخ نصر الدين طوبار",
+      "channel": "Hassan Shokeir",
+      "sha256": "6fe235fdd4e3a89aff74f46c6025748b4c0be0fdae4d9b250cfa4d256d7bd812",
+      "bytes": 3461373,
+      "duration": 288.368617,
+      "kind": "adhan",
+      "ar": "نصر الدين طوبار — الفجر",
+      "en": "Nasr El-Din Tobar — Fajr"
+    },
+    "tobar-isha": {
+      "source": "https://www.youtube.com/watch?v=czWeeCXe0zM",
+      "title": "الشيخ نصرالدين طوبار | يرفع أذان العشاء | إذاعة القرآن",
+      "channel": "روائع إذاعة القرآن RadioQuran",
+      "sha256": "14f33f0c7dd34de1b4aa1e0385836bbdaa905b0b49afc52d977cabd6d57ff487",
+      "bytes": 3882048,
+      "duration": 323.430748,
+      "kind": "adhan",
+      "ar": "نصر الدين طوبار — العشاء",
+      "en": "Nasr El-Din Tobar — Isha"
+    },
+    "azhar-friday": {
+      "source": "https://www.youtube.com/watch?v=cD3mXVGD4iI",
+      "title": "آذان ظهر اليوم الجمعة",
+      "channel": "Al-Azhar Al-Shareef",
+      "sha256": "f4a39e366be0e602a0bdc35806f99f09467e5c93a59a6824684f70b59d768d69",
+      "bytes": 2378963,
+      "duration": 198.182313,
+      "kind": "adhan",
+      "ar": "أذان الجمعة — الأزهر الشريف",
+      "en": "Friday Adhan — Al-Azhar"
+    },
+    "shuaisha": {
+      "sha256": "c5492fbec4e66c1e6ac699adc3f0ab7fe91cdfc01290abde1f676f6f2c6e246f",
+      "bytes": 473216,
+      "duration": 236.548,
+      "kind": "adhan",
+      "ar": "أبو العينين شعيشع",
+      "en": "Abul Enein Shuaisha",
+      "source": "https://audio.islamweb.net/audio/index.php?audioid=122662&page=audioinfo",
+      "mediaUrl": "https://quran-fjamfcbbeybteyat.z01.azurefd.net/Audio3/Adan/1024.mp3",
+      "channel": "Islamweb",
+      "title": "أبو العينين شعيشع"
+    },
+    "husary": {
+      "sha256": "3866a11de8d78f42c4e563ffb398b670f6483bb12768e21ec567b527ca15e8e3",
+      "bytes": 256128,
+      "duration": 127.504,
+      "kind": "adhan",
+      "ar": "محمود خليل الحصري",
+      "en": "Mahmoud Khalil Al-Husary",
+      "source": "https://audio.islamweb.net/audio/index.php?audioid=122667&page=audioinfo",
+      "mediaUrl": "https://quran-fjamfcbbeybteyat.z01.azurefd.net/Audio3/Adan/1030.mp3",
+      "channel": "Islamweb",
+      "title": "محمود خليل الحصري"
+    },
+    "rifaat": {
+      "sha256": "39964e1b6df88cfc30e66ca18cbc8efe5829fbf82d24210ebddc3d435eebd96c",
+      "bytes": 407680,
+      "duration": 203.716,
+      "kind": "adhan",
+      "ar": "محمد رفعت",
+      "en": "Mohamed Rifaat",
+      "source": "https://audio.islamweb.net/audio/index.php?audioid=122665&page=audioinfo",
+      "mediaUrl": "https://quran-fjamfcbbeybteyat.z01.azurefd.net/Audio3/Adan/1027.mp3",
+      "channel": "Islamweb",
+      "title": "محمد رفعت"
+    }
+  },
+  "sequences": {
+    "fajr": {
+      "intro": "intro-fajr",
+      "adhan": "tobar-fajr"
+    },
+    "dhuhr": {
+      "intro": "intro-dhuhr",
+      "adhan": "shuaisha"
+    },
+    "asr": {
+      "intro": "intro-asr",
+      "adhan": "husary"
+    },
+    "maghrib": {
+      "intro": "intro-maghrib",
+      "adhan": "rifaat"
+    },
+    "isha": {
+      "intro": "intro-isha",
+      "adhan": "tobar-isha"
+    },
+    "friday": {
+      "intro": "intro-friday",
+      "adhan": "azhar-friday"
+    }
+  }
+}

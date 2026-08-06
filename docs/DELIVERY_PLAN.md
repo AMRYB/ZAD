@@ -87,3 +87,9 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-032 | Native exact prayer alarms, private offline audio and stoppable foreground playback | Six native parser tests PASS; isolated real Android 16 tests PASS for source requests, reminders, screen-off playback service, notification stop and cancellation; cold-process restart and audibility confirmed separately |
 | RJ-033 | More → Adhan city/day/settings UI and sound-volume warning | Browser Arabic/English, light/dark, today/tomorrow/date and city changes PASS; typecheck/lint PASS; final product APK installation recorded separately |
 | RJ-034 | ZAD 0.5.0 APK, actual installation and final product alarm test | Build/signature/91 source files/six compiled sources/font PASS; update over 0.4.1 and cold launch PASS; user completed permissions/scheduling and confirmed notification plus audible Adhan with screen locked. 40 TS + 6 native tests PASS; Expo Doctor 19/20 patch advisory retained |
+
+## Prayer-specific audio 0.6
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-035 | Fixed per-prayer/Friday audio catalogue and Cairo-date selection | Twelve source/hash/duration records; 44 TypeScript tests and 11 native parser/sequence tests PASS; exact user-selected intro/Friday IDs retained |

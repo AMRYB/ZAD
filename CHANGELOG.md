@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 — prayer-specific voices and Friday audio
+
+- Added a hash-pinned twelve-clip catalogue: five ordinary MBC intros, one Friday intro and six Adhan recordings, with separate Tobar Fajr/Isha sources.
+- Assigned Tobar to Fajr/Isha, Shuaisha to ordinary Dhuhr, Husary to Asr, Rifaat to Maghrib, and the user-selected Al-Azhar recording to Friday Dhuhr only, using the saved Cairo calendar date.
+
 ## 0.5.0 — reader balance and Egyptian prayer times
 
 - Centered immersive playback exactly between equal-width ayah and text-only tafsir controls; removed the tafsir icon from this card.
