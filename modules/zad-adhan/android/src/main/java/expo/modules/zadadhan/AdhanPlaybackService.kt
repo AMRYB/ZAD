@@ -25,9 +25,9 @@ class AdhanPlaybackService:Service(){
     @Volatile var currentClip=""
     const val STOP="zad.adhan.STOP"
     private const val ID=71033
-    @Volatile private var cancellation=0
-    fun start(c:Context,intent:Intent){ContextCompat.startForegroundService(c,intent.putExtra("audioGeneration",cancellation))}
-    fun stop(c:Context){cancellation++;c.stopService(Intent(c,AdhanPlaybackService::class.java))}
+    private val cancellation=java.util.concurrent.atomic.AtomicInteger()
+    fun start(c:Context,intent:Intent){ContextCompat.startForegroundService(c,intent.putExtra("audioGeneration",cancellation.get()))}
+    fun stop(c:Context){cancellation.incrementAndGet();c.stopService(Intent(c,AdhanPlaybackService::class.java))}
   }
   private var player:MediaPlayer?=null
   private var focus:AudioFocusRequest?=null
@@ -53,8 +53,8 @@ class AdhanPlaybackService:Service(){
     else startForeground(ID,n)
   }
   override fun onStartCommand(intent:Intent?,flags:Int,startId:Int):Int {
-    if(intent?.action==STOP){cancellation++;replacement=null;halt();return START_NOT_STICKY}
-    if(intent==null||intent.getIntExtra("audioGeneration",cancellation)!=cancellation){halt();return START_NOT_STICKY}
+    if(intent?.action==STOP){cancellation.incrementAndGet();replacement=null;halt();return START_NOT_STICKY}
+    if(intent==null||intent.getIntExtra("audioGeneration",cancellation.get())!=cancellation.get()){halt();return START_NOT_STICKY}
     // A new start can arrive after stopSelf but before Android calls onDestroy.
     // Save it for the new instance; never prepare audio in the instance being destroyed.
     if(stopping){replacement=Intent(intent);return START_NOT_STICKY}
@@ -106,6 +106,6 @@ class AdhanPlaybackService:Service(){
   }
   override fun onDestroy(){
     val next=replacement;replacement=null;handler.removeCallbacks(timeout);release();stopForeground(STOP_FOREGROUND_REMOVE);super.onDestroy()
-    if(next!=null&&next.getIntExtra("audioGeneration",-1)==cancellation)try{ContextCompat.startForegroundService(this,next)}catch(_:Exception){AdhanEngine.prefs(this).edit().putString("error","PLAYBACK_RESTART_FAILED").apply()}
+    if(next!=null&&next.getIntExtra("audioGeneration",-1)==cancellation.get())try{ContextCompat.startForegroundService(this,next)}catch(_:Exception){AdhanEngine.prefs(this).edit().putString("error","PLAYBACK_RESTART_FAILED").apply()}
   }
 }

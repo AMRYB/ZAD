@@ -59,7 +59,7 @@ class AdhanHardwareTest:Instrumentation(){
       val config=JSONObject().put("city","القـاهـرة").put("locale","ar").put("enabled",true).put("reminder",true)
       val status=AdhanEngine.configure(c,config.toString());check(status["count"] as Int>0&&status["audio"]==true)
       val month=EsaClient.month(c,"القـاهـرة",EsaParser.today().take(7));check(month.getJSONArray("days").length() in 28..31)
-      report("PASS: native ESA HTTPS fetch, private month cache, verified MP3 and exact scheduling")
+      report("PASS: native ESA HTTPS fetch, private month cache, verified private recordings and exact scheduling")
       val events=JSONArray(AdhanEngine.prefs(c).getString("alarms","[]")!!)
       check((0 until events.length()).all {events.getJSONObject(it).getString("prayer")!="sunrise"})
       val firstAdhan=(0 until events.length()).map {events.getJSONObject(it)}.first { !it.getBoolean("reminder")&&it.getLong("at")>System.currentTimeMillis()+600000 }
