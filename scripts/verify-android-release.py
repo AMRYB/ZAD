@@ -43,7 +43,7 @@ def main():
                 compiled[name.replace('\\', '/')] = text.replace('\r\n', '\n').strip()
     checked = []
     for relative in ['src/screens/Quran.tsx', 'src/screens/Adhan.tsx', 'src/screens/Settings.tsx',
-                     'src/state/AdhanCoordinator.tsx', 'src/core/adhan.ts', 'src/services/adhan-native.ts']:
+                     'src/state/AdhanCoordinator.tsx', 'src/core/adhan.ts', 'src/core/adhan-sequence.ts', 'src/services/adhan-native.ts']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -58,14 +58,20 @@ def main():
         font_sha = digest(font.read_bytes())
         entry = next((name for name in names if name.endswith('.otf') and digest(apk.read(name)) == font_sha), None)
         assert entry, 'Private Light font was not packaged byte-for-byte'
+        catalogue = json.loads((root / 'src/data/adhan-audio.json').read_text(encoding='utf-8'))
+        assert json.loads(apk.read('assets/zad-adhan/catalogue.json')) == catalogue, 'Packaged audio catalogue differs'
+        for clip_id, clip in catalogue['clips'].items():
+            recording = apk.read('assets/zad-adhan/' + clip_id + '.mp3')
+            assert len(recording) == clip['bytes'] and digest(recording) == clip['sha256'], f'Packaged recording differs: {clip_id}'
         dex = b''.join(apk.read(name) for name in names if name.endswith('.dex'))
-        for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob']:
+        for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob', b'AdhanAudio', b'AdhanSequence']:
             assert token in dex, f'Missing native release marker: {token}'
         assert b'AdhanHardwareTest' not in dex and b'AdhanColdStartTest' not in dex, 'Test harness leaked into product APK'
     print(json.dumps({'sourceAndAssetFilesCompared': len(inputs), 'sourceMatchesBuild': True,
                       'compiledSourcesMatched': checked, 'abi': 'arm64-v8a',
                       'fontEntry': entry, 'fontSha256': font_sha, 'fontMatches': True,
                       'nativeAdhanPresent': True, 'testHarnessExcluded': True,
+                      'packagedRecordingsMatched': len(catalogue['clips']),
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
 
 
