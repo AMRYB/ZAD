@@ -30,13 +30,13 @@ The checked-in `src/data/adhan-audio.json` is the shared source/sequence catalog
 | `intro-isha` | [Source](https://www.youtube.com/watch?v=jBI7eJ8rObU) | CN APPLEJACK | 10.937 | 132014 |
 | `intro-friday` | [Source](https://www.youtube.com/watch?v=H6X_oDODWZU) | Fahad_1000 | 10.054 | 121356 |
 | `tobar-fajr` | [Source](https://www.youtube.com/watch?v=zzu2MUktkbs) | Hassan Shokeir | 288.369 | 3461373 |
-| `tobar-isha` | [Source](https://www.youtube.com/watch?v=czWeeCXe0zM) | روائع إذاعة القرآن RadioQuran | 323.431 | 3882048 |
+| `tobar-isha` | [Source](https://www.youtube.com/watch?v=czWeeCXe0zM) | روائع إذاعة القرآن RadioQuran | 317.831 | 3814653 |
 | `azhar-friday` | [Source](https://www.youtube.com/watch?v=cD3mXVGD4iI) | Al-Azhar Al-Shareef | 198.182 | 2378963 |
 | `shuaisha` | [Source](https://audio.islamweb.net/audio/index.php?audioid=122662&page=audioinfo) | Islamweb | 236.548 | 473216 |
 | `husary` | [Source](https://audio.islamweb.net/audio/index.php?audioid=122667&page=audioinfo) | Islamweb | 127.504 | 256128 |
 | `rifaat` | [Source](https://audio.islamweb.net/audio/index.php?audioid=122665&page=audioinfo) | Islamweb | 203.716 | 407680 |
 
-The three Islamweb files were fetched using their actual publisher `contentUrl` and public publisher Referer, returned HTTP 200 and decoded as MP3. Their original bytes were retained. YouTube recordings were read from the specific public videos, selecting audio only, and converted to MP3 at 96 kbit/s using yt-dlp 2026.08.19 and FFmpeg N-125875-g5d4d3bdc61-20260731. No clip was shortened, remixed, pitch-shifted or replaced with synthetic speech. `ffprobe` confirmed all twelve complete files decode. Uploader metadata is not copied into public logs; signed delivery URLs and response tokens are not stored in the catalogue.
+The three Islamweb files were fetched using their actual publisher `contentUrl` and public publisher Referer, returned HTTP 200 and decoded as MP3. Their original bytes were retained. YouTube recordings were read from the specific public videos, selecting audio only, and converted to MP3 at 96 kbit/s using yt-dlp 2026.08.19 and FFmpeg N-125875-g5d4d3bdc61-20260731. The original 0.6.0 clips were not shortened, remixed, pitch-shifted or replaced with synthetic speech. Version 0.6.1 removes exactly the first 5.6 seconds of `tobar-isha` at the user's request; all other eleven files, including `intro-isha`, remain byte-identical. `ffprobe` confirmed all twelve complete files decode. Uploader metadata is not copied into public logs; signed delivery URLs and response tokens are not stored in the catalogue.
 
 ## Private assets and reproducibility
 
@@ -95,3 +95,17 @@ The separate hardware APK compiles the production Kotlin sources and private ass
 The final production Kotlin sources were also compiled into the isolated test APK after the restart fix. Actual native ESA/cache setup, exact ten-minute timestamp spacing, +30s reminder, +60s media foreground playback, notification stop and disabling/cancellation checks passed. This run recorded `screenOff=false`; it is not a new locked-screen claim. The test package was uninstalled afterward. Only the separate product acceptance test can establish user-confirmed audibility/locked-screen behavior for the final 0.6 APK.
 
 Production web export passed with all three API routes. Expo Doctor was rerun on 0.6 and returned 19/20: the same five SDK 58 patch recommendations remain; no exclusion was used to hide the check.
+
+## Isha start trim — 0.6.1
+
+The user confirmed that the installed 0.6.0 Friday notification, Friday intro and Al-Azhar Adhan worked with the screen locked, then requested removing the first 5.6 seconds of the separate Isha Adhan. This confirmation belongs to 0.6.0, not a new 0.6.1 listening test.
+
+Original `tobar-isha` SHA256: `14f33f0c7dd34de1b4aa1e0385836bbdaa905b0b49afc52d977cabd6d57ff487`, 3882048 bytes, 323.430748 seconds. The original MP3 was backed up privately. FFmpeg decoded it, removed exactly 246960 samples per channel at 44100 Hz (5.6 seconds), reset timestamps and encoded the remainder as 96 kbit/s MP3, without normalization or fades:
+
+```powershell
+ffmpeg -i tobar-isha-original.mp3 -map 0:a:0 -af "atrim=start_sample=246960,asetpts=PTS-STARTPTS" -c:a libmp3lame -b:a 96k -map_metadata -1 tobar-isha.mp3
+```
+
+New SHA256: `914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393`, 3814653 bytes, 317.830748 seconds. The original tail and edited output both decode to 14016336 stereo samples per channel. Their first five seconds have zero-offset waveform correlation 0.99998578 (SNR 25.97 dB), consistent with the same start and MP3 re-encoding. All other eleven recording hashes match the 0.6.0 catalogue. No playback logic, intro, prayer schedule or Friday rule changed. Native extraction replaces the old cached Isha file when the new catalogue hash is checked. Restart an existing local web preview to clear its in-memory audio cache.
+
+The patch's build, signature, packaged bytes and actual update/launch evidence are tracked in `ANDROID_APK_RELEASE.md`; prior 0.6.0 evidence is archived separately.

@@ -18,7 +18,7 @@ Package `com.ramadanjourney.preview`, display name **ZAD**, version `0.6.0` / co
 | Actual permissions | Notification and Alarms & reminders access retained |
 | Isolated native playback | PASS, six pairs/all twelve files, notification stop and intro cancellation |
 | Isolated alarm regression | PASS, +30s reminder/+60s foreground MP3, cancellation and ten-minute timestamp spacing; screen was on |
-| Final product Friday test with screen locked | Pending user confirmation |
+| Final product Friday test with screen locked | PASS, user confirmed notification → Friday intro → Al-Azhar Adhan in the installed 0.6.0 product |
 | Deep Doze / reboot / DND / long-term OEM behavior / TalkBack | Not device-tested |
 | Public release / Play Store | Not performed |
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.1 — Isha recording start
+
+- Removed exactly the first 5.6 seconds from the separate Tobar Isha Adhan; retained the Isha intro and all eleven other recording files byte-for-byte. Updated the pinned hash, size and duration for offline extraction and preview.
+- Recorded the user-confirmed 0.6.0 Friday locked-screen notification, intro and Al-Azhar playback separately from patch verification.
+
 ## 0.6.0 — prayer-specific voices and Friday audio
 
 - Added a hash-pinned twelve-clip catalogue: five ordinary MBC intros, one Friday intro and six Adhan recordings, with separate Tobar Fajr/Isha sources.

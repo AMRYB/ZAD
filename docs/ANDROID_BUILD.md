@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Expo SDK 58.0.17, React Native 0.88.0, Node 24, Java from Android Studio, and Android SDK/NDK versions resolved by the generated Expo/Gradle project. Package: `com.ramadanjourney.preview`; current source and tested ZAD preview version `0.6.0`, versionCode `8`. The local `modules/zad-adhan` Expo module is autolinked during generation. Generated native directories are not hand maintained or included in the source archive.
+Expo SDK 58.0.17, React Native 0.88.0, Node 24, Java from Android Studio, and Android SDK/NDK versions resolved by the generated Expo/Gradle project. Package: `com.ramadanjourney.preview`; current source and tested ZAD preview version `0.6.1`, versionCode `9`. The local `modules/zad-adhan` Expo module is autolinked during generation. Generated native directories are not hand maintained or included in the source archive.
 
 `eas.json` separates an internal APK profile from the production AAB profile. A hosted EAS build needs the owner's Expo account/project; no account or cloud build was created here.
 

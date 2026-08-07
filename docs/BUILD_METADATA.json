@@ -92,7 +92,7 @@
     "isolatedStopDuringIntroPassed": true,
     "isolatedAlarmRegressionPassed": true,
     "isolatedAlarmRunScreenOff": false,
-    "finalProductFridayLockedScreenTest": "PENDING_USER_CONFIRMATION",
+    "finalProductFridayLockedScreenTest": "PASS: user confirmed notification, Friday intro and Al-Azhar Adhan with screen locked on installed 0.6.0",
     "testHarnessRemoved": true,
     "usbConnected": true,
     "remainingDeviceGates": [

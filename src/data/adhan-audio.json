@@ -82,12 +82,14 @@
       "source": "https://www.youtube.com/watch?v=czWeeCXe0zM",
       "title": "الشيخ نصرالدين طوبار | يرفع أذان العشاء | إذاعة القرآن",
       "channel": "روائع إذاعة القرآن RadioQuran",
-      "sha256": "14f33f0c7dd34de1b4aa1e0385836bbdaa905b0b49afc52d977cabd6d57ff487",
-      "bytes": 3882048,
-      "duration": 323.430748,
+      "sha256": "914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393",
+      "bytes": 3814653,
+      "duration": 317.830748,
       "kind": "adhan",
       "ar": "نصر الدين طوبار — العشاء",
-      "en": "Nasr El-Din Tobar — Isha"
+      "en": "Nasr El-Din Tobar — Isha",
+      "trimStartSeconds": 5.6,
+      "originalSha256": "14f33f0c7dd34de1b4aa1e0385836bbdaa905b0b49afc52d977cabd6d57ff487"
     },
     "azhar-friday": {
       "source": "https://www.youtube.com/watch?v=cD3mXVGD4iI",
