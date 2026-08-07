@@ -1,5 +1,7 @@
 # Adhan implementation verification
 
+This document preserves the 0.5.0 baseline and its actual device results. For current 0.6 prayer-specific audio, final APK evidence and remaining acceptance checks, see `ADHAN_AUDIO_V0_6.md`, `ANDROID_APK_RELEASE.md` and `BUILD_METADATA.json`. Do not count a baseline locked-screen result as a new 0.6 test.
+
 ## Executed on 2026-10-24
 
 - TypeScript `npm test`: 40 PASS, including seven ESA/Adhan tests and all previous reader/storage/backend tests.

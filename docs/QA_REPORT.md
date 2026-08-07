@@ -6,12 +6,12 @@
 |---|---|---|
 | TypeScript `npm run typecheck` | PASS | Strict application types, API routes and tests |
 | ESLint `npm run lint` | PASS | Expo/React rules |
-| `npm test` | PASS, 40 tests | Domain behavior, KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization, ESA source/date/DST and Adhan migration |
-| Native release parser tests | PASS, 6 tests | Captured ESA table, dates, wall-clock parsing and Cairo DST |
+| `npm test` | PASS, 44 tests | Domain behavior, KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization, ESA source/date/DST and Adhan migration |
+| Native release parser tests | PASS, 11 tests | Captured ESA table, dates, Cairo DST and Friday-only sequence policy |
 | `npx expo-doctor` | 19/20, patch-version advisory | Five newer SDK 58 patch packages are recommended; not counted as a pass. See ADHAN_VERIFICATION.md |
 | `npm run build:web` | PASS | Production web bundles and all three fixed-source API routes exported |
 
-The current 0.5.0 Android release build, signature and 91 source/config/asset comparisons passed. The product APK was installed over 0.4.1 and cold-launched on a real Android 16 phone. The user completed city/permission setup and confirmed the final product's test notification and audible Adhan with the screen locked. Background Adhan, notification stop/cancellation and cold-process playback were also tested through a disposable harness compiling production Kotlin sources. See `ADHAN_VERIFICATION.md` and `ANDROID_APK_RELEASE.md` for exact scenario boundaries and remaining gates.
+The current 0.6.0 APK build/signature, 107 source/config/asset comparisons, seven compiled JavaScript sources and all twelve packaged audio hashes passed. The APK was installed over 0.5.0 and launched successfully on Android 16, retaining notification and exact-alarm permissions. Six native audio sequences, stopping a queued Adhan during its intro, and a separate exact-alarm regression were tested through an isolated harness. That alarm run had the screen on; final product locked-screen acceptance is tracked in `ADHAN_AUDIO_V0_6.md` and `ANDROID_APK_RELEASE.md`. The 0.5 evidence is archived separately.
 
 The PostgreSQL test executes the migration on PGlite with a test-only Supabase Auth shim. It checks own-user RLS, forbidden direct writes, stale revision rejection, award idempotency and daily cap, consented leaderboard projection, and deletion cascade. It does not test a deployed Supabase instance.
 

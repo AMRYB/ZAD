@@ -16,7 +16,7 @@
 | `/progress` | Actual aggregates, personal goal counters | Local records |
 | `/plans` | Independent page plans, explicit completion/undo | Local records |
 | `/more` | Adhan entry, locale/theme, season setup, JSON export/import confirmation, privacy/about | Local preferences / native file/share adapter or browser file adapter |
-| `/adhan` | Saved city, today/tomorrow/week/date timetables, next prayer, permissions and audio controls | ESA monthly source, private cache and native Android exact alarms |
+| `/adhan` | Saved city, today/tomorrow/week/date timetables, next prayer, permissions and five intro/voice previews with Friday override | ESA monthly source, private cache and native Android exact alarms |
 | Adhan city sheet | Search 82 authoritative city options; freely resize/dismiss sheet | Captured ESA selectors and local preferences |
 | `/calendar` | Configured 29/30-day grid and day links | Local season + date-keyed records |
 

@@ -89,3 +89,9 @@ The separate hardware APK compiles the production Kotlin sources and private ass
 - Android 16 isolated hardware APK: all six complete intro → Adhan transitions PASS, exercising all twelve files, and notification stop during an intro prevented its queued Adhan from starting. The harness also stopped each playing Adhan through its notification.
 - Found and repaired a real Android lifecycle race: a new preview could arrive after `stopSelf` but before `onDestroy`, and the old instance would then destroy the new audio. New starts received while stopping are retained until destruction finishes; cancellation generations invalidate waiting requests. Stale audio-focus callbacks are ignored after release. The six-case run passed after the fix.
 - Arabic normal/Friday and English/dark layouts were reviewed and screenshots saved. Final product APK build/installation/locked-screen results are recorded separately after execution; the earlier 0.5.0 result is not counted as a 0.6.0 playback test.
+
+## Additional alarm regression run
+
+The final production Kotlin sources were also compiled into the isolated test APK after the restart fix. Actual native ESA/cache setup, exact ten-minute timestamp spacing, +30s reminder, +60s media foreground playback, notification stop and disabling/cancellation checks passed. This run recorded `screenOff=false`; it is not a new locked-screen claim. The test package was uninstalled afterward. Only the separate product acceptance test can establish user-confirmed audibility/locked-screen behavior for the final 0.6 APK.
+
+Production web export passed with all three API routes. Expo Doctor was rerun on 0.6 and returned 19/20: the same five SDK 58 patch recommendations remain; no exclusion was used to hide the check.

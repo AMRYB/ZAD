@@ -8,6 +8,7 @@
 - Added sequential native playback and per-prayer previews, with matching private bundled recordings, all-file hash checks, one stop action and a duration bound that accommodates the longer Tobar recordings.
 - Fixed rapid stop/start lifecycle races and cleared pending audio after stopping an intro. All six native sequences and intro-stop were exercised on Android 16.
 - Replaced the single audio relay with a validated local clip selector; malformed/extra/duplicate selectors fail closed.
+- Built the private 0.6.0 arm64 APK, verified 107 runtime inputs/seven compiled sources/twelve exact recording hashes and installed it over 0.5.0 on Android 16. Versioned release records preserve the previous 0.5 evidence and distinguish final-product acceptance from isolated hardware tests.
 
 ## 0.5.0 — reader balance and Egyptian prayer times
 

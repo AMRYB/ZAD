@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import zipfile
 
@@ -64,14 +65,35 @@ def main():
             recording = apk.read('assets/zad-adhan/' + clip_id + '.mp3')
             assert len(recording) == clip['bytes'] and digest(recording) == clip['sha256'], f'Packaged recording differs: {clip_id}'
         dex = b''.join(apk.read(name) for name in names if name.endswith('.dex'))
-        for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob', b'AdhanAudio', b'AdhanSequence']:
+        for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob']:
             assert token in dex, f'Missing native release marker: {token}'
+        # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
+        # of requiring original class-name strings that release optimization removes.
+        mapping_file = build / 'android/app/build/outputs/mapping/release/mapping.txt'
+        residual_owners = {name: set() for name in ['AdhanAudio', 'AdhanSequence']}
+        owner = None
+        for line in mapping_file.read_text(encoding='utf-8').splitlines():
+            match = re.match(r'^([^\s].*) -> ([^:]+):$', line)
+            if match:
+                owner = match[2]
+                for helper in residual_owners:
+                    if match[1] == 'expo.modules.zadadhan.' + helper:
+                        residual_owners[helper].add(owner)
+            elif owner:
+                for helper in residual_owners:
+                    if 'expo.modules.zadadhan.' + helper + '.' in line:
+                        residual_owners[helper].add(owner)
+        for helper, owners in residual_owners.items():
+            assert owners, f'Missing R8 helper mapping: {helper}'
+            for residual in owners:
+                assert ('L' + residual.replace('.', '/') + ';').encode() in dex, f'Missing residual helper owner: {helper}'
         assert b'AdhanHardwareTest' not in dex and b'AdhanColdStartTest' not in dex, 'Test harness leaked into product APK'
     print(json.dumps({'sourceAndAssetFilesCompared': len(inputs), 'sourceMatchesBuild': True,
                       'compiledSourcesMatched': checked, 'abi': 'arm64-v8a',
                       'fontEntry': entry, 'fontSha256': font_sha, 'fontMatches': True,
                       'nativeAdhanPresent': True, 'testHarnessExcluded': True,
                       'packagedRecordingsMatched': len(catalogue['clips']),
+                      'r8AudioHelpersVerified': True,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
 
 

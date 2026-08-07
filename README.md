@@ -4,7 +4,7 @@ ZAD is an Arabic-first Expo / React Native application for private daily trackin
 
 ## Current source and release status
 
-Current source and inspected private Android preview: **0.5.0**, branded ZAD / زاد. The arm64 APK build, v2 signature, manifest, packaged Pro Light font and 91 source/config/asset files were verified. The APK was installed over 0.4.1 and cold-launched on an Android 16 phone. The user completed city/permission setup and confirmed the final product's test notification and audible Adhan with the screen locked. Separate native checks covered source requests, stop/cancellation and cold-process playback. See `docs/ANDROID_APK_RELEASE.md`, `docs/BUILD_METADATA.json` and `docs/ADHAN_VERIFICATION.md` for exact limits, including the Expo Doctor 19/20 patch-version advisory.
+Current source and inspected private Android preview: **0.6.0**, branded ZAD / زاد. The arm64 APK build, v2 signature, manifest, Light font, twelve packaged recordings and 107 source/config/asset files were verified. It was installed over 0.5.0 and launched successfully on an Android 16 phone, retaining notification and exact-alarm access. Six native intro/Adhan sequences, intro cancellation and separate exact-alarm regression checks passed through the isolated hardware APK. Final product Friday locked-screen confirmation is recorded separately. See `docs/ANDROID_APK_RELEASE.md`, `docs/BUILD_METADATA.json` and `docs/ADHAN_AUDIO_V0_6.md`; Expo Doctor remains 19/20 due to five patch recommendations.
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. Product requirements are available in `docs/source-plan/`.
 
@@ -23,7 +23,7 @@ The private preview uses locally supplied Font Awesome Pro 7.3.1 Light icons. Li
 - Configurable 29/30-day season and calendar; no invented Ramadan date; date/timezone and Arabic-number input handling.
 - KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, direct pinch zoom/pan, deliberate page swipes, sideways cycling control cards, freely resizable/dismissible reader sheets and split immersive controls.
 - Native SQLite persistence. Browser preview uses localStorage as a separate adapter.
-- More → Adhan: 82 saved city choices from the Egyptian Survey Authority, today/tomorrow/week and custom-date timetables, native exact prayer alarms, ten-minute reminders, offline Mohamed Rifaat Adhan and notification stop. The screen exposes permission, volume and schedule-coverage status.
+- More → Adhan: 82 saved city choices from the Egyptian Survey Authority, today/tomorrow/week and custom-date timetables, native exact prayer alarms, ten-minute reminders, offline per-prayer Tobar/Shuaisha/Husary/Rifaat recordings, MBC intros, a Friday Al-Azhar override and notification stop. The screen exposes permission, volume and schedule-coverage status.
 - JSON backup export and validated import, with confirmation before replacing device records.
 
 ## Run
@@ -43,7 +43,7 @@ On this Windows host, a loopback-only web preview was started with `$env:NODE_OP
 
 Open the URL printed by Expo. The development web preview includes a strictly allowlisted KSU relay because KSU `interface.php` does not send CORS headers. Native Android calls the original KSU endpoints directly. See [API_CONTRACT.md](docs/API_CONTRACT.md).
 
-Prayer times come exclusively from ESA's [official page](https://www.esa.gov.eg/praytimes.aspx), using its linked monthly form; there is no local astronomical or alternate-provider fallback. Android calls ESA directly and refreshes cached months through its local module. Web uses a fixed-source relay. Read [ESA_API_DOCUMENTATION.md](docs/ESA_API_DOCUMENTATION.md). Background Adhan requires the Android build, notification permission and Alarms & reminders access; it does not run from browser timers.
+Prayer times come exclusively from ESA's [official page](https://www.esa.gov.eg/praytimes.aspx), using its linked monthly form; there is no local astronomical or alternate-provider fallback. Android calls ESA directly and refreshes cached months through its local module. Web uses a fixed-source relay. Read [ESA_API_DOCUMENTATION.md](docs/ESA_API_DOCUMENTATION.md). Background Adhan requires the Android build, notification permission and Alarms & reminders access; it does not run from browser timers. Prayer-specific recordings and intros are locally prepared for the private build; public setup and hashes are documented in [ADHAN_AUDIO_V0_6.md](docs/ADHAN_AUDIO_V0_6.md).
 
 ```bash
 # Native debug build, when an Android device/emulator is available:

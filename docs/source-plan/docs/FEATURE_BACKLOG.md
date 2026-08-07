@@ -80,3 +80,4 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 
 - RJ-035: Prayer-specific voices, MBC intros and Friday Al-Azhar selection — catalogue and Cairo-date policies implemented; mapping/boundary tests pass. See `docs/ADHAN_AUDIO_V0_6.md`.
 - RJ-036: Native sequential intros/Adhan, stoppable queue and per-prayer preview — implemented; six real-device playback transitions and intro cancellation passed; private clips stay outside public Git.
+- RJ-037: ZAD 0.6.0 private APK — built, signed, source/font/audio verified and installed over 0.5.0; final Friday locked-screen acceptance is recorded separately in the release metadata.
