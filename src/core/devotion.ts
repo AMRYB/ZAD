@@ -1,4 +1,6 @@
 import {parseDate} from './calendar.ts';
+import catalogue from '../data/adhkar.json' with {type:'json'};
+const knownDhikr=new Map(catalogue.entries.map(e=>[e.id,e]));
 
 export const tasbihPhrases=[
   {id:'subhan',ar:'سُبْحَانَ اللَّهِ',en:'Glory be to Allah'},
@@ -24,7 +26,7 @@ export interface ReminderSettings {enabled:boolean;times:string[]}
 export interface DevotionState {
   tasbih:{phrase:TasbihPhrase;target:number;haptics:boolean;counts:Record<TasbihPhrase,number>;daily:Record<string,number>};
   adhkar:{counts:Record<string,Record<string,number>>;favorites:string[];last:Partial<Record<AdhkarCategory,string>>;fontSize:number};
-  deeds:{selected:string[];custom:{id:string;title:string}[];days:Record<string,string[]>};
+  deeds:{selected:string[];custom:{id:string;title:string;archived?:boolean}[];days:Record<string,string[]>};
   reminders:{adhkar:ReminderSettings;deeds:ReminderSettings};
 }
 export function initialDevotion():DevotionState{return {
@@ -43,6 +45,7 @@ export type DevotionAction=
   |{type:'adhkarFont';size:number}
   |{type:'deedSelect';id:string}
   |{type:'deedAdd';id:string;title:string}
+  |{type:'deedArchive';id:string}
   |{type:'deedToggle';id:string;date:string}
   |{type:'reminders';kind:'adhkar'|'deeds';value:ReminderSettings};
 const integer=(n:unknown,max=1000000000):n is number=>Number.isInteger(n)&&Number(n)>=0&&Number(n)<=max;
@@ -61,15 +64,16 @@ export function reduceDevotion(s:DevotionState,a:DevotionAction):DevotionState{
     case 'tasbihSettings':if(a.phrase&&!tasbihPhrases.some(p=>p.id===a.phrase)||a.target!==undefined&&(!integer(a.target,10000)||a.target===0)||a.haptics!==undefined&&typeof a.haptics!=='boolean')return s;return {...s,tasbih:{...s.tasbih,...a.phrase?{phrase:a.phrase}:{},...a.target?{target:a.target}:{},...a.haptics!==undefined?{haptics:a.haptics}:{}}};
     case 'tasbihReset':return {...s,tasbih:{...s.tasbih,counts:{...s.tasbih.counts,[s.tasbih.phrase]:0}}};
     case 'adhkarStep':{
-      if(!validSession(a.session)||!/^r\d+(?:-[a-z0-9]+)?$/.test(a.id)||!integer(a.limit,1000)||!a.limit||a.change!==1&&a.change!==-1)return s;
+      const entry=knownDhikr.get(a.id);if(!entry||!validSession(a.session)||!entry.categories.includes(a.session.split(':')[1])||a.limit!==entry.repeat||a.change!==1&&a.change!==-1)return s;
       const old=s.adhkar.counts[a.session]??{};return {...s,adhkar:{...s.adhkar,counts:{...s.adhkar.counts,[a.session]:{...old,[a.id]:Math.max(0,Math.min(a.limit,(old[a.id]??0)+a.change))}}}};
     }
-    case 'adhkarFavorite':if(!/^r\d+(?:-[a-z0-9]+)?$/.test(a.id))return s;return {...s,adhkar:{...s.adhkar,favorites:s.adhkar.favorites.includes(a.id)?s.adhkar.favorites.filter(id=>id!==a.id):[...s.adhkar.favorites,a.id]}};
-    case 'adhkarPosition':if(!categories.includes(a.category)||!/^r\d+(?:-[a-z0-9]+)?$/.test(a.id))return s;return {...s,adhkar:{...s.adhkar,last:{...s.adhkar.last,[a.category]:a.id}}};
+    case 'adhkarFavorite':if(!knownDhikr.has(a.id))return s;return {...s,adhkar:{...s.adhkar,favorites:s.adhkar.favorites.includes(a.id)?s.adhkar.favorites.filter(id=>id!==a.id):[...s.adhkar.favorites,a.id]}};
+    case 'adhkarPosition':if(!categories.includes(a.category)||!knownDhikr.get(a.id)?.categories.includes(a.category))return s;return {...s,adhkar:{...s.adhkar,last:{...s.adhkar.last,[a.category]:a.id}}};
     case 'adhkarReset':if(!validSession(a.session))return s;return {...s,adhkar:{...s.adhkar,counts:{...s.adhkar.counts,[a.session]:{}}}};
     case 'adhkarFont':return [22,26,30,34].includes(a.size)?{...s,adhkar:{...s.adhkar,fontSize:a.size}}:s;
     case 'deedAdd':if(!/^custom-[a-z0-9-]{1,60}$/.test(a.id)||!a.title.trim()||s.deeds.custom.length>=100||s.deeds.custom.some(d=>d.id===a.id))return s;return {...s,deeds:{...s.deeds,custom:[...s.deeds.custom,{id:a.id,title:a.title.trim().slice(0,100)}],selected:[...s.deeds.selected,a.id]}};
-    case 'deedSelect':if(!deedPresets.some(d=>d.id===a.id)&&!s.deeds.custom.some(d=>d.id===a.id))return s;return {...s,deeds:{...s.deeds,selected:s.deeds.selected.includes(a.id)?s.deeds.selected.filter(id=>id!==a.id):[...s.deeds.selected,a.id]}};
+    case 'deedSelect':if(!deedPresets.some(d=>d.id===a.id)&&!s.deeds.custom.some(d=>d.id===a.id&&!d.archived))return s;return {...s,deeds:{...s.deeds,selected:s.deeds.selected.includes(a.id)?s.deeds.selected.filter(id=>id!==a.id):[...s.deeds.selected,a.id]}};
+    case 'deedArchive':return {...s,deeds:{...s.deeds,selected:s.deeds.selected.filter(id=>id!==a.id),custom:s.deeds.custom.map(d=>d.id===a.id?{...d,archived:true}:d)}};
     case 'deedToggle':parseDate(a.date);if(!s.deeds.selected.includes(a.id))return s;{const old=s.deeds.days[a.date]??[];return {...s,deeds:{...s.deeds,days:{...s.deeds.days,[a.date]:old.includes(a.id)?old.filter(id=>id!==a.id):[...old,a.id]}}};}
     case 'reminders':return validReminder(a.value)?{...s,reminders:{...s.reminders,[a.kind]:a.value}}:s;
   }
@@ -80,11 +84,12 @@ export function validateDevotion(value:unknown):value is DevotionState{
     const t=value.tasbih,d=value.deeds,a=value.adhkar;
     if(!tasbihPhrases.some(p=>p.id===t.phrase)||!integer(t.target,10000)||!t.target||typeof t.haptics!=='boolean'||!record(t.counts)||Object.keys(t.counts).length!==tasbihPhrases.length||!tasbihPhrases.every(p=>integer((t.counts as Record<string,unknown>)[p.id]))||!record(t.daily))return false;
     for(const [date,n] of Object.entries(t.daily)){parseDate(date);if(!integer(n))return false;}
-    if(!record(a.counts)||!Array.isArray(a.favorites)||!a.favorites.every(id=>typeof id==='string'&&/^r\d+(?:-[a-z0-9]+)?$/.test(id))||new Set(a.favorites).size!==a.favorites.length||!record(a.last)||![22,26,30,34].includes(Number(a.fontSize)))return false;
-    for(const [category,id] of Object.entries(a.last))if(!categories.includes(category as AdhkarCategory)||typeof id!=='string'||!/^r\d+(?:-[a-z0-9]+)?$/.test(id))return false;
-    for(const [key,counts] of Object.entries(a.counts)){if(!validSession(key)||!record(counts))return false;for(const [id,n] of Object.entries(counts))if(!/^r\d+(?:-[a-z0-9]+)?$/.test(id)||!integer(n,1000))return false;}
-    if(!Array.isArray(d.custom)||d.custom.length>100||!d.custom.every(v=>record(v)&&typeof v.id==='string'&&/^custom-[a-z0-9-]{1,60}$/.test(v.id)&&typeof v.title==='string'&&v.title.trim().length>0&&v.title.length<=100)||!Array.isArray(d.selected)||!record(d.days))return false;
-    const ids=new Set<string>([...deedPresets.map(p=>p.id),...d.custom.map(v=>v.id)]);if(new Set(d.custom.map(v=>v.id)).size!==d.custom.length||new Set(d.selected).size!==d.selected.length||!d.selected.every(id=>ids.has(id)))return false;
+    if(!record(a.counts)||!Array.isArray(a.favorites)||!a.favorites.every(id=>typeof id==='string'&&knownDhikr.has(id))||new Set(a.favorites).size!==a.favorites.length||!record(a.last)||typeof a.fontSize!=='number'||![22,26,30,34].includes(a.fontSize))return false;
+    for(const [category,id] of Object.entries(a.last))if(!categories.includes(category as AdhkarCategory)||typeof id!=='string'||!knownDhikr.get(id)?.categories.includes(category))return false;
+    for(const [key,counts] of Object.entries(a.counts)){if(!validSession(key)||!record(counts))return false;for(const [id,n] of Object.entries(counts)){const entry=knownDhikr.get(id);if(!entry||!entry.categories.includes(key.split(':')[1])||!integer(n,entry.repeat))return false;}}
+    if(!Array.isArray(d.custom)||d.custom.length>100||!d.custom.every(v=>record(v)&&typeof v.id==='string'&&/^custom-[a-z0-9-]{1,60}$/.test(v.id)&&typeof v.title==='string'&&v.title.trim().length>0&&v.title.length<=100&&(v.archived===undefined||typeof v.archived==='boolean'))||!Array.isArray(d.selected)||!record(d.days))return false;
+    const custom=d.custom as {id:string;title:string;archived?:boolean}[];
+    const ids=new Set<string>([...deedPresets.map(p=>p.id),...custom.map(v=>v.id)]);if(new Set(custom.map(v=>v.id)).size!==custom.length||new Set(d.selected).size!==d.selected.length||!d.selected.every(id=>ids.has(id)&&!custom.some(v=>v.id===id&&v.archived)))return false;
     for(const [date,list] of Object.entries(d.days)){parseDate(date);if(!Array.isArray(list)||new Set(list).size!==list.length||!list.every(id=>ids.has(id)))return false;}
     return validReminder(value.reminders.adhkar)&&validReminder(value.reminders.deeds);
   }catch{return false;}

@@ -1,6 +1,6 @@
 import React,{useCallback,useEffect,useState} from 'react';
 import {ActivityIndicator,BackHandler,Pressable,View} from 'react-native';
-import {useFocusEffect} from 'expo-router';
+import {useFocusEffect,useLocalSearchParams} from 'expo-router';
 import {useQuery} from '@tanstack/react-query';
 import {StatusBar} from 'expo-status-bar';
 import {SafeAreaView,useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -27,9 +27,15 @@ function validatePoints(value:unknown):Coordinates{
 const clock=(seconds:number)=>`${Math.floor(seconds/60)}:${String(Math.floor(seconds%60)).padStart(2,'0')}`;
 
 export function Quran(){
+  const target=useLocalSearchParams<{sura?:string;aya?:string;entry?:string}>();
+  let initialSelection:{sura:number;aya:number}|undefined;
+  try{if(target.sura&&target.aya){const requested={sura:Number(target.sura),aya:Number(target.aya)};versePage(requested.sura,requested.aya);initialSelection=requested;}}catch{/* Invalid links fall back to the saved reading position. */}
+  return <QuranReader key={`${target.sura??'saved'}:${target.aya??''}:${target.entry??''}`} initialSelection={initialSelection}/>;
+}
+function QuranReader({initialSelection}:{initialSelection?:{sura:number;aya:number}}){
   const {state,dispatch,t,rtl,dark,colors,saveError,retrySave,readerImmersive,setReaderImmersive}=useApp();
   const insets=useSafeAreaInsets();
-  const [selection,setSelection]=useState(state.lastRead);
+  const [selection,setSelection]=useState(initialSelection??state.lastRead);
   const [sheet,setSheet]=useState<Sheet>(null);
   const [search,setSearch]=useState('');
   const [number,setNumber]=useState('1');

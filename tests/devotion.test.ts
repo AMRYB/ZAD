@@ -20,9 +20,9 @@ test('Older backups migrate with notifications disabled and corrupted devotional
 });
 test('Adhkar progress is bounded and isolated by date, section and prayer; favorites and position survive',()=>{
   let s=initialState();const session=adhkarSession('2026-10-24','prayer','fajr');
-  for(let i=0;i<5;i++)s=reducer(s,{type:'devotion',action:{type:'adhkarStep',session,id:'r86',limit:3,change:1}});
-  assert.equal(s.devotion.adhkar.counts[session].r86,3);assert.equal(s.devotion.adhkar.counts[adhkarSession('2026-10-24','prayer','asr')],undefined);
-  s=reducer(s,{type:'devotion',action:{type:'adhkarFavorite',id:'r86'}});s=reducer(s,{type:'devotion',action:{type:'adhkarPosition',category:'prayer',id:'r86'}});
+  for(let i=0;i<5;i++)s=reducer(s,{type:'devotion',action:{type:'adhkarStep',session,id:'r86-istighfar',limit:3,change:1}});
+  assert.equal(s.devotion.adhkar.counts[session]['r86-istighfar'],3);assert.equal(s.devotion.adhkar.counts[adhkarSession('2026-10-24','prayer','asr')],undefined);
+  s=reducer(s,{type:'devotion',action:{type:'adhkarFavorite',id:'r86-istighfar'}});s=reducer(s,{type:'devotion',action:{type:'adhkarPosition',category:'prayer',id:'r86-istighfar'}});
   assert.deepEqual(restoreState(JSON.stringify(s)).devotion.adhkar,s.devotion.adhkar);assert.throws(()=>adhkarSession('2026-02-30','morning'));
   assert.equal(reduceDevotion(s.devotion,{type:'adhkarStep',session:'bad',id:'r86',limit:3,change:1}),s.devotion);
 });

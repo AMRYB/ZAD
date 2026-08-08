@@ -19,6 +19,39 @@ class AdhanHardwareTest:Instrumentation(){
   private fun report(text:String){sendStatus(0,Bundle().apply {putString("stream","$text\n")})}
   override fun onStart(){
     val c=targetContext;val result=Bundle();var passed=false
+    if(mode=="personal-reminders"){
+      val manager=c.getSystemService(NotificationManager::class.java);val preferences=c.getSharedPreferences("zad-personal-reminders-v1",android.content.Context.MODE_PRIVATE)
+      fun awaitState(label:String,condition:()->Boolean){val until=SystemClock.elapsedRealtime()+5000;while(!condition()&&SystemClock.elapsedRealtime()<until)Thread.sleep(100);check(condition()){label};report("PASS: $label")}
+      var failure:Throwable?=null
+      val prayerConfig=AdhanEngine.prefs(c).getString("config",null)
+      try{
+        val settings=JSONObject().put("locale","ar").put("entries",JSONArray().apply {for((i,id) in DailyReminderPolicy.ids.withIndex())put(JSONObject().put("id",id).put("time",listOf("07:00","18:00","22:00","09:00","15:00","20:00")[i]))})
+        check(DailyReminders.configure(c,settings.toString())["count"]==6);DailyReminders.plan(c);check(DailyReminders.status(c)["count"]==6)
+        report("PASS: six independent personal reminders scheduled and restored without enabling Adhan")
+        DailyReminders.test(c,"deeds");DailyReminders.test(c,"adhkar");DailyReminders.configure(c,settings.toString())
+        val end=SystemClock.elapsedRealtime()+45000
+        while(SystemClock.elapsedRealtime()<end&&manager.activeNotifications.count {it.notification.channelId==DailyReminders.CHANNEL}<2)Thread.sleep(200)
+        val delivered=manager.activeNotifications.filter {it.notification.channelId==DailyReminders.CHANNEL};check(delivered.size==2)
+        check(delivered.any {it.notification.extras.getCharSequence(android.app.Notification.EXTRA_TITLE).toString().contains("فرصة لعمل خير")})
+        check(delivered.any {it.notification.extras.getCharSequence(android.app.Notification.EXTRA_TITLE).toString().contains("أذكار الصباح")})
+        check(delivered.all {it.notification.contentIntent!=null})
+        report("PASS: AlarmManager delivered Arabic good-deed and Adhkar notifications with opening actions")
+        val id="deeds-0";val at=preferences.getLong("last:$id:true",0);check(at>0);val generation=preferences.getLong("generation",0)
+        val duplicate=Intent().putExtra("id",id).putExtra("at",at).putExtra("test",true).putExtra("generation",generation)
+        val posted=manager.activeNotifications.first {it.tag==id}.postTime;Thread.sleep(30);DailyReminders.deliver(c,duplicate);check(manager.activeNotifications.first {it.tag==id}.postTime==posted)
+        check(DailyReminders.status(c)["count"]==6)
+        report("PASS: duplicate delivery ignored; unchanged foreground configuration preserves armed tests")
+        DailyReminders.configure(c,settings.put("locale","en").toString());val english=Intent().putExtra("id","adhkar-evening").putExtra("at",System.currentTimeMillis()).putExtra("test",true).putExtra("generation",preferences.getLong("generation",0))
+        DailyReminders.deliver(c,english);awaitState("English evening reminder delivered"){manager.activeNotifications.any {it.notification.extras.getCharSequence(android.app.Notification.EXTRA_TITLE).toString().contains("Evening adhkar")}}
+        DailyReminders.configure(c,JSONObject().put("locale","ar").put("entries",JSONArray()).toString());check(DailyReminders.status(c)["count"]==0)
+        manager.cancelAll();awaitState("own notifications cleared"){manager.activeNotifications.isEmpty()};DailyReminders.deliver(c,duplicate);Thread.sleep(150);check(manager.activeNotifications.isEmpty())
+        check(AdhanEngine.prefs(c).getString("config",null)==prayerConfig)
+        report("PASS: English labels, disabling cancellation, stale-generation rejection; prayer configuration unchanged")
+        report("Screen interactive at end: ${c.getSystemService(PowerManager::class.java).isInteractive}")
+      }catch(e:Throwable){failure=e}
+      finally{DailyReminders.configure(c,JSONObject().put("locale","ar").put("entries",JSONArray()).toString());manager.cancelAll()}
+      finish(if(failure==null)Activity.RESULT_OK else Activity.RESULT_CANCELED,Bundle().apply {if(failure==null)putString("stream","Personal reminders hardware checks passed\n")else putString("failure",failure.stackTraceToString())});return
+    }
     if(mode=="notification-controls"){
       val manager=c.getSystemService(NotificationManager::class.java)
       fun awaitState(label:String,timeout:Long=5000,condition:()->Boolean){val deadline=SystemClock.elapsedRealtime()+timeout;while(!condition()&&SystemClock.elapsedRealtime()<deadline)Thread.sleep(100);check(condition()){label};report("PASS: $label")}

@@ -114,3 +114,4 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-041 | Animated Tasbih and persisted devotional foundation | Implemented bead loop, tap/pull, reduced-motion support, haptics toggle, independent counters and backup migration; typecheck/lint and 49 TypeScript tests PASS. Final browser/device checks follow after integration |
+| RJ-042 | Source-pinned Adhkar reader and optional reminder foundation | 90 unique entries in six sections, favorites, full text/citations, per-prayer progress and last position; 53 TypeScript + 20 native tests PASS. Isolated Android personal reminders passed; source/limits documented in DEVOTIONAL_V0_8.md |

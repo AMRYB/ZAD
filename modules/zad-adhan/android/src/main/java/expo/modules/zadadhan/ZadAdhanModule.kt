@@ -22,6 +22,9 @@ class ZadAdhanModule:Module(){
     Function("configure"){settings:String->AdhanEngine.setSettings(context,settings)}
     AsyncFunction("refresh") Coroutine { -> withContext(Dispatchers.IO){AdhanEngine.refresh(context);AdhanEngine.status(context)}}
     Function("status"){AdhanEngine.status(context)}
+    Function("configureReminders"){settings:String->DailyReminders.configure(context,settings)}
+    Function("reminderStatus"){DailyReminders.status(context)}
+    Function("testReminder"){kind:String->DailyReminders.test(context,kind);Unit}
     AsyncFunction("requestNotifications"){promise:Promise->
       AdhanEngine.channels(context)
       if(Build.VERSION.SDK_INT>=33)Permissions.askForPermissionsWithPermissionsManager(appContext.permissions,promise,Manifest.permission.POST_NOTIFICATIONS)
