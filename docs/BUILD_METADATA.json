@@ -32,13 +32,12 @@
     "fontMatchesLocalSource": true,
     "proAssetsInPublicGit": false
   },
-  "version": "0.6.0",
-  "versionCode": 8,
-  "codeRevision": "e65b6ee405853f13e211a45878c13e2661b551e9",
-  "artifact": "../ZAD_v0.6.0_arm64.apk",
-  "bytes": 44590996,
-  "sha256": "1d97d3d5f48a276c04763d6d375033eaf88a06b01d3316014ceb61712fe5b2b7",
-  "sameSignerAsVersion05": true,
+  "version": "0.6.1",
+  "versionCode": 9,
+  "codeRevision": "1529c26fc61504b8584f9f174614178f59c30be0",
+  "artifact": "../ZAD_v0.6.1_arm64.apk",
+  "bytes": 44523836,
+  "sha256": "761b023871732cd92a95d653a83911768a3ed037574d277a50678de2fb0197ee",
   "runtimeSourceAndAssetFilesCompared": 107,
   "sourceMatchesBuild": true,
   "compiledSourcesMatched": [
@@ -57,49 +56,46 @@
     "lint": true,
     "testsPassed": 44,
     "nativeParserTestsPassed": 11,
-    "expoDoctor": "19/20",
-    "expoDoctorAdvisory": "Newer SDK 58 patch versions recommended; current tested lockfile retained",
-    "recommendedPatches": {
-      "expo": "58.0.19",
-      "expo-file-system": "58.0.11",
-      "expo-font": "58.0.10",
-      "expo-router": "58.0.26",
-      "expo-sqlite": "58.0.14"
-    },
-    "webExport": true,
-    "exportedApiRoutes": [
-      "/api/ksu",
-      "/api/esa",
-      "/api/adhan-audio"
-    ],
-    "androidBuild": "PASS; full build 7m 21s, final incremental refresh 2m 54s",
+    "nativeParserTestScope": "Six ESA and five sequence/date tests",
+    "expoDoctor": "Not rerun for media-only patch; unchanged dependency baseline 19/20 with five patch advisories",
+    "webExport": "Not rerun for media-only patch; 0.6.0 production export passed",
+    "webAudioResponses": "PASS: edited Isha and unchanged Isha intro each returned HTTP 200 audio/mpeg with exact catalogue hashes after server restart",
+    "androidBuild": "PASS; 7m 36s",
     "nativeAdhanPresent": true,
-    "testHarnessExcluded": true,
-    "nativeParserTestScope": "Six ESA and five sequence/date tests"
+    "testHarnessExcluded": true
   },
   "deviceInstallationTest": {
     "status": "PASS",
     "androidVersion": "16",
     "deviceModel": "23117RA68G",
-    "updatedFrom": "0.5.0",
+    "updatedFrom": "0.6.0",
     "launchStatus": "ok",
     "launchState": "UNKNOWN (0)",
     "ownProcessErrorsObserved": false,
     "notificationPermissionRetained": true,
     "exactAlarmAccessRetained": true,
-    "isolatedSequencesPassed": 6,
-    "isolatedRecordingsPlayed": 12,
-    "isolatedStopDuringIntroPassed": true,
-    "isolatedAlarmRegressionPassed": true,
-    "isolatedAlarmRunScreenOff": false,
-    "finalProductFridayLockedScreenTest": "PASS: user confirmed notification, Friday intro and Al-Azhar Adhan with screen locked on installed 0.6.0",
-    "testHarnessRemoved": true,
-    "usbConnected": true,
+    "trimmedIshaUserListeningTest": "Not repeated for this patch",
     "remainingDeviceGates": [
       "Deep Doze, DND and long-term OEM battery restrictions",
       "Reboot and long-term ESA refresh behavior",
       "Physical reader multitouch and TalkBack"
     ]
   },
-  "recordedAt": "2026-10-24T07:41:38Z"
+  "recordedAt": "2026-10-24T08:14:02.112865+00:00",
+  "sameSignerAsVersion06": true,
+  "baselineAcceptance": {
+    "version": "0.6.0",
+    "fridayLockedScreen": "PASS: user confirmed reminder, Friday intro and Al-Azhar Adhan before requesting this trim",
+    "record": "BUILD_METADATA_v0.6.0.json"
+  },
+  "audioTrim": {
+    "clip": "tobar-isha",
+    "removedSeconds": 5.6,
+    "removedSamplesPerChannel": 246960,
+    "sampleRate": 44100,
+    "remainingDecodedSamplesPerChannel": 14016336,
+    "firstFiveSecondsCorrelation": 0.9999857814061788,
+    "otherRecordingsByteIdentical": 11,
+    "newSha256": "914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393"
+  }
 }

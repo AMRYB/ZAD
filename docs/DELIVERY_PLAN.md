@@ -95,3 +95,9 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-035 | Fixed per-prayer/Friday audio catalogue and Cairo-date selection | Twelve source/hash/duration records; 44 TypeScript tests and 11 native parser/sequence tests PASS; exact user-selected intro/Friday IDs retained |
 | RJ-036 | Native intro/Adhan queue, private assets and per-prayer preview UI | Android 16: six sequences/all twelve files and intro-stop PASS; rapid stop/start race repaired; twelve HTTP hash checks and Arabic/English light/dark browser checks PASS |
 | RJ-037 | ZAD 0.6.0 private APK and release verification | Build/signature/107 source files/seven compiled sources/font/twelve audio hashes PASS; installed over 0.5.0 and launched on Android 16; permissions retained. 44 TypeScript + 11 native tests PASS. Final product Friday locked-screen confirmation tracked in release metadata |
+
+## Isha recording correction 0.6.1
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-038 | Remove first 5.6 seconds of Isha Adhan only and deliver patch APK | Exact sample trim/waveform check and eleven unchanged files PASS; typecheck/lint, 44 TypeScript + 11 native tests PASS; build/signature/107 inputs/seven compiled sources/twelve audio hashes PASS; installed over 0.6.0 and launched on Android 16 with permissions retained. New listening/locked-screen test not repeated |
