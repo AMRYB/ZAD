@@ -1,0 +1,862 @@
+{
+  "capturedDate": "2026-10-22",
+  "timezone": "Africa/Cairo",
+  "transport": "Chrome DevTools Protocol Network domain",
+  "browser": "Chrome/156.0.8078.47",
+  "requests": [
+    {
+      "id": "3AD882E92626F266E5C14A51398755D0",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/index.php",
+      "query": {},
+      "resourceType": "Document",
+      "initiator": "other",
+      "status": 200,
+      "mime": "text/html",
+      "contentType": "text/html; charset=UTF-8",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 32974,
+      "responseSample": "<!DOCTYPE html>\n<html> <head>\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-GRNQFHMTPZ\"></script>\n<script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments)",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.3",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/lang.php?ejs=1&l=ar",
+      "query": {
+        "ejs": "1",
+        "l": "ar"
+      },
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "text/html",
+      "contentType": "text/html; charset=UTF-8",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 12428,
+      "responseSample": "_lang = {\"title\":\"القرآن الكريم - مشروع المصحف الإلكتروني بجامعة الملك سعود\",\"sura\":\"السورة\",\"aya\":\"الآية\",\"page\":\"الصفحة\",\"juz\":\"الجزء\",\"hizb\":\"الحزب\",\"arbaa\":\"الأرباع\",\"first\":\"الأول\",\"second\":\"الثاني\",\"sowar\":\"الســورة\",\"ayat\":\"الآيــة\",",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.4",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/js/quran-data.js",
+      "query": {},
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "application/javascript",
+      "contentType": "application/javascript",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 39750,
+      "responseSample": "\n// Quran Metadata (ver 1.0) \n// Source: Tanzil.info \n\nvar Notice = 'Copyright (C) 2008 tanzil.info, Licenced Under GPL';\n\nvar QuranData = {};\n\n//------------------ Sura Data ---------------------\n\nQuranData.Sura = [\n\t// [start, ayas, order",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.5",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+      "query": {},
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "application/javascript",
+      "contentType": "application/javascript",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 95159,
+      "responseSample": "/*! jQuery v1.7.2 jquery.com | jquery.org/license */\n(function(a,b){function cy(a){return f.isWindow(a)?a:a.nodeType===9?a.defaultView||a.parentWindow:!1}function cu(a){if(!cj[a]){var b=c.body,d=f(\"<\"+a+\">\").appendTo(b),e=d.css(\"display\");d",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.6",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/js/jquery.easing.1.3.js",
+      "query": {},
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "application/javascript",
+      "contentType": "application/javascript",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 5689,
+      "responseSample": "/*\n * jQuery Easing v1.3 - http://gsgd.co.uk/sandbox/jquery/easing/\n *\n * Uses the built in easing capabilities added In jQuery 1.1\n * to offer multiple easing options\n *\n * TERMS OF USE - jQuery Easing\n * \n * Open source under the BSD Lice",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.7",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/js/p200.js",
+      "query": {},
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "application/javascript",
+      "contentType": "application/javascript",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 33607,
+      "responseSample": "/*\n * jPlayer Plugin for jQuery JavaScript Library\n * http://www.happyworm.com/jquery/jplayer\n *\n * Copyright (c) 2009 - 2010 Happyworm Ltd\n * Dual licensed under the MIT and GPL licenses.\n *  - http://www.opensource.org/licenses/mit-licens",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.8",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/js/jquery.booklet.1.1.0.js",
+      "query": {},
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "application/javascript",
+      "contentType": "application/javascript",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 31092,
+      "responseSample": "/*\n * jQuery Booklet Plugin\n * Copyright (c) 2010 W. Grauvogel (http://builtbywill.com/)\n *\n * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)\n * and GPL (http://www.opensource.org/licenses/gpl-license.php) ",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.9",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/js/jquery.hasher.min.js",
+      "query": {},
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "application/javascript",
+      "contentType": "application/javascript",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 4636,
+      "responseSample": "(function($,r){var h,n=Array.prototype.slice,t=decodeURIComponent,a=$.param,j,c,m,y,b=$.bbq=$.bbq||{},s,x,k,e=$.event.special,d=\"hashchange\",B=\"querystring\",F=\"fragment\",z=\"elemUrlAttr\",l=\"href\",w=\"src\",p=/^.*\\?|#.*$/g,u,H,g,i,C,E={};functi",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.10",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/js/engine.js",
+      "query": {},
+      "resourceType": "Script",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "application/javascript",
+      "contentType": "application/javascript",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 88138,
+      "responseSample": "/*-------------------- Globals ------------------------*/\ncurrAya   = 0;\ncurrPage  = -1;\nglobalPlay = 0;\npb_trans  = false;\npb_trans_map = {\"En\":\"English_Walk\" , \"Fr\":\"fr.leclerc_128kbs\" , \"Ur\":\"ur.khan_46kbs\" , \"Bs\":\"Bosnian_Korkut_128kbps",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.75",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/safahat1/1.png",
+      "query": {},
+      "resourceType": "Image",
+      "initiator": "other",
+      "status": 200,
+      "mime": "image/png",
+      "contentType": "image/png",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 104711,
+      "responseSample": "Binary PNG; representative signature 89504e470d0a1a0a"
+    },
+    {
+      "id": "2780.76",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/safahat1/2.png",
+      "query": {},
+      "resourceType": "Image",
+      "initiator": "other",
+      "status": 200,
+      "mime": "image/png",
+      "contentType": "image/png",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 105741,
+      "responseSample": "Binary PNG; representative signature 89504e470d0a1a0a"
+    },
+    {
+      "id": "2780.78",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=hilites&mosshaf=hafs&t=28&page=1",
+      "query": {
+        "ui": "pc",
+        "do": "hilites",
+        "mosshaf": "hafs",
+        "t": "28",
+        "page": "1"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "drawHilites",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 400
+        }
+      ],
+      "status": 200,
+      "mime": "application/json",
+      "contentType": "application/json; charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 575,
+      "responseSample": "{ \"1\": {  \"1_1\" : [181,301], \"1_2\" : [159,325], \"1_3\" : [243,353], \"1_4\" : [138,352], \"1_5\" : [173,378], \"1_6\" : [227,406], \"1_7\" : [191,459]} }",
+      "sampleTruncated": false
+    },
+    {
+      "id": "2780.79",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tarjama&tafsir=ar_mu&b_sura=1&b_aya=1&e_sura=2&e_aya=1&11",
+      "query": {
+        "11": "",
+        "ui": "pc",
+        "do": "tarjama",
+        "tafsir": "ar_mu",
+        "b_sura": "1",
+        "b_aya": "1",
+        "e_sura": "2",
+        "e_aya": "1"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "getTranslation",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 694
+        }
+      ],
+      "status": 200,
+      "mime": "application/json",
+      "contentType": "application/json; charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 4759,
+      "responseSample": "{\"tafsir\":{\"1_1\":{\"text\":\"سورة الفاتحة سميت هذه السورة بالفاتحة؛ لأنه يفتتح بها القرآن العظيم، وتسمى المثاني؛ لأنها تقرأ \"}}}",
+      "sampleTruncated": true,
+      "responseKeys": [
+        "1_1",
+        "1_2",
+        "1_3",
+        "1_4",
+        "1_5",
+        "1_6",
+        "1_7"
+      ]
+    },
+    {
+      "id": "2780.81",
+      "phase": "play-fatiha",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Husary_64kbps/001001.mp3",
+      "query": {},
+      "resourceType": "Media",
+      "initiator": "other",
+      "range": "bytes=0-",
+      "status": 206,
+      "mime": "audio/mpeg",
+      "contentType": "audio/mpeg",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 42359,
+      "responseSample": "Binary MPEG audio; 001001 first bytes fff38064000000000000000000000000"
+    },
+    {
+      "id": "2780.85",
+      "phase": "play-fatiha",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Husary_64kbps/001002.mp3",
+      "query": {},
+      "resourceType": "Media",
+      "initiator": "other",
+      "range": "bytes=0-",
+      "status": 206,
+      "mime": "audio/mpeg",
+      "contentType": "audio/mpeg",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 51345,
+      "responseSample": "Binary MPEG audio; 001001 first bytes fff38064000000000000000000000000"
+    },
+    {
+      "id": "2780.87",
+      "phase": "play-fatiha",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Husary_64kbps/001003.mp3",
+      "query": {},
+      "resourceType": "Media",
+      "initiator": "other",
+      "range": "bytes=0-",
+      "status": 206,
+      "mime": "audio/mpeg",
+      "contentType": "audio/mpeg",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 37135,
+      "responseSample": "Binary MPEG audio; 001001 first bytes fff38064000000000000000000000000"
+    },
+    {
+      "id": "2780.89",
+      "phase": "tafsir-sa3dy-1_4",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=sa3dy&sura=1&aya=4",
+      "query": {
+        "ui": "pc",
+        "do": "tafsir",
+        "author": "sa3dy",
+        "sura": "1",
+        "aya": "4"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "doTafsir",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 1265
+        }
+      ],
+      "status": 200,
+      "mime": "text/html",
+      "contentType": "text/html;charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 1460,
+      "responseSample": "مَالِكِ يَوْمِ الدِّينِ|||<p><span class=\"t4\">{ مَالِكِ يَوْمِ الدِّينِ }</span> المالك: هو من ",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.93",
+      "phase": "tafsir-next-1_5",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=sa3dy&sura=1&aya=5",
+      "query": {
+        "ui": "pc",
+        "do": "tafsir",
+        "author": "sa3dy",
+        "sura": "1",
+        "aya": "5"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "gotoTafsir",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 1351
+        }
+      ],
+      "status": 200,
+      "mime": "text/html",
+      "contentType": "text/html;charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 2289,
+      "responseSample": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ|||<p>وقوله <span class=\"t4\">{ إِيَّاكَ نَعْبُدُ وَإِيّ",
+      "sampleTruncated": true
+    },
+    {
+      "id": "2780.101",
+      "phase": "next-page-3",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=hilites&mosshaf=hafs&t=28&page=3",
+      "query": {
+        "ui": "pc",
+        "do": "hilites",
+        "mosshaf": "hafs",
+        "t": "28",
+        "page": "3"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "drawHilites",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 400
+        }
+      ],
+      "status": 200,
+      "mime": "application/json",
+      "contentType": "application/json; charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 656,
+      "responseSample": "{ \"3\": {  \"2_6\" : [335,106], \"2_7\" : [148,146], \"2_8\" : [59,185], \"2_9\" : [314,263], \"2_10\" : [136,302], \"2_11\" : [117,340], \"2_12\" : [149,380], \"2_13\" : [112,460], \"2_14\" : [223,537], \"2_15\" : [260,579], \"2_16\" : [60,616]} }",
+      "sampleTruncated": false
+    },
+    {
+      "id": "2780.102",
+      "phase": "next-page-3",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tarjama&tafsir=ar_mu&b_sura=2&b_aya=6&e_sura=2&e_aya=17&11",
+      "query": {
+        "11": "",
+        "ui": "pc",
+        "do": "tarjama",
+        "tafsir": "ar_mu",
+        "b_sura": "2",
+        "b_aya": "6",
+        "e_sura": "2",
+        "e_aya": "17"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "getTranslation",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 694
+        }
+      ],
+      "status": 200,
+      "mime": "application/json",
+      "contentType": "application/json; charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 3738,
+      "responseSample": "{\"tafsir\":{\"2_6\":{\"text\":\"إن الذين جحدوا ما أُنزل إليك من ربك استكبارًا وطغيانًا، لن يقع منهم الإيمان، سواء أخوَّفتهم وحذ\"}}}",
+      "sampleTruncated": true,
+      "responseKeys": [
+        "2_6",
+        "2_7",
+        "2_8",
+        "2_9",
+        "2_10",
+        "2_11",
+        "2_12",
+        "2_13",
+        "2_14",
+        "2_15",
+        "2_16"
+      ]
+    },
+    {
+      "id": "2780.103",
+      "phase": "next-page-3",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/safahat1/3.png",
+      "query": {},
+      "resourceType": "Image",
+      "initiator": "other",
+      "status": 200,
+      "mime": "image/png",
+      "contentType": "image/png",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 67771,
+      "responseSample": "Binary PNG; representative signature 89504e470d0a1a0a"
+    },
+    {
+      "id": "2780.104",
+      "phase": "next-page-3",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/safahat1/4.png",
+      "query": {},
+      "resourceType": "Image",
+      "initiator": "other",
+      "status": 200,
+      "mime": "image/png",
+      "contentType": "image/png",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 69077,
+      "responseSample": "Binary PNG; representative signature 89504e470d0a1a0a"
+    },
+    {
+      "id": "2780.106",
+      "phase": "prev-page-2",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/safahat1/1.png",
+      "query": {},
+      "resourceType": "Image",
+      "initiator": "other",
+      "status": 200,
+      "mime": "image/png",
+      "contentType": "image/png",
+      "fromDiskCache": true,
+      "fromServiceWorker": false,
+      "encodedDataLength": 0,
+      "responseSample": "Binary PNG; representative signature 89504e470d0a1a0a"
+    },
+    {
+      "id": "2780.107",
+      "phase": "prev-page-2",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/safahat1/2.png",
+      "query": {},
+      "resourceType": "Image",
+      "initiator": "other",
+      "status": 200,
+      "mime": "image/png",
+      "contentType": "image/png",
+      "fromDiskCache": true,
+      "fromServiceWorker": false,
+      "encodedDataLength": 0,
+      "responseSample": "Binary PNG; representative signature 89504e470d0a1a0a"
+    },
+    {
+      "id": "2780.108",
+      "phase": "prev-page-2",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=hilites&mosshaf=hafs&t=28&page=2",
+      "query": {
+        "ui": "pc",
+        "do": "hilites",
+        "mosshaf": "hafs",
+        "t": "28",
+        "page": "2"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "drawHilites",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 400
+        }
+      ],
+      "status": 200,
+      "mime": "application/json",
+      "contentType": "application/json; charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 538,
+      "responseSample": "{ \"2\": {  \"2_1\" : [283,324], \"2_2\" : [284,352], \"2_3\" : [231,380], \"2_4\" : [138,405], \"2_5\" : [191,457]} }",
+      "sampleTruncated": false
+    },
+    {
+      "id": "2780.109",
+      "phase": "prev-page-2",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tarjama&tafsir=ar_mu&b_sura=2&b_aya=1&e_sura=2&e_aya=6&11",
+      "query": {
+        "11": "",
+        "ui": "pc",
+        "do": "tarjama",
+        "tafsir": "ar_mu",
+        "b_sura": "2",
+        "b_aya": "1",
+        "e_sura": "2",
+        "e_aya": "6"
+      },
+      "resourceType": "XHR",
+      "initiator": "script",
+      "initiatorFrames": [
+        {
+          "function": "send",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "ajax",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "f.<computed>",
+          "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+          "line": 4
+        },
+        {
+          "function": "getTranslation",
+          "url": "https://quran.ksu.edu.sa/js/engine.js",
+          "line": 694
+        }
+      ],
+      "status": 200,
+      "mime": "application/json",
+      "contentType": "application/json; charset=\"utf-8\"",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 3164,
+      "responseSample": "{\"tafsir\":{\"2_1\":{\"text\":\"هذه الحروف وغيرها من الحروف المقطَّعة في أوائل السور فيها إشارة إلى إعجاز القرآن؛ فقد وقع به تح\"}}}",
+      "sampleTruncated": true,
+      "responseKeys": [
+        "2_1",
+        "2_2",
+        "2_3",
+        "2_4",
+        "2_5"
+      ]
+    },
+    {
+      "id": "2780.11",
+      "phase": "initial",
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/provider/index.php?g=css&456",
+      "query": {
+        "456": "",
+        "g": "css"
+      },
+      "resourceType": "Stylesheet",
+      "initiator": "parser",
+      "status": 200,
+      "mime": "text/css",
+      "contentType": "text/css; charset=utf-8",
+      "fromDiskCache": false,
+      "fromServiceWorker": false,
+      "encodedDataLength": 8150,
+      "responseSample": "a.hiliter.active{opacity:.1;filter:Alpha(opacity=10);background:#006a9d}",
+      "sampleTruncated": true
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://quran.ksu.edu.sa/js/quran-data.js",
+      "sha256": "6e93fd099e2897638f7ccd18756663b66b10c2334eaaf760b3f1c99ac0806804",
+      "bytes": 39431
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/js/jquery-1.7.2.min.js",
+      "sha256": "0fb170f24675c84f8228ad6b61d69bf6705030949cc2fec316b3a006eab282f8",
+      "bytes": 94839
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/js/jquery.easing.1.3.js",
+      "sha256": "36c50915a48b2c09ae9d617d9315b86ff0d23e575dbf8be99b7d7841831f3388",
+      "bytes": 5371
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/js/p200.js",
+      "sha256": "205b34464045796f399e1a85c315bd41ffb77a715ff9376c417a8c09fec034b8",
+      "bytes": 33289
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/js/jquery.booklet.1.1.0.js",
+      "sha256": "910c3a776f4f6c21d90d7cea4dbc3099540dccb61528c8b7ee1999e7832f177b",
+      "bytes": 30773
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/js/jquery.hasher.min.js",
+      "sha256": "a012b93f82ed151858b21bbba6ce6def183c11a2fa018098d5fb2318bfdcb383",
+      "bytes": 4319
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/js/engine.js",
+      "sha256": "dc45ce8c2d8e9326f7d809eb8df58b70a30dc7b8af745fe914fe17ad60d8146a",
+      "bytes": 87819
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=hilites&mosshaf=hafs&t=28&page=1",
+      "sha256": "47ec44cbebdce67faee94473d22f073cee6947494f6409aa16d4d196c52726fd",
+      "bytes": 144
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tarjama&tafsir=ar_mu&b_sura=1&b_aya=1&e_sura=2&e_aya=1&11",
+      "sha256": "ed1e6e19633c09a4d2325fef57f6fd8a9b1c3dcc963634a876fb18db3dd6892c",
+      "bytes": 4326
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=sa3dy&sura=1&aya=4",
+      "sha256": "f363858f788cbe14f63f19bfc8e550d99995d61da43ebcac9d6ee70244cea83e",
+      "bytes": 1035
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=sa3dy&sura=1&aya=5",
+      "sha256": "6cdfbe6c54585ad5b5a15c8eb0c5a05e5767380aa9ed8376c6cf5cf98d1bde24",
+      "bytes": 1864
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=hilites&mosshaf=hafs&t=28&page=3",
+      "sha256": "d1fab030e644ee6166a120b0d3411515da214c0a7534a353001bb1053e8d2395",
+      "bytes": 225
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tarjama&tafsir=ar_mu&b_sura=2&b_aya=6&e_sura=2&e_aya=17&11",
+      "sha256": "849d6653526b87a4996df8a788fc40b8387c84620e6c0fc0721eedb550a354d7",
+      "bytes": 3305
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=hilites&mosshaf=hafs&t=28&page=2",
+      "sha256": "cff14306b29e915e23a46093e718650bbbd85a1d0e0e4e58348cd4b7e7d528d8",
+      "bytes": 106
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tarjama&tafsir=ar_mu&b_sura=2&b_aya=1&e_sura=2&e_aya=6&11",
+      "sha256": "b692ea1c16e3ac919acf4bbd2c5a79fbea5aa5b842b469796ac27524f9372f9f",
+      "bytes": 2731
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/provider/index.php?g=css&456",
+      "bytes": 35601,
+      "sha256": "0c7ffc6d16041f1c3e382bb7b552acb04ef071aefafd5eda60fc2fd3b402f5de"
+    }
+  ],
+  "binarySamples": [
+    {
+      "url": "https://quran.ksu.edu.sa/ayat/safahat1/1.png",
+      "bytes": 104404,
+      "first16": "89504e470d0a1a0a0000000d49484452"
+    },
+    {
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Husary_64kbps/001001.mp3",
+      "bytes": 42003,
+      "first16": "fff38064000000000000000000000000"
+    }
+  ],
+  "observations": {
+    "automaticPlayback": {
+      "from": "1_1",
+      "to": "1_2",
+      "audio": "001002.mp3",
+      "time": 1.345022,
+      "duration": 6.243265,
+      "active": [
+        "1_2__hilite_1",
+        "1_2__hilite_2"
+      ],
+      "preloaded": "001003.mp3"
+    },
+    "tafsirNext": {
+      "displayed": "1_5",
+      "readerRemained": "1_4"
+    },
+    "offlineValidation": {
+      "rectangles": 52,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "navigationCases": 7,
+      "result": "PASS"
+    },
+    "liveSmoke": {
+      "sequentialRequests": 5,
+      "result": "PASS",
+      "statuses": [
+        200,
+        206,
+        200,
+        200,
+        200
+      ]
+    }
+  }
+}
