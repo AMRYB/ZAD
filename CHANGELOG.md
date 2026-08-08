@@ -6,6 +6,8 @@
 - Added mute/unmute beside notification stop during playback and a matching native Adhan-screen control. Mute persists across intro/Adhan, leaves phone alarm volume unchanged and clears for the next session.
 - Scoped immutable notification actions to prayer identities/playback sessions; persisted one-prayer mutes and rejected expired or stale controls. Added four native policy tests and a real-device notification-control harness flow.
 
+- Built, signature/source/font/audio verified, installed and cold-launched the private 0.7.0 arm64 APK over 0.6.1 on Android 16; retained permissions and existing prepared recordings.
+
 ## 0.6.1 — Isha recording start
 
 - Removed exactly the first 5.6 seconds from the separate Tobar Isha Adhan; retained the Isha intro and all eleven other recording files byte-for-byte. Updated the pinned hash, size and duration for offline extraction and preview.

@@ -70,3 +70,7 @@ The final **ZAD 0.5.0 / code 7** arm64 APK was installed successfully over 0.4.1
 The user then pressed the final product APK's test button and locked the screen for a minute. The user explicitly confirmed **both the notification and audible Adhan worked from ZAD**. This is final-product end-to-end evidence, separate from the isolated harness checks above. The test uses +30s/+60s; the real ten-minute prayer reminder lead is independently covered by timestamp checks. USB was connected, so this does not establish deep-Doze or long-term battery behavior.
 
 Signature/manifest checks, all 91 runtime source/config/asset comparisons, six compiled JavaScript source comparisons, exact packaged-font verification and artifact hash/size are recorded in `ANDROID_APK_RELEASE.md` and `BUILD_METADATA.json`. The test harness was excluded from the product and uninstalled. The user's actual Adhan settings and scheduled prayers were retained.
+
+## Notification controls 0.7
+
+Current notification countdown, single-prayer mute/undo, live playback mute/unmute, real isolated hardware checks and release boundaries are documented in `ADHAN_NOTIFICATIONS_V0_7.md`. Current product update/startup evidence is in `ANDROID_APK_RELEASE.md`; the 0.5 baseline above remains historical evidence.

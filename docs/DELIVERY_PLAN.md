@@ -107,4 +107,4 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-039 | Ten-minute countdown, per-prayer reminder mute/undo and live notification mute/unmute | Typecheck/lint, 44 TypeScript + 15 native tests PASS. Isolated Android 16 real actions, muted scheduled alarm, next-prayer playback, intro-to-Adhan mute, undo/stop and stale-session isolation PASS; phone volume unchanged |
-| RJ-040 | ZAD 0.7.0 private APK and release verification | Build and actual product update evidence maintained in current release record |
+| RJ-040 | ZAD 0.7.0 private APK and release verification | Build/signature/109 inputs/seven compiled sources/font/twelve audio hashes/actions PASS; installed over 0.6.1 and cold-launched on Android 16, permissions retained. New final-product user acceptance not repeated |

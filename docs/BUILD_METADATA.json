@@ -32,13 +32,13 @@
     "fontMatchesLocalSource": true,
     "proAssetsInPublicGit": false
   },
-  "version": "0.6.1",
-  "versionCode": 9,
-  "codeRevision": "1529c26fc61504b8584f9f174614178f59c30be0",
-  "artifact": "../ZAD_v0.6.1_arm64.apk",
-  "bytes": 44523836,
-  "sha256": "761b023871732cd92a95d653a83911768a3ed037574d277a50678de2fb0197ee",
-  "runtimeSourceAndAssetFilesCompared": 107,
+  "version": "0.7.0",
+  "versionCode": 10,
+  "codeRevision": "423731be3bb1a0ec0599573b4994e0f0de7147a3",
+  "artifact": "../ZAD_v0.7.0_arm64.apk",
+  "bytes": 44524524,
+  "sha256": "17483fac1385841a752e61cfdbba17e4468a5559dfa12c2f6ccedebeb034def2",
+  "runtimeSourceAndAssetFilesCompared": 109,
   "sourceMatchesBuild": true,
   "compiledSourcesMatched": [
     "src/screens/Quran.tsx",
@@ -55,34 +55,42 @@
     "typecheck": true,
     "lint": true,
     "testsPassed": 44,
-    "nativeParserTestsPassed": 11,
-    "nativeParserTestScope": "Six ESA and five sequence/date tests",
-    "expoDoctor": "Not rerun for media-only patch; unchanged dependency baseline 19/20 with five patch advisories",
-    "webExport": "Not rerun for media-only patch; 0.6.0 production export passed",
-    "webAudioResponses": "PASS: edited Isha and unchanged Isha intro each returned HTTP 200 audio/mpeg with exact catalogue hashes after server restart",
-    "androidBuild": "PASS; 7m 36s",
+    "nativeParserTestsPassed": 15,
+    "nativeParserTestScope": "Six ESA, five sequence/date, four reminder identity/timing policy tests",
+    "expoDoctor": "Not rerun; unchanged dependency baseline 19/20 with five SDK 58 patch advisories",
+    "webExport": true,
+    "exportedApiRoutes": [
+      "/api/ksu",
+      "/api/esa",
+      "/api/adhan-audio"
+    ],
+    "androidBuild": "PASS; 8m 31s",
     "nativeAdhanPresent": true,
-    "testHarnessExcluded": true
+    "testHarnessExcluded": true,
+    "isolatedNotificationControls": "PASS on Android 16: exact ten-minute spacing, countdown, reminder mute/undo, scheduled silent arrival, following-prayer playback, live mute/unmute across intro completion, stop and stale-session rejection",
+    "systemAlarmVolumeUnchanged": true,
+    "isolatedScreenOffAtEnd": true,
+    "isolatedScreenOffNote": "Sampled at end; not claimed as continuous screen-state or external acoustic measurement"
   },
   "deviceInstallationTest": {
     "status": "PASS",
     "androidVersion": "16",
     "deviceModel": "23117RA68G",
-    "updatedFrom": "0.6.0",
+    "updatedFrom": "0.6.1",
     "launchStatus": "ok",
-    "launchState": "UNKNOWN (0)",
+    "launchState": "COLD",
     "ownProcessErrorsObserved": false,
     "notificationPermissionRetained": true,
     "exactAlarmAccessRetained": true,
-    "trimmedIshaUserListeningTest": "Not repeated for this patch",
+    "finalProductNotificationUserAcceptance": "Not repeated after installation; isolated production-code hardware checks passed",
+    "testHarnessRemoved": true,
     "remainingDeviceGates": [
       "Deep Doze, DND and long-term OEM battery restrictions",
       "Reboot and long-term ESA refresh behavior",
       "Physical reader multitouch and TalkBack"
     ]
   },
-  "recordedAt": "2026-10-24T08:14:02.112865+00:00",
-  "sameSignerAsVersion06": true,
+  "recordedAt": "2026-10-24T08:45:30.459780+00:00",
   "baselineAcceptance": {
     "version": "0.6.0",
     "fridayLockedScreen": "PASS: user confirmed reminder, Friday intro and Al-Azhar Adhan before requesting this trim",
@@ -97,5 +105,18 @@
     "firstFiveSecondsCorrelation": 0.9999857814061788,
     "otherRecordingsByteIdentical": 11,
     "newSha256": "914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393"
+  },
+  "sameSignerAsVersion061": true,
+  "nativeReminderActionsPresent": true,
+  "notificationControls": {
+    "reminderLeadMinutes": 10,
+    "countdown": true,
+    "reminderMuteScope": "Only the matching city/date/prayer/generation/timestamp; includes intro and Adhan",
+    "reminderUndo": "Available before prayer time",
+    "liveMute": "Per-player volume, maintained across intro/Adhan, cleared for next session",
+    "staleSessionControlsRejected": true,
+    "newPermissions": false,
+    "actionReceiverExported": false,
+    "record": "ADHAN_NOTIFICATIONS_V0_7.md"
   }
 }

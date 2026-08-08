@@ -7,13 +7,15 @@
 | TypeScript `npm run typecheck` | PASS | Strict application types, API routes and tests |
 | ESLint `npm run lint` | PASS | Expo/React rules |
 | `npm test` | PASS, 44 tests | Domain behavior, KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization, ESA source/date/DST and Adhan migration |
-| Native release parser tests | PASS, 11 tests | Captured ESA table, dates, Cairo DST and Friday-only sequence policy |
+| Native release parser/policy tests | PASS, 15 tests | Captured ESA table, Cairo DST, Friday-only audio, reminder timing/identity/expiry |
 | `npx expo-doctor` | 19/20, patch-version advisory | Five newer SDK 58 patch packages are recommended; not counted as a pass. See ADHAN_VERIFICATION.md |
 | `npm run build:web` | PASS | Production web bundles and all three fixed-source API routes exported |
 
 The archived 0.6.0 APK build/signature, 107 source/config/asset comparisons, seven compiled JavaScript sources and all twelve packaged audio hashes passed. The APK was installed over 0.5.0 and launched successfully on Android 16, retaining notification and exact-alarm permissions. Six native audio sequences, stopping a queued Adhan during its intro, and a separate exact-alarm regression were tested through an isolated harness. That isolated alarm run had the screen on. The user subsequently confirmed the installed 0.6.0 product's Friday reminder, intro and Al-Azhar Adhan with the screen locked; evidence is archived in `ANDROID_APK_RELEASE_v0.6.0.md`. The 0.5 evidence is archived separately.
 
 Version 0.6.1: exactly 5.6 seconds were removed from the Isha Adhan, verified against the original decoded tail; all eleven other recordings remain byte-identical. Typecheck/lint, 44 TypeScript and 11 native tests passed again. The Isha and intro web responses match their hashes. APK build/signature, 107 inputs, seven compiled sources, twelve audio hashes and update/launch over 0.6.0 on Android 16 passed. Permissions remained granted, with no own-process runtime errors observed. New listening/locked-screen tests, production web export and Expo Doctor were not repeated for this media-only patch. See the current release record.
+
+Version 0.7.0: typecheck/lint, 44 TypeScript and 15 native tests passed. The production web export passed with all three API routes. Actual reminder/playback notification PendingIntents passed through the isolated Android 16 APK: ten-minute spacing/countdown, per-prayer mute/undo, scheduled silent arrival, next-prayer playback, mute across intro completion, unmute/stop and stale-session rejection. System alarm-volume value was unchanged; `screenOff=true` was sampled at the end. This is not an external acoustic measurement. The final product's 109 inputs, seven compiled sources, font, twelve recording hashes, signature, update over 0.6.1 and cold startup passed. Notification/exact-alarm permissions remained granted and no own-process runtime errors were observed. New final-product user acceptance was not repeated. See `ADHAN_NOTIFICATIONS_V0_7.md` and the current release record.
 
 The PostgreSQL test executes the migration on PGlite with a test-only Supabase Auth shim. It checks own-user RLS, forbidden direct writes, stale revision rejection, award idempotency and daily cap, consented leaderboard projection, and deletion cascade. It does not test a deployed Supabase instance.
 
