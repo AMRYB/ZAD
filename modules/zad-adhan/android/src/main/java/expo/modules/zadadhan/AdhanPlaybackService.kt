@@ -23,11 +23,16 @@ class AdhanPlaybackService:Service(){
   companion object {
     @Volatile var playing=false
     @Volatile var currentClip=""
+    @Volatile var muted=false
+    @Volatile private var controlSession=""
     const val STOP="zad.adhan.STOP"
+    const val MUTE="zad.adhan.MUTE"
+    const val UNMUTE="zad.adhan.UNMUTE"
     private const val ID=71033
     private val cancellation=java.util.concurrent.atomic.AtomicInteger()
     fun start(c:Context,intent:Intent){ContextCompat.startForegroundService(c,intent.putExtra("audioGeneration",cancellation.get()))}
     fun stop(c:Context){cancellation.incrementAndGet();c.stopService(Intent(c,AdhanPlaybackService::class.java))}
+    fun setMuted(c:Context,value:Boolean){val token=controlSession;if(playing&&token.isNotEmpty())c.startService(Intent(c,AdhanPlaybackService::class.java).setAction(if(value)MUTE else UNMUTE).putExtra("session",token))}
   }
   private var player:MediaPlayer?=null
   private var focus:AudioFocusRequest?=null
@@ -36,24 +41,39 @@ class AdhanPlaybackService:Service(){
   private var run=0
   private var stopping=false
   private var replacement:Intent?=null
+  private var session=""
+  private var activeEvent:JSONObject?=null
+  private var notificationClip=""
   private val handler=Handler(Looper.getMainLooper())
   private val timeout=Runnable { fail() }
   private val focusListener=AudioManager.OnAudioFocusChangeListener {change->if(change<0&&focusHeld)halt()}
   override fun onBind(intent:Intent?):IBinder?=null
   private fun notification(event:JSONObject?,clip:String){
+    notificationClip=clip
     val en=AdhanEngine.config(this).optString("locale")=="en"
-    val stop=PendingIntent.getService(this,ID,Intent(this,AdhanPlaybackService::class.java).setAction(STOP),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    fun control(action:String)=PendingIntent.getService(this,ID,Intent(this,AdhanPlaybackService::class.java).setAction(action)
+      .setData(android.net.Uri.parse("zad-adhan://playback/$session/$action")).putExtra("session",session),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    val stop=control(STOP)
+    val sound=control(if(muted)UNMUTE else MUTE)
     val n=NotificationCompat.Builder(this,AdhanEngine.PLAYBACK_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-      .setContentTitle(AdhanNotification.title(this,event)).setContentText(AdhanAudio.label(this,clip,en))
+      .setContentTitle(AdhanNotification.title(this,event)).setContentText(AdhanAudio.label(this,clip,en)+(if(muted){if(en)" · Muted" else " · مكتوم"}else ""))
       .setContentIntent(AdhanNotification.open(this)).setOngoing(true).setOnlyAlertOnce(true)
       .setCategory(NotificationCompat.CATEGORY_ALARM).setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-      .addAction(android.R.drawable.ic_media_pause,if(en)"Stop audio" else "إيقاف الصوت",stop).build()
+      .addAction(android.R.drawable.ic_media_pause,if(en)"Stop audio" else "إيقاف الصوت",stop)
+      .addAction(if(muted)android.R.drawable.ic_lock_silent_mode_off else android.R.drawable.ic_lock_silent_mode,
+        if(muted){if(en)"Unmute" else "تشغيل الصوت"}else{if(en)"Mute" else "كتم الصوت"},sound).build()
     if(playing){NotificationManagerCompat.from(this).notify(ID,n)}
     else if(Build.VERSION.SDK_INT>=29)startForeground(ID,n,ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
     else startForeground(ID,n)
   }
   override fun onStartCommand(intent:Intent?,flags:Int,startId:Int):Int {
-    if(intent?.action==STOP){cancellation.incrementAndGet();replacement=null;halt();return START_NOT_STICKY}
+    if(intent?.action in listOf(STOP,MUTE,UNMUTE)){
+      // A notification from an earlier run must never control a later prayer.
+      if(!playing||session.isEmpty()||intent?.getStringExtra("session")!=session){if(!playing)stopSelf();return START_NOT_STICKY}
+      if(intent?.action==STOP){cancellation.incrementAndGet();replacement=null;halt()}
+      else try{muted=intent?.action==MUTE;val volume=if(muted)0f else 1f;player?.setVolume(volume,volume);notification(activeEvent,notificationClip)}catch(_:Exception){fail()}
+      return START_NOT_STICKY
+    }
     if(intent==null||intent.getIntExtra("audioGeneration",cancellation.get())!=cancellation.get()){halt();return START_NOT_STICKY}
     // A new start can arrive after stopSelf but before Android calls onDestroy.
     // Save it for the new instance; never prepare audio in the instance being destroyed.
@@ -63,6 +83,7 @@ class AdhanPlaybackService:Service(){
     if(!preview&&(event==null||!AdhanEngine.validEvent(this,event))){halt();return START_NOT_STICKY}
     try{
       release();handler.removeCallbacks(timeout);AdhanEngine.channels(this)
+      session=java.util.UUID.randomUUID().toString();controlSession=session;activeEvent=event
       val date=if(preview)requireNotNull(intent?.getStringExtra("date")) else event!!.getString("date")
       val prayer=if(preview)requireNotNull(intent?.getStringExtra("prayer")) else event!!.getString("prayer")
       val clips=AdhanAudio.sequence(this,date,prayer)
@@ -89,7 +110,7 @@ class AdhanPlaybackService:Service(){
       val clip=clips[index];val recording=AdhanAudio.ensure(this,clip)
       val next=MediaPlayer();player=next
       next.setAudioAttributes(attributes);next.setDataSource(recording.absolutePath)
-      next.setOnPreparedListener {if(token==run&&player===it){it.start();currentClip=clip;notification(event,clip)}}
+      next.setOnPreparedListener {if(token==run&&player===it){val volume=if(muted)0f else 1f;it.setVolume(volume,volume);it.start();currentClip=clip;notification(event,clip)}}
       next.setOnCompletionListener {if(token==run&&player===it)play(clips,index+1,token,attributes,event)}
       next.setOnErrorListener {_,_,_->if(token==run)fail();true}
       next.prepareAsync()
@@ -98,7 +119,7 @@ class AdhanPlaybackService:Service(){
   private fun fail(){AdhanEngine.prefs(this).edit().putString("error","PLAYBACK_FAILED").apply();halt()}
   private fun halt(){if(stopping)return;stopping=true;handler.removeCallbacks(timeout);release();stopSelf()}
   private fun release(){
-    run++;playing=false;currentClip="";focusHeld=false;player?.release();player=null
+    run++;playing=false;currentClip="";muted=false;session="";controlSession="";activeEvent=null;notificationClip="";focusHeld=false;player?.release();player=null
     if(wake?.isHeld==true)wake?.release();wake=null
     val audio=getSystemService(AudioManager::class.java)
     if(Build.VERSION.SDK_INT>=26){val old=focus;focus=null;old?.let {audio.abandonAudioFocusRequest(it)}}

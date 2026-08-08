@@ -32,6 +32,7 @@ class ZadAdhanModule:Module(){
     Function("openSoundSettings"){context.startActivity(Intent(Settings.ACTION_SOUND_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))}
     AsyncFunction("preview") Coroutine {date:String,prayer:String->val version=previewVersion.incrementAndGet();withContext(Dispatchers.IO){AdhanAudio.sequence(context,date,prayer).forEach {AdhanAudio.ensure(context,it)};if(version==previewVersion.get())AdhanPlaybackService.start(context,Intent(context,AdhanPlaybackService::class.java).putExtra("preview",true).putExtra("date",date).putExtra("prayer",prayer));Unit}}
     Function("stop"){previewVersion.incrementAndGet();AdhanPlaybackService.stop(context);Unit}
+    Function("setMuted"){value:Boolean->AdhanPlaybackService.setMuted(context,value);Unit}
     AsyncFunction("testAlarm"){date:String,prayer:String->AdhanEngine.test(context,date,prayer)}
   }
 }

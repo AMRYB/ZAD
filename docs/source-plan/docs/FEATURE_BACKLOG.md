@@ -83,3 +83,6 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 - RJ-037: ZAD 0.6.0 private APK — built, signed, source/font/audio verified and installed over 0.5.0; final Friday locked-screen acceptance is recorded separately in the release metadata.
 
 - RJ-038: Isha recording correction — removed exactly 5.6 seconds from the Isha Adhan only, verified the retained waveform and eleven unchanged files, updated the pinned hash/duration, and built/verified/installed 0.6.1 over 0.6.0 on Android 16. Typecheck/lint, 44 TypeScript and 11 native tests PASS. New patch listening/locked-screen test not repeated; the user confirmed the previous 0.6.0 Friday test.
+
+- RJ-039: Prayer notification controls — implemented ten-minute countdown, one-prayer mute/undo and current playback mute/unmute with session-safe controls. Typecheck/lint, 44 TypeScript and 15 native tests PASS; actual notification actions and scheduled muted alarm passed on isolated Android 16 hardware. See `../../ADHAN_NOTIFICATIONS_V0_7.md`.
+- RJ-040: ZAD 0.7.0 private APK — build, package checks and final update/launch are recorded after execution in the current release metadata.

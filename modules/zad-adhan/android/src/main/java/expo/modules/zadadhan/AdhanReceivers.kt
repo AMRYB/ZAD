@@ -14,6 +14,10 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 object AdhanNotification {
+  const val MUTE_PRAYER="zad.adhan.MUTE_PRAYER"
+  const val UNMUTE_PRAYER="zad.adhan.UNMUTE_PRAYER"
+  private const val REMINDER_ID=71034
+  private fun tag(event:JSONObject)="reminder:"+AdhanEngine.audioKey(event)
   fun title(c:Context,event:JSONObject?):String {
     val en=AdhanEngine.config(c).optString("locale")=="en"
     val key=event?.optString("prayer")?:"test"
@@ -27,19 +31,45 @@ object AdhanNotification {
   }
   fun reminder(c:Context,event:JSONObject){
     val en=AdhanEngine.config(c).optString("locale")=="en"
-    val n=NotificationCompat.Builder(c,AdhanEngine.REMINDER_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_idle_alarm).setContentTitle(title(c,event))
-      .setContentText(if(event.optBoolean("test")){if(en)"Adhan audio test" else "اختبار صوت الأذان"}else if(en)"In 10 minutes · ${EsaParser.normalize(event.getString("city"))}" else "بعد عشر دقائق · ${EsaParser.normalize(event.getString("city"))}")
-      .setContentIntent(open(c)).setAutoCancel(true).setCategory(NotificationCompat.CATEGORY_REMINDER).setVisibility(NotificationCompat.VISIBILITY_PRIVATE).build()
-    if(AdhanEngine.notifications(c))try{NotificationManagerCompat.from(c).notify(event.getString("id").hashCode(),n)}catch(_:SecurityException){}
+    val muted=AdhanEngine.muted(c,event);val at=AdhanEngine.prayerAt(event)
+    val action=if(muted)UNMUTE_PRAYER else MUTE_PRAYER
+    val control=PendingIntent.getBroadcast(c,REMINDER_ID,Intent(c,AdhanReminderActionReceiver::class.java).setAction(action)
+      .setData(Uri.parse("zad-adhan://reminder/"+Uri.encode(AdhanEngine.audioKey(event))+"/$action")).putExtra("event",event.toString()),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    val heading=if(event.optBoolean("test")){if(en)"Adhan test in 30 seconds" else "اختبار الأذان بعد 30 ثانية"}else if(en)"${title(c,event)} in 10 minutes" else "باقي 10 دقائق على ${title(c,event)}"
+    val detail=EsaParser.normalize(event.getString("city"))+(if(muted){if(en)" · This Adhan is muted" else " · أذان الصلاة دي مكتوم"}else "")
+    val n=NotificationCompat.Builder(c,AdhanEngine.REMINDER_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_idle_alarm).setContentTitle(heading)
+      .setContentText(detail).setContentIntent(open(c)).setAutoCancel(true).setOnlyAlertOnce(true)
+      .setWhen(at).setShowWhen(true).setUsesChronometer(true).setChronometerCountDown(true).setTimeoutAfter((at-System.currentTimeMillis()).coerceAtLeast(1))
+      .setCategory(NotificationCompat.CATEGORY_REMINDER).setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+      .addAction(if(muted)android.R.drawable.ic_lock_silent_mode_off else android.R.drawable.ic_lock_silent_mode,
+        if(muted){if(en)"Unmute this Adhan" else "إلغاء كتم الأذان"}else{if(en)"Mute this Adhan" else "كتم أذان الصلاة دي"},control).build()
+    if(AdhanEngine.notifications(c))try{NotificationManagerCompat.from(c).notify(tag(event),REMINDER_ID,n)}catch(_:SecurityException){}
+  }
+  fun dismissReminder(c:Context,event:JSONObject)=NotificationManagerCompat.from(c).cancel(tag(event),REMINDER_ID)
+  fun mutedPrayer(c:Context,event:JSONObject){
+    val en=AdhanEngine.config(c).optString("locale")=="en"
+    val n=NotificationCompat.Builder(c,AdhanEngine.PLAYBACK_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_silent_mode)
+      .setContentTitle(title(c,event)).setContentText(if(en)"This Adhan was muted. The next prayer will play normally." else "أذان الصلاة دي مكتوم. الصلاة الجاية بصوتها عادي.")
+      .setContentIntent(open(c)).setAutoCancel(true).setSilent(true).setCategory(NotificationCompat.CATEGORY_REMINDER).setVisibility(NotificationCompat.VISIBILITY_PRIVATE).build()
+    try{NotificationManagerCompat.from(c).notify("muted:"+AdhanEngine.audioKey(event),71035,n)}catch(_:SecurityException){}
   }
 }
+class AdhanReminderActionReceiver:BroadcastReceiver(){override fun onReceive(context:Context,intent:Intent){
+  if(intent.action !in listOf(AdhanNotification.MUTE_PRAYER,AdhanNotification.UNMUTE_PRAYER))return
+  try{val event=JSONObject(intent.getStringExtra("event")?:return)
+    if(AdhanEngine.setPrayerMuted(context,event,intent.action==AdhanNotification.MUTE_PRAYER))AdhanNotification.reminder(context,event)
+  }catch(_:Exception){/* Expired or malformed controls must not affect another prayer. */}
+}}
 class AdhanAlarmReceiver:BroadcastReceiver(){override fun onReceive(context:Context,intent:Intent){
   try{
     val event=JSONObject(intent.getStringExtra("event")?:return)
     if(!AdhanEngine.validEvent(context,event)||!AdhanEngine.notifications(context))return
     AdhanEngine.channels(context)
     if(event.getBoolean("reminder"))AdhanNotification.reminder(context,event)
-    else AdhanPlaybackService.start(context,Intent(context,AdhanPlaybackService::class.java).putExtra("event",event.toString()))
+    else {AdhanNotification.dismissReminder(context,event)
+      if(AdhanEngine.muted(context,event))AdhanNotification.mutedPrayer(context,event)
+      else AdhanPlaybackService.start(context,Intent(context,AdhanPlaybackService::class.java).putExtra("event",event.toString()))
+    }
   }catch(_:Exception){AdhanEngine.prefs(context).edit().putString("error","ALARM_DELIVERY_FAILED").apply()}
 }}
 class AdhanRestoreReceiver:BroadcastReceiver(){override fun onReceive(context:Context,intent:Intent){

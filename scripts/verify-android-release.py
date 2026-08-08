@@ -65,7 +65,8 @@ def main():
             recording = apk.read('assets/zad-adhan/' + clip_id + '.mp3')
             assert len(recording) == clip['bytes'] and digest(recording) == clip['sha256'], f'Packaged recording differs: {clip_id}'
         dex = b''.join(apk.read(name) for name in names if name.endswith('.dex'))
-        for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob']:
+        for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob',
+                      b'AdhanReminderActionReceiver', b'zad.adhan.MUTE_PRAYER', b'zad.adhan.UNMUTE_PRAYER']:
             assert token in dex, f'Missing native release marker: {token}'
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
@@ -92,6 +93,7 @@ def main():
                       'compiledSourcesMatched': checked, 'abi': 'arm64-v8a',
                       'fontEntry': entry, 'fontSha256': font_sha, 'fontMatches': True,
                       'nativeAdhanPresent': True, 'testHarnessExcluded': True,
+                      'nativeReminderActionsPresent': True,
                       'packagedRecordingsMatched': len(catalogue['clips']),
                       'r8AudioHelpersVerified': True,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))

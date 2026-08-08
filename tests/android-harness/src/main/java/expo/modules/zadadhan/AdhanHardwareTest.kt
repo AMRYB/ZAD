@@ -19,6 +19,69 @@ class AdhanHardwareTest:Instrumentation(){
   private fun report(text:String){sendStatus(0,Bundle().apply {putString("stream","$text\n")})}
   override fun onStart(){
     val c=targetContext;val result=Bundle();var passed=false
+    if(mode=="notification-controls"){
+      val manager=c.getSystemService(NotificationManager::class.java)
+      fun awaitState(label:String,timeout:Long=5000,condition:()->Boolean){val deadline=SystemClock.elapsedRealtime()+timeout;while(!condition()&&SystemClock.elapsedRealtime()<deadline)Thread.sleep(100);check(condition()){label};report("PASS: $label")}
+      fun playback()=manager.activeNotifications.first {it.notification.channelId==AdhanEngine.PLAYBACK_CHANNEL&&it.notification.actions?.size==2}.notification
+      try{
+        check(AdhanEngine.exact(c)&&AdhanEngine.notifications(c))
+        val config=JSONObject().put("city","القـاهـرة").put("locale","ar").put("enabled",true).put("reminder",true)
+        AdhanEngine.configure(c,config.toString());manager.cancelAll()
+        val events=JSONArray(AdhanEngine.prefs(c).getString("alarms","[]")!!)
+        val alarm=(0 until events.length()).map {events.getJSONObject(it)}.first {!it.getBoolean("reminder")&&it.getLong("at")>System.currentTimeMillis()+600000}
+        val reminder=(0 until events.length()).map {events.getJSONObject(it)}.first {it.getBoolean("reminder")&&AdhanEngine.audioKey(it)==AdhanEngine.audioKey(alarm)}
+        check(alarm.getLong("at")-reminder.getLong("at")==600000L)
+        val now=System.currentTimeMillis()
+        val display=JSONObject(reminder.toString()).put("at",now).put("prayerAt",now+600000)
+        AdhanNotification.reminder(c,display)
+        val actual=manager.activeNotifications.first {it.notification.channelId==AdhanEngine.REMINDER_CHANNEL}.notification
+        check(actual.extras.getCharSequence(android.app.Notification.EXTRA_TITLE).toString().contains("10 دقائق"))
+        check(actual.`when`==now+600000&&actual.extras.getBoolean(android.app.Notification.EXTRA_SHOW_CHRONOMETER)&&actual.extras.getBoolean(android.app.Notification.EXTRA_CHRONOMETER_COUNT_DOWN))
+        check(actual.actions.single().title.toString()=="كتم أذان الصلاة دي")
+        AdhanNotification.dismissReminder(c,display)
+        report("PASS: real schedule has exactly ten-minute spacing; Arabic reminder title, future countdown and mute action")
+        AdhanEngine.test(c,"2026-10-24","isha")
+        val tests=JSONArray(AdhanEngine.prefs(c).getString("alarms","[]")!!)
+        val testReminder=tests.getJSONObject(tests.length()-2)
+        val testPrayer=tests.getJSONObject(tests.length()-1)
+        awaitState("AlarmManager delivered test reminder",40000){manager.activeNotifications.any {it.notification.channelId==AdhanEngine.REMINDER_CHANNEL}}
+        fun reminderControl()=manager.activeNotifications.first {it.notification.channelId==AdhanEngine.REMINDER_CHANNEL}.notification.actions.single().actionIntent
+        reminderControl().send();awaitState("reminder action mutes only its paired prayer"){AdhanEngine.muted(c,testPrayer)}
+        check(!AdhanEngine.muted(c,JSONObject(testPrayer.toString()).put("prayer","fajr")))
+        check(JSONObject(AdhanEngine.prefs(c).getString("mutedPrayers","{}")!!).has(AdhanEngine.audioKey(testPrayer)))
+        reminderControl().send();awaitState("reminder unmute restores its prayer"){!AdhanEngine.muted(c,testPrayer)}
+        reminderControl().send();awaitState("reminder can be muted again"){AdhanEngine.muted(c,testPrayer)}
+        awaitState("muted alarm delivered a silent prayer notification without starting audio",40000){manager.activeNotifications.any {it.tag?.startsWith("muted:")==true}&&!AdhanPlaybackService.playing}
+        check(manager.activeNotifications.none {it.notification.channelId==AdhanEngine.REMINDER_CHANNEL})
+        check(!AdhanEngine.setPrayerMuted(c,testReminder,false))
+        report("PASS: expired reminder control rejected; persisted mute does not affect another prayer")
+        val next=JSONObject(testPrayer.toString()).put("test",false).put("id","next-prayer").put("prayer","asr").put("at",System.currentTimeMillis()).put("prayerAt",System.currentTimeMillis())
+        AdhanAlarmReceiver().onReceive(c,Intent().putExtra("event",next.toString()))
+        awaitState("next prayer starts normally after one-prayer mute"){AdhanPlaybackService.currentClip=="intro-asr"}
+        val audio=c.getSystemService(AudioManager::class.java);val volume=audio.getStreamVolume(AudioManager.STREAM_ALARM)
+        val staleMute=playback().actions[1].actionIntent
+        staleMute.send();awaitState("playback notification mute action"){AdhanPlaybackService.muted}
+        awaitState("mute persists from intro into Adhan",16000){AdhanPlaybackService.currentClip=="husary"&&AdhanPlaybackService.muted}
+        playback().actions[1].actionIntent.send();awaitState("playback notification unmute action"){!AdhanPlaybackService.muted}
+        check(audio.getStreamVolume(AudioManager.STREAM_ALARM)==volume)
+        playback().actions[0].actionIntent.send();awaitState("notification stop releases audio"){!AdhanPlaybackService.playing}
+        AdhanPlaybackService.start(c,Intent(c,AdhanPlaybackService::class.java).putExtra("preview",true).putExtra("date","2026-10-24").putExtra("prayer","fajr"))
+        awaitState("new preview starts unmuted"){AdhanPlaybackService.currentClip=="intro-fajr"&&!AdhanPlaybackService.muted}
+        staleMute.send();Thread.sleep(350);check(!AdhanPlaybackService.muted&&AdhanPlaybackService.playing)
+        report("PASS: stale playback control cannot mute a later session; phone alarm volume unchanged")
+        playback().actions[0].actionIntent.send();awaitState("preview stopped"){!AdhanPlaybackService.playing}
+        AdhanEngine.setSettings(c,config.put("locale","en").toString())
+        val enNow=System.currentTimeMillis();val enDisplay=JSONObject(display.toString()).put("at",enNow).put("prayerAt",enNow+600000)
+        AdhanNotification.reminder(c,enDisplay)
+        val en=manager.activeNotifications.first {it.notification.channelId==AdhanEngine.REMINDER_CHANNEL}.notification
+        check(en.extras.getCharSequence(android.app.Notification.EXTRA_TITLE).toString().contains("in 10 minutes"))
+        check(en.actions.single().title.toString()=="Mute this Adhan")
+        report("PASS: English reminder labels; screenOff=${!c.getSystemService(PowerManager::class.java).isInteractive}")
+        finish(Activity.RESULT_OK,Bundle().apply {putString("stream","Notification countdown, one-prayer mute, live mute/unmute, session isolation and stop passed\n")})
+      }catch(e:Throwable){finish(Activity.RESULT_CANCELED,Bundle().apply {putString("failure",e.toString())})}
+      finally{AdhanPlaybackService.stop(c);AdhanEngine.configure(c,AdhanEngine.config(c).put("enabled",false).toString());manager.cancelAll()}
+      return
+    }
     if(mode=="sequences"){
       try{
         AdhanAudio.ensureAll(c)

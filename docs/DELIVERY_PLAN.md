@@ -101,3 +101,10 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-038 | Remove first 5.6 seconds of Isha Adhan only and deliver patch APK | Exact sample trim/waveform check and eleven unchanged files PASS; typecheck/lint, 44 TypeScript + 11 native tests PASS; build/signature/107 inputs/seven compiled sources/twelve audio hashes PASS; installed over 0.6.0 and launched on Android 16 with permissions retained. New listening/locked-screen test not repeated |
+
+## Prayer notification controls 0.7
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-039 | Ten-minute countdown, per-prayer reminder mute/undo and live notification mute/unmute | Typecheck/lint, 44 TypeScript + 15 native tests PASS. Isolated Android 16 real actions, muted scheduled alarm, next-prayer playback, intro-to-Adhan mute, undo/stop and stale-session isolation PASS; phone volume unchanged |
+| RJ-040 | ZAD 0.7.0 private APK and release verification | Build and actual product update evidence maintained in current release record |

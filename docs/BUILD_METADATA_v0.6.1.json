@@ -1,0 +1,101 @@
+{
+  "package": "com.ramadanjourney.preview",
+  "displayName": "ZAD",
+  "architecture": "arm64-v8a",
+  "minSdk": 24,
+  "targetSdk": 36,
+  "compileSdk": 37,
+  "signatureVerified": true,
+  "signatureScheme": "v2",
+  "signing": "Android debug certificate; private preview",
+  "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+  "automaticAndroidBackup": false,
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.MODIFY_AUDIO_SETTINGS",
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.WAKE_LOCK",
+    "android.permission.SCHEDULE_EXACT_ALARM",
+    "android.permission.POST_NOTIFICATIONS",
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+    "android.permission.RECEIVE_BOOT_COMPLETED",
+    "com.ramadanjourney.preview.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
+  "iconConfiguration": {
+    "version": "7.3.1",
+    "style": "Pro Classic Light",
+    "weight": 300,
+    "localLicensedAssets": true,
+    "packagedFontEntry": "res/7V.otf",
+    "packagedFontSha256": "46e24a495ff52fdbb821cfaf1a6eb033a81ecd63c3e2cb99bd14789810190392",
+    "fontMatchesLocalSource": true,
+    "proAssetsInPublicGit": false
+  },
+  "version": "0.6.1",
+  "versionCode": 9,
+  "codeRevision": "1529c26fc61504b8584f9f174614178f59c30be0",
+  "artifact": "../ZAD_v0.6.1_arm64.apk",
+  "bytes": 44523836,
+  "sha256": "761b023871732cd92a95d653a83911768a3ed037574d277a50678de2fb0197ee",
+  "runtimeSourceAndAssetFilesCompared": 107,
+  "sourceMatchesBuild": true,
+  "compiledSourcesMatched": [
+    "src/screens/Quran.tsx",
+    "src/screens/Adhan.tsx",
+    "src/screens/Settings.tsx",
+    "src/state/AdhanCoordinator.tsx",
+    "src/core/adhan.ts",
+    "src/core/adhan-sequence.ts",
+    "src/services/adhan-native.ts"
+  ],
+  "packagedRecordingsMatched": 12,
+  "r8AudioHelpersVerified": true,
+  "verification": {
+    "typecheck": true,
+    "lint": true,
+    "testsPassed": 44,
+    "nativeParserTestsPassed": 11,
+    "nativeParserTestScope": "Six ESA and five sequence/date tests",
+    "expoDoctor": "Not rerun for media-only patch; unchanged dependency baseline 19/20 with five patch advisories",
+    "webExport": "Not rerun for media-only patch; 0.6.0 production export passed",
+    "webAudioResponses": "PASS: edited Isha and unchanged Isha intro each returned HTTP 200 audio/mpeg with exact catalogue hashes after server restart",
+    "androidBuild": "PASS; 7m 36s",
+    "nativeAdhanPresent": true,
+    "testHarnessExcluded": true
+  },
+  "deviceInstallationTest": {
+    "status": "PASS",
+    "androidVersion": "16",
+    "deviceModel": "23117RA68G",
+    "updatedFrom": "0.6.0",
+    "launchStatus": "ok",
+    "launchState": "UNKNOWN (0)",
+    "ownProcessErrorsObserved": false,
+    "notificationPermissionRetained": true,
+    "exactAlarmAccessRetained": true,
+    "trimmedIshaUserListeningTest": "Not repeated for this patch",
+    "remainingDeviceGates": [
+      "Deep Doze, DND and long-term OEM battery restrictions",
+      "Reboot and long-term ESA refresh behavior",
+      "Physical reader multitouch and TalkBack"
+    ]
+  },
+  "recordedAt": "2026-10-24T08:14:02.112865+00:00",
+  "sameSignerAsVersion06": true,
+  "baselineAcceptance": {
+    "version": "0.6.0",
+    "fridayLockedScreen": "PASS: user confirmed reminder, Friday intro and Al-Azhar Adhan before requesting this trim",
+    "record": "BUILD_METADATA_v0.6.0.json"
+  },
+  "audioTrim": {
+    "clip": "tobar-isha",
+    "removedSeconds": 5.6,
+    "removedSamplesPerChannel": 246960,
+    "sampleRate": 44100,
+    "remainingDecodedSamplesPerChannel": 14016336,
+    "firstFiveSecondsCorrelation": 0.9999857814061788,
+    "otherRecordingsByteIdentical": 11,
+    "newSha256": "914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393"
+  }
+}

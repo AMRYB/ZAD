@@ -24,6 +24,21 @@ object AdhanEngine {
   private val lock=Any()
   fun prefs(c:Context)=c.getSharedPreferences(PREFS,Context.MODE_PRIVATE)
   fun config(c:Context)=JSONObject(prefs(c).getString("config","{}")!!)
+  fun prayerAt(event:JSONObject)=event.optLong("prayerAt",AdhanReminderPolicy.prayerAt(event.getLong("at"),event.getBoolean("reminder"),event.optBoolean("test")))
+  fun audioKey(event:JSONObject)=AdhanReminderPolicy.key(event.getString("city"),event.getString("date"),event.getString("prayer"),event.getLong("generation"),prayerAt(event),event.optBoolean("test"))
+  private fun muteEntries(c:Context):JSONObject {
+    val values=JSONObject(prefs(c).getString("mutedPrayers","{}")!!);val now=System.currentTimeMillis()
+    values.keys().asSequence().toList().filter {values.optLong(it)<=now}.forEach {values.remove(it)}
+    return values
+  }
+  fun muted(c:Context,event:JSONObject):Boolean=synchronized(lock){muteEntries(c).optLong(audioKey(event))>System.currentTimeMillis()}
+  fun setPrayerMuted(c:Context,event:JSONObject,muted:Boolean):Boolean=synchronized(lock){
+    val settings=config(c);val now=System.currentTimeMillis()
+    if(!event.optBoolean("reminder")||!settings.optBoolean("enabled")||event.optLong("generation",-1)!=prefs(c).getLong("generation",0)||event.optString("city")!=settings.optString("city")||!AdhanReminderPolicy.canChange(now,event.getLong("at"),prayerAt(event)))return@synchronized false
+    val entries=muteEntries(c);val key=audioKey(event)
+    if(muted)entries.put(key,prayerAt(event)+120000L)else entries.remove(key)
+    prefs(c).edit().putString("mutedPrayers",entries.toString()).commit();true
+  }
   fun exact(c:Context)=Build.VERSION.SDK_INT<31||c.getSystemService(AlarmManager::class.java).canScheduleExactAlarms()
   fun notifications(c:Context):Boolean {
     if(!NotificationManagerCompat.from(c).areNotificationsEnabled())return false
@@ -71,8 +86,8 @@ object AdhanEngine {
     for(key in listOf(month,EsaParser.nextMonth(month))){val data=EsaClient.cached(c,city,key)?:continue;val days=data.getJSONArray("days")
       for(i in 0 until days.length()){val day=days.getJSONObject(i);val date=day.getString("date");val times=day.getJSONObject("times")
         for(prayer in EsaParser.keys.filter { it!="sunrise" }){val at=EsaParser.epoch(date,times.getString(prayer));if(at>now+14*86400000L)continue
-          for(reminder in if(settings.optBoolean("reminder",true))listOf(false,true) else listOf(false)){val trigger=at-if(reminder)600000 else 0;if(trigger<=now)continue
-            val id="$city:$date:$prayer:$reminder";events.put(JSONObject().put("id",id).put("at",trigger).put("date",date).put("city",city).put("prayer",prayer).put("reminder",reminder).put("generation",generation))
+          for(reminder in if(settings.optBoolean("reminder",true))listOf(false,true) else listOf(false)){val trigger=at-if(reminder)AdhanReminderPolicy.LEAD_MS else 0;if(trigger<=now)continue
+            val id="$city:$date:$prayer:$reminder";events.put(JSONObject().put("id",id).put("at",trigger).put("prayerAt",at).put("date",date).put("city",city).put("prayer",prayer).put("reminder",reminder).put("generation",generation))
           }
         }
       }
@@ -83,9 +98,9 @@ object AdhanEngine {
     catch(_:SecurityException){cancel(c);prefs(c).edit().putString("error","EXACT_ALARM_DENIED").apply()}
   }}
   fun validEvent(c:Context,event:JSONObject):Boolean {val settings=config(c);return settings.optBoolean("enabled")&&event.optLong("generation",-1)==prefs(c).getLong("generation",0)&&event.optString("city")==settings.optString("city")&&System.currentTimeMillis()-event.getLong("at") in -1000L..120000L}
-  fun status(c:Context):Map<String,Any>{val events=JSONArray(prefs(c).getString("alarms","[]")!!);val now=System.currentTimeMillis();val audio=c.getSystemService(AudioManager::class.java);val future=(0 until events.length()).map {events.getJSONObject(it)}.filter { it.optLong("at")>now };return mapOf("available" to true,"exact" to exact(c),"notifications" to notifications(c),"audio" to AdhanAudio.ready(c),"count" to future.size,"until" to (future.maxByOrNull {it.getLong("at")}?.optString("date")?:""),"error" to prefs(c).getString("error","")!!,"playing" to AdhanPlaybackService.playing,"clip" to AdhanPlaybackService.currentClip,"enabled" to config(c).optBoolean("enabled"),"alarmVolume" to audio.getStreamVolume(AudioManager.STREAM_ALARM),"alarmMuted" to audio.isStreamMute(AudioManager.STREAM_ALARM))}
+  fun status(c:Context):Map<String,Any>{val events=JSONArray(prefs(c).getString("alarms","[]")!!);val now=System.currentTimeMillis();val audio=c.getSystemService(AudioManager::class.java);val future=(0 until events.length()).map {events.getJSONObject(it)}.filter { it.optLong("at")>now };return mapOf("available" to true,"exact" to exact(c),"notifications" to notifications(c),"audio" to AdhanAudio.ready(c),"count" to future.size,"until" to (future.maxByOrNull {it.getLong("at")}?.optString("date")?:""),"error" to prefs(c).getString("error","")!!,"playing" to AdhanPlaybackService.playing,"muted" to AdhanPlaybackService.muted,"clip" to AdhanPlaybackService.currentClip,"enabled" to config(c).optBoolean("enabled"),"alarmVolume" to audio.getStreamVolume(AudioManager.STREAM_ALARM),"alarmMuted" to audio.isStreamMute(AudioManager.STREAM_ALARM))}
   fun test(c:Context,date:String=EsaParser.today(),prayer:String="maghrib"){synchronized(lock){AdhanSequence.slot(date,prayer);require(exact(c)&&notifications(c)&&AdhanAudio.ready(c)&&config(c).optBoolean("enabled"));val now=System.currentTimeMillis();val events=JSONArray(prefs(c).getString("alarms","[]")!!)
-    for(reminder in listOf(true,false)){val event=JSONObject().put("id","test:$reminder").put("test",true).put("at",now+if(reminder)30000 else 60000).put("date",date).put("city",config(c).getString("city")).put("prayer",prayer).put("reminder",reminder).put("generation",prefs(c).getLong("generation",0));events.put(event)}
+    for(reminder in listOf(true,false)){val event=JSONObject().put("id","test:$reminder").put("test",true).put("at",now+if(reminder)30000 else 60000).put("prayerAt",now+60000).put("date",date).put("city",config(c).getString("city")).put("prayer",prayer).put("reminder",reminder).put("generation",prefs(c).getLong("generation",0));events.put(event)}
     prefs(c).edit().putString("alarms",events.toString()).commit();val manager=c.getSystemService(AlarmManager::class.java);for(i in events.length()-2 until events.length()){val event=events.getJSONObject(i);manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,event.getLong("at"),requireNotNull(pending(c,event)))}
   }}
 }
