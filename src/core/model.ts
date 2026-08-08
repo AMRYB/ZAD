@@ -2,6 +2,7 @@ import { addDays, dateInZone, parseDate } from './calendar.ts';
 import { quran } from '../data/quran.ts';
 import {reciterById,tafsirById,type ReciterId,type TafsirId} from '../data/ksu-readers.ts';
 import {defaultAdhan,validAdhan,type AdhanPreferences} from './adhan.ts';
+import {initialDevotion,reduceDevotion,validateDevotion,type DevotionState,type DevotionAction} from './devotion.ts';
 export type Locale = 'ar' | 'en';
 export type ThemeMode = 'system' | 'light' | 'dark';
 export const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
@@ -21,13 +22,15 @@ export interface State {
   bookmarks: Bookmark[]; lastRead: Bookmark;
   reader: ReaderPreferences;
   adhan:AdhanPreferences;
+  devotion:DevotionState;
 }
 export function initialState(): State {
   return { version: 1, onboarded: false, locale: 'ar', theme: 'system',
-    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan} };
+    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan},devotion:initialDevotion() };
 }
 export function emptyDay(): DayRecord { return { prayers: {}, fast: 'unlogged', note: '' }; }
 export type Action =
+  | {type:'devotion';action:DevotionAction}
   | { type: 'settings'; locale?: Locale; theme?: ThemeMode }
   | { type: 'onboard' }
   | {type:'adhanSettings';value:AdhanPreferences}
@@ -51,6 +54,7 @@ function positive(value: number, max: number): boolean { return Number.isInteger
 function validVerse(sura:number,aya:number):boolean { return positive(sura,114)&&positive(aya,quran.Sura[sura]?.ayas??0); }
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case 'devotion':{const devotion=reduceDevotion(state.devotion,action.action);return devotion===state.devotion?state:{...state,devotion};}
     case 'adhanSettings':return validAdhan(action.value)?{...state,adhan:action.value}:state;
     case 'settings': return { ...state, locale: action.locale ?? state.locale, theme: action.theme ?? state.theme };
     case 'readerSettings': {
@@ -99,6 +103,8 @@ export function restoreState(text: string): State {
   if(value&&value.version===1&&value.habits===undefined)value.habits=[];
   if(value&&value.version===1&&value.reader===undefined)value.reader=initialState().reader;
   if(value&&value.version===1&&value.adhan===undefined)value.adhan={...defaultAdhan};
+  if(value&&value.version===1&&value.devotion===undefined)value.devotion=initialDevotion();
+  if(value&&!validateDevotion(value.devotion))throw new Error('INVALID_STORAGE');
   if(value&&!validAdhan(value.adhan))throw new Error('INVALID_STORAGE');
   if (!value || value.version !== 1 || !['ar','en'].includes(value.locale) || !['system','light','dark'].includes(value.theme)
     || typeof value.onboarded !== 'boolean' || !value.season || ![29,30].includes(value.season.length)

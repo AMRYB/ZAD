@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 — personal remembrance and good deeds
+
+- Added a bead-loop Tasbih page beside Quran in bottom navigation, tap/downward-pull counting, optional haptics, independent phrase counters, personal goals, undo and confirmed reset. New devotional records migrate into existing private storage and backups.
+
 ## 0.7.0 — prayer notification sound controls
 
 - Added explicit ten-minute prayer reminder titles, a native countdown and a one-prayer mute/undo action. Muting skips that prayer's intro and Adhan while keeping subsequent prayers unchanged.
