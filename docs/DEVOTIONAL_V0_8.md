@@ -39,13 +39,15 @@ The optional test schedules a selected enabled group's notification after 15 sec
 
 ## Verification evidence
 
-- Typecheck and lint passed; 53 TypeScript tests passed, covering migration, persistence, bounded counters, six source sections, evening/prayer variants, shared daily counts, custom archival and opt-in reminders.
+- Typecheck and lint passed; 54 TypeScript tests passed, covering migration, persistence, bounded counters, six source sections, evening/prayer variants, shared daily counts, custom archival and opt-in reminders.
 - Native JUnit: 20 passing tests (six ESA, five Adhan sequence/date, four prayer-reminder policy and five personal-reminder clock/route tests).
 - Browser 390px Tasbih: bead rendering, tap, one deliberate pull, undo and reload persistence passed. Synthetic count changes were undone after capturing the demo screenshot.
 - Browser Adhkar: full waking text and source, completion cap, star/unstar, previous/next and last-position reopening passed. Synthetic count/favorite changes were undone after the demo capture.
 - Isolated Android 16 personal-reminder APK: six slots, restore planning, actual accelerated AlarmManager deliveries for Adhkar/Good Deeds with opening actions, duplicate suppression, stable reconfiguration, English body/title, cancellation and stale-generation rejection passed. The prayer configuration was unchanged. Screen was non-interactive at the final sample, not a continuous external screen-state or acoustic measurement. The harness waits for Android's asynchronous notification updates/cancellations.
-- Product APK signature/assets/source comparisons, current Good Deeds/browser results and installation status are maintained in the current release record after execution. Hardware perception of the new haptic effect is not asserted by browser tests.
+- Product APK signature/assets/source comparisons, current Good Deeds/browser results and installation status are maintained in the current release record after execution. The user separately confirmed native counting, physical haptic feedback and switching that feedback off on the installed 0.8.0 preview. The final reminder-draft-only refresh leaves that Tasbih implementation unchanged.
 
 The dependency lock retains the existing five SDK 58 patch advisories. An audit also reports five high-severity package findings in the Expo/CLI code-signing dependency chain (`expo`, `@expo/cli`, `@expo/code-signing-certificates`, `node-forge`, `zod`); no broad or forced SDK migration was made as part of this feature. New `expo-haptics` is not one of the reported packages. This private preview is not a public/Play release.
 
 References: [Expo SDK 58 Haptics](https://docs.expo.dev/versions/v58.0.0/sdk/haptics/), [Android AlarmManager](https://developer.android.com/reference/android/app/AlarmManager), [Risala source edition](https://risala.prh.gov.sa/ar/content/51).
+
+The reminder off-switch uses the last valid saved times immediately, even while an invalid unsaved time is being edited. Enabling or explicitly saving edited times still validates all three clock values; a regression test covers cancellation through the generated schedule.

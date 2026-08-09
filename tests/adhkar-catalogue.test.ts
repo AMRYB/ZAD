@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {adhkarEntries,adhkarSource,categoryInfo,entrySession,sectionEntries} from '../src/core/adhkar.ts';
 import {initialState,restoreState} from '../src/core/model.ts';
 import {initialDevotion,reduceDevotion} from '../src/core/devotion.ts';
-import {personalReminders} from '../src/core/personal-reminders.ts';
+import {personalReminders,reminderChange} from '../src/core/personal-reminders.ts';
 test('Risala catalogue has complete nontruncated text, six sections and traceable source notes',()=>{
   assert.equal(adhkarSource,'https://risala.prh.gov.sa/ar/content/51');assert.equal(adhkarEntries.length,90);assert.equal(new Set(adhkarEntries.map(e=>e.id)).size,90);
   for(const c of categoryInfo)assert.ok(sectionEntries(c.id).length>=4,c.id);
@@ -27,4 +27,10 @@ test('Reminder generation is opt-in, bounded and never includes private custom d
   s=reduceDevotion(s,{type:'reminders',kind:'adhkar',value:{enabled:true,times:['07:00','18:00','22:00']}});assert.equal(personalReminders(s).length,6);
   s=reduceDevotion(s,{type:'deedToggle',date:'2026-10-24',id:'custom-a'});s=reduceDevotion(s,{type:'deedArchive',id:'custom-a'});assert.equal(personalReminders(s).length,3);assert.deepEqual(s.deeds.days['2026-10-24'],['custom-a']);assert.equal(s.deeds.custom[0].archived,true);
   assert.deepEqual(restoreState(JSON.stringify({...initialState(),devotion:s})).devotion,s);
+});
+test('Disabling reminders cancels the generated schedule even with an invalid unsaved clock draft',()=>{
+  let s=initialDevotion();s=reduceDevotion(s,{type:'deedSelect',id:'charity'});s=reduceDevotion(s,{type:'reminders',kind:'deeds',value:{enabled:true,times:['09:00','15:00','20:00']}});
+  assert.equal(personalReminders(s).length,3);const next=reminderChange(s.reminders.deeds,['bad','15:00','20:00'],false,true);assert.ok(next);
+  s=reduceDevotion(s,{type:'reminders',kind:'deeds',value:next});assert.deepEqual(personalReminders(s),[]);assert.deepEqual(s.reminders.deeds.times,['09:00','15:00','20:00']);
+  assert.equal(reminderChange(s.reminders.deeds,['bad','15:00','20:00'],true),null);
 });
