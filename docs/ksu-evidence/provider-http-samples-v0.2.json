@@ -1,0 +1,82 @@
+{
+  "capturedAt": "2026-10-23T08:21:59.722Z",
+  "note": "Bounded HTTP checks; catalogue is not a full recording availability audit.",
+  "results": [
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=baghawy&sura=1&aya=2",
+      "status": 200,
+      "contentType": "text/html;charset=\"utf-8\"",
+      "delimiter": true,
+      "sample": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ|||<p>قوله: <span class=\"t4\">{الحمد لله}</span>: لفظه خبر كأنه يخبر أن المستحق للحمد هو الله عز وجل وفي"
+    },
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=katheer&sura=1&aya=2",
+      "status": 200,
+      "contentType": "text/html;charset=\"utf-8\"",
+      "delimiter": true,
+      "sample": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ|||<p>القراء السبعة على ضم الدال من قوله : ( الحمد لله وهو مبتدأ وخبر . وروي عن سفيان بن عيينة ورؤبة بن"
+    },
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=qortoby&sura=1&aya=2",
+      "status": 200,
+      "contentType": "text/html;charset=\"utf-8\"",
+      "delimiter": true,
+      "sample": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ|||<p>الحمد لله</p><p>سورة الفاتحة :</p><p>وفيها أربعة أبواب :</p><p><span class=\"t2\">[ الباب الأول في "
+    },
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/interface.php?ui=pc&do=tafsir&author=tabary&sura=1&aya=2",
+      "status": 200,
+      "contentType": "text/html;charset=\"utf-8\"",
+      "delimiter": true,
+      "sample": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ|||<p>الْحَمْدُ لِلَّهِ :</p><p>قال أبو جعفر: ومعنى <span class=\"t3\">(الْحَمْدُ لِلَّهِ)</span> : الشكر"
+    },
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Alafasy_64kbps/001002.mp3",
+      "requestHeaders": {
+        "Range": "bytes=0-511"
+      },
+      "status": 206,
+      "contentType": "audio/mpeg",
+      "contentRange": "bytes 0-511/45765",
+      "sampleBytes": 512
+    },
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Maher_AlMuaiqly_64kbps/001002.mp3",
+      "requestHeaders": {
+        "Range": "bytes=0-511"
+      },
+      "status": 206,
+      "contentType": "audio/mpeg",
+      "contentRange": "bytes 0-511/28002",
+      "sampleBytes": 512
+    },
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Minshawy_Murattal_128kbps/001002.mp3",
+      "requestHeaders": {
+        "Range": "bytes=0-511"
+      },
+      "status": 206,
+      "contentType": "audio/mpeg",
+      "contentRange": "bytes 0-511/93667",
+      "sampleBytes": 512
+    },
+    {
+      "method": "GET",
+      "url": "https://quran.ksu.edu.sa/ayat/mp3/Abdurrahmaan_As-Sudais_64kbps/001002.mp3",
+      "requestHeaders": {
+        "Range": "bytes=0-511"
+      },
+      "status": 206,
+      "contentType": "audio/mpeg",
+      "contentRange": "bytes 0-511/36152",
+      "sampleBytes": 512
+    }
+  ]
+}
