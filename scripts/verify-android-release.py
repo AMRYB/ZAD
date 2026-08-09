@@ -44,7 +44,11 @@ def main():
                 compiled[name.replace('\\', '/')] = text.replace('\r\n', '\n').strip()
     checked = []
     for relative in ['src/screens/Quran.tsx', 'src/screens/Adhan.tsx', 'src/screens/Settings.tsx',
-                     'src/state/AdhanCoordinator.tsx', 'src/core/adhan.ts', 'src/core/adhan-sequence.ts', 'src/services/adhan-native.ts']:
+                     'src/state/AdhanCoordinator.tsx', 'src/core/adhan.ts', 'src/core/adhan-sequence.ts', 'src/services/adhan-native.ts',
+                     'src/screens/Tasbih.tsx', 'src/screens/Adhkar.tsx', 'src/screens/GoodDeeds.tsx',
+                     'src/screens/devotion/ReminderPreferences.tsx', 'src/state/PersonalReminderCoordinator.tsx',
+                     'src/core/devotion.ts', 'src/core/adhkar.ts', 'src/core/personal-reminders.ts', 'src/core/model.ts',
+                     'src/app/_layout.tsx', 'src/app/(tabs)/_layout.tsx']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -66,7 +70,8 @@ def main():
             assert len(recording) == clip['bytes'] and digest(recording) == clip['sha256'], f'Packaged recording differs: {clip_id}'
         dex = b''.join(apk.read(name) for name in names if name.endswith('.dex'))
         for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob',
-                      b'AdhanReminderActionReceiver', b'zad.adhan.MUTE_PRAYER', b'zad.adhan.UNMUTE_PRAYER']:
+                      b'AdhanReminderActionReceiver', b'zad.adhan.MUTE_PRAYER', b'zad.adhan.UNMUTE_PRAYER',
+                      b'DailyReminderReceiver', b'zad-personal-reminders-v1', b'ExpoHaptics']:
             assert token in dex, f'Missing native release marker: {token}'
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
@@ -94,6 +99,7 @@ def main():
                       'fontEntry': entry, 'fontSha256': font_sha, 'fontMatches': True,
                       'nativeAdhanPresent': True, 'testHarnessExcluded': True,
                       'nativeReminderActionsPresent': True,
+                      'personalReminderReceiverPresent': True, 'hapticsModulePresent': True,
                       'packagedRecordingsMatched': len(catalogue['clips']),
                       'r8AudioHelpersVerified': True,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
