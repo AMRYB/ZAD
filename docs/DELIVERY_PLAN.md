@@ -115,3 +115,5 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 |---|---|---|
 | RJ-041 | Animated Tasbih and persisted devotional foundation | Implemented bead loop, tap/pull, reduced-motion support, haptics toggle, independent counters and backup migration; typecheck/lint and 49 TypeScript tests PASS. Final browser/device checks follow after integration |
 | RJ-042 | Source-pinned Adhkar reader and optional reminder foundation | 90 unique entries in six sections, favorites, full text/citations, per-prayer progress and last position; 53 TypeScript + 20 native tests PASS. Isolated Android personal reminders passed; source/limits documented in DEVOTIONAL_V0_8.md |
+| RJ-043 | Personal Good Deeds choices and daily records | Eight suggestions plus private custom choices, selection, check-in/undo, archive preservation and reload persistence PASS; bilingual/dark/mobile browser checks and source tests PASS |
+| RJ-044 | ZAD 0.8.0 private APK and final device verification | Build/source/signature checks executed; current artifact and device results maintained in ANDROID_APK_RELEASE.md |

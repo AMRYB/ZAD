@@ -2,6 +2,8 @@
 
 ## 0.8.0 — personal remembrance and good deeds
 
+- Added optional personal Good Deeds choices, custom archived titles, reversible daily check-ins, weekly records and three editable opt-in reminder times. Notification bodies use generic encouragement without private deed titles.
+
 - Added six offline Adhkar sections from the user-selected Risala edition with complete included texts, source notes/citations, bounded repetition counters, favorites, text size and saved reading position. Morning/evening variants, prayer-specific entries and shared daily counts retain their source context.
 
 - Added a bead-loop Tasbih page beside Quran in bottom navigation, tap/downward-pull counting, optional haptics, independent phrase counters, personal goals, undo and confirmed reset. New devotional records migrate into existing private storage and backups.

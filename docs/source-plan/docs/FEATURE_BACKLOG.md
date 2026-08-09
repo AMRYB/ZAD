@@ -86,3 +86,8 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 
 - RJ-039: Prayer notification controls — implemented ten-minute countdown, one-prayer mute/undo and current playback mute/unmute with session-safe controls. Typecheck/lint, 44 TypeScript and 15 native tests PASS; actual notification actions and scheduled muted alarm passed on isolated Android 16 hardware. See `../../ADHAN_NOTIFICATIONS_V0_7.md`.
 - RJ-040: ZAD 0.7.0 private APK — build/signature/109 inputs/seven compiled sources/font/twelve audio hashes and native actions verified; installed over 0.6.1 and cold-launched on Android 16 with permissions retained. New final-product user acceptance not repeated. See the current release metadata.
+
+- RJ-041: Animated Tasbih — bead-loop tap/pull counting, independent saved phrase counters, round goals, undo/reset and optional haptics; browser and user-confirmed Android counting/haptics/toggle PASS.
+- RJ-042: Adhkar — 90 source-pinned entries in six sections from the user-selected Risala edition, full included text/citations, scoped repetition counts, favorites, last position and editable optional reminders.
+- RJ-043: Good Deeds — eight selectable suggestions, private custom/archived choices, reversible daily check-ins, weekly records and three editable opt-in reminders. Browser selection/custom/reload/archive checks and isolated Android reminder delivery PASS.
+- RJ-044: ZAD 0.8.0 private APK — final artifact/device results are recorded in current release documentation; no public/Play release.
