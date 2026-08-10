@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {initialState,reducer,restoreState,type Action,type State} from '../src/core/model.ts';
 import {achievementProgress,levelProgress,xpSummary} from '../src/core/gamification.ts';
 import {sectionEntries,entrySession} from '../src/core/adhkar.ts';
+import {addDays} from '../src/core/calendar.ts';
 const date='2026-10-24';
 const act=(s:State,a:Action,today=date)=>reducer(s,a,today);
 const xp=(s:State)=>xpSummary(s.gamification,date);
@@ -79,4 +80,34 @@ test('achievements have deterministic earned dates and streaks; old corrections 
   assert.deepEqual(achievementProgress(restoreState(JSON.stringify(s)).gamification),badges);
   s=act(s,{type:'fast',date:'2026-10-24',status:'unlogged'},'2026-10-26');assert.equal(achievementProgress(s.gamification).find(b=>b.id==='streak-3')!.earnedOn,null);
   s=act(s,{type:'fast',date:'2026-10-24',status:'excused'},'2026-10-26');assert.equal(xpSummary(s.gamification,'2026-10-26').total,15);assert.equal(s.gamification.events.length,3);
+});
+
+test('all twelve badges unlock through real activity transitions over 30 days across a month boundary',()=>{
+  let s=act(initialState(),{type:'habitAdd',id:'h',title:'Private habit'});
+  s=act(s,{type:'planAdd',id:'p',title:'Private plan',target:604,deadline:'2026-12-01'});
+  s=act(s,{type:'goalAdd',id:'g',title:'Private goal',target:1});
+  s=act(s,{type:'devotion',action:{type:'deedSelect',id:'charity'}});
+  for(let i=0;i<30;i++){
+    const d=addDays(date,i),step=(a:Action)=>{s=act(s,a,d);};
+    step({type:'fast',date:d,status:'excused'});step({type:'habitToggle',id:'h',date:d});step({type:'planPage',id:'p',page:i+1,completed:true});
+    if(i===0)step({type:'goalStep',id:'g',change:1});
+    if(i<5)step({type:'devotion',action:{type:'deedToggle',id:'charity',date:d}});
+    if(i<3){
+      for(let n=0;n<33;n++)step({type:'devotion',action:{type:'tasbihTap',date:d,change:1}});
+      for(const e of sectionEntries('waking'))for(let n=0;n<e.repeat;n++)step({type:'devotion',action:{type:'adhkarStep',session:entrySession(d,'waking',e),id:e.id,limit:e.repeat,change:1}});
+    }
+  }
+  assert.equal(xp(s).total,695);assert.equal(xp(s).level,4);
+  assert.equal(achievementProgress(s.gamification).filter(b=>b.earnedOn).length,12);
+  assert.deepEqual(restoreState(JSON.stringify(s)),s);
+  assert.equal(achievementProgress(s.gamification).find(b=>b.id==='days-30')!.earnedOn,'2026-11-22');
+});
+
+test('resetting a shared daily dhikr revokes and replay restores an affected morning-section allocation',()=>{
+  let s=initialState();const entries=sectionEntries('morning');const daily=entries.find(e=>e.daily)!;assert.ok(daily);
+  for(const e of entries)for(let n=0;n<e.repeat;n++)s=act(s,{type:'devotion',action:{type:'adhkarStep',session:entrySession(date,'morning',e),id:e.id,limit:e.repeat,change:1}});
+  assert.equal(xp(s).total,10);
+  s=act(s,{type:'devotion',action:{type:'adhkarReset',session:entrySession(date,'morning',daily)}});assert.equal(xp(s).total,0);
+  for(let n=0;n<daily.repeat;n++)s=act(s,{type:'devotion',action:{type:'adhkarStep',session:entrySession(date,'morning',daily),id:daily.id,limit:daily.repeat,change:1}});
+  assert.equal(xp(s).total,10);assert.equal(s.gamification.events.length,1);
 });
