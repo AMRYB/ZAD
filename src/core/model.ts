@@ -50,7 +50,7 @@ export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'settings': return { ...state, locale: action.locale ?? state.locale, theme: action.theme ?? state.theme };
     case 'readerSettings': {
-      const reader={...state.reader,...Object.fromEntries(Object.entries(action).filter(([key,value])=>key!=='type'&&value!==undefined))};
+      const reader={reciter:action.reciter??state.reader.reciter,tafsir:action.tafsir??state.reader.tafsir,fit:action.fit??state.reader.fit};
       if(!reciterById(reader.reciter)||!tafsirById(reader.tafsir)||!['page','width'].includes(reader.fit))return state;
       return {...state,reader};
     }

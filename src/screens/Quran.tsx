@@ -1,87 +1,161 @@
-import React,{useCallback,useEffect,useRef,useState} from 'react';
-import { AppState,Image,Modal,Pressable,ScrollView,View } from 'react-native';
-import { useFocusEffect } from 'expo-router';
+import React,{useCallback,useEffect,useState} from 'react';
+import {ActivityIndicator,BackHandler,Pressable,View} from 'react-native';
+import {useFocusEffect} from 'expo-router';
 import {useQuery} from '@tanstack/react-query';
-import { useAudioPlayer,useAudioPlayerStatus } from 'expo-audio';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { adjacentAya,hafsRects,hilitesUrl,husaryAudio,pageImage,pageStart,plainTafsir,saadieTafsirUrl,splitTafsir,versePage,type Coordinates } from '../core/ksu';
-import {readKsuText} from '../services/ksu';
+import {StatusBar} from 'expo-status-bar';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import {adjacentAya,hilitesUrl,pageStart,plainTafsir,splitTafsir,tafsirUrl,versePage,type Coordinates} from '../core/ksu';
 import {normalizeDigits} from '../core/calendar';
-import { quran,surahEnglish } from '../data/quran';
-import { useApp } from '../state/AppContext';
-import { Button,Card,Choice,Field,Loading,Row,Screen,Txt } from '../ui/components';
-type Selection={sura:number;aya:number};
+import {quran,surahEnglish} from '../data/quran';
+import {KSU_RECITERS,KSU_TAFSIRS,reciterById,tafsirById} from '../data/ksu-readers';
+import {readKsuText} from '../services/ksu';
+import {useApp} from '../state/AppContext';
+import {Button,Card,Choice,Field,Row,Txt} from '../ui/components';
+import {IconButton,OptionRow,ReaderChip,ReaderSheet} from './quran/ReaderControls';
+import {MushafCanvas} from './quran/MushafCanvas';
+import {useAyahAudio} from './quran/useAyahAudio';
+
+type Sheet='surah'|'page'|'aya'|'settings'|'reciter'|'tafsir-choice'|'tafsir'|'tools'|null;
 function validatePoints(value:unknown):Coordinates{
   if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('INVALID_KSU_POINTS');
   for(const [key,p] of Object.entries(value))if(!/^\d+_\d+$/.test(key)||!Array.isArray(p)||p.length!==2||p.some(n=>typeof n!=='number'||!Number.isFinite(n)))throw new Error('INVALID_KSU_POINTS');
   return value as Coordinates;
 }
+const clock=(seconds:number)=>`${Math.floor(seconds/60)}:${String(Math.floor(seconds%60)).padStart(2,'0')}`;
+
 export function Quran(){
-  const {state,dispatch,t,rtl,colors}=useApp();
-  const [selection,setSelection]=useState<Selection>(state.lastRead);
-  const [width,setWidth]=useState(0);const [retry,setRetry]=useState(0);const [failedImage,setFailedImage]=useState<string|null>(null);
-  const [picker,setPicker]=useState<'surah'|'page'|'aya'|null>(null);const [search,setSearch]=useState('');const [number,setNumber]=useState('1');const [pickerError,setPickerError]=useState(false);
-  const [tafsirOpen,setTafsirOpen]=useState(false);
-  const [playing,setPlaying]=useState(false);const [repeat,setRepeat]=useState(false);const [audioError,setAudioError]=useState(false);const [planId,setPlanId]=useState('');
-  const player=useAudioPlayer(null,{updateInterval:250});const status=useAudioPlayerStatus(player);
-  const live=useRef({selection,playing,repeat});
-  useEffect(()=>{live.current={selection,playing,repeat};},[selection,playing,repeat]);
-  const finishLatch=useRef(false);
+  const {state,dispatch,t,rtl,dark,colors,saveError,retrySave,readerImmersive,setReaderImmersive}=useApp();
+  const [selection,setSelection]=useState(state.lastRead);
+  const [sheet,setSheet]=useState<Sheet>(null);
+  const [search,setSearch]=useState('');
+  const [number,setNumber]=useState('1');
+  const [pickerError,setPickerError]=useState(false);
+  const [returnToTafsir,setReturnToTafsir]=useState(false);
+  const [zoom,setZoom]=useState(1);
+  const [retry,setRetry]=useState(0);
+  const [failedImage,setFailedImage]=useState<string|null>(null);
+  const [planId,setPlanId]=useState('');
   const page=versePage(selection.sura,selection.aya);
   const name=rtl?quran.Sura[selection.sura]!.name:surahEnglish[selection.sura];
-  const selectedPlan=state.plans.find(p=>p.id===planId)??state.plans[0];
+  const reciter=reciterById(state.reader.reciter)!;
+  const author=tafsirById(state.reader.tafsir)!;
+  const reciterName=rtl?reciter.nameAr:reciter.nameEn;
+  const authorName=rtl?author.nameAr:author.nameEn;
+  const nextAyah=useCallback(()=>setSelection(current=>adjacentAya(current.sura,current.aya,1)),[]);
+  const audio=useAyahAudio(reciter.id,selection.sura,selection.aya,nextAyah);
+  const select=useCallback((next:{sura:number;aya:number})=>{setSelection(next);dispatch({type:'lastRead',...next});},[dispatch]);
   useEffect(()=>dispatch({type:'lastRead',...selection}),[selection,dispatch]);
-  const pageQuery=useQuery({queryKey:['ksu-hilites',page],queryFn:async({signal})=>{const data=JSON.parse(await readKsuText(hilitesUrl(page),signal));return validatePoints(data[String(page)]);}});
-  const tafsirQuery=useQuery({queryKey:['ksu-saadi',selection.sura,selection.aya],enabled:tafsirOpen,queryFn:async({signal})=>splitTafsir(await readKsuText(saadieTafsirUrl(selection.sura,selection.aya),signal))});
-  const points=pageQuery.data;const loading=pageQuery.isPending;const failed=pageQuery.isError;const imageFailed=failedImage===`${page}-${retry}`;
-  const tafsir=tafsirQuery.data;const tafsirError=tafsirQuery.isError;
-  useEffect(()=>{
-    if(!playing){player.pause();return;}
-    let active=true;
-    Promise.resolve().then(()=>{if(active){player.replace(husaryAudio(selection.sura,selection.aya));player.play();}}).catch(()=>{if(active){setAudioError(true);setPlaying(false);}});
-    return()=>{active=false;try{player.pause();}catch{ /* Player hook releases the native resource on unmount. */ }};
-  },[player,playing,selection.sura,selection.aya]);
-  useEffect(()=>{
-    const subscription=player.addListener('playbackStatusUpdate',event=>{
-      if(!event.didJustFinish&&event.playing)finishLatch.current=false;
-      if(event.error){setAudioError(true);setPlaying(false);return;}
-      if(!event.didJustFinish||finishLatch.current||!live.current.playing)return;
-      finishLatch.current=true;
-      if(live.current.repeat){void player.seekTo(0).then(()=>player.play()).catch(()=>{setAudioError(true);setPlaying(false);});}
-      else{const s=live.current.selection;setSelection(adjacentAya(s.sura,s.aya,1));}
-    });return()=>subscription.remove();
-  },[player]);
-  useEffect(()=>{if(!playing||status.isLoaded)return;const timer=setTimeout(()=>{setAudioError(true);setPlaying(false);},15000);return()=>clearTimeout(timer);},[playing,status.isLoaded]);
-  useFocusEffect(useCallback(()=>()=>{live.current.playing=false;setPlaying(false);try{player.pause();}catch{}},[player]));
-  useEffect(()=>{const sub=AppState.addEventListener('change',value=>{if(value!=='active'){live.current.playing=false;setPlaying(false);player.pause();}});return()=>sub.remove();},[player]);
-  const rects=points?hafsRects(page,points):[];const scale=width/456;
+  useFocusEffect(useCallback(()=>()=>setReaderImmersive(false),[setReaderImmersive]));
+  useFocusEffect(useCallback(()=>{
+    const sub=BackHandler.addEventListener('hardwareBackPress',()=>{
+      if(!readerImmersive)return false;setReaderImmersive(false);return true;
+    });return()=>sub.remove();
+  },[readerImmersive,setReaderImmersive]));
+  const pageQuery=useQuery({queryKey:['ksu-hilites',page],queryFn:async({signal})=>{
+    const data=JSON.parse(await readKsuText(hilitesUrl(page),signal));return validatePoints(data[String(page)]);
+  }});
+  const tafsirQuery=useQuery({queryKey:['ksu-tafsir',author.id,selection.sura,selection.aya],enabled:sheet==='tafsir',queryFn:async({signal})=>splitTafsir(await readKsuText(tafsirUrl(author.id,selection.sura,selection.aya),signal))});
+  const onImageError=useCallback(()=>setFailedImage(`${page}-${retry}`),[page,retry]);
+  const imageFailed=failedImage===`${page}-${retry}`;
   const bookmarked=state.bookmarks.some(b=>b.sura===selection.sura&&b.aya===selection.aya);
-  const openPicker=(kind:'surah'|'page'|'aya')=>{setPicker(kind);setSearch('');setNumber(String(kind==='page'?page:selection.aya));setPickerError(false);};
-  const navigate=()=>{const n=Number(number);try{if(!Number.isInteger(n))throw new Error();const next=picker==='page'?pageStart(n):{sura:selection.sura,aya:n};versePage(next.sura,next.aya);setSelection(next);setPicker(null);setPickerError(false);}catch{setPickerError(true);}};
-  const stop=()=>{live.current.playing=false;setPlaying(false);player.pause();};
-  const popup=(visible:boolean,title:string,onClose:()=>void,children:React.ReactNode)=><Modal visible={visible} animationType="slide" onRequestClose={onClose}><SafeAreaView style={{flex:1,backgroundColor:colors.background,direction:'ltr'}}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{padding:20,gap:18,maxWidth:860,width:'100%',alignSelf:'center'}}><Row style={{justifyContent:'space-between'}}><Txt bold size={23}>{title}</Txt><Button secondary small label={t('إغلاق','Close')} onPress={onClose}/></Row>{children}</ScrollView></SafeAreaView></Modal>;
-  return <Screen title={t('القرآن الكريم','The Holy Quran')} subtitle={t('المصحف الأصلي · جامعة الملك سعود','Original Mushaf · King Saud University')}>
-    <Row style={{justifyContent:'space-between'}}><Button small secondary label={t(`السورة: ${name}`,`Surah: ${name}`)} onPress={()=>openPicker('surah')}/><Button small secondary label={t(`الصفحة ${page}`,`Page ${page}`)} onPress={()=>openPicker('page')}/><Button small secondary label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>openPicker('aya')}/></Row>
-    <View onLayout={event=>setWidth(Math.min(700,event.nativeEvent.layout.width))} style={{alignItems:'center',width:'100%'}}>
-      {width>0?<View style={{width,height:672*scale,backgroundColor:'#FFFFFF',position:'relative',direction:'ltr'}}>
-        <Image key={`${page}-${retry}`} accessibilityLabel={t(`صورة صفحة المصحف ${page}`,`Original Mushaf page ${page}`)} source={{uri:pageImage(page)}} resizeMode="contain" style={{width,height:672*scale}} onError={()=>setFailedImage(`${page}-${retry}`)}/>
-        {!imageFailed?rects.map(rect=>{const [s,a]=rect.id.split('__')[0].split('_').map(Number);const active=s===selection.sura&&a===selection.aya;return <Pressable key={rect.id} testID={`ayah-${rect.id}`} accessibilityRole="button" accessibilityLabel={t(`سورة ${s}، الآية ${a}`,`Surah ${s}, ayah ${a}`)} accessibilityState={{selected:active}}
-          aria-pressed={active} onPress={()=>setSelection({sura:s,aya:a})} style={{position:'absolute',top:rect.top*scale,left:rect.left*scale,width:rect.width*scale,height:rect.height*scale,backgroundColor:active?'rgba(23,107,87,0.18)':'transparent',borderRadius:3}}/>;}):null}
-      </View>:null}
+  const selectedPlan=state.plans.find(p=>p.id===planId)??state.plans[0];
+  const open=(target:Sheet)=>{setSheet(target);setSearch('');setNumber(String(target==='page'?page:selection.aya));setPickerError(false);};
+  const movePage=(delta:number)=>{const p=page+delta;if(p>=1&&p<=604)select(pageStart(p));};
+  const navigate=()=>{const n=Number(number);try{
+    if(!Number.isInteger(n))throw new Error();const next=sheet==='page'?pageStart(n):{sura:selection.sura,aya:n};versePage(next.sura,next.aya);select(next);setSheet(null);
+  }catch{setPickerError(true);}};
+  const retryPage=()=>{setRetry(value=>value+1);void pageQuery.refetch();};
+  const sheetTitles={surah:t('اختيار السورة','Choose a surah'),page:t('الانتقال إلى صفحة','Go to page'),aya:t('اختيار الآية','Choose an ayah'),settings:t('إعدادات القراءة','Reading settings'),reciter:t('اختيار القارئ','Choose a reciter'),'tafsir-choice':t('اختيار التفسير','Choose a tafsir'),tafsir:t('التفسير','Tafsir'),tools:t('أدوات القراءة','Reading tools')};
+  const progress=audio.duration?Math.min(100,100*audio.currentTime/audio.duration):0;
+
+  return <SafeAreaView edges={readerImmersive?['left','right','bottom']:['top','left','right']} style={{flex:1,backgroundColor:colors.background,direction:'ltr'}}>
+    <StatusBar hidden={readerImmersive} style={dark?'light':'dark'}/>
+    <View style={{flex:1,width:'100%',maxWidth:1100,alignSelf:'center'}}>
+      <Row style={{paddingHorizontal:14,paddingVertical:6,flexWrap:'nowrap',gap:8}}>
+        <Pressable accessibilityRole="button" accessibilityLabel={t(`السورة: ${name}`,`Surah: ${name}`)} onPress={()=>open('surah')} style={{flex:1,minHeight:48,justifyContent:'center'}}>
+          <Txt muted size={10}>{readerImmersive?t(`القرآن الكريم · صفحة ${page}`,`THE HOLY QURAN · PAGE ${page}`):t('القرآن الكريم · حفص عن عاصم','THE HOLY QURAN · HAFS')}</Txt>
+          <Row style={{gap:7}}><Txt bold size={20}>{name}</Txt><Ionicons name="chevron-down" size={15} color={colors.primary}/></Row>
+        </Pressable>
+        <IconButton icon="options-outline" label={t('إعدادات القراءة','Reading settings')} onPress={()=>open('settings')}/>
+        <IconButton icon={readerImmersive?'contract-outline':'expand-outline'} label={readerImmersive?t('إنهاء ملء الشاشة','Exit full screen'):t('ملء الشاشة','Full screen')} onPress={()=>setReaderImmersive(!readerImmersive)}/>
+      </Row>
+      {saveError?<Row style={{paddingHorizontal:14}}><Txt size={12} style={{color:colors.danger}}>{t('لم تُحفظ التغييرات بعد','Changes have not been saved')}</Txt><ReaderChip label={t('إعادة الحفظ','Retry saving')} onPress={retrySave}/></Row>:null}
+      <View style={{flex:1,marginHorizontal:8}}>
+        <MushafCanvas page={page} selection={selection} points={pageQuery.data} fit={state.reader.fit} zoom={zoom} retry={retry} onSelect={select} onImageError={onImageError} imageFailed={imageFailed}/>
+        {pageQuery.isPending?<View pointerEvents="none" style={{position:'absolute',top:10,left:0,right:0,alignItems:'center'}}><View style={{padding:8,borderRadius:20,backgroundColor:colors.surface}}><ActivityIndicator color={colors.primary}/></View></View>:null}
+        {imageFailed?<View style={{position:'absolute',top:0,bottom:0,left:0,right:0,justifyContent:'center',padding:20}}><Card><Txt>{t('تعذّر تحميل صورة الصفحة من KSU.','Could not load the page image from KSU.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Card></View>:null}
+      </View>
+      {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="refresh" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
+      {!readerImmersive?<Row style={{justifyContent:'center',gap:6,paddingHorizontal:8,paddingTop:3,flexWrap:'nowrap'}}>
+        <IconButton icon="chevron-forward" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
+        <ReaderChip label={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} onPress={()=>open('page')}/>
+        <Pressable accessibilityRole="button" accessibilityLabel={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')} style={{minHeight:48,justifyContent:'center',paddingHorizontal:8}}><Txt size={12} muted>{t(`آية ${selection.aya}`,`Ayah ${selection.aya}`)}</Txt></Pressable>
+        <IconButton icon="chevron-back" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
+      </Row>:null}
+      <View style={{marginBottom:readerImmersive?8:7,paddingHorizontal:10,paddingVertical:5,borderRadius:26,borderWidth:1,borderColor:colors.border,backgroundColor:colors.surface,shadowColor:'#102F24',shadowOffset:{width:0,height:4},shadowOpacity:.06,shadowRadius:18,elevation:3,maxWidth:620,width:'96%',alignSelf:'center'}}>
+        {readerImmersive?<Row style={{flexWrap:'nowrap',justifyContent:'space-between',gap:1}}>
+          <IconButton icon="chevron-forward" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
+          <ReaderChip label={t(`صفحة ${page}`,`Page ${page}`)} onPress={()=>open('page')}/>
+          <IconButton icon="chevron-back" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
+          <IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/>
+          <ReaderChip icon="book-outline" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
+        </Row>:<><Row style={{flexWrap:'nowrap',gap:7}}>
+          <Pressable accessibilityRole="button" accessibilityLabel={t(`القارئ: ${reciterName}`,`Reciter: ${reciterName}`)} onPress={()=>open('reciter')} style={{flex:1,minHeight:44,justifyContent:'center'}}><Row style={{flexWrap:'nowrap',gap:8}}><Ionicons name="headset-outline" size={18} color={colors.primary}/><View style={{flex:1}}><Txt size={12} bold numberOfLines={1}>{reciterName}</Txt><Txt muted size={10}>{t('تغيير القارئ','Change reciter')}</Txt></View></Row></Pressable>
+          <Txt muted size={11} style={{writingDirection:'ltr'}}>{clock(audio.currentTime)} / {clock(audio.duration)}</Txt>
+          <IconButton icon={bookmarked?'bookmark':'bookmark-outline'} label={bookmarked?t('إزالة العلامة','Remove bookmark'):t('حفظ علامة','Save bookmark')} active={bookmarked} onPress={()=>dispatch({type:'bookmark',...selection})}/>
+          <IconButton icon="ellipsis-horizontal" label={t('أدوات القراءة','Reading tools')} onPress={()=>open('tools')}/>
+        </Row>
+        <View accessibilityRole="progressbar" accessibilityLabel={t('تقدم التلاوة','Recitation progress')} accessibilityValue={{min:0,max:100,now:progress}} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} style={{height:3,marginHorizontal:8,borderRadius:3,backgroundColor:colors.soft,overflow:'hidden',direction:'ltr'}}><View style={{height:3,width:`${progress}%`,backgroundColor:colors.primary}}/></View>
+        <Row style={{justifyContent:'space-between',gap:1,flexWrap:'nowrap',paddingTop:4}}>
+          <IconButton icon="repeat" label={t('تكرار الآية','Repeat ayah')} active={audio.repeat} onPress={()=>audio.setRepeat(!audio.repeat)}/>
+          <IconButton icon="play-skip-forward" label={t('الآية التالية','Next ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,1))}/>
+          {audio.loading?<Pressable accessibilityRole="button" accessibilityLabel={t('إيقاف التحميل والتلاوة','Stop loading and playback')} onPress={audio.pause} style={{width:56,height:56,borderRadius:28,backgroundColor:colors.primary,alignItems:'center',justifyContent:'center'}}><ActivityIndicator color={colors.onPrimary}/></Pressable>:<IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/>}
+          <IconButton icon="play-skip-back" label={t('الآية السابقة','Previous ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,-1))}/>
+          <ReaderChip icon="book-outline" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
+        </Row></>}
+        {audio.error?<Txt size={12} style={{color:colors.danger}}>{t('تعذّر تشغيل هذا التسجيل من KSU. جرّب مجددًا أو اختر قارئًا آخر.','This KSU recording could not play. Retry or choose another reciter.')}</Txt>:null}
+      </View>
     </View>
-    {loading?<Loading/>:null}
-    {failed||imageFailed?<Card><Txt style={{color:colors.danger}}>{imageFailed?t('تعذّر تحميل صورة الصفحة من KSU.','Could not load the page image from KSU.'):t('تعذّر تحميل تحديد الآيات. يمكنك قراءة الصورة المتاحة دون تظليل.','Ayah selection could not load. You can read the available image without highlights.')}</Txt><Button secondary label={t('إعادة المحاولة','Retry')} onPress={()=>{setRetry(x=>x+1);void pageQuery.refetch();}}/></Card>:null}
-    <Row style={{justifyContent:'space-between'}}><Button small secondary disabled={page===1} label={t('الصفحة السابقة','Previous page')} onPress={()=>setSelection(pageStart(page-1))}/><Button small secondary disabled={page===604} label={t('الصفحة التالية','Next page')} onPress={()=>setSelection(pageStart(page+1))}/></Row>
-    <Card><Row style={{justifyContent:'space-between'}}><Txt bold>{t('الحصري · تلاوة الآية','Al-Husary · Ayah recitation')}</Txt><Txt muted size={13} style={{writingDirection:'ltr'}}>{playing?Math.floor(status.currentTime||0):0} / {playing?Math.floor(status.duration||0):0} {t('ث','s')}</Txt></Row>
-      <Row style={{justifyContent:'center'}}><Button small secondary label={t('الآية السابقة','Previous ayah')} onPress={()=>setSelection(adjacentAya(selection.sura,selection.aya,-1))}/><Button label={playing?t('إيقاف التلاوة','Stop recitation'):t('تشغيل التلاوة','Play recitation')} onPress={()=>{setAudioError(false);if(playing)stop();else setPlaying(true);}}/><Button small secondary label={t('الآية التالية','Next ayah')} onPress={()=>setSelection(adjacentAya(selection.sura,selection.aya,1))}/></Row>
-      <Choice value={repeat?'repeat':'continuous'} options={[{value:'continuous',label:t('متابعة الآيات','Continuous')},{value:'repeat',label:t('تكرار الآية','Repeat ayah')}]} onChange={value=>setRepeat(value==='repeat')}/>
-      {audioError?<Txt style={{color:colors.danger}}>{t('تعذّر تشغيل الصوت من KSU. تحقق من الاتصال واضغط تشغيل للمحاولة.','Could not play KSU audio. Check your connection and press Play to retry.')}</Txt>:playing&&!status.isLoaded?<Loading/>:null}
-    </Card>
-    <Row><Button secondary label={t('تفسير السعدي','Al-Saadi tafsir')} onPress={()=>setTafsirOpen(true)}/><Button secondary label={bookmarked?t('إزالة العلامة','Remove bookmark'):t('حفظ علامة','Save bookmark')} onPress={()=>dispatch({type:'bookmark',...selection})}/></Row>
-    {selectedPlan?<Card><Txt bold>{t('تسجيل القراءة باختيارك','Confirm your reading')}</Txt><Choice value={selectedPlan.id} options={state.plans.map(p=>({value:p.id,label:p.title}))} onChange={setPlanId}/><Button disabled={page>selectedPlan.target||selectedPlan.pages.includes(page)} label={selectedPlan.pages.includes(page)?t('الصفحة مسجلة في الخطة','Page already recorded'):t(`أؤكد قراءة الصفحة ${page}`,`Confirm reading page ${page}`)} onPress={()=>dispatch({type:'planPage',id:selectedPlan.id,page,completed:true})}/></Card>:null}
-    {state.bookmarks.length?<Card><Txt bold>{t('علاماتي المرجعية','My bookmarks')}</Txt><Row>{state.bookmarks.map(b=><Button key={`${b.sura}_${b.aya}`} small secondary label={`${rtl?quran.Sura[b.sura]?.name:surahEnglish[b.sura]} · ${b.aya}`} onPress={()=>setSelection(b)}/>)}</Row></Card>:null}
-    <Txt muted size={12}>{t('المحتوى من quran.ksu.edu.sa فقط. يتوقف الصوت عند مغادرة الشاشة أو وضع التطبيق في الخلفية.','Content is exclusively from quran.ksu.edu.sa. Audio stops when leaving this screen or backgrounding the app.')}</Txt>
-    {popup(picker!==null,picker==='surah'?t('اختيار السورة','Choose a surah'):picker==='page'?t('الانتقال إلى صفحة','Go to page'):t('اختيار الآية','Choose an ayah'),()=>setPicker(null),picker==='surah'?<><Field label={t('ابحث عن سورة أو رقمها','Search by surah name or number')} value={search} onChangeText={setSearch}/>{quran.Sura.map((s,i)=>s&&s.name&&i<=114&&(!search||s.name.includes(search)||surahEnglish[i].toLowerCase().includes(search.toLowerCase())||String(i)===search)?<Button key={i} secondary label={`${i}. ${rtl?s.name:surahEnglish[i]}`} onPress={()=>{setSelection({sura:i,aya:1});setPicker(null);}}/>:null)}</>:<><Field label={picker==='page'?t('رقم الصفحة (1–604)','Page number (1–604)'):t(`رقم الآية (1–${quran.Sura[selection.sura]!.ayas})`,`Ayah number (1–${quran.Sura[selection.sura]!.ayas})`)} value={number} onChangeText={text=>setNumber(normalizeDigits(text))} keyboardType="number-pad"/>{pickerError?<Txt style={{color:colors.danger}}>{t('الرقم خارج النطاق.','Number is outside the valid range.')}</Txt>:null}<Button label={t('انتقال','Go')} onPress={navigate}/></>)}
-    {popup(tafsirOpen,t(`تفسير السعدي · ${name} ${selection.aya}`,`Al-Saadi · ${name} ${selection.aya}`),()=>setTafsirOpen(false),tafsir?<><Txt size={23} bold style={{textAlign:'right',writingDirection:'rtl'}}>{tafsir.verseText}</Txt><Txt size={19} style={{textAlign:'right',writingDirection:'rtl'}}>{plainTafsir(tafsir.tafsirHtml)}</Txt><Txt muted size={12}>{t('تفسير عربي من المصدر الأصلي KSU، دون ترجمة مولدة.','Arabic tafsir from the original KSU source, without generated translation.')}</Txt></>:tafsirError?<Card><Txt style={{color:colors.danger}}>{t('تعذّر تحميل التفسير من KSU.','Could not load tafsir from KSU.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={()=>void tafsirQuery.refetch()}/></Card>:<Loading/>)}
-  </Screen>;
+    <ReaderSheet visible={sheet!==null} title={sheet?sheetTitles[sheet]:''} subtitle={sheet==='reciter'?t('تلاوات حفص من جامعة الملك سعود','Hafs recordings from King Saud University'):sheet==='tafsir'?`${name} · ${t('الآية','Ayah')} ${selection.aya}`:undefined} onClose={()=>setSheet(null)}>
+      {sheet==='settings'?<>
+        <OptionRow title={t('القارئ','Reciter')} detail={reciterName} icon="headset-outline" onPress={()=>open('reciter')}/>
+        <OptionRow title={t('التفسير','Tafsir')} detail={authorName} icon="book-outline" onPress={()=>{setReturnToTafsir(false);open('tafsir-choice');}}/>
+        <Txt bold size={15}>{t('عرض صفحة المصحف','Mushaf page display')}</Txt>
+        <Choice value={state.reader.fit} options={[{value:'page',label:t('الصفحة كاملة','Complete page')},{value:'width',label:t('ملء العرض','Fill width')}]} onChange={fit=>{dispatch({type:'readerSettings',fit});setZoom(1);}}/>
+        <Txt muted size={12}>{t('الصفحة كاملة تظهر الصورة دون قص. ملء العرض يتيح التمرير داخل الصفحة.','Complete page shows the entire image without cropping. Fill width lets you scroll within the page.')}</Txt>
+        <Row><ReaderChip icon="remove" label={t('تصغير','Zoom out')} onPress={()=>setZoom(value=>Math.max(1,value-.5))}/><Txt bold style={{writingDirection:'ltr'}}>{Math.round(zoom*100)}%</Txt><ReaderChip icon="add" label={t('تكبير','Zoom in')} onPress={()=>setZoom(value=>Math.min(3,value+.5))}/></Row>
+        <ReaderChip icon="scan-outline" label={t('إعادة ضبط العرض','Reset page view')} onPress={()=>{setZoom(1);dispatch({type:'readerSettings',fit:'page'});}}/>
+        <OptionRow title={t('الانتقال إلى صفحة','Go to page')} detail={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} icon="document-outline" onPress={()=>open('page')}/>
+        <OptionRow title={t('العلامات وخطط القراءة','Bookmarks and reading plans')} icon="bookmark-outline" onPress={()=>open('tools')}/>
+      </>:null}
+      {sheet==='reciter'?<>
+        <Field label={t('ابحث عن قارئ','Search reciters')} value={search} onChangeText={setSearch}/>
+        {KSU_RECITERS.filter(item=>`${item.nameAr} ${item.nameEn}`.toLowerCase().includes(search.toLowerCase())).map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} detail={item.lowData?t('توفير البيانات','Lower data use'):undefined} selected={item.id===reciter.id} icon="headset-outline" onPress={()=>{dispatch({type:'readerSettings',reciter:item.id});setSheet(null);}}/>)}
+        <Txt muted size={11}>{t('المصدر: مشروع المصحف الإلكتروني بجامعة الملك سعود. قد يتعذر تسجيل بعينه مؤقتًا.','Source: KSU Electronic Mushaf. Individual recordings may be temporarily unavailable.')}</Txt>
+      </>:null}
+      {sheet==='tafsir-choice'?KSU_TAFSIRS.map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} selected={item.id===author.id} icon="book-outline" onPress={()=>{dispatch({type:'readerSettings',tafsir:item.id});setSheet(returnToTafsir?'tafsir':'settings');}}/>):null}
+      {sheet==='surah'?<>
+        <Field label={t('ابحث عن سورة أو رقمها','Search by surah name or number')} value={search} onChangeText={text=>setSearch(normalizeDigits(text))}/>
+        {quran.Sura.map((item,i)=>item?.name&&i<=114&&(!search||item.name.includes(search)||surahEnglish[i].toLowerCase().includes(search.toLowerCase())||String(i)===search)?<OptionRow key={i} title={`${i}. ${rtl?item.name:surahEnglish[i]}`} detail={t(`${item.ayas} آية`,`${item.ayas} ayahs`)} selected={selection.sura===i} icon="book-outline" onPress={()=>{select({sura:i,aya:1});setSheet(null);}}/>:null)}
+      </>:null}
+      {sheet==='page'||sheet==='aya'?<>
+        <Field label={sheet==='page'?t('رقم الصفحة (1–604)','Page number (1–604)'):t(`رقم الآية (1–${quran.Sura[selection.sura]!.ayas})`,`Ayah number (1–${quran.Sura[selection.sura]!.ayas})`)} value={number} onChangeText={text=>setNumber(normalizeDigits(text))} keyboardType="number-pad"/>
+        {pickerError?<Txt style={{color:colors.danger}}>{t('الرقم خارج النطاق.','Number is outside the valid range.')}</Txt>:null}<Button label={t('انتقال','Go')} onPress={navigate}/>
+      </>:null}
+      {sheet==='tafsir'?<>
+        <ReaderChip label={t(`تفسير ${authorName}`,`${authorName} tafsir`)} icon="chevron-down" onPress={()=>{setReturnToTafsir(true);open('tafsir-choice');}}/>
+        {tafsirQuery.isPending?<ActivityIndicator color={colors.primary}/>:tafsirQuery.isError?<Card><Txt>{t('تعذّر تحميل التفسير من KSU.','Could not load tafsir from KSU.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={()=>void tafsirQuery.refetch()}/></Card>:<>
+          <Txt size={22} bold style={{textAlign:'right',writingDirection:'rtl'}}>{tafsirQuery.data.verseText}</Txt><Txt size={19} style={{textAlign:'right',writingDirection:'rtl'}}>{plainTafsir(tafsirQuery.data.tafsirHtml)}</Txt>
+        </>}
+        <Txt muted size={11}>{t('تفسير عربي من المصدر الأصلي KSU، دون ترجمة مولدة.','Arabic tafsir from the original KSU source, without generated translation.')}</Txt>
+      </>:null}
+      {sheet==='tools'?<>
+        <Txt bold>{t('علاماتي المرجعية','My bookmarks')}</Txt>
+        {state.bookmarks.length?state.bookmarks.map(bookmark=><OptionRow key={`${bookmark.sura}_${bookmark.aya}`} title={`${rtl?quran.Sura[bookmark.sura]?.name:surahEnglish[bookmark.sura]} · ${bookmark.aya}`} icon="bookmark-outline" onPress={()=>{select(bookmark);setSheet(null);}}/>):<Txt muted>{t('احفظ موضعك بزر العلامة في شريط التلاوة.','Save a position with the bookmark button in the player.')}</Txt>}
+        {selectedPlan?<Card><Txt bold>{t('تأكيد القراءة في خطة','Confirm reading in a plan')}</Txt><Choice value={selectedPlan.id} options={state.plans.map(plan=>({value:plan.id,label:plan.title}))} onChange={setPlanId}/><Button disabled={page>selectedPlan.target||selectedPlan.pages.includes(page)} label={selectedPlan.pages.includes(page)?t('الصفحة مسجلة في الخطة','Page already recorded'):t(`أؤكد قراءة الصفحة ${page}`,`Confirm reading page ${page}`)} onPress={()=>dispatch({type:'planPage',id:selectedPlan.id,page,completed:true})}/>{page>selectedPlan.target?<Txt muted size={12}>{t('هذه الصفحة خارج هدف الخطة المحددة.','This page is outside the selected plan’s target.')}</Txt>:null}</Card>:null}
+        <Txt muted size={12}>{t('الصورة والتلاوة والتفسير من KSU فقط. تتوقف التلاوة عند مغادرة القارئ أو وضع التطبيق في الخلفية.','Images, audio and tafsir come only from KSU. Recitation pauses when leaving the reader or backgrounding the app.')}</Txt>
+      </>:null}
+    </ReaderSheet>
+  </SafeAreaView>;
 }

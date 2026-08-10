@@ -12,6 +12,7 @@ export function AppProvider({children}: {children: React.ReactNode}) {
   const [saveError,setSaveError] = useState(false);
   const [saving,setSaving] = useState(false);
   const [restoreEpoch,setRestoreEpoch] = useState(0);
+  const [readerImmersive,setReaderImmersive] = useState(false);
   const queue = useRef(Promise.resolve());
   const revision = useRef(0);
   const scheme = useColorScheme();
@@ -40,5 +41,5 @@ export function AppProvider({children}: {children: React.ReactNode}) {
   if (!ready) return <View style={{flex:1,backgroundColor:colors.background,justifyContent:'center',alignItems:'center',padding:24,gap:20}}>
     {loadError ? <><Text style={{color:colors.text,textAlign:'center'}}>تعذّر فتح بياناتك المحفوظة. لم يتم حذفها.{ '\n' }Saved data could not be opened. It has not been deleted.</Text><Pressable accessibilityRole="button" onPress={()=>{setLoadError(false);hydrate();}}><Text style={{color:colors.primary,padding:16}}>إعادة المحاولة / Retry</Text></Pressable></> : <ActivityIndicator color={colors.primary} />}
   </View>;
-  return <AppContext.Provider value={{state,dispatch,colors,rtl,dark,t,saving,saveError,retrySave,replaceState,restoreEpoch}}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{state,dispatch,colors,rtl,dark,t,saving,saveError,retrySave,replaceState,restoreEpoch,readerImmersive,setReaderImmersive}}>{children}</AppContext.Provider>;
 }
