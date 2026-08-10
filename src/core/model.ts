@@ -1,5 +1,6 @@
 import { addDays, dateInZone, parseDate } from './calendar.ts';
 import { quran } from '../data/quran.ts';
+import {reciterById,tafsirById,type ReciterId,type TafsirId} from '../data/ksu-readers.ts';
 export type Locale = 'ar' | 'en';
 export type ThemeMode = 'system' | 'light' | 'dark';
 export const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
@@ -11,20 +12,23 @@ export interface Goal { id: string; title: string; target: number; progress: num
 export interface ReadingPlan { id: string; title: string; target: number; deadline: string; pages: number[] }
 export interface Bookmark { sura: number; aya: number }
 export interface Habit { id:string; title:string; dates:string[] }
+export interface ReaderPreferences {reciter:ReciterId;tafsir:TafsirId;fit:'page'|'width'}
 export interface State {
   version: 1; onboarded: boolean; locale: Locale; theme: ThemeMode;
   season: { start: string | null; length: 29 | 30; adjustment: number };
   days: Record<string, DayRecord>; goals: Goal[]; plans: ReadingPlan[]; habits: Habit[];
   bookmarks: Bookmark[]; lastRead: Bookmark;
+  reader: ReaderPreferences;
 }
 export function initialState(): State {
   return { version: 1, onboarded: false, locale: 'ar', theme: 'system',
-    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 } };
+    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'} };
 }
 export function emptyDay(): DayRecord { return { prayers: {}, fast: 'unlogged', note: '' }; }
 export type Action =
   | { type: 'settings'; locale?: Locale; theme?: ThemeMode }
   | { type: 'onboard' }
+  | {type:'readerSettings';reciter?:ReciterId;tafsir?:TafsirId;fit?:'page'|'width'}
   | { type: 'season'; start: string | null; length: 29 | 30; adjustment: number }
   | { type: 'prayer'; date: string; prayer: Prayer; status: PrayerStatus }
   | { type: 'fast'; date: string; status: FastStatus }
@@ -45,6 +49,11 @@ function validVerse(sura:number,aya:number):boolean { return positive(sura,114)&
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'settings': return { ...state, locale: action.locale ?? state.locale, theme: action.theme ?? state.theme };
+    case 'readerSettings': {
+      const reader={...state.reader,...Object.fromEntries(Object.entries(action).filter(([key,value])=>key!=='type'&&value!==undefined))};
+      if(!reciterById(reader.reciter)||!tafsirById(reader.tafsir)||!['page','width'].includes(reader.fit))return state;
+      return {...state,reader};
+    }
     case 'onboard': return { ...state, onboarded: true };
     case 'season':
       if (action.start) parseDate(action.start);
@@ -84,12 +93,14 @@ export function reducer(state: State, action: Action): State {
 export function restoreState(text: string): State {
   const value = JSON.parse(text);
   if(value&&value.version===1&&value.habits===undefined)value.habits=[];
+  if(value&&value.version===1&&value.reader===undefined)value.reader=initialState().reader;
   if (!value || value.version !== 1 || !['ar','en'].includes(value.locale) || !['system','light','dark'].includes(value.theme)
     || typeof value.onboarded !== 'boolean' || !value.season || ![29,30].includes(value.season.length)
     || !Number.isInteger(value.season.adjustment) || Math.abs(value.season.adjustment) > 2
     || !value.days || typeof value.days !== 'object' || Array.isArray(value.days)
     || !Array.isArray(value.goals) || !Array.isArray(value.plans) || !Array.isArray(value.bookmarks)
-    || !value.lastRead || !validVerse(value.lastRead.sura,value.lastRead.aya) || !Array.isArray(value.habits)) throw new Error('INVALID_STORAGE');
+    || !value.lastRead || !validVerse(value.lastRead.sura,value.lastRead.aya) || !Array.isArray(value.habits)
+    || !value.reader || !reciterById(value.reader.reciter)||!tafsirById(value.reader.tafsir)||!['page','width'].includes(value.reader.fit)) throw new Error('INVALID_STORAGE');
   if (value.season.start !== null) parseDate(value.season.start);
   for (const [date, day] of Object.entries(value.days) as [string, DayRecord][]) {
     parseDate(date);
