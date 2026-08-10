@@ -1,17 +1,23 @@
 # Verification report
 
+## Personal gamification 0.9.0
+
+Typecheck/lint and all 66 TypeScript tests PASS, including twelve new XP/level/badge tests and a thirty-day all-badge journey. Twenty native parser/policy tests were rerun and passed. Browser Home/More navigation, participation → 5 XP + First step, reload persistence, undo/relock, redo without duplication, filtering/rules and Arabic/light + English/dark layouts passed. At 320px/390px, measured horizontal overflow was zero; observed console error logs were empty. QA check-ins were undone and original appearance restored.
+
+Android build PASS in 10m 30s. Signature/manifest, 129 input comparisons, 23 compiled sources, exact Light font, twelve recordings, native receivers/haptics/R8 helpers and harness exclusion PASS. Device installation is pending: ADB disconnected while building; the install attempt returned no devices. No native XP interaction/user acceptance is claimed. Full source/limitations: `GAMIFICATION_V0_9.md`. The existing 0.8.0 Doctor/audit advisories were not rerun because dependencies are unchanged.
+
 ## Executed automated checks
 
 | Check | Actual result | Scope |
 |---|---|---|
 | TypeScript `npm run typecheck` | PASS | Strict application types, API routes and tests |
 | ESLint `npm run lint` | PASS | Expo/React rules |
-| `npm test` | PASS, 54 tests | Domain behavior, KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization, ESA source/date/DST and Adhan migration |
+| `npm test` | PASS, 66 tests | Domain behavior, KSU geometry, relay allowlist, SQLite reopen, PostgreSQL authorization, ESA source/date/DST and Adhan migration |
 | Native release parser/policy tests | PASS, 20 tests | Captured ESA table, Cairo DST, Friday-only audio, reminder timing/identity/expiry |
 | `npx expo-doctor` | 19/20, patch-version advisory | Five newer SDK 58 patch packages are recommended; not counted as a pass. See ADHAN_VERIFICATION.md |
 | `npm run build:web` | PASS | Production web bundles and all three fixed-source API routes exported |
 
-Current 0.8.0: 54 TypeScript + 20 native tests, typecheck/lint and web export passed. Browser tests cover animated Tasbih tap/pull/undo/reload, source-pinned full Adhkar text/citations/counts/favorites/last position, and Good Deeds selection/custom/check-in/undo/archive/reload. Arabic/light and English/dark, 390px and 320px, and the KSU surah reading link passed. Actual isolated Android personal reminders passed for both groups, restoration planning, duplicates, English labels, disable and stale delivery. The signed private product APK matches 124 inputs, 18 compiled sources, font and all twelve audio files. It was installed over 0.7.0 and refreshed after the final reminder-draft fix on Android 16, retaining permissions/data. The user confirmed actual counting, vibration and vibration-off on the unchanged Tasbih implementation. No own-process runtime errors were observed. Expo Doctor is 19/20; five existing high audit findings in the Expo/CLI signing chain remain documented in `DEVOTIONAL_V0_8.md`. Long-term Doze/reboot/clock and full TalkBack coverage are not inferred from these tests.
+Baseline 0.8.0: 54 TypeScript + 20 native tests, typecheck/lint and web export passed. Browser tests cover animated Tasbih tap/pull/undo/reload, source-pinned full Adhkar text/citations/counts/favorites/last position, and Good Deeds selection/custom/check-in/undo/archive/reload. Arabic/light and English/dark, 390px and 320px, and the KSU surah reading link passed. Actual isolated Android personal reminders passed for both groups, restoration planning, duplicates, English labels, disable and stale delivery. The signed private product APK matches 124 inputs, 18 compiled sources, font and all twelve audio files. It was installed over 0.7.0 and refreshed after the final reminder-draft fix on Android 16, retaining permissions/data. The user confirmed actual counting, vibration and vibration-off on the unchanged Tasbih implementation. No own-process runtime errors were observed. Expo Doctor is 19/20; five existing high audit findings in the Expo/CLI signing chain remain documented in `DEVOTIONAL_V0_8.md`. Long-term Doze/reboot/clock and full TalkBack coverage are not inferred from these tests.
 
 The archived 0.6.0 APK build/signature, 107 source/config/asset comparisons, seven compiled JavaScript sources and all twelve packaged audio hashes passed. The APK was installed over 0.5.0 and launched successfully on Android 16, retaining notification and exact-alarm permissions. Six native audio sequences, stopping a queued Adhan during its intro, and a separate exact-alarm regression were tested through an isolated harness. That isolated alarm run had the screen on. The user subsequently confirmed the installed 0.6.0 product's Friday reminder, intro and Al-Azhar Adhan with the screen locked; evidence is archived in `ANDROID_APK_RELEASE_v0.6.0.md`. The 0.5 evidence is archived separately.
 

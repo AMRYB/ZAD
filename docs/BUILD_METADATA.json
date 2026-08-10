@@ -1,6 +1,12 @@
 {
   "package": "com.ramadanjourney.preview",
   "displayName": "ZAD",
+  "version": "0.9.0",
+  "versionCode": 12,
+  "codeRevision": "8b608ec1ef78914746e7825a297605e95abee8a4",
+  "artifact": "../ZAD_v0.9.0_arm64.apk",
+  "bytes": 44679792,
+  "sha256": "a232575d2c4dcb6b8950f74d6118f91eccf1350e412313820c5733d91e70c2bd",
   "architecture": "arm64-v8a",
   "minSdk": 24,
   "targetSdk": 36,
@@ -9,10 +15,12 @@
   "signatureScheme": "v2",
   "signing": "Android debug certificate; private preview",
   "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+  "sameSignerAsVersion08": true,
   "automaticAndroidBackup": false,
   "permissions": [
     "android.permission.INTERNET",
     "android.permission.MODIFY_AUDIO_SETTINGS",
+    "android.permission.VIBRATE",
     "android.permission.ACCESS_NETWORK_STATE",
     "android.permission.WAKE_LOCK",
     "android.permission.SCHEDULE_EXACT_ALARM",
@@ -20,26 +28,10 @@
     "android.permission.FOREGROUND_SERVICE",
     "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
     "android.permission.RECEIVE_BOOT_COMPLETED",
-    "com.ramadanjourney.preview.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
-    "android.permission.VIBRATE"
+    "com.ramadanjourney.preview.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
   ],
-  "iconConfiguration": {
-    "version": "7.3.1",
-    "style": "Pro Classic Light",
-    "weight": 300,
-    "localLicensedAssets": true,
-    "packagedFontEntry": "res/7V.otf",
-    "packagedFontSha256": "46e24a495ff52fdbb821cfaf1a6eb033a81ecd63c3e2cb99bd14789810190392",
-    "fontMatchesLocalSource": true,
-    "proAssetsInPublicGit": false
-  },
-  "version": "0.8.0",
-  "versionCode": 11,
-  "codeRevision": "10624884e936005476eaf88feb0972fb234a7e61",
-  "artifact": "../ZAD_v0.8.0_arm64.apk",
-  "bytes": 44658260,
-  "sha256": "65c55ea70644db7a3686f4733f8c25eaf2089c378355e53b8426902d20e612b1",
-  "runtimeSourceAndAssetFilesCompared": 124,
+  "newPermissions": false,
+  "runtimeSourceAndAssetFilesCompared": 129,
   "sourceMatchesBuild": true,
   "compiledSourcesMatched": [
     "src/screens/Quran.tsx",
@@ -59,106 +51,61 @@
     "src/core/personal-reminders.ts",
     "src/core/model.ts",
     "src/app/_layout.tsx",
-    "src/app/(tabs)/_layout.tsx"
+    "src/app/(tabs)/_layout.tsx",
+    "src/core/gamification.ts",
+    "src/screens/Achievements.tsx",
+    "src/ui/ParticipationCard.tsx",
+    "src/ui/useLocalDate.ts",
+    "src/screens/Home.tsx"
   ],
+  "iconConfiguration": {
+    "version": "7.3.1",
+    "style": "Pro Classic Light",
+    "weight": 300,
+    "localLicensedAssets": true,
+    "packagedFontEntry": "res/7V.otf",
+    "packagedFontSha256": "46e24a495ff52fdbb821cfaf1a6eb033a81ecd63c3e2cb99bd14789810190392",
+    "fontMatchesLocalSource": true,
+    "proAssetsInPublicGit": false
+  },
   "packagedRecordingsMatched": 12,
+  "nativeReminderActionsPresent": true,
+  "personalReminderReceiverPresent": true,
+  "hapticsModulePresent": true,
   "r8AudioHelpersVerified": true,
+  "testHarnessExcluded": true,
   "verification": {
     "typecheck": true,
     "lint": true,
-    "testsPassed": 54,
-    "nativeParserTestsPassed": 20,
-    "nativeParserTestScope": "Six ESA + five audio sequence/date + four prayer-reminder policy + five personal-reminder policy tests",
-    "expoDoctor": "19/20; same five SDK 58 patch advisories; Haptics version compatible",
-    "dependencyAuditHighFindings": 5,
-    "dependencyAuditScope": "Existing Expo/CLI code-signing dependency chain; see DEVOTIONAL_V0_8.md",
-    "webExport": true,
-    "exportedApiRoutes": [
-      "/api/ksu",
-      "/api/esa",
-      "/api/adhan-audio"
-    ],
-    "androidBuild": "PASS; full build 6m 30s, UI refresh 57s, final reminder-draft refresh 25s",
-    "testHarnessExcluded": true,
-    "isolatedPersonalReminders": "PASS: six slots, restoration planning, actual AlarmManager Adhkar/Good Deeds test notifications, opening actions, duplicate suppression, English labels, cancellation and stale-generation rejection",
-    "isolatedScreenInteractiveAtEnd": false,
-    "browser": "PASS: Arabic/light and English/dark; 390px and 320px without horizontal overflow; Tasbih tap/pull/undo/reload; Adhkar sources/count/favorite/last position; Good Deeds select/custom/check-in/undo/reload/archive; KSU surah deep link; original reading position and appearance restored"
+    "typescriptTests": 66,
+    "newGamificationTests": 12,
+    "nativeUnitTests": 20,
+    "androidBuild": "PASS; 10m 30s; 543 executed / 28 up-to-date tasks",
+    "webExport": "PASS for new feature route; before final text-only polish and version bump",
+    "browser": "PASS: Arabic/light 320px and English/dark 390px; 5 XP/First step, reload, undo/relock, redo without duplication, earned filtering, rules, Home/More navigation, zero horizontal overflow and no console errors; QA participation undone and original appearance restored",
+    "expoDoctor": "Not repeated; unchanged dependency graph, prior 0.8.0 result 19/20 retained as an advisory",
+    "dependencyAudit": "Not repeated; same existing five high findings documented in DEVOTIONAL_V0_8.md"
+  },
+  "gamification": {
+    "ledger": "Private device-local participation only; never trusted server XP",
+    "dailyXpCap": 100,
+    "badges": 12,
+    "levelThreshold": "50 * level * (level - 1)",
+    "undoRedo": "Original allocations reserved; active totals and badges reconcile with corrections",
+    "legacyMigration": "Missing gamification initializes empty; existing records preserved without retroactive XP",
+    "leaderboardEnabled": false,
+    "authenticationEnabled": false,
+    "cloudSyncEnabled": false,
+    "record": "GAMIFICATION_V0_9.md"
   },
   "deviceInstallationTest": {
-    "status": "PASS",
-    "androidVersion": "16",
-    "deviceModel": "23117RA68G",
-    "updatedFrom": "0.7.0",
-    "finalRefreshUpdatedFrom": "Earlier 0.8.0 preview",
-    "launchStatus": "ok",
-    "launchState": "UNKNOWN (0)",
-    "ownProcessErrorsObserved": false,
-    "notificationPermissionRetained": true,
-    "exactAlarmAccessRetained": true,
-    "vibrationPermissionGranted": true,
-    "routeIntentsAccepted": [
-      "tasbih",
-      "adhkar",
-      "good-deeds"
-    ],
-    "userConfirmedTasbih": {
-      "counting": true,
-      "physicalHaptics": true,
-      "hapticsOffToggle": true
-    },
-    "acceptanceScope": "User tested Tasbih before the final reminder-draft-only refresh; Tasbih code is unchanged and included in compiled-source verification",
-    "testHarnessRemoved": true,
-    "remainingDeviceGates": [
-      "Deep Doze, DND and long-term OEM battery restrictions",
-      "Actual reboot and long-term timetable refresh",
-      "Full physical TalkBack and reader multitouch coverage",
-      "Long-running daily delivery at every chosen clock time"
-    ]
+    "status": "PENDING",
+    "reason": "ADB device disconnected during build; install attempt returned no devices/emulators found. No uninstall or data clear was attempted."
   },
-  "recordedAt": "2026-10-24T13:14:34.183336+00:00",
-  "baselineAcceptance": {
-    "version": "0.6.0",
-    "fridayLockedScreen": "PASS: user confirmed reminder, Friday intro and Al-Azhar Adhan before requesting this trim",
-    "record": "BUILD_METADATA_v0.6.0.json"
+  "previousBaseline": {
+    "version": "0.8.0",
+    "metadata": "BUILD_METADATA_v0.8.0.json",
+    "releaseRecord": "ANDROID_APK_RELEASE_v0.8.0.md"
   },
-  "audioTrim": {
-    "clip": "tobar-isha",
-    "removedSeconds": 5.6,
-    "removedSamplesPerChannel": 246960,
-    "sampleRate": 44100,
-    "remainingDecodedSamplesPerChannel": 14016336,
-    "firstFiveSecondsCorrelation": 0.9999857814061788,
-    "otherRecordingsByteIdentical": 11,
-    "newSha256": "914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393"
-  },
-  "nativeReminderActionsPresent": true,
-  "notificationControls": {
-    "reminderLeadMinutes": 10,
-    "countdown": true,
-    "reminderMuteScope": "Only the matching city/date/prayer/generation/timestamp; includes intro and Adhan",
-    "reminderUndo": "Available before prayer time",
-    "liveMute": "Per-player volume, maintained across intro/Adhan, cleared for next session",
-    "staleSessionControlsRejected": true,
-    "newPermissions": false,
-    "actionReceiverExported": false,
-    "record": "ADHAN_NOTIFICATIONS_V0_7.md"
-  },
-  "sameSignerAsVersion07": true,
-  "personalReminderReceiverPresent": true,
-  "hapticsModulePresent": true,
-  "devotionalPages": {
-    "tasbih": "Animated bead-loop tap/pull; per-phrase persisted counters, goals, haptics toggle, undo/reset",
-    "adhkar": {
-      "source": "https://risala.prh.gov.sa/ar/content/51",
-      "uniqueEntries": 90,
-      "sections": 6,
-      "sourceHtmlSha256": "091d5bd6a65e87b0e448347aa47d6057024418fc0e83f6bea7a8bfcf19e46341",
-      "traditionalRecitationLanguage": "Arabic; interface bilingual",
-      "offlineIncludedTexts": true,
-      "favoritesAndPositionSaved": true
-    },
-    "goodDeeds": "Eight opt-in suggestions, private custom/archived choices, reversible daily records and weekly totals",
-    "personalReminders": "Two separate opt-ins, off by default; three editable device-local clock times per group; inexact alarms independent of ESA prayer alarms",
-    "record": "DEVOTIONAL_V0_8.md"
-  }
+  "recordedAt": "2026-10-24T17:55:24.365506+00:00"
 }

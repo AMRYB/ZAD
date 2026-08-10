@@ -51,3 +51,7 @@ Browser flow PASS: More → My achievements, a pre-existing synthetic QA habit c
 Production web export PASS with `/achievements` and the three existing allowlisted API routes. No new API is needed for local participation.
 
 Additional scenarios PASS: all twelve badges unlocked through reducer transitions over thirty calendar days across October/November, and shared daily Adhkar reset/replay revokes/restores the affected morning-section reward without duplication.
+
+### Build evidence
+
+Private arm64 0.9.0/code 12 build PASS in 10m 30s. The artifact passes signature/manifest, 129 source/asset comparisons, 23 compiled-source comparisons, exact font/twelve recording checks and native/harness checks. All twenty native parser/policy tests were rerun and passed. No new permissions/dependencies. Device installation is pending ADB reconnection; no native XP interaction or new user acceptance is claimed. The previous installed 0.8.0 release evidence is archived unchanged. Prior Doctor/audit advisories are retained without claiming a rerun.

@@ -4,7 +4,7 @@ ZAD is an Arabic-first Expo / React Native application for private daily trackin
 
 ## Current source and release status
 
-Current source and inspected private Android preview: **0.8.0**, branded ZAD / زاد. Added an animated bead Tasbih tab beside Quran, a six-section source-pinned Adhkar reader, and personal Good Deeds choices in More, with saved progress and optional editable local reminders. Typecheck/lint, 54 TypeScript and 20 native tests passed. Browser tap/pull, persistence, reading/favorites, custom goals and 320px/390px Arabic/English light/dark checks passed. Isolated Android reminder delivery/cancellation passed; the private product APK was verified and installed over 0.7.0 on Android 16. The user confirmed native counting, physical haptics and its off-toggle. See `docs/DEVOTIONAL_V0_8.md`, `docs/ANDROID_APK_RELEASE.md` and `docs/BUILD_METADATA.json`. Expo Doctor remains 19/20; existing dependency audit findings are documented.
+Current source and built/verified private Android preview: **0.9.0**, branded ZAD / زاد. Added personal offline XP, progressive levels and twelve badges with a bilingual My achievements page from Home and More. Stable source identities, daily/category limits and correction-aware allocations preserve existing 0.8.0 records without historical backfill. Typecheck/lint, 66 TypeScript and 20 native unit tests passed; browser participation/persistence/undo/redo, filters, Arabic/English and light/dark responsive checks passed. The APK matches 129 inputs, 23 compiled sources, its licensed font and twelve recordings; signature/manifest checks passed. **0.9.0 device installation is pending: ADB disconnected during the build. The last installed/user-accepted baseline remains 0.8.0.** See `docs/GAMIFICATION_V0_9.md`, `docs/ANDROID_APK_RELEASE.md` and `docs/BUILD_METADATA.json`.
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. Product requirements are available in `docs/source-plan/`.
 
@@ -57,7 +57,7 @@ For Windows local release building, see [ANDROID_BUILD.md](docs/ANDROID_BUILD.md
 
 ## Database
 
-The running app stores private data locally without an account. `supabase/migrations/20261023000100_private_core.sql` additionally prepares a cloud database foundation: own-user RLS, revision-based snapshot sync, server-controlled participation XP, capped/deduplicated awards, opt-in leaderboard projection, blocks, and account-data deletion. These SQL behaviors are tested with PostgreSQL via PGlite, using a test-only Auth shim.
+The running app stores private data locally without an account. Its personal XP ledger is local-only and must never be imported as a trusted cloud XP balance. `supabase/migrations/20261023000100_private_core.sql` additionally prepares a cloud database foundation: own-user RLS, revision-based snapshot sync, server-controlled participation XP, capped/deduplicated awards, opt-in leaderboard projection, blocks, and account-data deletion. These SQL behaviors are tested with PostgreSQL via PGlite, using a test-only Auth shim.
 
 **No Supabase project has been provisioned. No live sign-in, cloud synchronization, challenge service, or social mobile UI is claimed to be working.** Those later-phase flows remain hidden; there are no placeholder social tabs. Read [DATABASE.md](docs/DATABASE.md) for the exact tables, RPC contracts, and remaining integration work.
 

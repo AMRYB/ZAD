@@ -1,38 +1,29 @@
-# Private Android preview release record — 0.8.0
+# Private Android preview release record — 0.9.0
 
-Package `com.ramadanjourney.preview`, display name **ZAD**, version `0.8.0` / code `11`.
+Package `com.ramadanjourney.preview`, display name **ZAD**, version `0.9.0` / code `12`. Runtime source revision `8b608ec1ef78914746e7825a297605e95abee8a4`; later test/documentation commits do not change the compiled app.
 
-Tasbih sits beside Quran in the bottom tabs. More opens the six-section Adhkar reader and personal Good Deeds page. Local progress, favorites, reading position, custom goals and optional reminder times migrate into the existing private state/backup. See `DEVOTIONAL_V0_8.md` for source provenance and feature boundaries.
+Personal offline XP, progressive levels and twelve correction-aware badges are available from Home and More → My achievements. This is a private device-local ledger, separate from trusted server XP. Authentication/cloud sync/leaderboards/challenges remain inactive. Existing records migrate without deletion or historical awards. See `GAMIFICATION_V0_9.md`.
 
 | Gate | Actual status |
 |---|---|
-| Typecheck / lint / TypeScript suite | PASS, 54 tests |
-| Native release JUnit | PASS, 20 tests |
-| Expo Doctor | 19/20, same five SDK 58 patch advisories; no exclusions |
-| Dependency audit | Five high findings in existing Expo/CLI signing chain; documented, no forced SDK migration |
-| Production web export | PASS, all routes and three existing API endpoints |
-| Browser UI/behavior | PASS, Arabic/light and English/dark, 390px/320px; tap/pull/undo/reload, source/count/favorite/last position, select/custom/check-in/undo/reload/archive, explicit checkbox states |
-| Quran reading deep link | PASS, surah 32/ayah 1 on original KSU page 415; previous 1:1 reading position restored after test |
-| Isolated Android personal reminders | PASS, six slots, restore planning, actual test delivery/open actions for Adhkar and Good Deeds, duplicate guard, English labels, disable/stale rejection; prayer configuration unchanged |
-| Isolated screen state | Non-interactive at final sample; continuous deep-Doze behavior not inferred |
-| Local arm64 release build | PASS, full 6m 30s + UI refresh 57s + final reminder-only refresh 25s |
-| APK signature / manifest | PASS, v2, same preview signer, 0.8.0/code 11; personal action receiver not exported |
-| New permission | Normal `VIBRATE`, explicitly needed for requested haptics; no new microphone/location/storage/overlay permission |
-| Inputs / compiled sources / font / recordings | PASS, 124 inputs, 18 compiled sources, exact licensed Light font, all twelve audio hashes and catalogue |
-| Personal receiver / haptics / R8 helpers | PASS, native markers and R8 residual mappings; test harness excluded |
-| Actual product installation/startup | PASS, update over 0.7.0 and final update over the earlier 0.8.0 preview on Android 16; status ok, process alive, no own-process runtime errors observed |
-| New page route intents | Tasbih, Adhkar and Good Deeds accepted by the installed product |
-| User physical Tasbih acceptance | PASS, user confirmed counting, felt vibration, and switching vibration off; Tasbih implementation unchanged by final reminder-draft refresh |
-| Existing permissions/data | Notifications and exact-alarm access retained; user state not cleared; vibration permission granted |
-| Deep Doze / actual reboot / long-term clock delivery / full TalkBack | Not device-tested |
-| Public/Play release | Not performed |
+| Typecheck / lint / TypeScript suite | PASS, 66 tests including twelve new gamification tests |
+| Native release JUnit | PASS, 20 tests rerun |
+| Browser flow | PASS, Home/More entry, check-in → XP/badge, reload, undo/relock, redo without duplication, filtering and rules |
+| Browser layout | PASS, Arabic/light 320px and English/dark 390px; zero measured horizontal overflow, badge cards visually inspected, no console errors |
+| Production web export | PASS for new feature route and existing three API routes; before final text-only polish/version bump |
+| Local arm64 release build | PASS, 10m 30s; 543 executed and 28 up-to-date tasks |
+| Signature / manifest | PASS, v2; same preview signer, 0.9.0/code 12, minSdk 24 / target 36 / compile 37 |
+| Source / compiled inputs | PASS, 129 files, 23 compiled source-map contents |
+| Font / audio / native modules | PASS, exact licensed Light font, twelve recording hashes/catalogue, receivers, haptics and R8 audio helpers; harness excluded |
+| New permissions | None; manifest permission set equals 0.8.0 |
+| Device installation / launch | PENDING; phone disconnected during build, install attempt returned no devices/emulators found |
+| Actual native XP interactions | Not verified; browser/domain checks are not a substitute for device interaction |
+| Doctor / dependency audit | Not repeated; dependency graph unchanged. Prior Doctor 19/20 and five high audit findings remain documented in DEVOTIONAL_V0_8.md |
 
-Artifact relative to repository: `../ZAD_v0.8.0_arm64.apk`, **44658260 bytes**, Android 7.0+ / ARM64 only.
+Artifact: `../ZAD_v0.9.0_arm64.apk` — 44,679,792 bytes.
 
-SHA256: `65c55ea70644db7a3686f4733f8c25eaf2089c378355e53b8426902d20e612b1`.
+SHA256: `a232575d2c4dcb6b8950f74d6118f91eccf1350e412313820c5733d91e70c2bd`.
 
-Compiled runtime revision: `10624884e936005476eaf88feb0972fb234a7e61`. Later documentation commits do not change runtime inputs. Startup reported `UNKNOWN (0)` and is not described as a cold launch. The isolated harness was uninstalled. The twelve prepared recordings retain the 0.6.1 Isha trim and remain outside public Git, together with the licensed Pro font.
+Certificate SHA256: `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c` (private development/debug signing, not production signing).
 
-Adhkar includes 90 traditional source-pinned entries, with Arabic recitation text and bilingual controls/citations. It does not claim to include every chapter of the source book. Existing KSU Quran content and ESA prayer-time authority are unchanged. Personal reminders are opt-in and inexact; actual ESA prayer alarms retain their existing exact scheduling and notification controls.
-
-Previous release evidence: `ANDROID_APK_RELEASE_v0.7.0.md` and `BUILD_METADATA_v0.7.0.json`.
+The installed and user-accepted 0.8.0 baseline is preserved in `ANDROID_APK_RELEASE_v0.8.0.md` / `BUILD_METADATA_v0.8.0.json`. The attempted update did not uninstall or clear app data. Current build is not represented as device-tested until the installation gate is completed. ARM64 only; no Play/AAB/public release. Long-term Doze/reboot, full TalkBack and new native XP acceptance remain separate verification scope.

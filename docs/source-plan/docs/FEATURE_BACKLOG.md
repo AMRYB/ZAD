@@ -94,4 +94,4 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 
 - RJ-045: Requested personal offline XP/levels/achievements slice implemented; 66 TS tests and typecheck/lint PASS. No deployment or completion claim for original RJ-14 server-only XP, RJ-11/RJ-12 Auth/sync, or RJ-15 leaderboards. See `../../GAMIFICATION_V0_9.md`.
 - RJ-046: Bilingual achievements UI implemented; browser flow and responsive/locale/theme checks PASS; device verification pending.
-- RJ-047: Private 0.9.0 build/install pending.
+- RJ-047: Private 0.9.0 build/signature/source/font/audio checks PASS; installation pending ADB reconnect.
