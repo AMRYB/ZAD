@@ -48,7 +48,9 @@ def main():
                      'src/screens/Tasbih.tsx', 'src/screens/Adhkar.tsx', 'src/screens/GoodDeeds.tsx',
                      'src/screens/devotion/ReminderPreferences.tsx', 'src/state/PersonalReminderCoordinator.tsx',
                      'src/core/devotion.ts', 'src/core/adhkar.ts', 'src/core/personal-reminders.ts', 'src/core/model.ts',
-                     'src/app/_layout.tsx', 'src/app/(tabs)/_layout.tsx']:
+                     'src/app/_layout.tsx', 'src/app/(tabs)/_layout.tsx',
+                     'src/core/gamification.ts', 'src/screens/Achievements.tsx', 'src/ui/ParticipationCard.tsx',
+                     'src/ui/useLocalDate.ts', 'src/screens/Home.tsx']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
