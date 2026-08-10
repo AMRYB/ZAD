@@ -3,6 +3,7 @@ import { quran } from '../data/quran.ts';
 import {reciterById,tafsirById,type ReciterId,type TafsirId} from '../data/ksu-readers.ts';
 import {defaultAdhan,validAdhan,type AdhanPreferences} from './adhan.ts';
 import {initialDevotion,reduceDevotion,validateDevotion,type DevotionState,type DevotionAction} from './devotion.ts';
+import {initialGamification,reconcileParticipation,validateGamification,type GamificationState} from './gamification.ts';
 export type Locale = 'ar' | 'en';
 export type ThemeMode = 'system' | 'light' | 'dark';
 export const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
@@ -23,10 +24,11 @@ export interface State {
   reader: ReaderPreferences;
   adhan:AdhanPreferences;
   devotion:DevotionState;
+  gamification:GamificationState;
 }
 export function initialState(): State {
   return { version: 1, onboarded: false, locale: 'ar', theme: 'system',
-    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan},devotion:initialDevotion() };
+    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan},devotion:initialDevotion(),gamification:initialGamification() };
 }
 export function emptyDay(): DayRecord { return { prayers: {}, fast: 'unlogged', note: '' }; }
 export type Action =
@@ -52,7 +54,13 @@ export type Action =
   | { type: 'lastRead'; sura: number; aya: number };
 function positive(value: number, max: number): boolean { return Number.isInteger(value) && value > 0 && value <= max; }
 function validVerse(sura:number,aya:number):boolean { return positive(sura,114)&&positive(aya,quran.Sura[sura]?.ayas??0); }
-export function reducer(state: State, action: Action): State {
+export function reducer(state: State, action: Action,today=dateInZone()): State {
+  const next=reduceActivity(state,action);
+  if(next===state)return state;
+  const gamification=reconcileParticipation(state,next,action,today);
+  return gamification===state.gamification?next:{...next,gamification};
+}
+function reduceActivity(state: State, action: Action): State {
   switch (action.type) {
     case 'devotion':{const devotion=reduceDevotion(state.devotion,action.action);return devotion===state.devotion?state:{...state,devotion};}
     case 'adhanSettings':return validAdhan(action.value)?{...state,adhan:action.value}:state;
@@ -104,6 +112,8 @@ export function restoreState(text: string): State {
   if(value&&value.version===1&&value.reader===undefined)value.reader=initialState().reader;
   if(value&&value.version===1&&value.adhan===undefined)value.adhan={...defaultAdhan};
   if(value&&value.version===1&&value.devotion===undefined)value.devotion=initialDevotion();
+  if(value&&value.version===1&&value.gamification===undefined)value.gamification=initialGamification();
+  if(value&&!validateGamification(value.gamification))throw new Error('INVALID_STORAGE');
   if(value&&!validateDevotion(value.devotion))throw new Error('INVALID_STORAGE');
   if(value&&!validAdhan(value.adhan))throw new Error('INVALID_STORAGE');
   if (!value || value.version !== 1 || !['ar','en'].includes(value.locale) || !['system','light','dark'].includes(value.theme)

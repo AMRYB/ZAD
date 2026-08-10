@@ -117,3 +117,11 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-042 | Source-pinned Adhkar reader and optional reminder foundation | 90 unique entries in six sections, favorites, full text/citations, per-prayer progress and last position; 54 TypeScript + 20 native tests PASS. Isolated Android personal reminders passed; source/limits documented in DEVOTIONAL_V0_8.md |
 | RJ-043 | Personal Good Deeds choices and daily records | Eight suggestions plus private custom choices, selection, check-in/undo, archive preservation and reload persistence PASS; bilingual/dark/mobile browser checks and source tests PASS |
 | RJ-044 | ZAD 0.8.0 private APK and final device verification | Build/signature/124 inputs/18 compiled sources/font/audio/haptics/personal receiver PASS; actual Android 16 update/startup PASS; user confirmed native counting, vibration and off-toggle. 54 TypeScript + 20 native tests PASS; Doctor 19/20 and existing audit findings documented |
+
+## Personal gamification 0.9
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-045 | Personal local XP ledger, level thresholds and twelve derived badges | 64 TS tests, typecheck/lint PASS; old snapshot migration and correction/replay covered. Separate from trusted server XP; no public ranking |
+| RJ-046 | Bilingual achievements page and home/More entry | Implemented; browser and Android verification pending |
+| RJ-047 | Private 0.9.0 APK and installation | Pending build and actual verification |

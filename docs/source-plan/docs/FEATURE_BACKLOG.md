@@ -91,3 +91,7 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 - RJ-042: Adhkar — 90 source-pinned entries in six sections from the user-selected Risala edition, full included text/citations, scoped repetition counts, favorites, last position and editable optional reminders.
 - RJ-043: Good Deeds — eight selectable suggestions, private custom/archived choices, reversible daily check-ins, weekly records and three editable opt-in reminders. Browser selection/custom/reload/archive checks and isolated Android reminder delivery PASS.
 - RJ-044: ZAD 0.8.0 private APK — built, source/signature/font/audio/native-module verified and installed over 0.7.0 on Android 16. User confirmed native count/haptics/off-toggle. 54 TypeScript and 20 native tests PASS; Doctor 19/20 and existing audit findings recorded. No public/Play release.
+
+- RJ-045: Requested personal offline XP/levels/achievements slice implemented; 64 TS tests and typecheck/lint PASS. No deployment or completion claim for original RJ-14 server-only XP, RJ-11/RJ-12 Auth/sync, or RJ-15 leaderboards. See `../../GAMIFICATION_V0_9.md`.
+- RJ-046: Bilingual achievements UI implemented; browser/device verification pending.
+- RJ-047: Private 0.9.0 build/install pending.
