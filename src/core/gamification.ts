@@ -5,11 +5,11 @@ import type {Action,State} from './model.ts';
 // Personal, device-local participation only. Never submit this ledger as trusted server XP.
 export const DAILY_XP_CAP=100;
 export const xpRules=[
-  {kind:'checkin',points:5,cap:5,ar:'أول تسجيل لليوم',en:'First daily check-in',detailAr:'مرة في اليوم عند تسجيل حالة صلاة أو صيام، أيًا كانت الحالة.',detailEn:'Once a day for recording any prayer or fasting status.'},
+  {kind:'checkin',points:5,cap:5,ar:'أول تسجيل لليوم',en:'First daily check-in',detailAr:'5 نقاط مرة في اليوم عند تسجيل حالة صلاة أو صيام، أيًا كانت الحالة.',detailEn:'5 XP once a day for recording any prayer or fasting status.'},
   {kind:'reading',points:10,cap:30,ar:'تسجيل صفحة في خطة القراءة',en:'Reading-plan page',detailAr:'10 نقاط لكل صفحة جديدة في الخطة؛ حتى 30 يوميًا.',detailEn:'10 per new page in a plan; up to 30 a day.'},
   {kind:'habit',points:5,cap:15,ar:'متابعة عادة',en:'Habit check-in',detailAr:'5 نقاط لكل عادة مسجلة؛ حتى 15 يوميًا.',detailEn:'5 per recorded habit; up to 15 a day.'},
   {kind:'goal',points:10,cap:20,ar:'إكمال هدف شخصي',en:'Complete a personal goal',detailAr:'10 نقاط لكل هدف؛ حتى 20 يوميًا.',detailEn:'10 per completed goal; up to 20 a day.'},
-  {kind:'tasbih',points:10,cap:10,ar:'جلسة السبحة',en:'Tasbih session',detailAr:'مرة يوميًا عند بلوغ 33 ضغطة، مهما كان هدف العدّ.',detailEn:'Once a day at 33 counts, regardless of the counter target.'},
+  {kind:'tasbih',points:10,cap:10,ar:'جلسة السبحة',en:'Tasbih session',detailAr:'10 نقاط مرة يوميًا عند بلوغ 33 ضغطة، مهما كان هدف العدّ.',detailEn:'10 XP once a day at 33 counts, regardless of the counter target.'},
   {kind:'adhkar',points:10,cap:20,ar:'إكمال قسم أذكار',en:'Complete an adhkar section',detailAr:'10 نقاط لكل قسم كامل؛ حتى 20 يوميًا. بعد الصلاة قسم واحد يوميًا.',detailEn:'10 per complete section; up to 20 a day. After-prayer adhkar counts as one section per day.'},
   {kind:'deed',points:5,cap:15,ar:'تسجيل عمل تختاره',en:'Good-deed check-in',detailAr:'5 نقاط لكل اختيار مسجل؛ حتى 15 يوميًا.',detailEn:'5 per recorded choice; up to 15 a day.'},
 ] as const;

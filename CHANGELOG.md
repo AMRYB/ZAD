@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0 — personal XP, levels and achievements
+
+- Added an offline participation ledger with a 100 XP daily cap, per-category limits, stable source identities, reversible allocations and zero retroactive rewards on migration. Local totals remain separate from trusted server XP.
+- Added progressive levels and twelve derived badges with saved source events, deterministic eligibility dates and correction-aware progress.
+- Added My achievements from Home and More, Arabic/English light/dark layouts, badge filters, daily XP, next-level progress, recent participation and transparent rules. Existing backups retain all previous records.
+
 ## 0.8.0 — personal remembrance and good deeds
 
 - Kept reminder disabling immediate when an unsaved time draft is invalid; enabling and saving still validate the chosen times.

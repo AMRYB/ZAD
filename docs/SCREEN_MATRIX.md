@@ -25,3 +25,4 @@ The original master plan's approximately 70 destinations refer to the full futur
 ## Reader 0.3 interaction changes
 
 The current reader uses two sideways-cycling control cards; its arrow-free navigation face contains aligned surah, ayah and enlarged page pickers. Immersive mode centers playback between ayah on the right and text-only tafsir on the left. Original page overlays live on a pinch/pan transform plane. Horizontal page swipes apply at normal size. See `ADHAN_VERIFICATION.md` for the current revision and earlier reader reports for gesture history and tested limits.
+| `/achievements` | Personal XP/levels, twelve badges, filters, rules and corrected/recent allocations; reachable from Home and More | Private local participation ledger; no server/trusted XP writes |

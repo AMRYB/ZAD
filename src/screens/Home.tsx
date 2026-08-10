@@ -7,6 +7,7 @@ import { emptyDay,PRAYERS } from '../core/model';
 import { useApp } from '../state/AppContext';
 import { Button,Card,Meter,Row,Screen,Section,Stat,Txt } from '../ui/components';
 import { quran } from '../data/quran';
+import {ParticipationCard} from '../ui/ParticipationCard';
 
 export function Home(){
   const {state,t,dark,colors}=useApp();
@@ -21,6 +22,7 @@ export function Home(){
       <Txt style={{color:'#E0EEE7'}}>{t('ليس المطلوب يومًا مثاليًا. اختر خطوة صغيرة تستطيع الاستمرار عليها.','Your day does not need to be perfect. Choose one small step you can keep taking.')}</Txt>
       <Button label={t('سجّل يومك','Check in today')} secondary onPress={()=>router.push('/day')}/>
     </LinearGradient>
+    <ParticipationCard/>
     <Section title={t('لمحة عن اليوم','Today at a glance')}/>
     <Row style={{alignItems:'stretch'}}><Stat label={t('صلوات مسجلة كمكتملة','Prayers marked complete')} value={`${done} / 5`}/><Stat label={t('الأهداف المكتملة','Completed goals')} value={state.goals.filter(g=>g.progress===g.target).length}/></Row>
     <Section title={t('موعدك مع القرآن','Your time with the Quran')}/>

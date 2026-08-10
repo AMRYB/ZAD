@@ -43,3 +43,9 @@ This local ledger is not tamper-proof: backup/device-clock editing, reinstalling
 - Core: 64 TypeScript tests PASS (10 new), including inclusive check-ins, no passive rewards, undo/replay, category/global caps, partial/zero allocations, old snapshot migration, malformed ledger rejection, 100 level boundaries, Tasbih target/reset, full Adhkar completion/reset, source deletion and deterministic badge dates/streak corrections.
 - Typecheck/lint PASS after adding the new UI.
 - UI/device/release evidence will be added after execution; core results do not imply APK/device acceptance.
+
+### UI evidence
+
+Browser flow PASS: More → My achievements, a pre-existing synthetic QA habit check-in → 5 XP + First step badge; reload preserved both; undo → 0 XP + badge relock; redo → the same 5 XP without duplication. The QA habit was unmarked afterward and original Arabic/light preferences restored. Earned badge filtering and expanded rules rendered correctly. Arabic/light at 320px and English/dark at 390px had zero DOM elements outside horizontal viewport bounds. Both 390px layouts and badge cards were visually inspected; browser error logs were empty. Raw screenshots use synthetic participation, not the user's worship records. React review: calculations derived with memoized ledger dependencies, no reward effects, fixed hooks, accessible controls/progress, theme tokens and explicit RTL/LTR retained.
+
+Production web export PASS with `/achievements` and the three existing allowlisted API routes. No new API is needed for local participation.
