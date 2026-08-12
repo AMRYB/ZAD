@@ -125,3 +125,16 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-045 | Personal local XP ledger, level thresholds and twelve derived badges | 66 TS tests, typecheck/lint PASS; old snapshot migration and correction/replay covered. Separate from trusted server XP; no public ranking |
 | RJ-046 | Bilingual achievements page and home/More entry | Browser participation/persistence/undo/redo/filter and Arabic/English layout PASS; Android cold launch PASS; native XP/badge display and retained data confirmed by the user |
 | RJ-047 | Private 0.9.0 APK and installation | Build/signature/129 inputs/23 compiled sources/font/audio PASS; installed over 0.8.0 and cold-launched on Android 16; native XP/badge display and retained data confirmed by the user |
+
+## Connected daily journey 0.10 (in progress)
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-048 | Personalized daily Home and separate More/Settings | Domain implemented; browser/device QA pending |
+| RJ-049 | Date-aware weekly/monthly reports | Domain tests PASS; no invented historical reading dates |
+| RJ-050 | Optional setup with city, companion choices and reminders | Migration tests PASS; UI QA pending |
+| RJ-051 | Native queued background Quran recitation and sleep timer | Implemented; native build/device verification pending |
+| RJ-052 | ESA-backed Android home-screen widget | Implemented; policy/build/launcher verification pending |
+| RJ-053 | Optional accounts, private profile caches and CAS outbox/conflicts | Local domain tests PASS; fresh hosted schema applied; Auth/live/device verification pending |
+| RJ-054 | Connected preview APK and release/accessibility evidence | Pending final source and actual checks |
+| RJ-055 | Remove final 57 seconds of Isha Adhan | Sample cutoff/waveform/other eleven recordings PASS; new APK listening pending |

@@ -4,6 +4,7 @@ import {reciterById,tafsirById,type ReciterId,type TafsirId} from '../data/ksu-r
 import {defaultAdhan,validAdhan,type AdhanPreferences} from './adhan.ts';
 import {initialDevotion,reduceDevotion,validateDevotion,type DevotionState,type DevotionAction} from './devotion.ts';
 import {initialGamification,reconcileParticipation,validateGamification,type GamificationState} from './gamification.ts';
+import {initialPersonalization,validPersonalization,type Personalization} from './personalization.ts';
 export type Locale = 'ar' | 'en';
 export type ThemeMode = 'system' | 'light' | 'dark';
 export const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
@@ -25,13 +26,15 @@ export interface State {
   adhan:AdhanPreferences;
   devotion:DevotionState;
   gamification:GamificationState;
+  personalization:Personalization;
 }
 export function initialState(): State {
   return { version: 1, onboarded: false, locale: 'ar', theme: 'system',
-    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan},devotion:initialDevotion(),gamification:initialGamification() };
+    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan},devotion:initialDevotion(),gamification:initialGamification(),personalization:initialPersonalization() };
 }
 export function emptyDay(): DayRecord { return { prayers: {}, fast: 'unlogged', note: '' }; }
 export type Action =
+  | {type:'personalization';value:Personalization}
   | {type:'devotion';action:DevotionAction}
   | { type: 'settings'; locale?: Locale; theme?: ThemeMode }
   | { type: 'onboard' }
@@ -62,6 +65,7 @@ export function reducer(state: State, action: Action,today=dateInZone()): State 
 }
 function reduceActivity(state: State, action: Action): State {
   switch (action.type) {
+    case 'personalization':return validPersonalization(action.value)?{...state,personalization:action.value}:state;
     case 'devotion':{const devotion=reduceDevotion(state.devotion,action.action);return devotion===state.devotion?state:{...state,devotion};}
     case 'adhanSettings':return validAdhan(action.value)?{...state,adhan:action.value}:state;
     case 'settings': return { ...state, locale: action.locale ?? state.locale, theme: action.theme ?? state.theme };
@@ -113,6 +117,8 @@ export function restoreState(text: string): State {
   if(value&&value.version===1&&value.adhan===undefined)value.adhan={...defaultAdhan};
   if(value&&value.version===1&&value.devotion===undefined)value.devotion=initialDevotion();
   if(value&&value.version===1&&value.gamification===undefined)value.gamification=initialGamification();
+  if(value&&value.version===1&&value.personalization===undefined)value.personalization=initialPersonalization();
+  if(value&&!validPersonalization(value.personalization))throw new Error('INVALID_STORAGE');
   if(value&&!validateGamification(value.gamification))throw new Error('INVALID_STORAGE');
   if(value&&!validateDevotion(value.devotion))throw new Error('INVALID_STORAGE');
   if(value&&!validAdhan(value.adhan))throw new Error('INVALID_STORAGE');
