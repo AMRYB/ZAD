@@ -30,7 +30,7 @@ The checked-in `src/data/adhan-audio.json` is the shared source/sequence catalog
 | `intro-isha` | [Source](https://www.youtube.com/watch?v=jBI7eJ8rObU) | CN APPLEJACK | 10.937 | 132014 |
 | `intro-friday` | [Source](https://www.youtube.com/watch?v=H6X_oDODWZU) | Fahad_1000 | 10.054 | 121356 |
 | `tobar-fajr` | [Source](https://www.youtube.com/watch?v=zzu2MUktkbs) | Hassan Shokeir | 288.369 | 3461373 |
-| `tobar-isha` | [Source](https://www.youtube.com/watch?v=czWeeCXe0zM) | روائع إذاعة القرآن RadioQuran | 317.831 | 3814653 |
+| `tobar-isha` | [Source](https://www.youtube.com/watch?v=czWeeCXe0zM) | روائع إذاعة القرآن RadioQuran | 260.830748 | 3130662 |
 | `azhar-friday` | [Source](https://www.youtube.com/watch?v=cD3mXVGD4iI) | Al-Azhar Al-Shareef | 198.182 | 2378963 |
 | `shuaisha` | [Source](https://audio.islamweb.net/audio/index.php?audioid=122662&page=audioinfo) | Islamweb | 236.548 | 473216 |
 | `husary` | [Source](https://audio.islamweb.net/audio/index.php?audioid=122667&page=audioinfo) | Islamweb | 127.504 | 256128 |
@@ -109,3 +109,12 @@ ffmpeg -i tobar-isha-original.mp3 -map 0:a:0 -af "atrim=start_sample=246960,aset
 New SHA256: `914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393`, 3814653 bytes, 317.830748 seconds. The original tail and edited output both decode to 14016336 stereo samples per channel. Their first five seconds have zero-offset waveform correlation 0.99998578 (SNR 25.97 dB), consistent with the same start and MP3 re-encoding. All other eleven recording hashes match the 0.6.0 catalogue. No playback logic, intro, prayer schedule or Friday rule changed. Native extraction replaces the old cached Isha file when the new catalogue hash is checked. Restart an existing local web preview to clear its in-memory audio cache.
 
 The patch's build, signature, packaged bytes and actual update/launch evidence are tracked in `ANDROID_APK_RELEASE.md`; prior 0.6.0 evidence is archived separately.
+
+
+## Isha end trim — 0.10.0
+
+At the user's request, removed exactly the last 57 seconds of the existing Isha-only recording, preserving the earlier 5.6-second start trim. No other clip, including the Isha intro, was changed. A private backup of the 0.6.1–0.9.0 Isha clip was retained.
+
+Baseline SHA256: `914a994a92c7426e982e2a56cb50180d8b40026de50d45ca1525b220c3536393`. New SHA256: `193eecec5e4f80e7e66c06d31dc1bda3e1410e0de060e08b034976092202362f`, 3,130,662 bytes, 260.830748 seconds.
+
+Decoded baseline: 14,016,336 samples per channel at 44,100 Hz. Removed 2,513,700 samples from the end, retaining exactly 11,502,636 samples per channel. FFmpeg used `atrim=end_sample=11502636,asetpts=PTS-STARTPTS` and 96 kbit/s MP3 encoding, with no fades or normalization. Decoding the result confirmed the exact sample count. First-five-second waveform correlation against the baseline was 0.9999859455; the last five retained seconds correlated at 0.9999944295. All eleven other private recording hashes remain byte-identical. Updated catalogue pins are used by packaging; new product listening acceptance is pending the rebuilt APK.
