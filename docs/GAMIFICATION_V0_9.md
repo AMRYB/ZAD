@@ -42,7 +42,7 @@ This local ledger is not tamper-proof: backup/device-clock editing, reinstalling
 
 - Core: 66 TypeScript tests PASS (12 new), including inclusive check-ins, no passive rewards, undo/replay, category/global caps, partial/zero allocations, old snapshot migration, malformed ledger rejection, 100 level boundaries, Tasbih target/reset, full Adhkar completion/reset, source deletion and deterministic badge dates/streak corrections.
 - Typecheck/lint PASS after adding the new UI.
-- UI/device/release evidence will be added after execution; core results do not imply APK/device acceptance.
+- UI/device/release results are recorded below; the automated core tests are separate from native user acceptance.
 
 ### UI evidence
 
@@ -54,4 +54,4 @@ Additional scenarios PASS: all twelve badges unlocked through reducer transition
 
 ### Build evidence
 
-Private arm64 0.9.0/code 12 build PASS in 10m 30s. The artifact passes signature/manifest, 129 source/asset comparisons, 23 compiled-source comparisons, exact font/twelve recording checks and native/harness checks. All twenty native parser/policy tests were rerun and passed. No new permissions/dependencies. After ADB reconnection, install -r over 0.8.0 and COLD startup into achievements PASS on Android 16. App top-resumed/alive with no own-process runtime errors; notification/exact-alarm/vibration access retained. Native XP interaction and old-record integrity user confirmation are pending. The previous installed 0.8.0 release evidence is archived unchanged. Prior Doctor/audit advisories are retained without claiming a rerun.
+Private arm64 0.9.0/code 12 build PASS in 10m 30s. The artifact passes signature/manifest, 129 source/asset comparisons, 23 compiled-source comparisons, exact font/twelve recording checks and native/harness checks. All twenty native parser/policy tests were rerun and passed. No new permissions/dependencies. After ADB reconnection, install -r over 0.8.0 and COLD startup into achievements PASS on Android 16. App top-resumed/alive with no own-process runtime errors; notification/exact-alarm/vibration access retained. The user confirmed that XP and a badge appeared and previous data remained present on the phone. The previous installed 0.8.0 release evidence is archived unchanged. Prior Doctor/audit advisories are retained without claiming a rerun.

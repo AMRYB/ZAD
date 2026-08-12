@@ -117,12 +117,18 @@
     "notificationPermissionRetained": true,
     "exactAlarmAccessRetained": true,
     "vibrationPermissionGranted": true,
-    "nativeXpInteractionAcceptance": "Pending user visual/interaction confirmation; not inferred from launch or browser tests"
+    "nativeXpInteractionAcceptance": "PASS by user confirmation: XP and a badge appeared; previous data remained present",
+    "userConfirmedGamification": {
+      "xpDisplayed": true,
+      "badgeDisplayed": true,
+      "previousDataPresent": true,
+      "scope": "User-reported native interaction, not independent inspection of private records or manual testing of all twelve badges"
+    }
   },
   "previousBaseline": {
     "version": "0.8.0",
     "metadata": "BUILD_METADATA_v0.8.0.json",
     "releaseRecord": "ANDROID_APK_RELEASE_v0.8.0.md"
   },
-  "recordedAt": "2026-10-24T17:58:43.711970+00:00"
+  "recordedAt": "2026-10-24T18:03:54.824077+00:00"
 }

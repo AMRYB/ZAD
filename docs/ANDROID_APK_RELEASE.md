@@ -17,7 +17,7 @@ Personal offline XP, progressive levels and twelve correction-aware badges are a
 | Font / audio / native modules | PASS, exact licensed Light font, twelve recording hashes/catalogue, receivers, haptics and R8 audio helpers; harness excluded |
 | New permissions | None; manifest permission set equals 0.8.0 |
 | Device installation / launch | PASS; update over 0.8.0 on Android 16, 0.9.0/code 12; achievements intent accepted, COLD launch, app top-resumed/process alive, no own-process runtime errors |
-| Actual native XP interactions | User test requested; confirmation pending, not inferred from launch/browser/domain checks |
+| Actual native XP interactions | PASS by user confirmation: XP and a badge appeared, and previous data remained present |
 | Doctor / dependency audit | Not repeated; dependency graph unchanged. Prior Doctor 19/20 and five high audit findings remain documented in DEVOTIONAL_V0_8.md |
 
 Artifact: `../ZAD_v0.9.0_arm64.apk` — 44,679,792 bytes.
@@ -26,4 +26,4 @@ SHA256: `a232575d2c4dcb6b8950f74d6118f91eccf1350e412313820c5733d91e70c2bd`.
 
 Certificate SHA256: `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c` (private development/debug signing, not production signing).
 
-The installed and user-accepted 0.8.0 baseline is preserved in `ANDROID_APK_RELEASE_v0.8.0.md` / `BUILD_METADATA_v0.8.0.json`. The actual update used install -r without uninstall or data clearing. Cold startup and retained notification/exact-alarm/vibration access passed. Native XP interaction and integrity of the user’s old records remain awaiting user confirmation. ARM64 only; no Play/AAB/public release. Long-term Doze/reboot, full TalkBack and new native XP acceptance remain separate verification scope.
+The installed and user-accepted 0.8.0 baseline is preserved in `ANDROID_APK_RELEASE_v0.8.0.md` / `BUILD_METADATA_v0.8.0.json`. The actual update used install -r without uninstall or data clearing. Cold startup and retained notification/exact-alarm/vibration access passed. The user confirmed that XP and a badge appeared and previous data remained present. ARM64 only; no Play/AAB/public release. Long-term Doze/reboot and full TalkBack remain separate verification scope. The user acceptance confirms displayed XP, a badge and retained data; it does not claim every badge or every native correction path was manually tested.
