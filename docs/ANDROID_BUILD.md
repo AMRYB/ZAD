@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Expo SDK 58.0.17, React Native 0.88.0, Node 24, Java from Android Studio, and Android SDK/NDK versions resolved by the generated Expo/Gradle project. Package: `com.ramadanjourney.preview`; current source and tested ZAD preview version `0.8.0`, versionCode `11`. The local `modules/zad-adhan` Expo module is autolinked during generation. Generated native directories are not hand maintained or included in the source archive.
+Expo SDK 58.0.17, React Native 0.88.0, Node 24, Java from Android Studio, and Android SDK/NDK versions resolved by the generated Expo/Gradle project. Package: `com.ramadanjourney.preview`; current source and installed ZAD preview version `0.9.0`, versionCode `12`. The local `modules/zad-adhan` Expo module is autolinked during generation. Generated native directories are not hand maintained or included in the source archive.
 
 `eas.json` separates an internal APK profile from the production AAB profile. A hosted EAS build needs the owner's Expo account/project; no account or cloud build was created here.
 
@@ -39,4 +39,4 @@ See `ANDROID_APK_RELEASE.md` for the actual gate status and artifact fingerprint
 
 ## Personal participation 0.9.0
 
-Source version is now 0.9.0/code 12. Local build, signature, manifest, 129 input comparisons, 23 compiled sources, exact Pro Light font, twelve audio hashes and native/harness checks PASS. Twenty native unit tests were rerun. The current artifact is built and inspected; device installation is pending because ADB disconnected during the build. The last installed/user-accepted baseline remains 0.8.0. See `ANDROID_APK_RELEASE.md` for the current explicit gate.
+Source version is now 0.9.0/code 12. Local build, signature, manifest, 129 input comparisons, 23 compiled sources, exact Pro Light font, twelve audio hashes and native/harness checks PASS. Twenty native unit tests were rerun. The artifact was installed over 0.8.0 after ADB reconnection and cold-launched into achievements on Android 16, with no observed own-process errors and permissions retained. Native XP interaction/user acceptance remains pending. See `ANDROID_APK_RELEASE.md` for the current explicit gate.

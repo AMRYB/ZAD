@@ -99,13 +99,30 @@
     "record": "GAMIFICATION_V0_9.md"
   },
   "deviceInstallationTest": {
-    "status": "PENDING",
-    "reason": "ADB device disconnected during build; install attempt returned no devices/emulators found. No uninstall or data clear was attempted."
+    "status": "PASS",
+    "androidVersion": "16",
+    "deviceModel": "23117RA68G",
+    "updatedFrom": "0.8.0",
+    "installedVersion": "0.9.0",
+    "installedVersionCode": 12,
+    "installationMethod": "adb install -r; no uninstall/data-clear",
+    "launchStatus": "ok",
+    "launchState": "COLD",
+    "launchTotalTimeMs": 2363,
+    "launchWaitTimeMs": 2412,
+    "routeIntentAccepted": "ramadanjourney://achievements",
+    "applicationTopResumed": true,
+    "processAlive": true,
+    "ownProcessErrorsObserved": false,
+    "notificationPermissionRetained": true,
+    "exactAlarmAccessRetained": true,
+    "vibrationPermissionGranted": true,
+    "nativeXpInteractionAcceptance": "Pending user visual/interaction confirmation; not inferred from launch or browser tests"
   },
   "previousBaseline": {
     "version": "0.8.0",
     "metadata": "BUILD_METADATA_v0.8.0.json",
     "releaseRecord": "ANDROID_APK_RELEASE_v0.8.0.md"
   },
-  "recordedAt": "2026-10-24T17:55:24.365506+00:00"
+  "recordedAt": "2026-10-24T17:58:43.711970+00:00"
 }

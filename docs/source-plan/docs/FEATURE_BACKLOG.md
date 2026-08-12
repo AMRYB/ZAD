@@ -93,5 +93,5 @@ Ship Auth/sync/privacy, XP/achievements, opt-in leaderboard, challenges, plus re
 - RJ-044: ZAD 0.8.0 private APK — built, source/signature/font/audio/native-module verified and installed over 0.7.0 on Android 16. User confirmed native count/haptics/off-toggle. 54 TypeScript and 20 native tests PASS; Doctor 19/20 and existing audit findings recorded. No public/Play release.
 
 - RJ-045: Requested personal offline XP/levels/achievements slice implemented; 66 TS tests and typecheck/lint PASS. No deployment or completion claim for original RJ-14 server-only XP, RJ-11/RJ-12 Auth/sync, or RJ-15 leaderboards. See `../../GAMIFICATION_V0_9.md`.
-- RJ-046: Bilingual achievements UI implemented; browser flow and responsive/locale/theme checks PASS; device verification pending.
-- RJ-047: Private 0.9.0 build/signature/source/font/audio checks PASS; installation pending ADB reconnect.
+- RJ-046: Bilingual achievements UI implemented; browser flow and responsive/locale/theme checks PASS; Android cold launch PASS; native XP user acceptance pending.
+- RJ-047: Private 0.9.0 build/signature/source/font/audio checks PASS; update over 0.8.0 and Android 16 cold launch PASS, permissions retained; native XP user acceptance pending.

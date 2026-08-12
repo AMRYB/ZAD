@@ -123,5 +123,5 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | Ticket | Slice | Evidence state |
 |---|---|---|
 | RJ-045 | Personal local XP ledger, level thresholds and twelve derived badges | 66 TS tests, typecheck/lint PASS; old snapshot migration and correction/replay covered. Separate from trusted server XP; no public ranking |
-| RJ-046 | Bilingual achievements page and home/More entry | Browser participation/persistence/undo/redo/filter and Arabic/English layout PASS; Android verification pending |
-| RJ-047 | Private 0.9.0 APK and installation | Build/signature/129 inputs/23 compiled sources/font/audio PASS; installation pending ADB reconnect |
+| RJ-046 | Bilingual achievements page and home/More entry | Browser participation/persistence/undo/redo/filter and Arabic/English layout PASS; Android cold launch PASS; native XP interaction/user confirmation pending |
+| RJ-047 | Private 0.9.0 APK and installation | Build/signature/129 inputs/23 compiled sources/font/audio PASS; installed over 0.8.0 and cold-launched on Android 16; native XP user acceptance pending |
