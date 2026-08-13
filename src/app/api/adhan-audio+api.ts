@@ -12,9 +12,9 @@ async function recording(id:ClipId){
 }
 export async function GET(request:Request){
   const params=new URL(request.url).searchParams;
-  if([...params.keys()].some(key=>key!=='clip')||params.getAll('clip').length!==1)return Response.json({error:'INVALID_AUDIO_CLIP'},{status:400});
+  if([...params.keys()].some(key=>key!=='clip'&&key!=='v')||params.getAll('clip').length!==1||params.getAll('v').length>1)return Response.json({error:'INVALID_AUDIO_CLIP'},{status:400});
   const id=clipId(params.get('clip'));
-  if(!id)return Response.json({error:'INVALID_AUDIO_CLIP'},{status:400});
+  if(!id||(params.has('v')&&params.get('v')!==adhanClips[id].sha256))return Response.json({error:'INVALID_AUDIO_CLIP'},{status:400});
   try{
     if(!cache.has(id)){if(!pending.has(id))pending.set(id,recording(id));cache.set(id,await pending.get(id)!);}
     return new Response(cache.get(id)! as BodyInit,{headers:{'Content-Type':'audio/mpeg','Cache-Control':'private, max-age=86400'}});

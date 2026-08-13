@@ -5,6 +5,7 @@ export type AdhanPrayer=typeof adhanPrayers[number];
 export type AudioSlot=AdhanPrayer|'friday';
 export type ClipId=keyof typeof catalogue.clips;
 export const adhanClips=catalogue.clips;
+export function adhanPreviewUrl(id:ClipId){return `/api/adhan-audio?clip=${id}&v=${adhanClips[id].sha256}`;}
 export function audioSlot(date:string,prayer:string):AudioSlot {
   const day=new Date(parseDate(date)).getUTCDay();
   if(!adhanPrayers.includes(prayer as AdhanPrayer))throw new Error('INVALID_ADHAN_PRAYER');

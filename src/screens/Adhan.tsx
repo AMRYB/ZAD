@@ -6,7 +6,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useApp} from '../state/AppContext';
 import {addDays,dateInZone,normalizeDigits,parseDate} from '../core/calendar';
 import {cairoTimestamp,prayerKeys,type TimeKey} from '../core/adhan';
-import {adhanPrayers,adhanSequence,adhanClips,audioSlot,type AdhanPrayer,type ClipId} from '../core/adhan-sequence';
+import {adhanPrayers,adhanSequence,adhanClips,adhanPreviewUrl,audioSlot,type AdhanPrayer,type ClipId} from '../core/adhan-sequence';
 import {cityName,esaCities,esaCity} from '../data/esa-cities';
 import {adhanNative,configureAdhan,loadPrayerMonth,unavailableAdhan} from '../services/adhan-native';
 import {Button,Card,Field,Row,Screen,Txt} from '../ui/components';
@@ -39,7 +39,7 @@ export function Adhan(){
     // Ignore late completion events from a replaced intro when its Adhan is already loading.
     if(event.didJustFinish&&queue&&Math.abs(event.duration-adhanClips[queue.ids[queue.index]].duration)<1){
       const next=queue.index+1;
-      if(next<queue.ids.length){queue.index=next;setWebClip(queue.ids[next]);player.replace('/api/adhan-audio?clip='+queue.ids[next]);player.play();}
+      if(next<queue.ids.length){queue.index=next;setWebClip(queue.ids[next]);player.replace(adhanPreviewUrl(queue.ids[next]));player.play();}
       else {webQueue.current=null;setWebClip(null);}
     }
   });return()=>listener.remove();},[player,t]);
@@ -67,7 +67,7 @@ export function Adhan(){
     if(previewPrayer===prayer&&audio.playing||status.playing&&adhanSequence(date,prayer).includes(status.clip as ClipId)){stopAudio();return;}
     setPreviewPrayer(prayer);
     if(adhanNative){nativePreview.current=true;await adhanNative.preview(date,prayer);setStatus(adhanNative.status());}
-    else{player.pause();const ids=adhanSequence(date,prayer);webQueue.current={ids,index:0};setWebClip(ids[0]);player.replace('/api/adhan-audio?clip='+ids[0]);player.play();}
+    else{player.pause();const ids=adhanSequence(date,prayer);webQueue.current={ids,index:0};setWebClip(ids[0]);player.replace(adhanPreviewUrl(ids[0]));player.play();}
   }catch{webQueue.current=null;setMessage(t('تعذّر تشغيل التسجيل. أعد المحاولة.','The recording could not play. Please retry.'));}finally{setBusy(false);}};
   const filtered=esaCities.filter(c=>c.name.replace(/[أإآ]/g,'ا').includes(search.replace(/[أإآ]/g,'ا').replace(/ـ/g,'').trim())||c.en.toLowerCase().includes(search.trim().toLowerCase()));
   const chosenDayLabel=date===today?t('النهارده','Today'):date===addDays(today,1)?t('بكرة','Tomorrow'):new Intl.DateTimeFormat(locale,{weekday:'long',timeZone:'UTC'}).format(new Date(`${date}T12:00:00Z`));
