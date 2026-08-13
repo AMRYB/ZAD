@@ -51,9 +51,10 @@ function QuranReader({initialSelection}:{initialSelection?:{sura:number;aya:numb
   const author=tafsirById(state.reader.tafsir)!;
   const reciterName=rtl?reciter.nameAr:reciter.nameEn;
   const authorName=rtl?author.nameAr:author.nameEn;
-  const nextAyah=useCallback(()=>setSelection(current=>adjacentAya(current.sura,current.aya,1)),[]);
-  const audio=useAyahAudio(reciter.id,selection.sura,selection.aya,nextAyah);
-  const select=useCallback((next:{sura:number;aya:number})=>{setSelection(next);dispatch({type:'lastRead',...next});},[dispatch]);
+  const audio=useAyahAudio(reciter.id,selection.sura,selection.aya);
+  const {subscribe,playing,playFrom}=audio;
+  useEffect(()=>subscribe(verse=>setSelection(verse)),[subscribe]);
+  const select=useCallback((next:{sura:number;aya:number})=>{setSelection(next);dispatch({type:'lastRead',...next});if(playing)playFrom(reciter.id,next.sura,next.aya);},[dispatch,playing,playFrom,reciter.id]);
   useEffect(()=>dispatch({type:'lastRead',...selection}),[selection,dispatch]);
   useFocusEffect(useCallback(()=>()=>setReaderImmersive(false),[setReaderImmersive]));
   useFocusEffect(useCallback(()=>{

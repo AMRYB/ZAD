@@ -13,6 +13,8 @@
     <receiver android:name=".AdhanAlarmReceiver" android:exported="false" />
     <receiver android:name=".AdhanReminderActionReceiver" android:exported="false" />
     <receiver android:name=".DailyReminderReceiver" android:exported="false" />
+    <receiver android:name=".RecitationSleepReceiver" android:exported="false" />
+    <receiver android:name=".ZadWidget" android:exported="false" android:label="@string/zad_widget_name"><intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter><meta-data android:name="android.appwidget.provider" android:resource="@xml/zad_widget_info" /></receiver>
     <receiver android:name=".AdhanRestoreReceiver" android:exported="false">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />

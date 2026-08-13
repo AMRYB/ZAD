@@ -2,7 +2,7 @@
   "expo": {
     "name": "ZAD",
     "slug": "zad",
-    "version": "0.9.0",
+    "version": "0.10.0",
     "orientation": "default",
     "icon": "./assets/brand-icon.png",
     "userInterfaceStyle": "automatic",
@@ -17,7 +17,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.ramadanjourney.preview",
-      "versionCode": 12,
+      "versionCode": 13,
       "allowBackup": false,
       "permissions": [],
       "blockedPermissions": [
@@ -50,12 +50,13 @@
         {
           "microphonePermission": false,
           "recordAudioAndroid": false,
-          "enableBackgroundPlayback": false
+          "enableBackgroundPlayback": true
         }
       ],
       "expo-font",
       "expo-asset",
-      "expo-sharing"
+      "expo-sharing",
+      "expo-secure-store"
     ],
     "scheme": "ramadanjourney"
   }

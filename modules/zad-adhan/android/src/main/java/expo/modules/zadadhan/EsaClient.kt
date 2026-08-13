@@ -45,6 +45,7 @@ object EsaClient {
       val result=JSONObject().put("city",city).put("month",month).put("days",days).put("fetchedAt",System.currentTimeMillis()).put("source",SOURCE)
       val dir=directory(context);val file=File(dir,key(city,month));val temp=File(dir,"${file.name}.tmp");temp.writeText(result.toString());check(temp.renameTo(file))
       dir.listFiles()?.filter { it.name.endsWith(".json") }?.sortedByDescending { it.lastModified() }?.drop(24)?.forEach { it.delete() }
+      ZadWidget.refreshAll(context)
       return result
     }catch(e:Exception){if(cached!=null)return cached;throw e}
   }
