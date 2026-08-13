@@ -1,1 +1,1 @@
-export {Settings as default} from '../../screens/Settings';
+export {More as default} from '../../screens/More';
