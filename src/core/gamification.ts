@@ -120,3 +120,17 @@ export function validateGamification(value:unknown):value is GamificationState{
     return true;
   }catch{return false;}
 }
+
+export function participationStillRecorded(s:State,e:XpEvent):boolean{
+  try{
+    if(e.kind==='checkin')return checkin(s,e.source);
+    if(e.kind==='tasbih')return (s.devotion.tasbih.daily[e.source]??0)>=33;
+    if(e.kind==='goal')return s.goals.some(g=>g.id===e.source&&g.progress===g.target);
+    const [id,value]=JSON.parse(e.source);
+    if(e.kind==='reading')return s.plans.some(p=>p.id===id&&p.pages.includes(value));
+    if(e.kind==='habit')return s.habits.some(h=>h.id===id&&h.dates.includes(value));
+    if(e.kind==='deed')return !!s.devotion.deeds.days[value]?.includes(id);
+    if(e.kind==='adhkar')return sectionComplete(s,id,value);
+    return false;
+  }catch{return false;}
+}

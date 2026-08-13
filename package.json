@@ -1,16 +1,18 @@
 {
   "name": "zad",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "expo-router/entry",
   "dependencies": {
     "@expo-google-fonts/cairo": "^0.4.2",
     "@expo/vector-icons": "^15.0.2",
     "@fortawesome/fontawesome-free": "7.3.1",
+    "@supabase/supabase-js": "^2.118.0",
     "@tanstack/react-query": "^5.104.5",
     "expo": "~58.0.17",
     "expo-asset": "~58.0.18",
     "expo-audio": "~58.0.10",
     "expo-constants": "~58.0.13",
+    "expo-crypto": "~58.0.7",
     "expo-document-picker": "~58.0.4",
     "expo-file-system": "~58.0.10",
     "expo-font": "~58.0.9",
@@ -19,6 +21,7 @@
     "expo-linking": "~58.0.14",
     "expo-localization": "~58.0.5",
     "expo-router": "~58.0.25",
+    "expo-secure-store": "~58.0.2",
     "expo-sharing": "~58.0.20",
     "expo-sqlite": "~58.0.13",
     "expo-status-bar": "~58.0.4",
@@ -28,6 +31,7 @@
     "react-native": "0.88.0",
     "react-native-safe-area-context": "~5.10.1",
     "react-native-screens": "~4.30.0",
+    "react-native-url-polyfill": "^4.0.0",
     "react-native-web": "^0.21.4"
   },
   "devDependencies": {

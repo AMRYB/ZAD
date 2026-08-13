@@ -1,2 +1,2 @@
-export const MIGRATION_SQL='PRAGMA journal_mode = WAL; CREATE TABLE IF NOT EXISTS app_state (id INTEGER PRIMARY KEY CHECK(id=1), version INTEGER NOT NULL, payload TEXT NOT NULL); PRAGMA user_version = 1;';
+export const MIGRATION_SQL='PRAGMA journal_mode = WAL; CREATE TABLE IF NOT EXISTS app_state (id INTEGER PRIMARY KEY CHECK(id=1), version INTEGER NOT NULL, payload TEXT NOT NULL); CREATE TABLE IF NOT EXISTS account_state (owner TEXT PRIMARY KEY, payload TEXT NOT NULL); PRAGMA user_version = 1;';
 export const UPSERT_SQL='INSERT INTO app_state(id,version,payload) VALUES(1,1,?) ON CONFLICT(id) DO UPDATE SET version=excluded.version,payload=excluded.payload';

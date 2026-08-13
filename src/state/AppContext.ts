@@ -6,6 +6,7 @@ export interface AppContextValue {
   rtl:boolean;dark:boolean;t:(ar:string,en:string)=>string;saving:boolean;saveError:boolean;
   retrySave:()=>void;replaceState:(state:State)=>void;restoreEpoch:number;
   readerImmersive:boolean;setReaderImmersive:(value:boolean)=>void;
+  owner:string|null;installCloud:(state:State,revision:number)=>Promise<void>;importGuest:()=>Promise<boolean>;
 }
 // Keep context identity independent from Fast Refresh of the provider component.
 export const AppContext=createContext<AppContextValue|null>(null);

@@ -18,3 +18,5 @@ export async function save(state: State): Promise<void> {
   await ready();
   await (await database).runAsync(UPSERT_SQL, JSON.stringify(state));
 }
+export async function readProfile(owner:string):Promise<string|null>{await ready();return (await (await database).getFirstAsync<{payload:string}>('SELECT payload FROM account_state WHERE owner=?',owner))?.payload??null;}
+export async function writeProfile(owner:string,text:string):Promise<void>{await ready();await (await database).runAsync('INSERT INTO account_state(owner,payload) VALUES(?,?) ON CONFLICT(owner) DO UPDATE SET payload=excluded.payload',owner,text);}
