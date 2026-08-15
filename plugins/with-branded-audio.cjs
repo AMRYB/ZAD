@@ -15,7 +15,14 @@ const changes={
             }
           }
           playlist.loadInitialPlaylist()`]]},
- 'service/AudioControlsService.kt':{hash:'81784e7bee485a6342df944cef20cae755d8f79fda8d8d20aca6ba5fffeb8608',edits:[['          updateMetadata(metadata)','          updateMetadata(metadata)\n          updateArtwork(currentArtwork)'],[
+ 'service/AudioControlsService.kt':{hash:'81784e7bee485a6342df944cef20cae755d8f79fda8d8d20aca6ba5fffeb8608',edits:[[
+`    if (artworkUrl == null) {
+      clearArtwork()`,
+`    if (artworkUrl == null) {
+      clearArtwork()
+      val brand = resources.getIdentifier("zad_brand_art", "drawable", packageName)
+      if (brand != 0) currentArtwork = BitmapFactory.decodeResource(resources, brand)
+      sessionMetadataPlayer?.updateArtwork(currentArtwork)`],['          updateMetadata(metadata)','          updateMetadata(metadata)\n          updateArtwork(currentArtwork)'],[
 '.setSmallIcon(androidx.media3.session.R.drawable.media3_icon_circular_play)',
 '.setSmallIcon(resources.getIdentifier("zad_notification", "drawable", packageName).takeIf { it != 0 } ?: androidx.media3.session.R.drawable.media3_icon_circular_play)'],[
 `      currentArtwork = bitmap

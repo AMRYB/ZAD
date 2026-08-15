@@ -1,6 +1,5 @@
 import React,{useCallback,useEffect,useRef,useState} from 'react';
 import {Platform} from 'react-native';
-import {Asset} from 'expo-asset';
 import {setAudioModeAsync,useAudioPlaylist,useAudioPlaylistStatus,type AudioPlaylistStatus} from 'expo-audio';
 import {recitationQueue,sleepDeadline} from '../core/recitation';
 import {quran} from '../data/quran';
@@ -29,14 +28,20 @@ export function RecitationProvider({children}:{children:React.ReactNode}){
   const activate=useCallback(()=>{
     if(!request)return;
     const version=++generation.current;
-    void Promise.all([setAudioModeAsync({playsInSilentMode:true,shouldPlayInBackground:true,interruptionMode:'doNotMix'}),Asset.fromModule(require('../../assets/brand-icon.png')).downloadAsync()]).then(([,artwork])=>{
+    let stage='audio-mode';
+    void setAudioModeAsync({playsInSilentMode:true,shouldPlayInBackground:true,interruptionMode:'doNotMix'}).then(()=>{
       if(version!==generation.current)return;
+      stage='media-controls';
       playlist.loop=repeatRef.current?'single':'none';
       const title=state.locale==='ar'?`سورة ${quran.Sura[request.queue[0].sura]!.name}`:`Surah ${request.queue[0].sura}`;
       const reciter=reciterById(request.reciter)!;
-      playlist.setActiveForLockScreen(true,{title,artist:state.locale==='ar'?reciter.nameAr:reciter.nameEn,albumTitle:'ZAD',artworkUrl:artwork.localUri??artwork.uri},{showNextTrack:true,showPreviousTrack:true});
-      playlist.play();
-    }).catch(()=>{if(version===generation.current){setError(true);setLoading(false);}});
+      playlist.setActiveForLockScreen(true,{title,artist:state.locale==='ar'?reciter.nameAr:reciter.nameEn,albumTitle:'ZAD'},{showNextTrack:true,showPreviousTrack:true});
+      stage='play';playlist.play();
+    }).catch((cause:unknown)=>{if(version===generation.current){
+      const candidate=cause&&typeof cause==='object'&&'code' in cause?cause.code:null;
+      const code=typeof candidate==='string'&&/^[A-Z0-9_]{1,64}$/.test(candidate)?candidate:'UNKNOWN';
+      console.warn('ZAD_RECITATION_START',stage,code);setError(true);setLoading(false);
+    }});
     // Language changes do not restart a running recitation.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[playlist,request]);
