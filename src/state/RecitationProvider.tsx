@@ -1,5 +1,6 @@
 import React,{useCallback,useEffect,useRef,useState} from 'react';
 import {Platform} from 'react-native';
+import {Asset} from 'expo-asset';
 import {setAudioModeAsync,useAudioPlaylist,useAudioPlaylistStatus,type AudioPlaylistStatus} from 'expo-audio';
 import {recitationQueue,sleepDeadline} from '../core/recitation';
 import {quran} from '../data/quran';
@@ -28,12 +29,12 @@ export function RecitationProvider({children}:{children:React.ReactNode}){
   const activate=useCallback(()=>{
     if(!request)return;
     const version=++generation.current;
-    void setAudioModeAsync({playsInSilentMode:true,shouldPlayInBackground:true,interruptionMode:'doNotMix'}).then(()=>{
+    void Promise.all([setAudioModeAsync({playsInSilentMode:true,shouldPlayInBackground:true,interruptionMode:'doNotMix'}),Asset.fromModule(require('../../assets/brand-icon.png')).downloadAsync()]).then(([,artwork])=>{
       if(version!==generation.current)return;
       playlist.loop=repeatRef.current?'single':'none';
       const title=state.locale==='ar'?`سورة ${quran.Sura[request.queue[0].sura]!.name}`:`Surah ${request.queue[0].sura}`;
       const reciter=reciterById(request.reciter)!;
-      playlist.setActiveForLockScreen(true,{title,artist:state.locale==='ar'?reciter.nameAr:reciter.nameEn,albumTitle:'ZAD'},{showNextTrack:true,showPreviousTrack:true});
+      playlist.setActiveForLockScreen(true,{title,artist:state.locale==='ar'?reciter.nameAr:reciter.nameEn,albumTitle:'ZAD',artworkUrl:artwork.localUri??artwork.uri},{showNextTrack:true,showPreviousTrack:true});
       playlist.play();
     }).catch(()=>{if(version===generation.current){setError(true);setLoading(false);}});
     // Language changes do not restart a running recitation.
@@ -56,7 +57,7 @@ export function RecitationProvider({children}:{children:React.ReactNode}){
     const queue=recitationQueue(reciter,sura,aya);
     // A failed identical queue needs native re-preparation rather than replaying an errored player.
     if(error&&request?.reciter===reciter&&request.queue[0].sura===sura&&request.queue[0].aya===aya){playlist.clear();for(const item of request.sources)playlist.add(item);setError(false);setLoading(true);activate();return;}
-    generation.current++;playlist.pause();setLoading(true);setError(false);setRequest({reciter,queue,sources:queue.map(v=>({uri:v.url,name:`${quran.Sura[v.sura]!.name} · ${v.aya}`}))});
+    generation.current++;playlist.pause();setLoading(true);setError(false);setRequest({reciter,queue,sources:queue.map(v=>({uri:v.url,name:state.locale==='ar'?`سورة ${quran.Sura[v.sura]!.name} · الآية ${v.aya} من ${quran.Sura[v.sura]!.ayas}`:`Surah ${v.sura} · Ayah ${v.aya} of ${quran.Sura[v.sura]!.ayas}`}))});
   };
   const setRepeat=(value:boolean)=>{repeatRef.current=value;setRepeatState(value);
     // eslint-disable-next-line react-hooks/immutability -- Expo SharedObject invokes a native setter, not a React state mutation.

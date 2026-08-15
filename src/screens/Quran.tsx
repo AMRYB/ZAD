@@ -108,7 +108,7 @@ function QuranReader({initialSelection}:{initialSelection?:{sura:number;aya:numb
       </View>:<ReaderDeck player={<>
         <Row style={{flexWrap:'nowrap',gap:7}}>
           <Pressable accessibilityRole="button" accessibilityLabel={t(`القارئ: ${reciterName}`,`Reciter: ${reciterName}`)} onPress={()=>open('reciter')} style={{flex:1,minHeight:44,justifyContent:'center'}}><Row style={{flexWrap:'nowrap',gap:8}}><AppIcon name="headphones" size={18} color={colors.primary}/><View style={{flex:1}}><Txt size={12} bold numberOfLines={1}>{reciterName}</Txt><Txt muted size={10}>{t('تغيير القارئ','Change reciter')}</Txt></View></Row></Pressable>
-          <Txt muted size={11} style={{writingDirection:'ltr'}}>{clock(audio.currentTime)} / {clock(audio.duration)}</Txt>
+          <Txt muted size={11} style={{writingDirection:'ltr'}}>{t('الآية','Ayah')} · {clock(audio.currentTime)} / {audio.duration>0?clock(audio.duration):'—'}</Txt>
           <IconButton icon={bookmarked?'bookmark':'bookmark'} label={bookmarked?t('إزالة العلامة','Remove bookmark'):t('حفظ علامة','Save bookmark')} active={bookmarked} onPress={()=>dispatch({type:'bookmark',...selection})}/>
           <IconButton icon="ellipsis" label={t('أدوات القراءة','Reading tools')} onPress={()=>open('tools')}/>
         </Row>

@@ -37,7 +37,7 @@ object AdhanNotification {
       .setData(Uri.parse("zad-adhan://reminder/"+Uri.encode(AdhanEngine.audioKey(event))+"/$action")).putExtra("event",event.toString()),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     val heading=if(event.optBoolean("test")){if(en)"Adhan test in 30 seconds" else "اختبار الأذان بعد 30 ثانية"}else if(en)"${title(c,event)} in 10 minutes" else "باقي 10 دقائق على ${title(c,event)}"
     val detail=EsaParser.normalize(event.getString("city"))+(if(muted){if(en)" · This Adhan is muted" else " · أذان الصلاة دي مكتوم"}else "")
-    val n=NotificationCompat.Builder(c,AdhanEngine.REMINDER_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_idle_alarm).setContentTitle(heading)
+    val n=NotificationCompat.Builder(c,AdhanEngine.REMINDER_CHANNEL).setSmallIcon(R.drawable.zad_notification).setLargeIcon(NotificationBrand.artwork(c)).setContentTitle(heading)
       .setContentText(detail).setContentIntent(open(c)).setAutoCancel(true).setOnlyAlertOnce(true)
       .setWhen(at).setShowWhen(true).setUsesChronometer(true).setChronometerCountDown(true).setTimeoutAfter((at-System.currentTimeMillis()).coerceAtLeast(1))
       .setCategory(NotificationCompat.CATEGORY_REMINDER).setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
@@ -48,7 +48,7 @@ object AdhanNotification {
   fun dismissReminder(c:Context,event:JSONObject)=NotificationManagerCompat.from(c).cancel(tag(event),REMINDER_ID)
   fun mutedPrayer(c:Context,event:JSONObject){
     val en=AdhanEngine.config(c).optString("locale")=="en"
-    val n=NotificationCompat.Builder(c,AdhanEngine.PLAYBACK_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_silent_mode)
+    val n=NotificationCompat.Builder(c,AdhanEngine.PLAYBACK_CHANNEL).setSmallIcon(R.drawable.zad_notification).setLargeIcon(NotificationBrand.artwork(c))
       .setContentTitle(title(c,event)).setContentText(if(en)"This Adhan was muted. The next prayer will play normally." else "أذان الصلاة دي مكتوم. الصلاة الجاية بصوتها عادي.")
       .setContentIntent(open(c)).setAutoCancel(true).setSilent(true).setCategory(NotificationCompat.CATEGORY_REMINDER).setVisibility(NotificationCompat.VISIBILITY_PRIVATE).build()
     try{NotificationManagerCompat.from(c).notify("muted:"+AdhanEngine.audioKey(event),71035,n)}catch(_:SecurityException){}

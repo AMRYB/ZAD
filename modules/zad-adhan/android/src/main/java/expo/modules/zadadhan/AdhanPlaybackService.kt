@@ -55,7 +55,7 @@ class AdhanPlaybackService:Service(){
       .setData(android.net.Uri.parse("zad-adhan://playback/$session/$action")).putExtra("session",session),PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     val stop=control(STOP)
     val sound=control(if(muted)UNMUTE else MUTE)
-    val n=NotificationCompat.Builder(this,AdhanEngine.PLAYBACK_CHANNEL).setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+    val n=NotificationCompat.Builder(this,AdhanEngine.PLAYBACK_CHANNEL).setSmallIcon(R.drawable.zad_notification).setLargeIcon(NotificationBrand.artwork(this))
       .setContentTitle(AdhanNotification.title(this,event)).setContentText(AdhanAudio.label(this,clip,en)+(if(muted){if(en)" · Muted" else " · مكتوم"}else ""))
       .setContentIntent(AdhanNotification.open(this)).setOngoing(true).setOnlyAlertOnce(true)
       .setCategory(NotificationCompat.CATEGORY_ALARM).setVisibility(NotificationCompat.VISIBILITY_PRIVATE)

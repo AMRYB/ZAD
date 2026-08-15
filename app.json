@@ -58,7 +58,8 @@
       "expo-font",
       "expo-asset",
       "expo-sharing",
-      "expo-secure-store"
+      "expo-secure-store",
+      "./plugins/with-branded-audio.cjs"
     ],
     "scheme": "ramadanjourney"
   }
