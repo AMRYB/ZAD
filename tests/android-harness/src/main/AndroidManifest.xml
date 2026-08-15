@@ -13,6 +13,8 @@
     <receiver android:name="expo.modules.zadadhan.AdhanAlarmReceiver" android:exported="false" />
     <receiver android:name="expo.modules.zadadhan.AdhanReminderActionReceiver" android:exported="false" />
     <receiver android:name="expo.modules.zadadhan.DailyReminderReceiver" android:exported="false" />
+    <receiver android:name="expo.modules.zadadhan.RecitationSleepReceiver" android:exported="false" />
+    <receiver android:name="expo.modules.zadadhan.ZadWidget" android:exported="false" android:label="@string/zad_widget_name"><intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter><meta-data android:name="android.appwidget.provider" android:resource="@xml/zad_widget_info" /></receiver>
     <receiver android:name="expo.modules.zadadhan.AdhanColdStartTest" android:exported="true" android:permission="android.permission.DUMP" />
   </application>
   <instrumentation android:name="expo.modules.zadadhan.AdhanHardwareTest" android:targetPackage="com.zad.adhanharness" android:label="ZAD isolated Adhan checks" />

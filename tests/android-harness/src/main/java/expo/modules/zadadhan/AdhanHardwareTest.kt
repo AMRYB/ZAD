@@ -19,6 +19,29 @@ class AdhanHardwareTest:Instrumentation(){
   private fun report(text:String){sendStatus(0,Bundle().apply {putString("stream","$text\n")})}
   override fun onStart(){
     val c=targetContext;val result=Bundle();var passed=false
+    if(mode=="journey-native"){
+      try{
+        val sleep=c.getSharedPreferences("zad-recitation-sleep-v1",android.content.Context.MODE_PRIVATE)
+        val first=RecitationSleep.schedule(c,5);check(first["deadline"] as Long>System.currentTimeMillis()+290000)
+        val stale=sleep.getLong("generation",0);RecitationSleep.schedule(c,0);RecitationSleep.deliver(c,stale)
+        check(sleep.getLong("deadline",-1)==0L);report("PASS: native sleep alarm schedules, cancels and rejects cancelled delivery")
+        val second=RecitationSleep.schedule(c,15);RecitationSleep.deliver(c,stale)
+        check(sleep.getLong("deadline",0)==second["deadline"]);report("PASS: an old timer cannot pause or cancel a replacement session")
+        var invalid=false;try{RecitationSleep.schedule(c,7)}catch(_:IllegalArgumentException){invalid=true};check(invalid)
+        report("PASS: native timer rejects unsupported durations")
+        val providers=c.getSystemService(android.appwidget.AppWidgetManager::class.java).getInstalledProvidersForPackage(c.packageName,null)
+        check(providers.any {it.provider.className==ZadWidget::class.java.name&&it.minHeight>0})
+        runOnMainSync {val view=android.widget.RemoteViews(c.packageName,R.layout.zad_widget).apply(c,null);check(view.findViewById<android.view.View>(R.id.zad_widget_read)!=null);check(view.findViewById<android.view.View>(R.id.zad_widget_tasbih)!=null)}
+        ZadWidget.configure(c,JSONObject().put("locale","ar").put("city","").put("cityName","").put("sura",1).put("aya",1).toString())
+        report("PASS: Android registers the real widget provider and inflates its resource layout without a launcher pin or network request")
+        val branded=androidx.core.app.NotificationCompat.Builder(c,"qa-brand").setSmallIcon(R.drawable.zad_notification).setLargeIcon(NotificationBrand.artwork(c)).build()
+        check(branded.smallIcon.resId==R.drawable.zad_notification&&branded.getLargeIcon()!=null);check(NotificationBrand.artwork(c).width==256)
+        report("PASS: ZAD small icon and decoded 256px artwork are attached to a native notification")
+        result.putInt("checks",5);passed=true
+      }catch(e:Throwable){result.putString("failure",e.javaClass.simpleName+": "+e.message);report("FAIL: "+e.message)}
+      finally{RecitationSleep.schedule(c,0);result.putString("stream",if(passed)"Journey native checks passed\n" else "Journey native checks failed\n");finish(if(passed)Activity.RESULT_OK else Activity.RESULT_CANCELED,result)}
+      return
+    }
     if(mode=="personal-reminders"){
       val manager=c.getSystemService(NotificationManager::class.java);val preferences=c.getSharedPreferences("zad-personal-reminders-v1",android.content.Context.MODE_PRIVATE)
       fun awaitState(label:String,condition:()->Boolean){val until=SystemClock.elapsedRealtime()+5000;while(!condition()&&SystemClock.elapsedRealtime()<until)Thread.sleep(100);check(condition()){label};report("PASS: $label")}
