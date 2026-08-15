@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0",
+  "versionCode": 1,
+  "package": "com.ramadanjourney.preview",
+  "architecture": "arm64-v8a",
+  "minSdk": 24,
+  "targetSdk": 36,
+  "compileSdk": 37,
+  "codeRevision": "af7252fb32a414e9321689dbd6cb644343564546",
+  "bytes": 32585170,
+  "sha256": "71a312a0513b4895306c9452608a8adfff917e4978f4cec02303d4bfc014509a",
+  "signatureVerified": true,
+  "signing": "Android debug certificate; private preview",
+  "sourceFilesCompared": 37,
+  "sourceMatchesBuild": true,
+  "automaticAndroidBackup": false,
+  "deviceInstallationTest": "Not performed; no USB/ADB device detected. User requested APK handoff.",
+  "recordedAt": "2026-10-23T00:31:58.475Z"
+}
