@@ -84,7 +84,7 @@ export function Quran(){
       <View style={{flex:1,marginHorizontal:8}}>
         <MushafCanvas page={page} selection={selection} points={pageQuery.data} fit={state.reader.fit} zoom={zoom} retry={retry} onSelect={select} onImageError={onImageError} imageFailed={imageFailed}/>
         {pageQuery.isPending?<View pointerEvents="none" style={{position:'absolute',top:10,left:0,right:0,alignItems:'center'}}><View style={{padding:8,borderRadius:20,backgroundColor:colors.surface}}><ActivityIndicator color={colors.primary}/></View></View>:null}
-        {imageFailed?<View style={{position:'absolute',top:0,bottom:0,left:0,right:0,justifyContent:'center',padding:20}}><Card><Txt>{t('تعذّر تحميل صورة الصفحة من KSU.','Could not load the page image from KSU.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Card></View>:null}
+        {imageFailed?<View style={{position:'absolute',top:0,bottom:0,left:0,right:0,justifyContent:'center',padding:20}}><Card><Txt>{t('تعذّر تحميل صورة الصفحة.','Could not load the page image.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Card></View>:null}
       </View>
       {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="refresh" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
       {!readerImmersive?<Row style={{justifyContent:'center',gap:6,paddingHorizontal:8,paddingTop:3,flexWrap:'nowrap'}}>
@@ -114,10 +114,10 @@ export function Quran(){
           <IconButton icon="play-skip-back" label={t('الآية السابقة','Previous ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,-1))}/>
           <ReaderChip icon="book-outline" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
         </Row></>}
-        {audio.error?<Txt size={12} style={{color:colors.danger}}>{t('تعذّر تشغيل هذا التسجيل من KSU. جرّب مجددًا أو اختر قارئًا آخر.','This KSU recording could not play. Retry or choose another reciter.')}</Txt>:null}
+        {audio.error?<Txt size={12} style={{color:colors.danger}}>{t('تعذّر تشغيل هذا التسجيل. جرّب مجددًا أو اختر قارئًا آخر.','This recording could not play. Retry or choose another reciter.')}</Txt>:null}
       </View>
     </View>
-    <ReaderSheet visible={sheet!==null} title={sheet?sheetTitles[sheet]:''} subtitle={sheet==='reciter'?t('تلاوات حفص من جامعة الملك سعود','Hafs recordings from King Saud University'):sheet==='tafsir'?`${name} · ${t('الآية','Ayah')} ${selection.aya}`:undefined} onClose={()=>setSheet(null)}>
+    <ReaderSheet visible={sheet!==null} title={sheet?sheetTitles[sheet]:''} subtitle={sheet==='reciter'?t('اختر التلاوة التي تفضّلها','Choose your preferred recitation'):sheet==='tafsir'?`${name} · ${t('الآية','Ayah')} ${selection.aya}`:undefined} onClose={()=>setSheet(null)}>
       {sheet==='settings'?<>
         <OptionRow title={t('القارئ','Reciter')} detail={reciterName} icon="headset-outline" onPress={()=>open('reciter')}/>
         <OptionRow title={t('التفسير','Tafsir')} detail={authorName} icon="book-outline" onPress={()=>{setReturnToTafsir(false);open('tafsir-choice');}}/>
@@ -132,7 +132,7 @@ export function Quran(){
       {sheet==='reciter'?<>
         <Field label={t('ابحث عن قارئ','Search reciters')} value={search} onChangeText={setSearch}/>
         {KSU_RECITERS.filter(item=>`${item.nameAr} ${item.nameEn}`.toLowerCase().includes(search.toLowerCase())).map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} detail={item.lowData?t('توفير البيانات','Lower data use'):undefined} selected={item.id===reciter.id} icon="headset-outline" onPress={()=>{dispatch({type:'readerSettings',reciter:item.id});setSheet(null);}}/>)}
-        <Txt muted size={11}>{t('المصدر: مشروع المصحف الإلكتروني بجامعة الملك سعود. قد يتعذر تسجيل بعينه مؤقتًا.','Source: KSU Electronic Mushaf. Individual recordings may be temporarily unavailable.')}</Txt>
+        <Txt muted size={11}>{t('قد يتعذر تسجيل بعينه مؤقتًا. يمكنك اختيار قارئ آخر.','Individual recordings may be temporarily unavailable. You can choose another reciter.')}</Txt>
       </>:null}
       {sheet==='tafsir-choice'?KSU_TAFSIRS.map(item=><OptionRow key={item.id} title={rtl?item.nameAr:item.nameEn} selected={item.id===author.id} icon="book-outline" onPress={()=>{dispatch({type:'readerSettings',tafsir:item.id});setSheet(returnToTafsir?'tafsir':'settings');}}/>):null}
       {sheet==='surah'?<>
@@ -145,16 +145,16 @@ export function Quran(){
       </>:null}
       {sheet==='tafsir'?<>
         <ReaderChip label={t(`تفسير ${authorName}`,`${authorName} tafsir`)} icon="chevron-down" onPress={()=>{setReturnToTafsir(true);open('tafsir-choice');}}/>
-        {tafsirQuery.isPending?<ActivityIndicator color={colors.primary}/>:tafsirQuery.isError?<Card><Txt>{t('تعذّر تحميل التفسير من KSU.','Could not load tafsir from KSU.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={()=>void tafsirQuery.refetch()}/></Card>:<>
+        {tafsirQuery.isPending?<ActivityIndicator color={colors.primary}/>:tafsirQuery.isError?<Card><Txt>{t('تعذّر تحميل التفسير.','Could not load tafsir.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={()=>void tafsirQuery.refetch()}/></Card>:<>
           <Txt size={22} bold style={{textAlign:'right',writingDirection:'rtl'}}>{tafsirQuery.data.verseText}</Txt><Txt size={19} style={{textAlign:'right',writingDirection:'rtl'}}>{plainTafsir(tafsirQuery.data.tafsirHtml)}</Txt>
         </>}
-        <Txt muted size={11}>{t('تفسير عربي من المصدر الأصلي KSU، دون ترجمة مولدة.','Arabic tafsir from the original KSU source, without generated translation.')}</Txt>
+        <Txt muted size={11}>{t('اختر التفسير من الزر بالأعلى.','Choose a tafsir using the button above.')}</Txt>
       </>:null}
       {sheet==='tools'?<>
         <Txt bold>{t('علاماتي المرجعية','My bookmarks')}</Txt>
         {state.bookmarks.length?state.bookmarks.map(bookmark=><OptionRow key={`${bookmark.sura}_${bookmark.aya}`} title={`${rtl?quran.Sura[bookmark.sura]?.name:surahEnglish[bookmark.sura]} · ${bookmark.aya}`} icon="bookmark-outline" onPress={()=>{select(bookmark);setSheet(null);}}/>):<Txt muted>{t('احفظ موضعك بزر العلامة في شريط التلاوة.','Save a position with the bookmark button in the player.')}</Txt>}
         {selectedPlan?<Card><Txt bold>{t('تأكيد القراءة في خطة','Confirm reading in a plan')}</Txt><Choice value={selectedPlan.id} options={state.plans.map(plan=>({value:plan.id,label:plan.title}))} onChange={setPlanId}/><Button disabled={page>selectedPlan.target||selectedPlan.pages.includes(page)} label={selectedPlan.pages.includes(page)?t('الصفحة مسجلة في الخطة','Page already recorded'):t(`أؤكد قراءة الصفحة ${page}`,`Confirm reading page ${page}`)} onPress={()=>dispatch({type:'planPage',id:selectedPlan.id,page,completed:true})}/>{page>selectedPlan.target?<Txt muted size={12}>{t('هذه الصفحة خارج هدف الخطة المحددة.','This page is outside the selected plan’s target.')}</Txt>:null}</Card>:null}
-        <Txt muted size={12}>{t('الصورة والتلاوة والتفسير من KSU فقط. تتوقف التلاوة عند مغادرة القارئ أو وضع التطبيق في الخلفية.','Images, audio and tafsir come only from KSU. Recitation pauses when leaving the reader or backgrounding the app.')}</Txt>
+        <Txt muted size={12}>{t('تتوقف التلاوة عند مغادرة القارئ أو وضع التطبيق في الخلفية.','Recitation pauses when leaving the reader or backgrounding the app.')}</Txt>
       </>:null}
     </ReaderSheet>
   </SafeAreaView>;

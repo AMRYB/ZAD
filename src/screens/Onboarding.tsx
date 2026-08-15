@@ -14,7 +14,7 @@ export function Onboarding(){
     </LinearGradient>
     <Card><Txt bold>{t('اللغة','Language')}</Txt><Choice value={state.locale} options={[{value:'ar',label:'العربية'},{value:'en',label:'English'}]} onChange={locale=>dispatch({type:'settings',locale})}/>
       <Txt bold>{t('المظهر','Appearance')}</Txt><Choice value={state.theme} options={[{value:'system',label:t('النظام','System')},{value:'light',label:t('فاتح','Light')},{value:'dark',label:t('داكن','Dark')}]} onChange={theme=>dispatch({type:'settings',theme})}/></Card>
-    <Card><Txt bold>{t('خصوصيتك أولًا','Private by default')}</Txt><Txt muted>{t('سجلاتك وأهدافك محفوظة على هذا الجهاز فقط. لا حساب، ولا لوحة ترتيب عامة، ولا تتبع إعلاني. تحميل القرآن والصوت والتفسير يتصل بموقع جامعة الملك سعود عند طلبك.','Your records and goals stay on this device. No account, public rankings, or advertising trackers. Quran images, audio, and tafsir connect to King Saud University when requested.')}</Txt></Card>
+    <Card><Txt bold>{t('خصوصيتك أولًا','Private by default')}</Txt><Txt muted>{t('سجلاتك وأهدافك محفوظة على هذا الجهاز فقط. لا حساب، ولا لوحة ترتيب عامة، ولا تتبع إعلاني. يحتاج تحميل المصحف والتلاوات والتفسير إلى الإنترنت عند طلبك.','Your records and goals stay on this device. No account, public rankings, or advertising trackers. Loading Quran pages, recitations, and tafsir requires internet access when requested.')}</Txt></Card>
     <View><Button label={t('ابدأ رحلتك','Begin your journey')} testID="onboarding-start" onPress={()=>dispatch({type:'onboard'})}/></View>
   </Screen>;
 }
