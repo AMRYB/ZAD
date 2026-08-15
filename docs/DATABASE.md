@@ -2,7 +2,7 @@
 
 ## Running app: native SQLite
 
-`ramadan-journey.db` stores one versioned application snapshot in `app_state`. It includes appearance/language, onboarding, season configuration, date-keyed prayer/fasting records and notes, personal goals, daily habits, reading plans and page confirmations, Quran bookmarks and last selection. It contains no Quran PNGs, MP3s or tafsir corpus.
+`ramadan-journey.db` stores one versioned application snapshot in `app_state`. It includes appearance/language, onboarding, season configuration, date-keyed prayer/fasting records and notes, personal goals, daily habits, reading plans and page confirmations, Quran bookmarks and last selection, selected reciter/tafsir and page-fit preference. Zoom and immersive mode remain temporary UI state. It contains no Quran PNGs, MP3s or tafsir corpus.
 
 Saving uses a parameterized upsert and a serialized write queue. The snapshot is validated on restore; unknown schemas fail visibly instead of replacing private data. Browser preview uses localStorage in its own origin. The native SQLite SQL is additionally tested through Node's SQLite engine across a real close/reopen; that does not prove the Expo native bridge on an Android device.
 

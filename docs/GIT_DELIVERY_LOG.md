@@ -28,3 +28,20 @@ git show <commit> --stat
 ```
 
 A Git bundle accompanies source deliveries so recipients can clone the real history, rather than relying only on a source ZIP. No remote push has been performed; a GitHub destination was not supplied.
+
+## Executed reader revision commits
+
+```text
+a9b87ed | 2026-10-23T11:20:29+03:00 | docs(git): publish authentic implementation and delivery history
+597ac63 | 2026-10-23T11:23:33+03:00 | feat(quran): add observed KSU reciters and tafsir catalogue
+3b2d5ad | 2026-10-23T11:24:12+03:00 | feat(settings): persist Quran reciter tafsir and page-fit preferences
+d184031 | 2026-10-23T11:25:11+03:00 | feat(quran): calculate complete-page and zoomed viewport geometry
+eb7d09e | 2026-10-23T11:35:54+03:00 | feat(quran): redesign reader controls sheets and immersive page view
+84d7ac6 | 2026-10-23T11:36:37+03:00 | chore(release): version the revised reader preview as 0.2.0
+```
+
+```text
+2478a49 | 2026-10-23T11:50:50+03:00 | fix(ui): keep provider attribution in repository documentation
+```
+
+The latest user request moves provider branding out of the application interface. Source attribution and the verified HTTP/API evidence remain in the repository for GitHub documentation; no remote publication has been performed.

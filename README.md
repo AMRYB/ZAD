@@ -9,7 +9,7 @@ Arabic-first Expo / React Native application, built from the supplied Ramadan Jo
 - Local onboarding, dashboard with reconciled counts, five prayer records, fasting status, private daily notes, recurring daily habits.
 - Editable daily records, bounded personal goal counters, multiple independent reading plans, explicit page completion, undo, and catch-up assignments.
 - Configurable 29/30-day season and calendar; no invented Ramadan date; date/timezone and Arabic-number input handling.
-- KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, Husary ayah playback and repeat, safe plain-text Saadi tafsir.
+- KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, zoom and immersive mode.
 - Native SQLite persistence. Browser preview uses localStorage as a separate adapter.
 - JSON backup export and validated import, with confirmation before replacing device records.
 
@@ -25,6 +25,8 @@ npm test
 npm run doctor
 npm run web
 ```
+
+On this Windows host, a loopback-only web preview was started with `$env:NODE_OPTIONS="--dns-result-order=ipv4first"; npx.cmd expo start --web --localhost --port 8082`. This is a process-local IPv4 binding fix, not a public network exposure.
 
 Open the URL printed by Expo. The development web preview includes a strictly allowlisted KSU relay because KSU `interface.php` does not send CORS headers. Native Android calls the original KSU endpoints directly. See [API_CONTRACT.md](docs/API_CONTRACT.md).
 
@@ -50,7 +52,10 @@ The running app stores private data locally without an account. `supabase/migrat
 - [DELIVERY_PLAN.md](docs/DELIVERY_PLAN.md): corrected IDs, first-preview scope, later phases and truthful status.
 - [SCREEN_MATRIX.md](docs/SCREEN_MATRIX.md): actual routes and sheets.
 - [DESIGN.md](docs/DESIGN.md): typography, tokens, directional layout and interaction choices.
+- [Reader revision](docs/READER_V0_2_DESIGN.md): reference research, layout, source catalogue and verification limits.
+- [Authentic Git history](docs/GIT_DELIVERY_LOG.md): actual commits and delivery provenance.
 - [CHANGELOG.md](CHANGELOG.md): implemented changes.
+- [Source attribution and API provenance](docs/SOURCE_ATTRIBUTION.md): maintained for GitHub/project documentation.
 - [Third-party notices](THIRD_PARTY_NOTICES.md).
 
 This is a private development preview, not a declaration that every future feature in the master plan has shipped. Reviewed adhkar/lesson content, prayer-time authority integration, notifications, social challenges, Family and optional AI are not bundled as fake completed features. Public distribution also requires the KSU usage review specified in the supplied plan.
