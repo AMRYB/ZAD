@@ -54,5 +54,14 @@
     "build:web": "expo export --platform web",
     "build:android": "expo run:android --variant release"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "autolinking": {
+      "android": {
+        "buildFromSource": [
+          "expo-audio"
+        ]
+      }
+    }
+  }
 }

@@ -77,6 +77,7 @@ function patchText(name,input){
  if(sha(original)!==spec.hash)throw new Error('EXPO_AUDIO_PATCH_SOURCE_CHANGED');return text;
 }
 function apply(projectRoot,{verify=false}={}){
+ if(!JSON.parse(fs.readFileSync(path.join(projectRoot,'package.json'),'utf8')).expo?.autolinking?.android?.buildFromSource?.includes('expo-audio'))throw new Error('EXPO_AUDIO_SOURCE_BUILD_REQUIRED');
  const root=path.dirname(require.resolve('expo-audio/package.json',{paths:[projectRoot]}));
  if(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).version!=='58.0.10')throw new Error('EXPO_AUDIO_PATCH_VERSION_CHANGED');
  const base=path.join(root,'android/src/main/java/expo/modules/audio');const result={};
