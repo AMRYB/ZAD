@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.10.0 — connected daily journey
+
+- Added a personalized Home with ESA next-prayer countdown, saved reading/remembrance, chosen daily companions, optional city/reminder setup, a separate Explore grid and Settings route.
+- Added date-aware 7/30-day reports and an activity calendar without inventing historical reading dates.
+- Moved Quran recitation above navigation, using original KSU ayah queues, native background/notification controls, repeat and a bounded sleep timer. Added an ESA-cache-only Android home-screen widget.
+- Added optional PKCE email accounts, secure native session storage, isolated guest/account caches, explicit guest import, durable private sync, revision conflicts, recoverable copies and scoped cloud deletion. Hosted authorization tests use rolled-back synthetic identities; local XP remains separate from trusted server XP.
+- Removed exactly the final 57 seconds of Isha Adhan, retaining its earlier 5.6-second beginning trim; versioned browser audio URLs prevent stale previews.
+- Added ZAD small/large notification artwork and source-built native media-session updates for loaded per-ayah duration and ayah number/total, including while JavaScript is suspended.
+- Updated compatible Expo patch packages and blocked unused biometric permissions. Actual release/device gates are recorded separately; public SMTP/signing/source-permission gates remain open.
+
 ## 0.9.0 — personal XP, levels and achievements
 
 - Added an offline participation ledger with a 100 XP daily cap, per-category limits, stable source identities, reversible allocations and zero retroactive rewards on migration. Local totals remain separate from trusted server XP.

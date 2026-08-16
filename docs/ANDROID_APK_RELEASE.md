@@ -1,29 +1,35 @@
-# Private Android preview release record — 0.9.0
+# Private Android beta release — 0.10.0
 
-Package `com.ramadanjourney.preview`, display name **ZAD**, version `0.9.0` / code `12`. Runtime source revision `8b608ec1ef78914746e7825a297605e95abee8a4`; later test/documentation commits do not change the compiled app.
+ZAD / زاد, package com.ramadanjourney.preview, version 0.10.0 / code 13. Compiled runtime source: `604b4406c7e68037394309187fcc4ccd8cdf3a65`. Documentation/test-only commits after this revision do not change the APK.
 
-Personal offline XP, progressive levels and twelve correction-aware badges are available from Home and More → My achievements. This is a private device-local ledger, separate from trusted server XP. Authentication/cloud sync/leaderboards/challenges remain inactive. Existing records migrate without deletion or historical awards. See `GAMIFICATION_V0_9.md`.
+This release preserves the accepted 0.9.0 local journey and adds personalized Home/setup, separate Explore/Settings, 7/30-day reports, queued background KSU recitation/sleep timer, an ESA-cache Android widget and optional private accounts/sync. Per-ayah duration and ayah number/total follow the user's final choice. Isha retains its earlier 5.6-second beginning trim and removes exactly the requested final 57 seconds.
 
-| Gate | Actual status |
+| Gate | Actual result |
 |---|---|
-| Typecheck / lint / TypeScript suite | PASS, 66 tests including twelve new gamification tests |
-| Native release JUnit | PASS, 20 tests rerun |
-| Browser flow | PASS, Home/More entry, check-in → XP/badge, reload, undo/relock, redo without duplication, filtering and rules |
-| Browser layout | PASS, Arabic/light 320px and English/dark 390px; zero measured horizontal overflow, badge cards visually inspected, no console errors |
-| Production web export | PASS for new feature route and existing three API routes; before final text-only polish/version bump |
-| Local arm64 release build | PASS, 10m 30s; 543 executed and 28 up-to-date tasks |
-| Signature / manifest | PASS, v2; same preview signer, 0.9.0/code 12, minSdk 24 / target 36 / compile 37 |
-| Source / compiled inputs | PASS, 129 files, 23 compiled source-map contents |
-| Font / audio / native modules | PASS, exact licensed Light font, twelve recording hashes/catalogue, receivers, haptics and R8 audio helpers; harness excluded |
-| New permissions | None; manifest permission set equals 0.8.0 |
-| Device installation / launch | PASS; update over 0.8.0 on Android 16, 0.9.0/code 12; achievements intent accepted, COLD launch, app top-resumed/process alive, no own-process runtime errors |
-| Actual native XP interactions | PASS by user confirmation: XP and a badge appeared, and previous data remained present |
-| Doctor / dependency audit | Not repeated; dependency graph unchanged. Prior Doctor 19/20 and five high audit findings remain documented in DEVOTIONAL_V0_8.md |
+| TypeScript / lint / unit suite | PASS, typecheck and clean full ESLint; 81 tests |
+| Native policy/parser unit suite | PASS, 22 tests |
+| Isolated Android hardware checks | PASS, 5: timer schedule/cancel, stale/replacement isolation, invalid durations, real widget registration/layout and attached notification artwork; separate harness removed afterward |
+| Expo Doctor | PASS, 20/20 after compatible SDK patches |
+| npm audit | Five high findings remain in the Expo CLI/code-signing/node-forge/zod chain; no clean-audit claim |
+| Production web export | PASS, feature routes and three fixed-source API routes |
+| Browser journeys | PASS, optional setup/city search/persistence, actual ESA countdown, synthetic habit-to-7/30-day-report, guest email validation, KSU audio continuing across navigation and ayahs, repeat and timer set/cancel |
+| Browser layout | Arabic/light 390px and English/dark 320px visually checked, measured zero horizontal overflow; broader TalkBack/system-text testing remains open |
+| Native build | PASS; customized Expo Audio compiled from source, final incremental repair 3m 59s, 606 tasks (47 executed / 559 up-to-date) |
+| Signature / manifest | PASS, v2 existing preview signer; ARM64, min24 / target36 / compile37; unused biometric, microphone, storage and overlay permissions absent; automatic Android backup disabled |
+| Inputs / compiled source | PASS, 178 source/asset/plugin/config files and 44 critical compiled JS source-map contents |
+| Packaged assets/native patch | PASS, exact Pro Light font, 12 recording hashes/catalogue, guarded native media patch hashes and compiled branding marker, widget/sleep/SecureStore/Crypto and existing reminder/haptics/R8 checks; harness excluded |
+| Android installation/startup | PASS on Android 16 via install -r, no ZAD uninstall/data clear. First 0.10 launch COLD1007ms; final repaired install WARM909ms and corrected reentry HOT229ms. No observed own-process runtime errors; media service independently observed foreground |
+| Owner account / private sync | User confirmed email link sign-in, explicit guest import/private sync completion and retained records |
+| Widget / Isha cutoff | User confirmed widget appeared and Isha ending is correct |
+| Final repaired recitation | User confirmed audio plays and notification is correct after removal of image preparation from the startup path |
+| Hosted authorization | PASS: anonymous read/sync401; real role/RLS/CAS/replay/private-board/scoped-deletion smoke test with two rolled-back synthetic identities |
 
-Artifact: `../ZAD_v0.9.0_arm64.apk` — 44,679,792 bytes.
+Artifact beside the project: **ZAD_v0.10.0_arm64.apk**, **44,904,584 bytes**.
 
-SHA256: `a232575d2c4dcb6b8950f74d6118f91eccf1350e412313820c5733d91e70c2bd`.
+SHA256: `8d9c06407a40e2f2e1a9efad06c9f29f8691ff3d016826f77a0b2667e5d4715f`.
 
-Certificate SHA256: `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c` (private development/debug signing, not production signing).
+Certificate SHA256: `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c`. Development/debug signing only; no public Play/AAB release.
 
-The installed and user-accepted 0.8.0 baseline is preserved in `ANDROID_APK_RELEASE_v0.8.0.md` / `BUILD_METADATA_v0.8.0.json`. The actual update used install -r without uninstall or data clearing. Cold startup and retained notification/exact-alarm/vibration access passed. The user confirmed that XP and a badge appeared and previous data remained present. ARM64 only; no Play/AAB/public release. Long-term Doze/reboot and full TalkBack remain separate verification scope. The user acceptance confirms displayed XP, a badge and retained data; it does not claim every badge or every native correction path was manually tested.
+Guest/account namespaces, archives and pending changes remain separate. The cloud database was applied manually; no CLI migration-history claim. Public email delivery still needs verified SMTP/sender and an owned production callback origin. No public leaderboard, shared challenges or bulk Quran offline corpus is activated. Production signing, source permissions, full accessibility, multiple launchers/devices, long Doze/reboot/headphone and two-device conflict acceptance remain explicit gates in RELEASE_READINESS.md. User acceptance is reported as such; private worship records were not independently inspected.
+
+The 0.9.0 baseline is preserved in ANDROID_APK_RELEASE_v0.9.0.md and BUILD_METADATA_v0.9.0.json. Machine-readable current proof is BUILD_METADATA.json; feature/data boundaries are in JOURNEY_V0_10.md and PRIVACY_DATA_MAP.md.

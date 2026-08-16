@@ -1,5 +1,9 @@
 # Verification report
 
+## Connected journey 0.10.0 — current
+
+Current evidence: 81 TypeScript tests, 22 native unit tests, 5 isolated hardware checks, typecheck/clean lint, Doctor 20/20 and production web export PASS. Final APK/source/signature/asset/media-patch checks and Android 16 update PASS. User confirmed private sign-in/import/sync with retained records, widget/Isha cutoff and final repaired recitation/notification appearance. The media startup regression was repaired before final acceptance. Details and limits: ANDROID_APK_RELEASE.md, BUILD_METADATA.json and JOURNEY_V0_10.md. Historical sections below describe their original versions.
+
 ## Personal gamification 0.9.0
 
 Typecheck/lint and all 66 TypeScript tests PASS, including twelve new XP/level/badge tests and a thirty-day all-badge journey. Twenty native parser/policy tests were rerun and passed. Browser Home/More navigation, participation → 5 XP + First step, reload persistence, undo/relock, redo without duplication, filtering/rules and Arabic/light + English/dark layouts passed. At 320px/390px, measured horizontal overflow was zero; observed console error logs were empty. QA check-ins were undone and original appearance restored.

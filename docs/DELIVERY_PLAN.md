@@ -126,15 +126,15 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-046 | Bilingual achievements page and home/More entry | Browser participation/persistence/undo/redo/filter and Arabic/English layout PASS; Android cold launch PASS; native XP/badge display and retained data confirmed by the user |
 | RJ-047 | Private 0.9.0 APK and installation | Build/signature/129 inputs/23 compiled sources/font/audio PASS; installed over 0.8.0 and cold-launched on Android 16; native XP/badge display and retained data confirmed by the user |
 
-## Connected daily journey 0.10 (in progress)
+## Connected daily journey 0.10
 
 | Ticket | Slice | Evidence state |
 |---|---|---|
-| RJ-048 | Personalized daily Home and separate More/Settings | Domain implemented; browser/device QA pending |
-| RJ-049 | Date-aware weekly/monthly reports | Domain tests PASS; no invented historical reading dates |
-| RJ-050 | Optional setup with city, companion choices and reminders | Migration tests PASS; UI QA pending |
-| RJ-051 | Native queued background Quran recitation and sleep timer | Implemented; native build/device verification pending |
-| RJ-052 | ESA-backed Android home-screen widget | Implemented; policy/build/launcher verification pending |
-| RJ-053 | Optional accounts, private profile caches and CAS outbox/conflicts | Local domain tests PASS; fresh hosted schema applied; Auth/live/device verification pending |
-| RJ-054 | Connected preview APK and release/accessibility evidence | Pending final source and actual checks |
-| RJ-055 | Remove final 57 seconds of Isha Adhan | Sample cutoff/waveform/other eleven recordings PASS; new APK listening pending |
+| RJ-048 | Personalized daily Home and separate More/Settings | Implemented; real ESA countdown, selected companion persistence and bilingual/mobile browser QA PASS |
+| RJ-049 | Date-aware weekly/monthly reports | Domain tests and synthetic habit-to-7/30-day browser reports PASS; no invented historical reading dates |
+| RJ-050 | Optional setup with city, companion choices and reminders | Migration and browser setup/search/persistence PASS; optional reminders retain their existing opt-in flow |
+| RJ-051 | Native queued background Quran recitation and sleep timer | Queue/timer unit and isolated native timer checks PASS; user confirmed final recitation/notification after startup repair. Full physical sleep/headphone/Doze matrix remains a release gate |
+| RJ-052 | ESA-backed Android home-screen widget | Policy/native registration/layout checks PASS; user confirmed the widget appeared |
+| RJ-053 | Optional accounts, private profile caches and CAS outbox/conflicts | Local outbox/conflict tests and hosted authorization PASS; user confirmed native PKCE login, explicit guest import/private sync and retained records. Public mail delivery remains gated |
+| RJ-054 | Connected preview APK and release/accessibility evidence | Verified/signature/178 inputs/44 compiled sources/12 recordings/media-patch PASS; final Android 16 install and user acceptance PASS. Doctor 20/20, 81 TS, 22 native, 5 hardware and web export PASS; five audit findings and production gates remain documented |
+| RJ-055 | Remove final 57 seconds of Isha Adhan | Exact sample/waveform and other 11 recordings PASS; packaged hash PASS; user confirmed cutoff |

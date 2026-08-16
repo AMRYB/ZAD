@@ -9,7 +9,14 @@
 - Prayer timetables: fetched exclusively from the Egyptian Survey Authority's official `praytimes.aspx` page and linked `monthlymwaket.aspx` form. Public city/table fixtures are preserved for parser tests. No claim is made that these website form endpoints are a supported public API. See `docs/ESA_API_DOCUMENTATION.md`.
 - Adhan only: the private 0.6 preview packages the twelve user-requested/source-pinned prayer intros and recordings described in `docs/ADHAN_AUDIO_V0_6.md`. Sources include the user's MBC clip links, the user's official Al-Azhar link, separately identified Tobar Fajr/Isha uploads and Islamweb's Shuaisha/Husary/Rifaat files. Prepared recordings are excluded from public Git; only source metadata/hashes are tracked. Public source availability does not establish redistribution licensing or permission for a public app release. This supersedes 0.5's single privately downloaded Rifaat file. Quran audio still comes exclusively from KSU.
 
+- Supabase JS 2.118.0 and react-native-url-polyfill 4.0.0 report MIT licenses in their installed package manifests; preserve upstream license files. Repositories: [Supabase JS](https://github.com/supabase/supabase-js), [URL polyfill](https://github.com/charpeni/react-native-url-polyfill).
+- The guarded Expo Audio 58.0.10 customization modifies its installed Android sources during native prebuild. Upstream Expo licensing remains applicable; only the patch/configuration is maintained here.
+
 ## Dependency advisory review
+
+The 0.10.0 audit reports five high findings through the Expo CLI/code-signing/node-forge/zod chain. Doctor 20/20 and functional tests do not constitute a clean dependency audit. The earlier review below is historical.
+
+### Earlier dependency review
 
 The current npm dependency audit reports inherited high-severity findings involving `braces` and `node-forge` and their dependents. The reviewed advisories list no patched versions as of this check:
 

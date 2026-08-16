@@ -15,13 +15,19 @@
 | `/day` and `?date=` | Prayer/fasting, daily habits, private note | SQLite / browser adapter |
 | `/progress` | Actual aggregates, personal goal counters | Local records |
 | `/plans` | Independent page plans, explicit completion/undo | Local records |
-| `/more` | Adhan entry, locale/theme, season setup, JSON export/import confirmation, privacy/about | Local preferences / native file/share adapter or browser file adapter |
+| `/more` | Companions and journey feature grid | Real route links; optional account entry when configured |
+| `/settings` | Appearance, locale, season, privacy, export/import | Local preferences and explicit backup adapter |
+| `/setup` | Optional companions, city and reminders | Persisted personalization; no automatic Adhan activation |
+| `/reports` | 7/30-day dated activity, totals and day links | Private recorded activity; no inferred historical dates |
+| `/listening` | Persistent queue, controls, repeat and sleep timer | Original KSU audio and native media service |
+| `/widget` | Native launcher pin and cache instructions | Android RemoteViews widget; no browser pin claim |
+| `/account`, `/auth/callback` | Optional email PKCE, opt-in sync/import/conflict/archive/deletion | Private hosted Supabase, UUID local cache and secure session storage |
 | `/adhan` | Saved city, today/tomorrow/week/date timetables, next prayer, permissions and five intro/voice previews with Friday override | ESA monthly source, private cache and native Android exact alarms |
 | Adhan city sheet | Search 82 authoritative city options; freely resize/dismiss sheet | Captured ESA selectors and local preferences |
 | `/achievements` | Personal XP/levels, twelve badges, filters, rules and corrected/recent allocations; reachable from Home and More | Private local participation ledger; no server/trusted XP writes |
 | `/calendar` | Configured 29/30-day grid and day links | Local season + date-keyed records |
 
-The original master plan's approximately 70 destinations refer to the full future product. They are not presented as 70 implemented screens. No sign-in, leaderboard, challenges, Family or AI placeholder route is shown.
+The original master plan's approximately 70 destinations refer to the full future product. They are not presented as 70 implemented screens. Optional sign-in has a functional route when configured. No leaderboard, challenges, Family or AI placeholder route is shown.
 
 ## Reader 0.3 interaction changes
 
