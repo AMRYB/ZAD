@@ -28,11 +28,11 @@ class AdhanHardwareTest:Instrumentation(){
           check(entries.size==1&&entries[0].activityInfo.name.endsWith(if(part=="day")"MorningIcon" else "EveningIcon"))
           check(android.os.Process.myPid()==pid)
           val art=NotificationBrand.artwork(c);check(art.width==256)
-          check(art.getPixel(20,128)!=android.graphics.Color.WHITE){"Notification artwork still has the old wide margin"}
+          check(art.getPixel(2,128)!=android.graphics.Color.WHITE){"Notification artwork still has the old wide margin"}
           val icon=c.packageManager.getActivityIcon(android.content.ComponentName(c.packageName,entries[0].activityInfo.name))
           val preview=android.graphics.Bitmap.createBitmap(256,256,android.graphics.Bitmap.Config.ARGB_8888)
           icon.setBounds(0,0,256,256);icon.draw(android.graphics.Canvas(preview))
-          check(preview.getPixel(20,128)!=android.graphics.Color.WHITE){"Launcher artwork still has the old wide margin"}
+          check(preview.getPixel(2,128)!=android.graphics.Color.WHITE){"Launcher artwork still has the old wide margin"}
           preview.recycle()
         }
         report("PASS: Android switches day/night/day atomically with one launcher entry, the process alive, and both launcher/notification artworks enlarged without a wide white margin")

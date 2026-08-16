@@ -1,4 +1,4 @@
-<inset xmlns:android="http://schemas.android.com/apk/res/android" android:inset="-10%">
+<inset xmlns:android="http://schemas.android.com/apk/res/android" android:inset="-17%">
   <!-- Native rendering only: keep the owner-supplied PNG unchanged. -->
   <bitmap android:src="@drawable/zad_icon_day" android:gravity="fill" android:filter="true" />
 </inset>

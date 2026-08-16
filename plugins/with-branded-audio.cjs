@@ -27,7 +27,7 @@ const changes={
       if (brand != 0) {
         val source = BitmapFactory.decodeResource(resources, brand, BitmapFactory.Options().apply { inSampleSize = 8 })
         val enlarged = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888)
-        android.graphics.Canvas(enlarged).drawBitmap(source, null, android.graphics.RectF(-25.6f, -25.6f, 281.6f, 281.6f), android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG))
+        android.graphics.Canvas(enlarged).drawBitmap(source, null, android.graphics.RectF(-43.52f, -43.52f, 299.52f, 299.52f), android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG))
         source.recycle()
         currentArtwork = enlarged
       }
