@@ -47,3 +47,11 @@ Reviewed adhkar/dua and lessons require source/editorial decisions. Prayer times
 ## Release rule
 
 An APK file, reproducible build, actual installation and real Android smoke results are separate gates. A successful browser test never counts as Android installation. Public KSU usage approval and unresolved dependency advisories are release review items. No Google Play upload or public deployment is authorized by a local preview build.
+
+## Gesture revision 0.3 (in verification)
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-019 | Focal pinch zoom, bounded pan, swipe intent and boundary rules | Four new gesture regression tests PASS; 27 total tests PASS |
+| RJ-020 | Direct-touch canvas and stacked player/navigation cards | Implemented; actual browser page swipe and card drag verified; further UI QA underway |
+| RJ-021 | Updated Android preview and delivery evidence | Pending build/inspection; native two-finger interaction not yet tested |
