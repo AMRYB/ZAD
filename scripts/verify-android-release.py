@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 import subprocess
+import xml.etree.ElementTree as ET
 from pathlib import Path
 import zipfile
 
@@ -39,6 +40,16 @@ def main():
     audio_patch = subprocess.run(['node', str(root / 'plugins/with-branded-audio.cjs'), str(build), '--verify'],
                                  capture_output=True, text=True, check=True)
     audio_patch_hashes = json.loads(audio_patch.stdout)
+    ns = '{http://schemas.android.com/apk/res/android}'
+    manifest = ET.parse(build / 'android/app/src/main/AndroidManifest.xml').getroot()
+    application = manifest.find('application')
+    aliases = application.findall('activity-alias')
+    package = json.loads((root / 'app.json').read_text(encoding='utf-8'))['expo']['android']['package']
+    assert {a.get(ns + 'name') for a in aliases} == {package + '.MorningIcon', package + '.EveningIcon'}, 'Missing launcher aliases'
+    assert all(a.get(ns + 'targetActivity') == package + '.MainActivity' for a in aliases), 'Unstable alias target'
+    assert sum(a.get(ns + 'enabled') == 'true' for a in aliases) == 1, 'Multiple default launcher icons'
+    main = next(a for a in application.findall('activity') if a.get(ns + 'name') in ['.MainActivity', package + '.MainActivity'])
+    assert not any(c.get(ns + 'name') == 'android.intent.category.LAUNCHER' for c in main.findall('intent-filter/category')), 'Duplicate MainActivity launcher'
     mapping_path = build / 'android/app/build/intermediates/sourcemaps/react/release/index.android.bundle.packager.map'
     mapping = json.loads(mapping_path.read_text(encoding='utf-8'))
     compiled = {}
@@ -62,7 +73,8 @@ def main():
                      'src/ui/RecitationBar.tsx', 'src/ui/NextPrayerCard.tsx',
                      'src/core/cloud.ts', 'src/core/cloud-transport.ts', 'src/core/auth-callback.ts',
                      'src/core/recitation.ts', 'src/core/reports.ts', 'src/core/personalization.ts',
-                     'src/services/pkce-crypto.native.ts', 'src/services/auth-storage.ts']:
+                     'src/services/pkce-crypto.native.ts', 'src/services/auth-storage.ts',
+                     'src/state/BrandingCoordinator.tsx', 'src/ui/StartupIntro.tsx']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -78,6 +90,9 @@ def main():
         entry = next((name for name in names if name.endswith('.otf') and digest(apk.read(name)) == font_sha), None)
         assert entry, 'Private Light font was not packaged byte-for-byte'
         catalogue = json.loads((root / 'src/data/adhan-audio.json').read_text(encoding='utf-8'))
+        intro = root / 'assets/branding/intro.mp4'
+        intro_entry = next((n for n in names if n.endswith('.mp4') and digest(apk.read(n)) == digest(intro.read_bytes())), None)
+        assert intro_entry, 'Owner-provided intro was not packaged byte-for-byte'
         assert json.loads(apk.read('assets/zad-adhan/catalogue.json')) == catalogue, 'Packaged audio catalogue differs'
         for clip_id, clip in catalogue['clips'].items():
             recording = apk.read('assets/zad-adhan/' + clip_id + '.mp3')
@@ -87,7 +102,8 @@ def main():
                       b'AdhanReminderActionReceiver', b'zad.adhan.MUTE_PRAYER', b'zad.adhan.UNMUTE_PRAYER',
                       b'DailyReminderReceiver', b'zad-personal-reminders-v1', b'ExpoHaptics',
                       b'AudioControlsService', b'ZadWidget', b'RecitationSleepReceiver',
-                      b'ExpoSecureStore', b'ExpoCrypto', b'zad_notification']:
+                      b'ExpoSecureStore', b'ExpoCrypto', b'zad_notification', b'ExpoVideo',
+                      b'BrandingReceiver', b'BrandRefreshJob', b'MorningIcon', b'EveningIcon']:
             assert token in dex, f'Missing native release marker: {token}'
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
@@ -109,7 +125,7 @@ def main():
             assert owners, f'Missing R8 helper mapping: {helper}'
             for residual in owners:
                 assert ('L' + residual.replace('.', '/') + ';').encode() in dex, f'Missing residual helper owner: {helper}'
-        assert b'AdhanHardwareTest' not in dex and b'AdhanColdStartTest' not in dex, 'Test harness leaked into product APK'
+        assert all(n not in dex for n in [b'AdhanHardwareTest', b'AdhanColdStartTest', b'BrandingHostActivity']), 'Test harness leaked into product APK'
     print(json.dumps({'sourceAndAssetFilesCompared': len(inputs), 'sourceMatchesBuild': True,
                       'compiledSourcesMatched': checked, 'abi': 'arm64-v8a',
                       'fontEntry': entry, 'fontSha256': font_sha, 'fontMatches': True,
@@ -119,6 +135,7 @@ def main():
                       'packagedRecordingsMatched': len(catalogue['clips']),
                       'r8AudioHelpersVerified': True,
                       'pinnedNativeMediaPatch': audio_patch_hashes,
+                      'launcherAliasesVerified': True, 'introEntry': intro_entry, 'introMatches': True,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
 
 
