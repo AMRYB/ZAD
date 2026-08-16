@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 from pathlib import Path
 import zipfile
 
@@ -28,13 +29,16 @@ def main():
     marker = build / '.ramadan-build-workspace'
     assert marker.read_text().strip().lower() == str(root).lower(), 'Build workspace marker mismatch'
     inputs = []
-    for directory in ['src', 'assets', 'modules']:
+    for directory in ['src', 'assets', 'modules', 'plugins']:
         inputs.extend(p for p in (root / directory).rglob('*') if p.is_file()
                       and not {'build', '.gradle', '.cxx', 'node_modules', '__pycache__'}.intersection(p.relative_to(root).parts))
     inputs.extend(root / name for name in ['package.json', 'package-lock.json', 'app.json', 'scripts/cmake-short-paths.init.gradle'])
     for path in inputs:
         relative = path.relative_to(root)
         assert path.read_bytes() == (build / relative).read_bytes(), f'Build input mismatch: {relative}'
+    audio_patch = subprocess.run(['node', str(root / 'plugins/with-branded-audio.cjs'), str(build), '--verify'],
+                                 capture_output=True, text=True, check=True)
+    audio_patch_hashes = json.loads(audio_patch.stdout)
     mapping_path = build / 'android/app/build/intermediates/sourcemaps/react/release/index.android.bundle.packager.map'
     mapping = json.loads(mapping_path.read_text(encoding='utf-8'))
     compiled = {}
@@ -50,7 +54,15 @@ def main():
                      'src/core/devotion.ts', 'src/core/adhkar.ts', 'src/core/personal-reminders.ts', 'src/core/model.ts',
                      'src/app/_layout.tsx', 'src/app/(tabs)/_layout.tsx',
                      'src/core/gamification.ts', 'src/screens/Achievements.tsx', 'src/ui/ParticipationCard.tsx',
-                     'src/ui/useLocalDate.ts', 'src/screens/Home.tsx']:
+                     'src/ui/useLocalDate.ts', 'src/screens/Home.tsx',
+                     'src/screens/More.tsx', 'src/screens/Setup.tsx', 'src/screens/Reports.tsx',
+                     'src/screens/Listening.tsx', 'src/screens/Widget.tsx', 'src/screens/Account.tsx',
+                     'src/state/RecitationProvider.tsx', 'src/state/AuthProvider.tsx', 'src/state/SyncProvider.tsx',
+                     'src/state/AppProvider.tsx', 'src/state/WidgetCoordinator.tsx',
+                     'src/ui/RecitationBar.tsx', 'src/ui/NextPrayerCard.tsx',
+                     'src/core/cloud.ts', 'src/core/cloud-transport.ts', 'src/core/auth-callback.ts',
+                     'src/core/recitation.ts', 'src/core/reports.ts', 'src/core/personalization.ts',
+                     'src/services/pkce-crypto.native.ts', 'src/services/auth-storage.ts']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -73,7 +85,9 @@ def main():
         dex = b''.join(apk.read(name) for name in names if name.endswith('.dex'))
         for token in [b'ZadAdhan', b'AdhanPlaybackService', b'AdhanAlarmReceiver', b'AdhanRefreshJob',
                       b'AdhanReminderActionReceiver', b'zad.adhan.MUTE_PRAYER', b'zad.adhan.UNMUTE_PRAYER',
-                      b'DailyReminderReceiver', b'zad-personal-reminders-v1', b'ExpoHaptics']:
+                      b'DailyReminderReceiver', b'zad-personal-reminders-v1', b'ExpoHaptics',
+                      b'AudioControlsService', b'ZadWidget', b'RecitationSleepReceiver',
+                      b'ExpoSecureStore', b'ExpoCrypto', b'zad_notification']:
             assert token in dex, f'Missing native release marker: {token}'
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
@@ -104,6 +118,7 @@ def main():
                       'personalReminderReceiverPresent': True, 'hapticsModulePresent': True,
                       'packagedRecordingsMatched': len(catalogue['clips']),
                       'r8AudioHelpersVerified': True,
+                      'pinnedNativeMediaPatch': audio_patch_hashes,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
 
 
