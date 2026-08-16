@@ -3,6 +3,8 @@ import {requireOptionalNativeModule} from 'expo';
 import type {AdhanPreferences,PrayerMonth} from '../core/adhan';
 export interface AdhanStatus {available:boolean;exact:boolean;notifications:boolean;audio:boolean;count:number;until:string;error:string;playing:boolean;muted:boolean;clip:string;enabled:boolean;alarmVolume:number;alarmMuted:boolean}
 interface AdhanModule {
+  configureBranding(city:string,locale:string):{variant:'day'|'night';known:boolean;boundary:number;exact:boolean};
+  brandingStatus():{variant:'day'|'night';known:boolean;boundary:number};
   recitationSleep(minutes:number):{exact:boolean;deadline:number};
   configureWidget(settings:string):void;
   pinWidget():boolean;

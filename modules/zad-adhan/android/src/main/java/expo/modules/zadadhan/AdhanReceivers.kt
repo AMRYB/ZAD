@@ -74,7 +74,7 @@ class AdhanAlarmReceiver:BroadcastReceiver(){override fun onReceive(context:Cont
 }}
 class AdhanRestoreReceiver:BroadcastReceiver(){override fun onReceive(context:Context,intent:Intent){
   // Boot restores alarms from saved official times; never starts a media service from BOOT_COMPLETED.
-  AdhanEngine.channels(context);AdhanEngine.replan(context);AdhanEngine.installJob(context);DailyReminders.plan(context);ZadWidget.refreshAll(context)
+  AdhanEngine.channels(context);AdhanEngine.replan(context);AdhanEngine.installJob(context);DailyReminders.plan(context);ZadWidget.refreshAll(context);Branding.refresh(context,true)
 }}
 class AdhanRefreshJob:JobService(){
   private val executor=Executors.newSingleThreadExecutor();private var work:Future<*>?=null

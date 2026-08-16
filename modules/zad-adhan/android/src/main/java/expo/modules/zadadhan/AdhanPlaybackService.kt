@@ -67,6 +67,7 @@ class AdhanPlaybackService:Service(){
     else startForeground(ID,n)
   }
   override fun onStartCommand(intent:Intent?,flags:Int,startId:Int):Int {
+    if(intent?.action==Branding.MEDIA_REFRESH){if(playing&&currentClip.isNotEmpty())notification(activeEvent,currentClip);return START_NOT_STICKY}
     if(intent?.action in listOf(STOP,MUTE,UNMUTE)){
       // A notification from an earlier run must never control a later prayer.
       if(!playing||session.isEmpty()||intent?.getStringExtra("session")!=session){if(!playing)stopSelf();return START_NOT_STICKY}

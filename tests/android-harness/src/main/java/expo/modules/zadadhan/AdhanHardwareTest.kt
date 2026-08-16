@@ -19,6 +19,28 @@ class AdhanHardwareTest:Instrumentation(){
   private fun report(text:String){sendStatus(0,Bundle().apply {putString("stream","$text\n")})}
   override fun onStart(){
     val c=targetContext;val result=Bundle();var passed=false
+    if(mode=="branding"){
+      try{
+        val pid=android.os.Process.myPid();val p=c.getSharedPreferences("zad-brand-v1",android.content.Context.MODE_PRIVATE)
+        for(part in listOf("day","night","day")){
+          p.edit().putString("city","").putString("variant",part).commit();Branding.applyVariant(c,part)
+          val entries=c.packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(c.packageName),0)
+          check(entries.size==1&&entries[0].activityInfo.name.endsWith(if(part=="day")"MorningIcon" else "EveningIcon"))
+          check(android.os.Process.myPid()==pid)
+          val art=NotificationBrand.artwork(c);check(art.width==256)
+          check(art.getPixel(20,128)!=android.graphics.Color.WHITE){"Notification artwork still has the old wide margin"}
+          val icon=c.packageManager.getActivityIcon(android.content.ComponentName(c.packageName,entries[0].activityInfo.name))
+          val preview=android.graphics.Bitmap.createBitmap(256,256,android.graphics.Bitmap.Config.ARGB_8888)
+          icon.setBounds(0,0,256,256);icon.draw(android.graphics.Canvas(preview))
+          check(preview.getPixel(20,128)!=android.graphics.Color.WHITE){"Launcher artwork still has the old wide margin"}
+          preview.recycle()
+        }
+        report("PASS: Android switches day/night/day atomically with one launcher entry, the process alive, and both launcher/notification artworks enlarged without a wide white margin")
+        result.putInt("checks",1);passed=true
+      }catch(e:Throwable){report("FAIL: "+e.message);result.putString("failure",e.javaClass.simpleName+": "+e.message)}
+      finally{Branding.applyVariant(c,"day");result.putString("stream",if(passed)"Branding checks passed\n" else "Branding checks failed\n");finish(if(passed)Activity.RESULT_OK else Activity.RESULT_CANCELED,result)}
+      return
+    }
     if(mode=="journey-native"){
       try{
         val sleep=c.getSharedPreferences("zad-recitation-sleep-v1",android.content.Context.MODE_PRIVATE)
@@ -208,3 +230,4 @@ class AdhanHardwareTest:Instrumentation(){
     finally{try{val off=AdhanEngine.config(c).put("enabled",false);AdhanEngine.configure(c,off.toString());AdhanPlaybackService.stop(c)}catch(_:Exception){};result.putString("stream",if(passed)"Hardware checks passed\n" else "Hardware checks failed\n");finish(if(passed)Activity.RESULT_OK else Activity.RESULT_CANCELED,result)}
   }
 }
+class BrandingHostActivity:Activity()

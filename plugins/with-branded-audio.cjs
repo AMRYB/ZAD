@@ -15,13 +15,22 @@ const changes={
             }
           }
           playlist.loadInitialPlaylist()`]]},
- 'service/AudioControlsService.kt':{hash:'81784e7bee485a6342df944cef20cae755d8f79fda8d8d20aca6ba5fffeb8608',edits:[[
+ 'service/AudioControlsService.kt':{hash:'81784e7bee485a6342df944cef20cae755d8f79fda8d8d20aca6ba5fffeb8608',edits:[['      when (intent?.action) {','      when (intent?.action) {\n        "zad.media.REFRESH_ART" -> updateArtwork(currentMetadata)'],[
+'    val appIntent = packageManager.getLaunchIntentForPackage(packageName) ?: return null',
+'    val appIntent = Intent().setClassName(packageName, "$packageName.MainActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)'],[
 `    if (artworkUrl == null) {
       clearArtwork()`,
 `    if (artworkUrl == null) {
       clearArtwork()
-      val brand = resources.getIdentifier("zad_brand_art", "drawable", packageName)
-      if (brand != 0) currentArtwork = BitmapFactory.decodeResource(resources, brand)
+      val variant = getSharedPreferences("zad-brand-v1", Context.MODE_PRIVATE).getString("variant", "day")
+      val brand = resources.getIdentifier(if (variant == "night") "zad_icon_night" else "zad_icon_day", "drawable", packageName)
+      if (brand != 0) {
+        val source = BitmapFactory.decodeResource(resources, brand, BitmapFactory.Options().apply { inSampleSize = 8 })
+        val enlarged = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888)
+        android.graphics.Canvas(enlarged).drawBitmap(source, null, android.graphics.RectF(-25.6f, -25.6f, 281.6f, 281.6f), android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG))
+        source.recycle()
+        currentArtwork = enlarged
+      }
       sessionMetadataPlayer?.updateArtwork(currentArtwork)`],['          updateMetadata(metadata)','          updateMetadata(metadata)\n          updateArtwork(currentArtwork)'],[
 '.setSmallIcon(androidx.media3.session.R.drawable.media3_icon_circular_play)',
 '.setSmallIcon(resources.getIdentifier("zad_notification", "drawable", packageName).takeIf { it != 0 } ?: androidx.media3.session.R.drawable.media3_icon_circular_play)'],[

@@ -1,0 +1,4 @@
+<inset xmlns:android="http://schemas.android.com/apk/res/android" android:inset="-5dp">
+  <!-- Android 7 fallback for its standard 48dp launcher icon; fractions require API 26. -->
+  <bitmap android:src="@drawable/zad_icon_day" android:gravity="fill" android:filter="true" />
+</inset>

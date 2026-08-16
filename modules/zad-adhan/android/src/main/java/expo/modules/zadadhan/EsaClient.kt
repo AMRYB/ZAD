@@ -46,6 +46,7 @@ object EsaClient {
       val dir=directory(context);val file=File(dir,key(city,month));val temp=File(dir,"${file.name}.tmp");temp.writeText(result.toString());check(temp.renameTo(file))
       dir.listFiles()?.filter { it.name.endsWith(".json") }?.sortedByDescending { it.lastModified() }?.drop(24)?.forEach { it.delete() }
       ZadWidget.refreshAll(context)
+      Branding.refresh(context)
       return result
     }catch(e:Exception){if(cached!=null)return cached;throw e}
   }

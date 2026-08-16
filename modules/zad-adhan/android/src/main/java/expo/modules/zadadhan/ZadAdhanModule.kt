@@ -22,6 +22,8 @@ class ZadAdhanModule:Module(){
     Function("configure"){settings:String->AdhanEngine.setSettings(context,settings)}
     AsyncFunction("refresh") Coroutine { -> withContext(Dispatchers.IO){AdhanEngine.refresh(context);AdhanEngine.status(context)}}
     Function("status"){AdhanEngine.status(context)}
+    Function("configureBranding"){city:String,locale:String->Branding.configure(context,city,locale)}
+    Function("brandingStatus"){Branding.status(context)}
     Function("recitationSleep"){minutes:Int->RecitationSleep.schedule(context,minutes)}
     Function("configureWidget"){settings:String->ZadWidget.configure(context,settings);Unit}
     Function("pinWidget"){ZadWidget.pin(context)}

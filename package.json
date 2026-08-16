@@ -1,6 +1,6 @@
 {
   "name": "zad",
-  "version": "0.10.0",
+  "version": "0.11.1",
   "main": "expo-router/entry",
   "dependencies": {
     "@expo-google-fonts/cairo": "^0.4.2",
@@ -26,6 +26,7 @@
     "expo-sqlite": "~58.0.14",
     "expo-status-bar": "~58.0.4",
     "expo-system-ui": "~58.0.6",
+    "expo-video": "~58.0.12",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-native": "0.88.0",

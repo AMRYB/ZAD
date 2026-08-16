@@ -1,5 +1,5 @@
 import React,{useCallback,useEffect,useRef,useState} from 'react';
-import {ActivityIndicator,Pressable,Text,View,useColorScheme} from 'react-native';
+import {Pressable,Text,View,useColorScheme} from 'react-native';
 import {initialState,reducer,restoreState,type Action,type State} from '../core/model';
 import {applyCloud,cloudDocument,mergeGuest,stageProfile,type Profile} from '../core/cloud';
 import * as repository from '../storage/repository';
@@ -51,6 +51,6 @@ export function AppProvider({children}:{children:React.ReactNode}){
   },[owner,persist]);
   const rtl=state.locale==='ar',dark=state.theme==='dark'||(state.theme==='system'&&scheme==='dark'),colors=dark?palette.dark:palette.light;
   const t=useCallback((ar:string,en:string)=>rtl?ar:en,[rtl]);
-  if(!auth.ready||!ready||displayedOwner!==owner)return <View style={{flex:1,backgroundColor:colors.background,justifyContent:'center',alignItems:'center',padding:24,gap:20}}>{loadError?<><Text style={{color:colors.text,textAlign:'center'}}>تعذّر فتح بياناتك المحفوظة. لم يتم حذفها.{'\n'}Saved data could not be opened. It has not been deleted.</Text><Pressable accessibilityRole="button" onPress={hydrate}><Text style={{color:colors.primary,padding:16}}>إعادة المحاولة / Retry</Text></Pressable></>:<ActivityIndicator color={colors.primary}/>}</View>;
+  if(!auth.ready||!ready||displayedOwner!==owner)return <View style={{flex:1,backgroundColor:loadError?colors.background:'#080E13',justifyContent:'center',alignItems:'center',padding:24,gap:20}}>{loadError?<><Text style={{color:colors.text,textAlign:'center'}}>تعذّر فتح بياناتك المحفوظة. لم يتم حذفها.{'\n'}Saved data could not be opened. It has not been deleted.</Text><Pressable accessibilityRole="button" onPress={hydrate}><Text style={{color:colors.primary,padding:16}}>إعادة المحاولة / Retry</Text></Pressable></>:<View/>}</View>;
   return <AppContext.Provider value={{state,dispatch,colors,rtl,dark,t,saving,saveError,retrySave,replaceState,restoreEpoch,readerImmersive,setReaderImmersive,owner,installCloud,importGuest}}>{children}</AppContext.Provider>;
 }
