@@ -18,6 +18,7 @@ class ZadAdhanModule:Module(){
   private val context get()=requireNotNull(appContext.reactContext)
   override fun definition()=ModuleDefinition {
     Name("ZadAdhan")
+    Function("setIntroImmersive"){enabled:Boolean->appContext.currentActivity?.let {activity->activity.runOnUiThread {IntroSystemBars.set(activity,enabled)}};Unit}
     AsyncFunction("month") Coroutine {city:String,month:String->withContext(Dispatchers.IO){EsaClient.month(context,city,month).toString()}}
     Function("configure"){settings:String->AdhanEngine.setSettings(context,settings)}
     AsyncFunction("refresh") Coroutine { -> withContext(Dispatchers.IO){AdhanEngine.refresh(context);AdhanEngine.status(context)}}

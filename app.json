@@ -2,7 +2,7 @@
   "expo": {
     "name": "ZAD",
     "slug": "zad",
-    "version": "0.11.1",
+    "version": "0.11.2",
     "orientation": "default",
     "icon": "./assets/branding/morning.png",
     "userInterfaceStyle": "automatic",
@@ -16,7 +16,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.ramadanjourney.preview",
-      "versionCode": 15,
+      "versionCode": 16,
       "allowBackup": false,
       "permissions": [],
       "blockedPermissions": [

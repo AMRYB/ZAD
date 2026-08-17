@@ -19,6 +19,25 @@ class AdhanHardwareTest:Instrumentation(){
   private fun report(text:String){sendStatus(0,Bundle().apply {putString("stream","$text\n")})}
   override fun onStart(){
     val c=targetContext;val result=Bundle();var passed=false
+      if(mode=="intro-bars"){
+        var activity:Activity?=null
+        try{
+          val host=startActivitySync(Intent(c,BrandingHostActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));activity=host
+          waitForIdleSync()
+          fun state():List<Boolean>{var value=listOf<Boolean>();runOnMainSync {val inset=androidx.core.view.ViewCompat.getRootWindowInsets(host.window.decorView)?:error("No window insets");value=listOf(inset.isVisible(androidx.core.view.WindowInsetsCompat.Type.statusBars()),inset.isVisible(androidx.core.view.WindowInsetsCompat.Type.navigationBars()))};return value}
+          fun await(expected:List<Boolean>){val deadline=SystemClock.elapsedRealtime()+4000;while(state()!=expected&&SystemClock.elapsedRealtime()<deadline)Thread.sleep(50);check(state()==expected){"Expected system bars $expected, actual ${state()}, focus=${host.hasWindowFocus()}, locked=${c.getSystemService(android.app.KeyguardManager::class.java).isDeviceLocked}"}}
+          val previous=state();var behavior=0
+          runOnMainSync {behavior=androidx.core.view.WindowCompat.getInsetsController(host.window,host.window.decorView).systemBarsBehavior;IntroSystemBars.set(host,true)}
+          await(listOf(false,false))
+          runOnMainSync {IntroSystemBars.set(host,true);IntroSystemBars.set(host,false)}
+          await(previous)
+          runOnMainSync {check(androidx.core.view.WindowCompat.getInsetsController(host.window,host.window.decorView).systemBarsBehavior==behavior);IntroSystemBars.set(host,false)}
+          report("PASS: immersive intro hides status/navigation bars and repeated entry restores their original visibility and behavior")
+          result.putInt("checks",1);passed=true
+        }catch(e:Throwable){report("FAIL: "+e.message);result.putString("failure",e.javaClass.simpleName+": "+e.message)}
+        finally{activity?.let {host->runOnMainSync {IntroSystemBars.set(host,false);host.finish()}};result.putString("stream",if(passed)"Intro bar checks passed\n" else "Intro bar checks failed\n");finish(if(passed)Activity.RESULT_OK else Activity.RESULT_CANCELED,result)}
+        return
+      }
     if(mode=="branding"){
       try{
         val pid=android.os.Process.myPid();val p=c.getSharedPreferences("zad-brand-v1",android.content.Context.MODE_PRIVATE)
