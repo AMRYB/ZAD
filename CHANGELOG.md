@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.11.1 — larger day/night artwork
+
+- Enlarged launcher and audio-notification artwork by approximately 34% through native rendering; retained original source images.
+
+## 0.11.0 — timed branding and startup video
+
+- Added sunrise-to-Isha morning and Isha-to-sunrise evening branding using the selected city's ESA cache, stable launcher aliases and native artwork refresh.
+- Replaced the startup spinner with the supplied 15-second video, muted by default with sound toggle, Skip, error timeout and background pause.
+- Added bounded ESA refresh and native boundary scheduling without GPS or a new permission prompt. Actual release evidence is recorded separately.
+
 ## 0.10.0 — connected daily journey
 
 - Added a personalized Home with ESA next-prayer countdown, saved reading/remembrance, chosen daily companions, optional city/reminder setup, a separate Explore grid and Settings route.

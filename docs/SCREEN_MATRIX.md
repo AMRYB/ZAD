@@ -29,6 +29,10 @@
 
 The original master plan's approximately 70 destinations refer to the full future product. They are not presented as 70 implemented screens. Optional sign-in has a functional route when configured. No leaderboard, challenges, Family or AI placeholder route is shown.
 
+## Startup overlay 0.11
+
+The root displays the supplied video with translated Skip/sound controls before revealing the intended route. It is not a new navigable screen. ESA sunrise/Isha branding changes launcher and large audio artwork independently of UI theme. See BRANDING_V0_11.md.
+
 ## Reader 0.3 interaction changes
 
 The current reader uses two sideways-cycling control cards; its arrow-free navigation face contains aligned surah, ayah and enlarged page pickers. Immersive mode centers playback between ayah on the right and text-only tafsir on the left. Original page overlays live on a pinch/pan transform plane. Horizontal page swipes apply at normal size. See `ADHAN_VERIFICATION.md` for the current revision and earlier reader reports for gesture history and tested limits.

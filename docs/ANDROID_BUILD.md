@@ -45,3 +45,8 @@ Source version is now 0.9.0/code 12. Local build, signature, manifest, 129 input
 ## Connected journey 0.10.0
 
 The new media-session customization requires expo-audio to be built from source; package.json declares expo.autolinking.android.buildFromSource and the registered plugins/with-branded-audio.cjs applies the guarded source patch during prebuild. Do not remove the source-build setting or accept a release-verifier failure by weakening its checks. The verifier also checks plugin inputs/applied hashes, native media branding, SecureStore/Crypto, the sleep receiver and widget in addition to the existing Adhan/font/asset gates. See RELEASE_READINESS.md for production gates and JOURNEY_V0_10.md for actually completed checks.
+
+
+## Timed branding 0.11.1
+
+Keep the day/night config plugin and native resources together: launcher aliases require stable MainActivity, the original day/night PNGs and scale wrappers. Fractional insets are restricted to drawable-v26; API24/25 use dimensions. Expo Video adds a native module and the unchanged supplied MP4. The release verifier additionally checks aliases, compiled startup/coordinator sources, video hash and exclusion of the branding harness. Rebuild from marked prebuild sources; preserve the existing development signer when updating the private phone. See BRANDING_V0_11.md.

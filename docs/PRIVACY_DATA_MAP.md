@@ -1,4 +1,4 @@
-# ZAD data flow map — 0.10.0 private beta
+# ZAD data flow map — 0.11.1 private beta
 
 | Data | Default location | Optional destination and trigger |
 |---|---|---|
@@ -10,6 +10,8 @@
 | Requested Quran page/audio/tafsir | Original KSU content endpoints; fixed-source web relay for browser CORS | Only requested reading/playback content; no alternate provider, bulk corpus scan or analytics |
 | Manual prayer city/month | ESA monthly timetable request and bounded app cache | Original ESA service; no GPS/precise location permission or alternate calculation |
 | Widget | Minimal city/language/theme/last-reading preferences and existing ESA cache | Own Android launcher; no separate network fetch or account session/token |
+| Timed branding | Device-local city/language/variant and ESA cache | Bounded ESA refresh; launcher/own notification artwork, no account records or GPS |
+| Startup video | Bundled MP4, muted by default | Local playback only; no network, background audio or media notification |
 | Reminder notifications | Native Android schedule | Generic encouragement; no private note/deed-title payload |
 | Export file | User-initiated active snapshot or selected local archive | User chooses the file/share destination; it can contain private notes |
 

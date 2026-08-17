@@ -1,5 +1,13 @@
 # Corrected delivery plan and evidence status
 
+## Timed branding and intro 0.11
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-056 | ESA sunrise/Isha launcher and notification artwork | Policy and isolated Android16 alias cycle PASS; owner accepted 0.11.0 appearance |
+| RJ-057 | Supplied video with Skip, sound and safe route transition | Browser controls/completion PASS; owner confirmed video/Skip on Android0.11.0 |
+| RJ-058 | Enlarge day/night artwork after owner feedback | Native pixel checks, 82 TS tests/typecheck/lint, final APK verification/install PASS; owner confirmed final size |
+
 ## Source and identifiers
 
 Product requirements are maintained under `docs/source-plan/`.

@@ -1,6 +1,7 @@
 # Third-party notices and provenance
 
-- Expo/React Native and supporting packages retain their respective upstream licenses. The generated template LICENSE is preserved.
+- Expo/React Native and supporting packages, including Expo Video, retain their respective upstream licenses. The generated template LICENSE is preserved.
+- Day/night artwork and startup MP4 were supplied by the owner as local files and bundled unchanged. Native rendering enlarges their display. Fingerprints and behavior are in docs/BRANDING_V0_11.md; public redistribution rights require owner review.
 - Cairo UI fonts: bundled by `@expo-google-fonts/cairo`; the package contains the upstream SIL Open Font License. Preserve it when redistributing font assets. [Cairo source](https://github.com/google/fonts/tree/main/ofl/cairo).
 - KSU Quran images, verse audio, hilites and tafsir: fetched from `https://quran.ksu.edu.sa` when requested, not bundled as a corpus. No claim of public redistribution permission is made. The supplied plan requires a usage/permission review before broad publication.
 - Quran navigation metadata and transliterated names were captured from KSU's `js/quran-data.js`. That source includes the notice `Copyright (C) 2008 tanzil.info, Licenced Under GPL`. The metadata's upstream source attribution is preserved; no alternate Quran service was queried. Public distribution/license compatibility requires review rather than assuming that the app's template license covers this dataset.

@@ -1,13 +1,13 @@
 {
   "package": "com.ramadanjourney.preview",
   "displayName": "ZAD",
-  "version": "0.10.0",
-  "versionCode": 13,
-  "codeRevision": "604b4406c7e68037394309187fcc4ccd8cdf3a65",
-  "artifact": "../ZAD_v0.10.0_arm64.apk",
+  "version": "0.11.1",
+  "versionCode": 15,
+  "codeRevision": "4598ad5e78affef57731821dcda5ee00b79dd4eb",
+  "artifact": "../ZAD_v0.11.1_arm64.apk",
   "artifactPathBase": "project root",
-  "bytes": 44904584,
-  "sha256": "8d9c06407a40e2f2e1a9efad06c9f29f8691ff3d016826f77a0b2667e5d4715f",
+  "bytes": 82466208,
+  "sha256": "7f74dbd0e707e2d4ae3d9db0b8d26178ed95d2430069cf20b2970cbfef957601",
   "architecture": "arm64-v8a",
   "minSdk": 24,
   "targetSdk": 36,
@@ -32,7 +32,7 @@
   ],
   "unusedBiometricPermissionsRemoved": true,
   "sourceVerification": {
-    "sourceAndAssetFilesCompared": 178,
+    "sourceAndAssetFilesCompared": 194,
     "sourceMatchesBuild": true,
     "compiledSourcesMatched": [
       "src/screens/Quran.tsx",
@@ -78,7 +78,9 @@
       "src/core/reports.ts",
       "src/core/personalization.ts",
       "src/services/pkce-crypto.native.ts",
-      "src/services/auth-storage.ts"
+      "src/services/auth-storage.ts",
+      "src/state/BrandingCoordinator.tsx",
+      "src/ui/StartupIntro.tsx"
     ],
     "abi": "arm64-v8a",
     "fontEntry": "res/7V.otf",
@@ -93,20 +95,23 @@
     "r8AudioHelpersVerified": true,
     "pinnedNativeMediaPatch": {
       "AudioModule.kt": "5f90428c15cd65a1748ef44e1e9d38070fdaebd9bbf72d988eef93aa00cf4ddf",
-      "service/AudioControlsService.kt": "5474afa92510beb0b9b49a50a638591636fd5cce98dc110ad560b6da8a2e9906",
+      "service/AudioControlsService.kt": "59174c2cd7d3232ee0976a7a916030b2af4eb8eab0807b2f15a65d81da3cc03b",
       "service/MetadataInjectingPlayer.kt": "2b881ced799519c87b76385c2e83440c99e61e4612038c39f9defe0393fdb28f"
     },
-    "apkBytes": 44904584,
-    "apkSha256": "8d9c06407a40e2f2e1a9efad06c9f29f8691ff3d016826f77a0b2667e5d4715f"
+    "launcherAliasesVerified": true,
+    "introEntry": "res/hZ.mp4",
+    "introMatches": true,
+    "apkBytes": 82466208,
+    "apkSha256": "7f74dbd0e707e2d4ae3d9db0b8d26178ed95d2430069cf20b2970cbfef957601"
   },
   "checks": {
     "typecheck": "PASS",
     "cleanFullLint": "PASS",
-    "typescriptTests": 81,
-    "nativeUnitTests": 22,
-    "isolatedAndroidHardwareChecks": 5,
+    "typescriptTests": 82,
+    "nativeUnitTests": 26,
+    "isolatedAndroidHardwareChecks": 6,
     "expoDoctor": "20/20 PASS",
-    "productionWebExport": "PASS; all feature routes and three fixed-source API routes",
+    "productionWebExport": "PASS; final startup component, feature routes and three API routes",
     "npmAudit": {
       "high": 5,
       "critical": 0,
@@ -118,36 +123,35 @@
     "anonymousReadAndSync": "401 denied",
     "roleTests": "PASS with two synthetic identities in a rolled-back transaction: own-user RLS, cross-user/direct-write denial, CAS, XP replay, private board and scoped deletion",
     "ownerEmailPkceAndSync": "User confirmed sign-in, guest import/private sync and retained records",
-    "publicEmailDelivery": "Pending verified SMTP/sender and production callback origin"
+    "publicEmailDelivery": "Pending verified SMTP/sender and production callback origin",
+    "provenance": "Retained 0.10.0 evidence; not rerun for branding-only changes"
   },
   "deviceInstallationTest": {
     "androidVersion": "16",
-    "method": "adb install -r; no uninstall/data clear of ZAD",
-    "installedVersion": "0.10.0",
-    "installedVersionCode": 13,
-    "firstLaunch": {
-      "state": "COLD",
-      "totalTimeMs": 1007
-    },
-    "finalRepairedLaunch": {
-      "state": "WARM",
-      "totalTimeMs": 909,
-      "waitTimeMs": 916
-    },
-    "correctedDeepLinkReentry": {
-      "state": "HOT",
-      "totalTimeMs": 229
+    "method": "adb install -r; no ZAD uninstall/data clear",
+    "installedVersion": "0.11.1",
+    "installedVersionCode": 15,
+    "launch": {
+      "reportedState": "COLD",
+      "waitTimeMs": 2294,
+      "totalTimeMs": 2254
     },
     "ownProcessErrorsObserved": false,
-    "permissionGrants": "Not re-asserted; notifications/exact alarms remain user controlled",
+    "launcherEntries": 1,
+    "activeLauncher": "MorningIcon",
     "isolatedHarnessRemoved": true
   },
   "userAcceptance": {
-    "homeScreenWidget": "Appeared",
-    "ishaEndTrim": "Correct cutoff",
-    "accountSignInAndPrivateSync": "Succeeded with records present",
-    "finalRepairedRecitation": "Audio plays with the requested notification appearance",
-    "method": "User-reported Android interactions; private records were not independently inspected"
+    "baseline0.10.0": {
+      "homeScreenWidget": "Appeared",
+      "ishaEndTrim": "Correct cutoff",
+      "accountSignInAndPrivateSync": "Succeeded with records present",
+      "finalRepairedRecitation": "Audio plays with the requested notification appearance",
+      "method": "User-reported Android interactions; private records were not independently inspected"
+    },
+    "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
+    "finalArtwork": "Owner confirmed the enlarged launcher icon and notification artwork size is suitable",
+    "method": "User-reported interactions; private records not independently inspected"
   },
   "audioPatch": {
     "version": "expo-audio 58.0.10",
@@ -155,11 +159,11 @@
     "guardedConfigPlugin": "plugins/with-branded-audio.cjs",
     "hashes": {
       "AudioModule.kt": "5f90428c15cd65a1748ef44e1e9d38070fdaebd9bbf72d988eef93aa00cf4ddf",
-      "service/AudioControlsService.kt": "5474afa92510beb0b9b49a50a638591636fd5cce98dc110ad560b6da8a2e9906",
+      "service/AudioControlsService.kt": "59174c2cd7d3232ee0976a7a916030b2af4eb8eab0807b2f15a65d81da3cc03b",
       "service/MetadataInjectingPlayer.kt": "2b881ced799519c87b76385c2e83440c99e61e4612038c39f9defe0393fdb28f"
     },
     "timing": "Per-ayah duration and ayah number/total, as selected by the user; no surah metadata scan",
-    "artwork": "Native packaged brand drawable; startup does not wait for an image download"
+    "artwork": "Native 256px ESA-timed morning/evening artwork, rendered at 134%; no startup image download"
   },
   "ishaTrim": {
     "beginningTrimSecondsRetained": 5.6,
@@ -169,14 +173,36 @@
     "otherRecordingsUnchanged": 11
   },
   "previousBaseline": {
-    "version": "0.9.0",
-    "metadata": "BUILD_METADATA_v0.9.0.json",
-    "releaseRecord": "ANDROID_APK_RELEASE_v0.9.0.md"
+    "version": "0.10.0",
+    "metadata": "BUILD_METADATA_v0.10.0.json",
+    "releaseRecord": "ANDROID_APK_RELEASE_v0.10.0.md"
   },
   "limits": [
     "Private preview signing and ARM64 only",
     "Public SMTP/origin, production signing/source permissions and full accessibility/Doze/two-device acceptance remain separate gates",
-    "No public leaderboards/social features or bulk Quran offline download activation"
+    "No public leaderboards/social features or bulk Quran offline download activation",
+    "Launcher caching, denied exact-alarm access and OEM battery restrictions may delay icon changes",
+    "Physical overnight boundary transitions, alternate launchers and API24/25 rendering remain unobserved"
   ],
-  "recordedAt": "2026-10-25T06:29:43.671641+00:00"
+  "recordedAt": "2026-10-25T07:48:03.474897+00:00",
+  "branding": {
+    "clock": "Africa/Cairo",
+    "boundaries": "ESA selected-city sunrise inclusive to Isha exclusive = morning; otherwise evening",
+    "missingOfficialData": "Retain last variant; morning on first install",
+    "scale": 1.34,
+    "newPermissionPrompt": false,
+    "physicalOvernightTransitionObserved": false
+  },
+  "startupVideo": {
+    "bytes": 29703617,
+    "durationSeconds": 15,
+    "sha256": "373e126d556beafeed3f0522f98e1219e76a580d0b812c114fcb704bacfd0034",
+    "mutedByDefault": true,
+    "skip": true,
+    "sourceUnchanged": true
+  },
+  "nativeBuild": {
+    "duration": "3m",
+    "tasks": "606 actionable tasks: 57 executed, 549 up-to-date"
+  }
 }

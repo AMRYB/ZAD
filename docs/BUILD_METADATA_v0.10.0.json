@@ -1,0 +1,182 @@
+{
+  "package": "com.ramadanjourney.preview",
+  "displayName": "ZAD",
+  "version": "0.10.0",
+  "versionCode": 13,
+  "codeRevision": "604b4406c7e68037394309187fcc4ccd8cdf3a65",
+  "artifact": "../ZAD_v0.10.0_arm64.apk",
+  "artifactPathBase": "project root",
+  "bytes": 44904584,
+  "sha256": "8d9c06407a40e2f2e1a9efad06c9f29f8691ff3d016826f77a0b2667e5d4715f",
+  "architecture": "arm64-v8a",
+  "minSdk": 24,
+  "targetSdk": 36,
+  "compileSdk": 37,
+  "signatureVerified": true,
+  "signatureScheme": "v2",
+  "signing": "Existing Android development/debug certificate; private beta",
+  "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+  "automaticAndroidBackup": false,
+  "permissions": [
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+    "android.permission.INTERNET",
+    "android.permission.MODIFY_AUDIO_SETTINGS",
+    "android.permission.VIBRATE",
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.WAKE_LOCK",
+    "android.permission.SCHEDULE_EXACT_ALARM",
+    "android.permission.POST_NOTIFICATIONS",
+    "android.permission.RECEIVE_BOOT_COMPLETED",
+    "com.ramadanjourney.preview.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
+  "unusedBiometricPermissionsRemoved": true,
+  "sourceVerification": {
+    "sourceAndAssetFilesCompared": 178,
+    "sourceMatchesBuild": true,
+    "compiledSourcesMatched": [
+      "src/screens/Quran.tsx",
+      "src/screens/Adhan.tsx",
+      "src/screens/Settings.tsx",
+      "src/state/AdhanCoordinator.tsx",
+      "src/core/adhan.ts",
+      "src/core/adhan-sequence.ts",
+      "src/services/adhan-native.ts",
+      "src/screens/Tasbih.tsx",
+      "src/screens/Adhkar.tsx",
+      "src/screens/GoodDeeds.tsx",
+      "src/screens/devotion/ReminderPreferences.tsx",
+      "src/state/PersonalReminderCoordinator.tsx",
+      "src/core/devotion.ts",
+      "src/core/adhkar.ts",
+      "src/core/personal-reminders.ts",
+      "src/core/model.ts",
+      "src/app/_layout.tsx",
+      "src/app/(tabs)/_layout.tsx",
+      "src/core/gamification.ts",
+      "src/screens/Achievements.tsx",
+      "src/ui/ParticipationCard.tsx",
+      "src/ui/useLocalDate.ts",
+      "src/screens/Home.tsx",
+      "src/screens/More.tsx",
+      "src/screens/Setup.tsx",
+      "src/screens/Reports.tsx",
+      "src/screens/Listening.tsx",
+      "src/screens/Widget.tsx",
+      "src/screens/Account.tsx",
+      "src/state/RecitationProvider.tsx",
+      "src/state/AuthProvider.tsx",
+      "src/state/SyncProvider.tsx",
+      "src/state/AppProvider.tsx",
+      "src/state/WidgetCoordinator.tsx",
+      "src/ui/RecitationBar.tsx",
+      "src/ui/NextPrayerCard.tsx",
+      "src/core/cloud.ts",
+      "src/core/cloud-transport.ts",
+      "src/core/auth-callback.ts",
+      "src/core/recitation.ts",
+      "src/core/reports.ts",
+      "src/core/personalization.ts",
+      "src/services/pkce-crypto.native.ts",
+      "src/services/auth-storage.ts"
+    ],
+    "abi": "arm64-v8a",
+    "fontEntry": "res/7V.otf",
+    "fontSha256": "46e24a495ff52fdbb821cfaf1a6eb033a81ecd63c3e2cb99bd14789810190392",
+    "fontMatches": true,
+    "nativeAdhanPresent": true,
+    "testHarnessExcluded": true,
+    "nativeReminderActionsPresent": true,
+    "personalReminderReceiverPresent": true,
+    "hapticsModulePresent": true,
+    "packagedRecordingsMatched": 12,
+    "r8AudioHelpersVerified": true,
+    "pinnedNativeMediaPatch": {
+      "AudioModule.kt": "5f90428c15cd65a1748ef44e1e9d38070fdaebd9bbf72d988eef93aa00cf4ddf",
+      "service/AudioControlsService.kt": "5474afa92510beb0b9b49a50a638591636fd5cce98dc110ad560b6da8a2e9906",
+      "service/MetadataInjectingPlayer.kt": "2b881ced799519c87b76385c2e83440c99e61e4612038c39f9defe0393fdb28f"
+    },
+    "apkBytes": 44904584,
+    "apkSha256": "8d9c06407a40e2f2e1a9efad06c9f29f8691ff3d016826f77a0b2667e5d4715f"
+  },
+  "checks": {
+    "typecheck": "PASS",
+    "cleanFullLint": "PASS",
+    "typescriptTests": 81,
+    "nativeUnitTests": 22,
+    "isolatedAndroidHardwareChecks": 5,
+    "expoDoctor": "20/20 PASS",
+    "productionWebExport": "PASS; all feature routes and three fixed-source API routes",
+    "npmAudit": {
+      "high": 5,
+      "critical": 0,
+      "scope": "Existing Expo CLI/code-signing/node-forge/zod chain; not a clean audit claim"
+    }
+  },
+  "hostedChecks": {
+    "schema": "Applied manually; no CLI migration-history claim",
+    "anonymousReadAndSync": "401 denied",
+    "roleTests": "PASS with two synthetic identities in a rolled-back transaction: own-user RLS, cross-user/direct-write denial, CAS, XP replay, private board and scoped deletion",
+    "ownerEmailPkceAndSync": "User confirmed sign-in, guest import/private sync and retained records",
+    "publicEmailDelivery": "Pending verified SMTP/sender and production callback origin"
+  },
+  "deviceInstallationTest": {
+    "androidVersion": "16",
+    "method": "adb install -r; no uninstall/data clear of ZAD",
+    "installedVersion": "0.10.0",
+    "installedVersionCode": 13,
+    "firstLaunch": {
+      "state": "COLD",
+      "totalTimeMs": 1007
+    },
+    "finalRepairedLaunch": {
+      "state": "WARM",
+      "totalTimeMs": 909,
+      "waitTimeMs": 916
+    },
+    "correctedDeepLinkReentry": {
+      "state": "HOT",
+      "totalTimeMs": 229
+    },
+    "ownProcessErrorsObserved": false,
+    "permissionGrants": "Not re-asserted; notifications/exact alarms remain user controlled",
+    "isolatedHarnessRemoved": true
+  },
+  "userAcceptance": {
+    "homeScreenWidget": "Appeared",
+    "ishaEndTrim": "Correct cutoff",
+    "accountSignInAndPrivateSync": "Succeeded with records present",
+    "finalRepairedRecitation": "Audio plays with the requested notification appearance",
+    "method": "User-reported Android interactions; private records were not independently inspected"
+  },
+  "audioPatch": {
+    "version": "expo-audio 58.0.10",
+    "buildFromSource": true,
+    "guardedConfigPlugin": "plugins/with-branded-audio.cjs",
+    "hashes": {
+      "AudioModule.kt": "5f90428c15cd65a1748ef44e1e9d38070fdaebd9bbf72d988eef93aa00cf4ddf",
+      "service/AudioControlsService.kt": "5474afa92510beb0b9b49a50a638591636fd5cce98dc110ad560b6da8a2e9906",
+      "service/MetadataInjectingPlayer.kt": "2b881ced799519c87b76385c2e83440c99e61e4612038c39f9defe0393fdb28f"
+    },
+    "timing": "Per-ayah duration and ayah number/total, as selected by the user; no surah metadata scan",
+    "artwork": "Native packaged brand drawable; startup does not wait for an image download"
+  },
+  "ishaTrim": {
+    "beginningTrimSecondsRetained": 5.6,
+    "additionalEndTrimSeconds": 57,
+    "durationSeconds": 260.830748,
+    "sha256": "193eecec5e4f80e7e66c06d31dc1bda3e1410e0de060e08b034976092202362f",
+    "otherRecordingsUnchanged": 11
+  },
+  "previousBaseline": {
+    "version": "0.9.0",
+    "metadata": "BUILD_METADATA_v0.9.0.json",
+    "releaseRecord": "ANDROID_APK_RELEASE_v0.9.0.md"
+  },
+  "limits": [
+    "Private preview signing and ARM64 only",
+    "Public SMTP/origin, production signing/source permissions and full accessibility/Doze/two-device acceptance remain separate gates",
+    "No public leaderboards/social features or bulk Quran offline download activation"
+  ],
+  "recordedAt": "2026-10-25T06:29:43.671641+00:00"
+}

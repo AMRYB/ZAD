@@ -100,3 +100,8 @@ Two-finger pinch was tested as deterministic gesture-controller input, not as in
 ## ZAD source rename and repository import
 
 Current source is 0.3.1, branded ZAD / زاد. The Android package, deep-link scheme, SQLite filename and web storage key were retained. Typecheck/lint and all 28 tests passed after the branding edits and legacy import; the ZAD production web export also passed. No new Android binary or installed-device result is claimed for the rename. The existing 0.3 APK metadata continues to identify its original compiled commit.
+
+
+## Timed branding and startup video 0.11
+
+82 TypeScript tests, typecheck/clean lint, 26 native tests, Doctor20/20 and final production web export PASS. The isolated Android16 harness cycles day/night/day with one launcher entry and no process kill; enlarged launcher/notification pixels and five timer/widget/artwork regressions PASS. Harness removed afterward. Browser observation verifies video playback, sound toggle, automatic completion and Skip; temporary 390x844 viewport reset. Owner confirmed initial icons/notification/video/Skip and the final enlarged size on Android. Physical overnight transitions, API24/25/alternate-launcher rendering remain unverified; final 0.11.1 artifact/install/acceptance are recorded in ANDROID_APK_RELEASE.md.
