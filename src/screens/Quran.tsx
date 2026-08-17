@@ -15,6 +15,7 @@ import {Button,Card,Choice,Field,Row,Txt} from '../ui/components';
 import {IconButton,OptionRow,ReaderChip,ReaderSheet} from './quran/ReaderControls';
 import {MushafCanvas} from './quran/MushafCanvas';
 import {useAyahAudio} from './quran/useAyahAudio';
+import {ReaderDeck} from './quran/ReaderDeck';
 
 type Sheet='surah'|'page'|'aya'|'settings'|'reciter'|'tafsir-choice'|'tafsir'|'tools'|null;
 function validatePoints(value:unknown):Coordinates{
@@ -37,7 +38,7 @@ export function Quran(){
   const [failedImage,setFailedImage]=useState<string|null>(null);
   const [planId,setPlanId]=useState('');
   const page=versePage(selection.sura,selection.aya);
-  const name=rtl?quran.Sura[selection.sura]!.name:surahEnglish[selection.sura];
+  const name=rtl?quran.Sura[selection.sura]!.name!:surahEnglish[selection.sura]!;
   const reciter=reciterById(state.reader.reciter)!;
   const author=tafsirById(state.reader.tafsir)!;
   const reciterName=rtl?reciter.nameAr:reciter.nameEn;
@@ -61,7 +62,7 @@ export function Quran(){
   const bookmarked=state.bookmarks.some(b=>b.sura===selection.sura&&b.aya===selection.aya);
   const selectedPlan=state.plans.find(p=>p.id===planId)??state.plans[0];
   const open=(target:Sheet)=>{setSheet(target);setSearch('');setNumber(String(target==='page'?page:selection.aya));setPickerError(false);};
-  const movePage=(delta:number)=>{const p=page+delta;if(p>=1&&p<=604)select(pageStart(p));};
+  const movePage=useCallback((delta:number)=>{const p=page+delta;if(p>=1&&p<=604)select(pageStart(p));},[page,select]);
   const navigate=()=>{const n=Number(number);try{
     if(!Number.isInteger(n))throw new Error();const next=sheet==='page'?pageStart(n):{sura:selection.sura,aya:n};versePage(next.sura,next.aya);select(next);setSheet(null);
   }catch{setPickerError(true);}};
@@ -73,34 +74,30 @@ export function Quran(){
     <StatusBar hidden={readerImmersive} style={dark?'light':'dark'}/>
     <View style={{flex:1,width:'100%',maxWidth:1100,alignSelf:'center'}}>
       <Row style={{paddingHorizontal:14,paddingVertical:6,flexWrap:'nowrap',gap:8}}>
-        <Pressable accessibilityRole="button" accessibilityLabel={t(`السورة: ${name}`,`Surah: ${name}`)} onPress={()=>open('surah')} style={{flex:1,minHeight:48,justifyContent:'center'}}>
+        <Pressable accessibilityRole={readerImmersive?"button":"header"} accessibilityLabel={t(`السورة: ${name}`,`Surah: ${name}`)} disabled={!readerImmersive} onPress={()=>open('surah')} style={{flex:1,minHeight:48,justifyContent:'center'}}>
           <Txt muted size={10}>{readerImmersive?t(`القرآن الكريم · صفحة ${page}`,`THE HOLY QURAN · PAGE ${page}`):t('القرآن الكريم · حفص عن عاصم','THE HOLY QURAN · HAFS')}</Txt>
-          <Row style={{gap:7}}><Txt bold size={20}>{name}</Txt><Ionicons name="chevron-down" size={15} color={colors.primary}/></Row>
+          <Row style={{gap:7}}><Txt bold size={20}>{name}</Txt>{readerImmersive?<Ionicons name="chevron-down" size={15} color={colors.primary}/>:null}</Row>
         </Pressable>
         <IconButton icon="options-outline" label={t('إعدادات القراءة','Reading settings')} onPress={()=>open('settings')}/>
         <IconButton icon={readerImmersive?'contract-outline':'expand-outline'} label={readerImmersive?t('إنهاء ملء الشاشة','Exit full screen'):t('ملء الشاشة','Full screen')} onPress={()=>setReaderImmersive(!readerImmersive)}/>
       </Row>
       {saveError?<Row style={{paddingHorizontal:14}}><Txt size={12} style={{color:colors.danger}}>{t('لم تُحفظ التغييرات بعد','Changes have not been saved')}</Txt><ReaderChip label={t('إعادة الحفظ','Retry saving')} onPress={retrySave}/></Row>:null}
       <View style={{flex:1,marginHorizontal:8}}>
-        <MushafCanvas page={page} selection={selection} points={pageQuery.data} fit={state.reader.fit} zoom={zoom} retry={retry} onSelect={select} onImageError={onImageError} imageFailed={imageFailed}/>
+        <MushafCanvas page={page} selection={selection} points={pageQuery.data} fit={state.reader.fit} zoom={zoom} onZoomChange={setZoom} onMovePage={movePage} retry={retry} onSelect={select} onImageError={onImageError} imageFailed={imageFailed}/>
         {pageQuery.isPending?<View pointerEvents="none" style={{position:'absolute',top:10,left:0,right:0,alignItems:'center'}}><View style={{padding:8,borderRadius:20,backgroundColor:colors.surface}}><ActivityIndicator color={colors.primary}/></View></View>:null}
         {imageFailed?<View style={{position:'absolute',top:0,bottom:0,left:0,right:0,justifyContent:'center',padding:20}}><Card><Txt>{t('تعذّر تحميل صورة الصفحة.','Could not load the page image.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Card></View>:null}
       </View>
       {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="refresh" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
-      {!readerImmersive?<Row style={{justifyContent:'center',gap:6,paddingHorizontal:8,paddingTop:3,flexWrap:'nowrap'}}>
-        <IconButton icon="chevron-forward" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
-        <ReaderChip label={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} onPress={()=>open('page')}/>
-        <Pressable accessibilityRole="button" accessibilityLabel={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')} style={{minHeight:48,justifyContent:'center',paddingHorizontal:8}}><Txt size={12} muted>{t(`آية ${selection.aya}`,`Ayah ${selection.aya}`)}</Txt></Pressable>
-        <IconButton icon="chevron-back" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
-      </Row>:null}
-      <View style={{marginBottom:readerImmersive?8:7,paddingHorizontal:10,paddingVertical:5,borderRadius:26,borderWidth:1,borderColor:colors.border,backgroundColor:colors.surface,shadowColor:'#102F24',shadowOffset:{width:0,height:4},shadowOpacity:.06,shadowRadius:18,elevation:3,maxWidth:620,width:'96%',alignSelf:'center'}}>
-        {readerImmersive?<Row style={{flexWrap:'nowrap',justifyContent:'space-between',gap:1}}>
+      {readerImmersive?<View style={{marginBottom:8,paddingHorizontal:10,paddingVertical:5,borderRadius:26,borderWidth:1,borderColor:colors.border,backgroundColor:colors.surface,maxWidth:620,width:'96%',alignSelf:'center'}}>
+        <Row style={{flexWrap:'nowrap',justifyContent:'space-between',gap:1}}>
           <IconButton icon="chevron-forward" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
           <ReaderChip label={t(`صفحة ${page}`,`Page ${page}`)} onPress={()=>open('page')}/>
           <IconButton icon="chevron-back" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
           <IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/>
           <ReaderChip icon="book-outline" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
-        </Row>:<><Row style={{flexWrap:'nowrap',gap:7}}>
+        </Row>
+      </View>:<ReaderDeck player={<>
+        <Row style={{flexWrap:'nowrap',gap:7}}>
           <Pressable accessibilityRole="button" accessibilityLabel={t(`القارئ: ${reciterName}`,`Reciter: ${reciterName}`)} onPress={()=>open('reciter')} style={{flex:1,minHeight:44,justifyContent:'center'}}><Row style={{flexWrap:'nowrap',gap:8}}><Ionicons name="headset-outline" size={18} color={colors.primary}/><View style={{flex:1}}><Txt size={12} bold numberOfLines={1}>{reciterName}</Txt><Txt muted size={10}>{t('تغيير القارئ','Change reciter')}</Txt></View></Row></Pressable>
           <Txt muted size={11} style={{writingDirection:'ltr'}}>{clock(audio.currentTime)} / {clock(audio.duration)}</Txt>
           <IconButton icon={bookmarked?'bookmark':'bookmark-outline'} label={bookmarked?t('إزالة العلامة','Remove bookmark'):t('حفظ علامة','Save bookmark')} active={bookmarked} onPress={()=>dispatch({type:'bookmark',...selection})}/>
@@ -113,9 +110,19 @@ export function Quran(){
           {audio.loading?<Pressable accessibilityRole="button" accessibilityLabel={t('إيقاف التحميل والتلاوة','Stop loading and playback')} onPress={audio.pause} style={{width:56,height:56,borderRadius:28,backgroundColor:colors.primary,alignItems:'center',justifyContent:'center'}}><ActivityIndicator color={colors.onPrimary}/></Pressable>:<IconButton prominent icon={audio.playing?'pause':'play'} label={audio.playing?t('إيقاف مؤقت للتلاوة','Pause recitation'):t('تشغيل التلاوة','Play recitation')} onPress={audio.toggle}/>}
           <IconButton icon="play-skip-back" label={t('الآية السابقة','Previous ayah')} onPress={()=>select(adjacentAya(selection.sura,selection.aya,-1))}/>
           <ReaderChip icon="book-outline" label={t('التفسير','Tafsir')} onPress={()=>open('tafsir')}/>
-        </Row></>}
-        {audio.error?<Txt size={12} style={{color:colors.danger}}>{t('تعذّر تشغيل هذا التسجيل. جرّب مجددًا أو اختر قارئًا آخر.','This recording could not play. Retry or choose another reciter.')}</Txt>:null}
-      </View>
+        </Row>
+      </>} navigation={<>
+        <Row style={{flexWrap:'nowrap',gap:8,paddingVertical:3}}>
+          <View style={{flex:1}}><ReaderChip label={t(`سورة ${name}`,`Surah ${name}`)} onPress={()=>open('surah')}/></View>
+          <ReaderChip label={t(`الآية ${selection.aya}`,`Ayah ${selection.aya}`)} onPress={()=>open('aya')}/>
+        </Row>
+        <Row style={{justifyContent:'space-between',flexWrap:'nowrap',gap:4}}>
+          <IconButton icon="chevron-forward" label={t('الصفحة التالية','Next page')} disabled={page===604} onPress={()=>movePage(1)}/>
+          <View style={{flex:1}}><ReaderChip large label={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} onPress={()=>open('page')}/></View>
+          <IconButton icon="chevron-back" label={t('الصفحة السابقة','Previous page')} disabled={page===1} onPress={()=>movePage(-1)}/>
+        </Row>
+      </>}/>}
+      {audio.error?<Txt size={12} style={{color:colors.danger}}>{t('تعذّر تشغيل هذا التسجيل. جرّب مجددًا أو اختر قارئًا آخر.','This recording could not play. Retry or choose another reciter.')}</Txt>:null}
     </View>
     <ReaderSheet visible={sheet!==null} title={sheet?sheetTitles[sheet]:''} subtitle={sheet==='reciter'?t('اختر التلاوة التي تفضّلها','Choose your preferred recitation'):sheet==='tafsir'?`${name} · ${t('الآية','Ayah')} ${selection.aya}`:undefined} onClose={()=>setSheet(null)}>
       {sheet==='settings'?<>
@@ -123,7 +130,7 @@ export function Quran(){
         <OptionRow title={t('التفسير','Tafsir')} detail={authorName} icon="book-outline" onPress={()=>{setReturnToTafsir(false);open('tafsir-choice');}}/>
         <Txt bold size={15}>{t('عرض صفحة المصحف','Mushaf page display')}</Txt>
         <Choice value={state.reader.fit} options={[{value:'page',label:t('الصفحة كاملة','Complete page')},{value:'width',label:t('ملء العرض','Fill width')}]} onChange={fit=>{dispatch({type:'readerSettings',fit});setZoom(1);}}/>
-        <Txt muted size={12}>{t('الصفحة كاملة تظهر الصورة دون قص. ملء العرض يتيح التمرير داخل الصفحة.','Complete page shows the entire image without cropping. Fill width lets you scroll within the page.')}</Txt>
+        <Txt muted size={12}>{t('كبّر بإصبعين وحرّك الصفحة بإصبع واحد. عند الحجم الطبيعي اسحب يمينًا للصفحة التالية ويسارًا للسابقة.','Pinch with two fingers to zoom and drag with one finger to pan. At normal size, swipe left for the next page and right for the previous page.')}</Txt>
         <Row><ReaderChip icon="remove" label={t('تصغير','Zoom out')} onPress={()=>setZoom(value=>Math.max(1,value-.5))}/><Txt bold style={{writingDirection:'ltr'}}>{Math.round(zoom*100)}%</Txt><ReaderChip icon="add" label={t('تكبير','Zoom in')} onPress={()=>setZoom(value=>Math.min(3,value+.5))}/></Row>
         <ReaderChip icon="scan-outline" label={t('إعادة ضبط العرض','Reset page view')} onPress={()=>{setZoom(1);dispatch({type:'readerSettings',fit:'page'});}}/>
         <OptionRow title={t('الانتقال إلى صفحة','Go to page')} detail={t(`صفحة ${page} من 604`,`Page ${page} of 604`)} icon="document-outline" onPress={()=>open('page')}/>

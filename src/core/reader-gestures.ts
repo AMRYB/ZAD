@@ -73,3 +73,8 @@ export class ReaderGesture {
     return {delta,moved};
   }
 }
+
+// Capture before a finger leaves the 24px grab handle; commit only a deliberate upward pull.
+export function upwardCardDrag(dx:number,dy:number,released=false){
+  return dy< -(released?44:6)&&Math.abs(dy)>Math.abs(dx)*1.2;
+}
