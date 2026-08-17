@@ -92,7 +92,7 @@ def main():
         catalogue = json.loads((root / 'src/data/adhan-audio.json').read_text(encoding='utf-8'))
         intro = root / 'assets/branding/intro.mp4'
         intro_entry = next((n for n in names if n.endswith('.mp4') and digest(apk.read(n)) == digest(intro.read_bytes())), None)
-        assert intro_entry, 'Owner-provided intro was not packaged byte-for-byte'
+        assert intro_entry, 'Prepared intro clip was not packaged byte-for-byte'
         assert json.loads(apk.read('assets/zad-adhan/catalogue.json')) == catalogue, 'Packaged audio catalogue differs'
         for clip_id, clip in catalogue['clips'].items():
             recording = apk.read('assets/zad-adhan/' + clip_id + '.mp3')
@@ -108,7 +108,7 @@ def main():
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
         mapping_file = build / 'android/app/build/outputs/mapping/release/mapping.txt'
-        residual_owners = {name: set() for name in ['AdhanAudio', 'AdhanSequence']}
+        residual_owners = {name: set() for name in ['AdhanAudio', 'AdhanSequence', 'IntroSystemBars']}
         owner = None
         for line in mapping_file.read_text(encoding='utf-8').splitlines():
             match = re.match(r'^([^\s].*) -> ([^:]+):$', line)
@@ -136,6 +136,7 @@ def main():
                       'r8AudioHelpersVerified': True,
                       'pinnedNativeMediaPatch': audio_patch_hashes,
                       'launcherAliasesVerified': True, 'introEntry': intro_entry, 'introMatches': True,
+                      'introSha256': digest(intro.read_bytes()), 'introSystemBarsVerified': True,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
 
 
