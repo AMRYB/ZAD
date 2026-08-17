@@ -18,7 +18,9 @@ object IntroSystemBars {
     val status=WindowInsetsCompat.Type.statusBars();val navigation=WindowInsetsCompat.Type.navigationBars()
     if(enabled){
       if(!saved.containsKey(window)){
-        val insets=ViewCompat.getRootWindowInsets(window.decorView)
+        // Behind keyguard, reported bars belong to the lock screen. Restore the app's
+        // visible defaults rather than inheriting its hidden navigation bar.
+        val insets=if(window.decorView.hasWindowFocus())ViewCompat.getRootWindowInsets(window.decorView)else null
         saved[window]=Previous(insets?.isVisible(status)?:true,insets?.isVisible(navigation)?:true,controller.systemBarsBehavior)
       }
       controller.systemBarsBehavior=WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
