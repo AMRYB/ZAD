@@ -19,3 +19,7 @@
 | `/calendar` | Configured 29/30-day grid and day links | Local season + date-keyed records |
 
 The original master plan's approximately 70 destinations refer to the full future product. They are not presented as 70 implemented screens. No sign-in, leaderboard, challenges, Family or AI placeholder route is shown.
+
+## Reader 0.3 interaction changes
+
+The normal reader uses two upward-cycling control cards; the navigation face contains the text-only surah, ayah and enlarged page pickers. Original page overlays live on a pinch/pan transform plane. Horizontal page swipes apply at normal size. See `READER_GESTURES_V0_3.md` for interaction rules and tested limits.

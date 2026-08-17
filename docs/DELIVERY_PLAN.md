@@ -54,4 +54,4 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 |---|---|---|
 | RJ-019 | Focal pinch zoom, bounded pan, swipe intent and boundary rules | Five gesture regression tests PASS; 28 total tests PASS |
 | RJ-020 | Direct-touch canvas and stacked player/navigation cards | Browser next/previous swipes, zoomed pan, ayah taps and repeated upward card cycling PASS; native multitouch pending |
-| RJ-021 | Updated Android preview and delivery evidence | Pending build/inspection; native two-finger interaction not yet tested |
+| RJ-021 | Updated Android preview and delivery evidence | Local build, signature, manifest and 44-file source comparison PASS; native installation/two-finger interaction pending |

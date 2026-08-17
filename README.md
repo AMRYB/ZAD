@@ -9,7 +9,7 @@ Arabic-first Expo / React Native application, built from the supplied Ramadan Jo
 - Local onboarding, dashboard with reconciled counts, five prayer records, fasting status, private daily notes, recurring daily habits.
 - Editable daily records, bounded personal goal counters, multiple independent reading plans, explicit page completion, undo, and catch-up assignments.
 - Configurable 29/30-day season and calendar; no invented Ramadan date; date/timezone and Arabic-number input handling.
-- KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, zoom and immersive mode.
+- KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, direct pinch zoom/pan, deliberate page swipes, upward cycling control cards and immersive mode.
 - Native SQLite persistence. Browser preview uses localStorage as a separate adapter.
 - JSON backup export and validated import, with confirmation before replacing device records.
 
@@ -53,6 +53,7 @@ The running app stores private data locally without an account. `supabase/migrat
 - [SCREEN_MATRIX.md](docs/SCREEN_MATRIX.md): actual routes and sheets.
 - [DESIGN.md](docs/DESIGN.md): typography, tokens, directional layout and interaction choices.
 - [Reader revision](docs/READER_V0_2_DESIGN.md): reference research, layout, source catalogue and verification limits.
+- [Gesture revision](docs/READER_GESTURES_V0_3.md): interactions, final card design and actual verification limits.
 - [Authentic Git history](docs/GIT_DELIVERY_LOG.md): actual commits and delivery provenance.
 - [CHANGELOG.md](CHANGELOG.md): implemented changes.
 - [Source attribution and API provenance](docs/SOURCE_ATTRIBUTION.md): maintained for GitHub/project documentation.

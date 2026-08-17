@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "versionCode": 2,
+  "package": "com.ramadanjourney.preview",
+  "architecture": "arm64-v8a",
+  "minSdk": 24,
+  "targetSdk": 36,
+  "compileSdk": 37,
+  "codeRevision": "2478a494b2fc601b5245e206b9b3e7190c9e2ac1",
+  "bytes": 32605894,
+  "sha256": "6552821ce6b03669f129139cc3f8ef39a7a73dcccb74e0b899930dd7df41c8ba",
+  "signatureVerified": true,
+  "signing": "Android debug certificate; private preview",
+  "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+  "sameSignerAsVersion01": true,
+  "sourceFilesCompared": 42,
+  "sourceMatchesBuild": true,
+  "automaticAndroidBackup": false,
+  "deviceInstallationTest": "Not performed; user requested APK handoff.",
+  "recordedAt": "2026-10-23T08:52:41.418Z"
+}
