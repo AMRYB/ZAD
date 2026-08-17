@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ramadan Journey",
     "slug": "ramadan-journey",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "orientation": "default",
     "icon": "./assets/brand-icon.png",
     "userInterfaceStyle": "automatic",
@@ -17,7 +17,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.ramadanjourney.preview",
-      "versionCode": 2,
+      "versionCode": 3,
       "allowBackup": false,
       "permissions": [],
       "blockedPermissions": [
