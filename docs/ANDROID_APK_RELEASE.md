@@ -17,7 +17,7 @@ The Tasbih page now has a curved horizontal onyx-style strand, central counter, 
 | Assets / native helpers | PASS; exact silent nine-second intro, Pro font, all 12 recordings, source-built media patch, launcher/immersion checks; harness excluded |
 | Signature / manifest | PASS; existing v2 development signer, ARM64 min24/target36/compile37; no unused microphone/storage/biometric/overlay permissions; embedded Expo config 0.12.0 matches Android version |
 | Android installation/startup | PASS; update over existing app without data clear on Android 16; COLD launch 2538ms, no observed own-process errors |
-| Physical Tasbih acceptance | Recorded separately in metadata; browser haptic toggle is not a physical vibration claim |
+| Physical Tasbih acceptance | Owner confirmed layout, counting, physical vibration and retained prior records on Android16 |
 
 Artifact beside the project: **ZAD_v0.12.0_arm64.apk**, **70,734,092 bytes**.
 

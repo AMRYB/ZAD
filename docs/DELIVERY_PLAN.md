@@ -4,7 +4,7 @@
 
 | Ticket | Slice | Evidence state |
 |---|---|---|
-| RJ-060 | Reference-inspired horizontal bead strand and focused counter | Implemented; actual browser tap/side/down count, undo, reset cancel, phrase isolation and target/haptic settings PASS. Typecheck/lint/82 TS tests PASS; current APK/device proof in release metadata |
+| RJ-060 | Reference-inspired horizontal bead strand and focused counter | Implemented; actual browser tap/side/down count, undo, reset cancel, phrase isolation and target/haptic settings PASS. Typecheck/lint/82 TS tests and APK verification/install PASS; owner confirmed layout/counting/vibration and retained data |
 
 ## Silent fullscreen intro 0.11.2
 

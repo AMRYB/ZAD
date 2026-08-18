@@ -18,7 +18,7 @@ Tap on the bead/counter region or primary button adds one. A deliberate lateral 
 
 - Typecheck, full lint and the existing 82-test source suite PASS. The change reuses existing devotional rules; no implementation-mirroring screenshot test was added.
 - Actual browser interaction: bead tap and primary tap, sideways drag and downward drag each increment once; undo restores the initial count and daily total. Switching remembrance retains independent counters. Reset confirmation was opened/cancelled without deleting records.
-- Vibration preference off/on persists through the UI; physical haptic feedback requires Android acceptance. Invalid zero target is rejected; Arabic-digit input normalizes and saves; the original goal is restored after QA.
+- Vibration preference off/on persists through the UI; the owner subsequently confirmed physical vibration, layout/counting and retained previous records on Android. Invalid zero target is rejected; Arabic-digit input normalizes and saves; the original goal is restored after QA.
 - Arabic Light at 390x844 and English Dark at 320x720 visually inspected. No horizontal document overflow at 320px. Long Arabic remembrance and its English translation remain complete. Browser settings are restored after QA; source screenshots remain private in .test-output/.
 - Final APK checks and device acceptance are recorded in ANDROID_APK_RELEASE.md / BUILD_METADATA.json. No unperformed physical accessibility or vibration test is implied by browser results.
 

@@ -161,7 +161,7 @@
       "method": "User-reported interactions; private records not independently inspected",
       "currentIntro": "Owner confirmed fullscreen video without buttons, automatic transition after about nine seconds and normal system-bar restoration"
     },
-    "tasbih0.12.0": "Pending owner feedback on layout, gestures, physical vibration/off-toggle and retained records",
+    "tasbih0.12.0": "Owner confirmed the layout, counting, physical vibration and retained previous records on Android",
     "method": "User-reported interactions; private records not independently inspected"
   },
   "audioPatch": {
