@@ -31,7 +31,7 @@ The original master plan's approximately 70 destinations refer to the full futur
 
 ## Startup overlay 0.11
 
-The root displays the supplied video with translated Skip/sound controls before revealing the intended route. It is not a new navigable screen. ESA sunrise/Isha branding changes launcher and large audio artwork independently of UI theme. See BRANDING_V0_11.md.
+The root displays the original first nine seconds in silent cover mode without controls before revealing the intended route. Android system bars are hidden during the intro and restored afterward. It is not a new navigable screen. ESA sunrise/Isha branding changes launcher and large audio artwork independently of UI theme. See BRANDING_V0_11.md.
 
 ## Reader 0.3 interaction changes
 

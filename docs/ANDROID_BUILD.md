@@ -50,3 +50,8 @@ The new media-session customization requires expo-audio to be built from source;
 ## Timed branding 0.11.1
 
 Keep the day/night config plugin and native resources together: launcher aliases require stable MainActivity, the original day/night PNGs and scale wrappers. Fractional insets are restricted to drawable-v26; API24/25 use dimensions. Expo Video adds a native module and the unchanged supplied MP4. The release verifier additionally checks aliases, compiled startup/coordinator sources, video hash and exclusion of the branding harness. Rebuild from marked prebuild sources; preserve the existing development signer when updating the private phone. See BRANDING_V0_11.md.
+
+
+## Silent fullscreen intro 0.11.2
+
+The tracked startup MP4 is a stream-copy of the original first nine seconds, with audio removed. Its270 decoded frame hashes match the supplied source; no video re-encoding was applied. The native IntroSystemBars helper uses existing AndroidX dependencies and restores previous bars after playback. No new Expo/native dependency or permission is added. The verifier checks the prepared video hash and R8 residual owner of the system-bar helper.

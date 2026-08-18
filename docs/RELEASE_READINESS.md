@@ -1,8 +1,8 @@
-# Private beta release readiness — 0.11.1
+# Private beta release readiness — 0.11.2
 
 The active target is a private, ARM64 Android preview. A built/installed beta is not a Play Store production release.
 
-Selected-city ESA sunrise/Isha launcher and large audio artwork, plus a bundled skippable startup video are implemented. Artwork is enlarged following owner feedback. Alternate launchers, physical overnight transitions, API24/25 rendering and OEM battery delays remain acceptance gates. See BRANDING_V0_11.md.
+Selected-city ESA sunrise/Isha launcher and large audio artwork, plus a bundled nine-second silent fullscreen startup video are implemented. Artwork is enlarged following owner feedback. Alternate launchers, physical overnight transitions, API24/25 rendering and OEM battery delays remain acceptance gates. See BRANDING_V0_11.md.
 
 ## Delivered functionality
 

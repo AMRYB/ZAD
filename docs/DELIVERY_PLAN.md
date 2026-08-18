@@ -1,5 +1,11 @@
 # Corrected delivery plan and evidence status
 
+## Silent fullscreen intro 0.11.2
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-059 | Original first nine seconds, no audio/controls, cover rendering and scoped Android immersion | Exact frame/audio checks, typecheck/lint/82 TS tests, browser/Android immersion, APK verification/install PASS; owner confirmed final behavior |
+
 ## Timed branding and intro 0.11
 
 | Ticket | Slice | Evidence state |

@@ -1,13 +1,13 @@
 {
   "package": "com.ramadanjourney.preview",
   "displayName": "ZAD",
-  "version": "0.11.1",
-  "versionCode": 15,
-  "codeRevision": "4598ad5e78affef57731821dcda5ee00b79dd4eb",
-  "artifact": "../ZAD_v0.11.1_arm64.apk",
+  "version": "0.11.2",
+  "versionCode": 16,
+  "codeRevision": "39e1dd8c5c80fe11bc62f04353a9f736891bda09",
+  "artifact": "../ZAD_v0.11.2_arm64.apk",
   "artifactPathBase": "project root",
-  "bytes": 82466208,
-  "sha256": "7f74dbd0e707e2d4ae3d9db0b8d26178ed95d2430069cf20b2970cbfef957601",
+  "bytes": 70728968,
+  "sha256": "d160afc8bc82bd62023ea1c9b45e64fa72da7744b9895d384da26879e8eff2b5",
   "architecture": "arm64-v8a",
   "minSdk": 24,
   "targetSdk": 36,
@@ -32,7 +32,7 @@
   ],
   "unusedBiometricPermissionsRemoved": true,
   "sourceVerification": {
-    "sourceAndAssetFilesCompared": 194,
+    "sourceAndAssetFilesCompared": 195,
     "sourceMatchesBuild": true,
     "compiledSourcesMatched": [
       "src/screens/Quran.tsx",
@@ -101,22 +101,25 @@
     "launcherAliasesVerified": true,
     "introEntry": "res/hZ.mp4",
     "introMatches": true,
-    "apkBytes": 82466208,
-    "apkSha256": "7f74dbd0e707e2d4ae3d9db0b8d26178ed95d2430069cf20b2970cbfef957601"
+    "introSha256": "6b3f6ffd5053036714b0adc5b5f05a14e18ededbb9b96b7096d1de854a3a7122",
+    "introSystemBarsVerified": true,
+    "apkBytes": 70728968,
+    "apkSha256": "d160afc8bc82bd62023ea1c9b45e64fa72da7744b9895d384da26879e8eff2b5"
   },
   "checks": {
     "typecheck": "PASS",
     "cleanFullLint": "PASS",
     "typescriptTests": 82,
     "nativeUnitTests": 26,
-    "isolatedAndroidHardwareChecks": 6,
+    "isolatedAndroidHardwareChecks": 7,
     "expoDoctor": "20/20 PASS",
     "productionWebExport": "PASS; final startup component, feature routes and three API routes",
     "npmAudit": {
       "high": 5,
       "critical": 0,
       "scope": "Existing Expo CLI/code-signing/node-forge/zod chain; not a clean audit claim"
-    }
+    },
+    "introSystemBarsHardware": "PASS"
   },
   "hostedChecks": {
     "schema": "Applied manually; no CLI migration-history claim",
@@ -129,12 +132,12 @@
   "deviceInstallationTest": {
     "androidVersion": "16",
     "method": "adb install -r; no ZAD uninstall/data clear",
-    "installedVersion": "0.11.1",
-    "installedVersionCode": 15,
+    "installedVersion": "0.11.2",
+    "installedVersionCode": 16,
     "launch": {
-      "reportedState": "COLD",
-      "waitTimeMs": 2294,
-      "totalTimeMs": 2254
+      "reportedState": "WARM",
+      "waitTimeMs": 1737,
+      "totalTimeMs": 1730
     },
     "ownProcessErrorsObserved": false,
     "launcherEntries": 1,
@@ -143,15 +146,21 @@
   },
   "userAcceptance": {
     "baseline0.10.0": {
-      "homeScreenWidget": "Appeared",
-      "ishaEndTrim": "Correct cutoff",
-      "accountSignInAndPrivateSync": "Succeeded with records present",
-      "finalRepairedRecitation": "Audio plays with the requested notification appearance",
-      "method": "User-reported Android interactions; private records were not independently inspected"
+      "baseline0.10.0": {
+        "homeScreenWidget": "Appeared",
+        "ishaEndTrim": "Correct cutoff",
+        "accountSignInAndPrivateSync": "Succeeded with records present",
+        "finalRepairedRecitation": "Audio plays with the requested notification appearance",
+        "method": "User-reported Android interactions; private records were not independently inspected"
+      },
+      "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
+      "finalArtwork": "Owner confirmed the enlarged launcher icon and notification artwork size is suitable",
+      "method": "User-reported interactions; private records not independently inspected"
     },
     "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
-    "finalArtwork": "Owner confirmed the enlarged launcher icon and notification artwork size is suitable",
-    "method": "User-reported interactions; private records not independently inspected"
+    "finalArtwork": "34% enlargement installed; optional size acceptance pending",
+    "method": "User-reported interactions; private records not independently inspected",
+    "currentIntro": "Owner confirmed fullscreen video without buttons, automatic transition after about nine seconds and normal system-bar restoration"
   },
   "audioPatch": {
     "version": "expo-audio 58.0.10",
@@ -173,9 +182,9 @@
     "otherRecordingsUnchanged": 11
   },
   "previousBaseline": {
-    "version": "0.10.0",
-    "metadata": "BUILD_METADATA_v0.10.0.json",
-    "releaseRecord": "ANDROID_APK_RELEASE_v0.10.0.md"
+    "version": "0.11.1",
+    "metadata": "BUILD_METADATA_v0.11.1.json",
+    "releaseRecord": "ANDROID_APK_RELEASE_v0.11.1.md"
   },
   "limits": [
     "Private preview signing and ARM64 only",
@@ -184,7 +193,7 @@
     "Launcher caching, denied exact-alarm access and OEM battery restrictions may delay icon changes",
     "Physical overnight boundary transitions, alternate launchers and API24/25 rendering remain unobserved"
   ],
-  "recordedAt": "2026-10-25T07:48:03.474897+00:00",
+  "recordedAt": "2026-10-25T08:10:07.882863+00:00",
   "branding": {
     "clock": "Africa/Cairo",
     "boundaries": "ESA selected-city sunrise inclusive to Isha exclusive = morning; otherwise evening",
@@ -194,15 +203,20 @@
     "physicalOvernightTransitionObserved": false
   },
   "startupVideo": {
-    "bytes": 29703617,
-    "durationSeconds": 15,
-    "sha256": "373e126d556beafeed3f0522f98e1219e76a580d0b812c114fcb704bacfd0034",
-    "mutedByDefault": true,
-    "skip": true,
-    "sourceUnchanged": true
+    "bytes": 17967190,
+    "durationSeconds": 9,
+    "sha256": "6b3f6ffd5053036714b0adc5b5f05a14e18ededbb9b96b7096d1de854a3a7122",
+    "audioStreams": 0,
+    "controls": false,
+    "skipButton": false,
+    "contentFit": "cover",
+    "frames": 270,
+    "allFramesMatchOriginalFirstNineSeconds": true,
+    "reencoded": false,
+    "androidSystemBars": "Hidden during intro; prior visibility and behavior restored on cleanup"
   },
   "nativeBuild": {
-    "duration": "3m",
-    "tasks": "606 actionable tasks: 57 executed, 549 up-to-date"
+    "duration": "2m 13s",
+    "tasks": "606 actionable tasks: 39 executed, 567 up-to-date"
   }
 }

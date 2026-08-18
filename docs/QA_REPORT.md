@@ -105,3 +105,8 @@ Current source is 0.3.1, branded ZAD / زاد. The Android package, deep-link sc
 ## Timed branding and startup video 0.11
 
 82 TypeScript tests, typecheck/clean lint, 26 native tests, Doctor20/20 and final production web export PASS. The isolated Android16 harness cycles day/night/day with one launcher entry and no process kill; enlarged launcher/notification pixels and five timer/widget/artwork regressions PASS. Harness removed afterward. Browser observation verifies video playback, sound toggle, automatic completion and Skip; temporary 390x844 viewport reset. Owner confirmed initial icons/notification/video/Skip and the final enlarged size on Android. Physical overnight transitions, API24/25/alternate-launcher rendering remain unverified; final 0.11.1 artifact/install/acceptance are recorded in ANDROID_APK_RELEASE.md.
+
+
+## Silent fullscreen intro 0.11.2
+
+82 TypeScript tests, typecheck/clean lint and final production web export PASS. FFprobe confirms exactly9.000 seconds, H2641080x1920,270 frames and no audio stream. Every decoded frame matches the original first nine seconds, with no re-encoding. Browser observation confirms duration9, muted playback, cover layout across390x844, zero intro buttons and automatic transition to Home. Actual screenshot remains private in .test-output/intro9-fullscreen.png. Native hide/restore after repeated entry PASS on the unlocked Android16 phone. Final APK verification/install PASS; owner confirmed fullscreen/no controls, nine-second transition and normal system bars. See release metadata.

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.2 — silent fullscreen intro
+
+- Limited the supplied startup video to its first nine seconds without re-encoding frames; removed its audio stream.
+- Removed Skip and sound controls; the video fills the screen with proportional cropping and returns to the intended route automatically.
+- Hide Android status/navigation bars only during the intro and restore their previous visibility/behavior afterward, including repeated resume calls.
+
 ## 0.11.1 — larger day/night artwork
 
 - Enlarged launcher and audio-notification artwork by approximately 34% through native rendering; retained original source images.

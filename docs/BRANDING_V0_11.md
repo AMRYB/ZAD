@@ -1,4 +1,4 @@
-# Day/night branding and startup video — 0.11.1
+# Day/night branding and startup video — 0.11.2
 
 ## Behavior
 
@@ -6,7 +6,9 @@ The owner-provided Morning_Icon.png and Evening_Icon.png are copied unchanged in
 
 Launcher and large Quran/Adhan notification artwork follow the variant. The existing monochrome status-bar symbol remains. Following owner feedback, 0.11.1 enlarges artwork by approximately 34%, removing the original roughly 12.5% outer white border. Rendering preserves source PNGs: fractional launcher insets on API26+, a -8dp fallback on API24/25 and filtered 256px notification bitmaps. Launcher masks/normalization vary by device.
 
-The supplied Portrate.mp4 is bundled unchanged: 15 seconds, 1080x1920 H264/AAC, 29,703,617 bytes. It replaces the startup spinner, fits inside the screen and starts muted with a sound toggle, Skip and Android Back. The underlying route is inaccessible during the overlay. Ordinary navigation does not replay it. Backgrounding pauses it; completion, error or a 25-second timeout continues to the intended route. Android's mandatory starting window is dark with a transparent mark; video begins after React/fonts/local state are ready.
+The startup clip is the original first nine seconds of the supplied Portrate.mp4: 1080x1920 H264, 270 frames, 17,967,190 bytes, with its audio stream removed. Stream-copy preparation avoids re-encoding; all 270 decoded frame hashes match the original first nine seconds. No Skip, sound toggle or native video controls remain.
+
+Cover rendering fills the screen while preserving proportions, cropping the sides or top/bottom when aspect ratios differ. The intro temporarily hides Android status/navigation bars; edge swipes can reveal transient system bars. Previous visibility and controller behavior are restored on unmount, completion or error. Repeated resume calls do not overwrite the saved state. The underlying route is inaccessible during the overlay. Ordinary navigation does not replay it. Backgrounding pauses playback; completion, error, Android Back or a 25-second stall timeout continues to the intended route. Android's mandatory starting window remains dark with a transparent mark.
 
 ## Native implementation and limits
 
@@ -20,14 +22,15 @@ OS/OEM caching, denied exact-alarm access and battery restrictions can delay vis
 
 ## Verification
 
-Typecheck, clean lint, 82 TypeScript tests, 26 native tests, Doctor20/20 and production web export pass. Six isolated Android16 checks cover atomic day/night/day aliases, one launcher entry, retained process, enlarged launcher/notification pixels and five existing timer/widget/artwork regressions. The separate harness is excluded from production.
+Typecheck, clean lint, 82 TypeScript tests, 26 native tests, Doctor20/20 and production web export pass. Seven isolated Android16 checks cover atomic day/night/day aliases, one launcher entry, retained process, enlarged launcher/notification pixels and five existing timer/widget/artwork regressions, plus scoped system-bar hide/restore after repeated entry. The separate harness is excluded from production.
 
-Browser observation confirms video playback, sound toggles and automatic completion/Skip revealing Home at 390x844; viewport override was reset. Actual screenshot remains private in .test-output/intro-controls-proof.png. Owner confirmed the initial launcher/notification artwork and video/Skip on Android. Owner also confirmed the final enlarged launcher/notification size is suitable. Final build/install evidence belongs in ANDROID_APK_RELEASE.md.
+Current browser observation confirms nine-second duration, muted playback, cover rendering across a 390x844 viewport, zero intro buttons and automatic transition to Home. Actual screenshot: private .test-output/intro9-fullscreen.png; viewport override reset afterward. Initial 0.11.0 video/Skip and 0.11.1 enlarged-icon acceptance remain historical evidence, not acceptance of the changed intro. Native immersion/restoration passed on the unlocked device, and the owner confirmed the final fullscreen/no-button/nine-second behavior. Artifact proof belongs in ANDROID_APK_RELEASE.md.
 
 | Original asset | SHA256 |
 |---|---|
 | Morning_Icon.png | 64b1e58b5bec9a0e0f2b364b372661f332e85f88ff4e49674f32c05d8602d816 |
 | Evening_Icon.png | 208ff5a940f9058ae269f72be9e2a1d05eae5ce9c9cbeea8f17f94e841c272cf |
-| Portrate.mp4 | 373e126d556beafeed3f0522f98e1219e76a580d0b812c114fcb704bacfd0034 |
+| Portrate.mp4 (original source) | 373e126d556beafeed3f0522f98e1219e76a580d0b812c114fcb704bacfd0034 |
+| intro.mp4 (first nine seconds, no audio) | 6b3f6ffd5053036714b0adc5b5f05a14e18ededbb9b96b7096d1de854a3a7122 |
 
 Sources: [Expo Video SDK58](https://docs.expo.dev/versions/v58.0.0/sdk/video/), [Android aliases](https://developer.android.com/guide/topics/manifest/activity-alias-element), [PackageManager](https://developer.android.com/reference/android/content/pm/PackageManager), [drawable resources](https://developer.android.com/guide/topics/resources/drawable-resource). Supplied assets are not an independently verified public redistribution license.
