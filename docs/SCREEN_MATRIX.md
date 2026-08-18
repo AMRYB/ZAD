@@ -36,3 +36,7 @@ The root displays the original first nine seconds in silent cover mode without c
 ## Reader 0.3 interaction changes
 
 The current reader uses two sideways-cycling control cards; its arrow-free navigation face contains aligned surah, ayah and enlarged page pickers. Immersive mode centers playback between ayah on the right and text-only tafsir on the left. Original page overlays live on a pinch/pan transform plane. Horizontal page swipes apply at normal size. See `ADHAN_VERIFICATION.md` for the current revision and earlier reader reports for gesture history and tested limits.
+
+## Tasbih 0.12
+
+/tasbih now presents a horizontal curved onyx-style strand, central counter/round progress, count/undo/reset, full-text phrase picker and a compact statistics strip. Preset/custom targets and vibration are in the existing draggable settings sheet. Tap, sideways drag and downward pull each count once; data actions/IDs are retained.

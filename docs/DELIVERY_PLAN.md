@@ -1,5 +1,11 @@
 # Corrected delivery plan and evidence status
 
+## Tasbih visual revision 0.12
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-060 | Reference-inspired horizontal bead strand and focused counter | Implemented; actual browser tap/side/down count, undo, reset cancel, phrase isolation and target/haptic settings PASS. Typecheck/lint/82 TS tests PASS; current APK/device proof in release metadata |
+
 ## Silent fullscreen intro 0.11.2
 
 | Ticket | Slice | Evidence state |

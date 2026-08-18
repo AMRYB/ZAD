@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.0 — a quieter Tasbih page
+
+- Replaced the oval bead loop with a curved horizontal onyx-style strand, textured native gradients, a larger centered count and slim round progress.
+- Added one-count sideways gestures while retaining tap/downward counting, haptics and reduced-motion support. Gesture release suppresses a duplicate press.
+- Grouped count/undo/reset controls and a full-text remembrance picker; moved vibration and preset/custom round targets into the existing draggable settings sheet.
+- Retained per-remembrance counters, daily totals, reset confirmation, source actions/storage IDs, bilingual themes and Font Awesome Light icons.
+
 ## 0.11.2 — silent fullscreen intro
 
 - Limited the supplied startup video to its first nine seconds without re-encoding frames; removed its audio stream.

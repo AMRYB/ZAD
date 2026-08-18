@@ -1,4 +1,4 @@
-# Private beta release readiness — 0.11.2
+# Private beta release readiness — 0.12.0
 
 The active target is a private, ARM64 Android preview. A built/installed beta is not a Play Store production release.
 
@@ -22,3 +22,7 @@ Personalized Home/setup, separate Explore/Settings, date-aware 7/30-day reports,
 Expo Audio 58.0.10 is explicitly built from source using expo.autolinking.android.buildFromSource. The registered config plugin validates normalized SHA256 hashes before applying three small Android source edits: notification branding, item titles and loaded-duration/artwork refresh. It is idempotent and rejects an unknown source/version. The release verifier checks the applied hashes and the compiled native branding marker; precompiled upstream binaries must not silently replace this customization.
 
 References: [Expo config plugins](https://docs.expo.dev/config-plugins/plugins/) and [Autolinking buildFromSource](https://docs.expo.dev/modules/autolinking/#buildfromsource).
+
+## Tasbih visual revision
+
+The page is redesigned using local native gradient/textured beads and existing counting/storage rules. Browser gesture/count, settings and RTL/LTR layout checks pass. Physical count/haptic/gesture acceptance is recorded separately in release metadata; full TalkBack, large system text and broader OEM interaction testing remain separate gates.

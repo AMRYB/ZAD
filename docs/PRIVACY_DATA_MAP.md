@@ -1,4 +1,4 @@
-# ZAD data flow map — 0.11.2 private beta
+# ZAD data flow map — 0.12.0 private beta
 
 | Data | Default location | Optional destination and trigger |
 |---|---|---|
@@ -20,3 +20,5 @@ No advertising/analytics SDK, microphone, external storage, overlay or biometric
 Cloud records are private by default and protected by own-user RLS/CAS RPCs. Personal snapshot XP is not trusted server XP. No public leaderboard/social feed is activated. The account screen confirms cloud deletion; it explicitly states that local caches/archives and the guest profile remain on the phone. Removing the app can remove local records. Export first when desired.
 
 KSU, ESA and Supabase receive ordinary service requests, including network-level information required to answer them. This app does not assert those operators' retention rules. Production publication requires an owner-reviewed policy, retention/contact details and source agreements; see RELEASE_READINESS.md.
+
+Tasbih0.12 changes presentation and local gesture handling only. Beads are rendered in code without an external image host. Counter, phrase, goal and haptic settings retain the existing storage/sync boundaries; no new device permission or telemetry was added.
