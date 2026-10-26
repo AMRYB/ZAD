@@ -18,6 +18,21 @@ test('Older backups migrate with notifications disabled and corrupted devotional
     const s=initialState();change(s);assert.throws(()=>restoreState(JSON.stringify(s)));
   }
 });
+
+test('Bead sound restores old records and persists independently of haptics and counts',()=>{
+  const old=initialState();delete old.devotion.tasbih.sound;
+  old.devotion=reduceDevotion(old.devotion,{type:'tasbihTap',date:'2026-10-26',change:1});
+  let s=restoreState(JSON.stringify(old));assert.equal(s.devotion.tasbih.sound??true,true);
+  s=reducer(s,{type:'devotion',action:{type:'tasbihSettings',sound:false}});
+  const restored=restoreState(JSON.stringify(s));
+  assert.equal(restored.devotion.tasbih.sound,false);assert.equal(restored.devotion.tasbih.haptics,true);
+  assert.equal(restored.devotion.tasbih.counts.subhan,1);assert.equal(restored.devotion.tasbih.daily['2026-10-26'],1);
+  s=reducer(s,{type:'devotion',action:{type:'tasbihSettings',haptics:false}});
+  s=reducer(s,{type:'devotion',action:{type:'tasbihSettings',sound:true}});
+  assert.equal(s.devotion.tasbih.sound,true);assert.equal(s.devotion.tasbih.haptics,false);
+  const invalid=JSON.parse(JSON.stringify(s));invalid.devotion.tasbih.sound='false';
+  assert.throws(()=>restoreState(JSON.stringify(invalid)),/INVALID_STORAGE/);
+});
 test('Adhkar progress is bounded and isolated by date, section and prayer; favorites and position survive',()=>{
   let s=initialState();const session=adhkarSession('2026-10-24','prayer','fajr');
   for(let i=0;i<5;i++)s=reducer(s,{type:'devotion',action:{type:'adhkarStep',session,id:'r86-istighfar',limit:3,change:1}});

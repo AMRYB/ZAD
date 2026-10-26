@@ -24,19 +24,19 @@ export const deedPresets=[
 ] as const;
 export interface ReminderSettings {enabled:boolean;times:string[]}
 export interface DevotionState {
-  tasbih:{phrase:TasbihPhrase;target:number;haptics:boolean;counts:Record<TasbihPhrase,number>;daily:Record<string,number>};
+  tasbih:{phrase:TasbihPhrase;target:number;haptics:boolean;sound?:boolean;counts:Record<TasbihPhrase,number>;daily:Record<string,number>};
   adhkar:{counts:Record<string,Record<string,number>>;favorites:string[];last:Partial<Record<AdhkarCategory,string>>;fontSize:number};
   deeds:{selected:string[];custom:{id:string;title:string;archived?:boolean}[];days:Record<string,string[]>};
   reminders:{adhkar:ReminderSettings;deeds:ReminderSettings};
 }
 export function initialDevotion():DevotionState{return {
-  tasbih:{phrase:'subhan',target:33,haptics:true,counts:{subhan:0,hamd:0,takbir:0,istighfar:0,salawat:0},daily:{}},
+  tasbih:{phrase:'subhan',target:33,haptics:true,sound:true,counts:{subhan:0,hamd:0,takbir:0,istighfar:0,salawat:0},daily:{}},
   adhkar:{counts:{},favorites:[],last:{},fontSize:26},deeds:{selected:[],custom:[],days:{}},
   reminders:{adhkar:{enabled:false,times:['07:00','18:00','22:00']},deeds:{enabled:false,times:['09:00','15:00','20:00']}},
 };}
 export type DevotionAction=
   |{type:'tasbihTap';date:string;change:1|-1}
-  |{type:'tasbihSettings';phrase?:TasbihPhrase;target?:number;haptics?:boolean}
+  |{type:'tasbihSettings';phrase?:TasbihPhrase;target?:number;haptics?:boolean;sound?:boolean}
   |{type:'tasbihReset'}
   |{type:'adhkarStep';session:string;id:string;limit:number;change:1|-1}
   |{type:'adhkarFavorite';id:string}
@@ -61,7 +61,7 @@ export function reduceDevotion(s:DevotionState,a:DevotionAction):DevotionState{
       if(a.change<0&&(value===0||!(s.tasbih.daily[a.date]>0))||a.change>0&&(value>=1000000000||(s.tasbih.daily[a.date]??0)>=1000000000))return s;
       return {...s,tasbih:{...s.tasbih,counts:{...s.tasbih.counts,[key]:value+a.change},daily:{...s.tasbih.daily,[a.date]:(s.tasbih.daily[a.date]??0)+a.change}}};
     }
-    case 'tasbihSettings':if(a.phrase&&!tasbihPhrases.some(p=>p.id===a.phrase)||a.target!==undefined&&(!integer(a.target,10000)||a.target===0)||a.haptics!==undefined&&typeof a.haptics!=='boolean')return s;return {...s,tasbih:{...s.tasbih,...a.phrase?{phrase:a.phrase}:{},...a.target?{target:a.target}:{},...a.haptics!==undefined?{haptics:a.haptics}:{}}};
+    case 'tasbihSettings':if(a.phrase&&!tasbihPhrases.some(p=>p.id===a.phrase)||a.target!==undefined&&(!integer(a.target,10000)||a.target===0)||a.haptics!==undefined&&typeof a.haptics!=='boolean'||a.sound!==undefined&&typeof a.sound!=='boolean')return s;return {...s,tasbih:{...s.tasbih,...a.phrase?{phrase:a.phrase}:{},...a.target?{target:a.target}:{},...a.haptics!==undefined?{haptics:a.haptics}:{},...a.sound!==undefined?{sound:a.sound}:{}}};
     case 'tasbihReset':return {...s,tasbih:{...s.tasbih,counts:{...s.tasbih.counts,[s.tasbih.phrase]:0}}};
     case 'adhkarStep':{
       const entry=knownDhikr.get(a.id);if(!entry||!validSession(a.session)||!entry.categories.includes(a.session.split(':')[1])||a.limit!==entry.repeat||a.change!==1&&a.change!==-1)return s;
@@ -82,7 +82,7 @@ export function validateDevotion(value:unknown):value is DevotionState{
   try{
     if(!record(value)||!record(value.tasbih)||!record(value.adhkar)||!record(value.deeds)||!record(value.reminders))return false;
     const t=value.tasbih,d=value.deeds,a=value.adhkar;
-    if(!tasbihPhrases.some(p=>p.id===t.phrase)||!integer(t.target,10000)||!t.target||typeof t.haptics!=='boolean'||!record(t.counts)||Object.keys(t.counts).length!==tasbihPhrases.length||!tasbihPhrases.every(p=>integer((t.counts as Record<string,unknown>)[p.id]))||!record(t.daily))return false;
+    if(!tasbihPhrases.some(p=>p.id===t.phrase)||!integer(t.target,10000)||!t.target||typeof t.haptics!=='boolean'||t.sound!==undefined&&typeof t.sound!=='boolean'||!record(t.counts)||Object.keys(t.counts).length!==tasbihPhrases.length||!tasbihPhrases.every(p=>integer((t.counts as Record<string,unknown>)[p.id]))||!record(t.daily))return false;
     for(const [date,n] of Object.entries(t.daily)){parseDate(date);if(!integer(n))return false;}
     if(!record(a.counts)||!Array.isArray(a.favorites)||!a.favorites.every(id=>typeof id==='string'&&knownDhikr.has(id))||new Set(a.favorites).size!==a.favorites.length||!record(a.last)||typeof a.fontSize!=='number'||![22,26,30,34].includes(a.fontSize))return false;
     for(const [category,id] of Object.entries(a.last))if(!categories.includes(category as AdhkarCategory)||typeof id!=='string'||!knownDhikr.get(id)?.categories.includes(category))return false;

@@ -18,6 +18,11 @@ class ZadAdhanModule:Module(){
   private val context get()=requireNotNull(appContext.reactContext)
   override fun definition()=ModuleDefinition {
     Name("ZadAdhan")
+    Function("prepareTasbihSound"){TasbihSound.prepare(context);Unit}
+    Function("playTasbihSound"){TasbihSound.play()}
+    Function("stopTasbihSound"){TasbihSound.stop();Unit}
+    Function("releaseTasbihSound"){TasbihSound.release();Unit}
+    OnDestroy { TasbihSound.release() }
     Function("setIntroImmersive"){enabled:Boolean->appContext.currentActivity?.let {activity->activity.runOnUiThread {IntroSystemBars.set(activity,enabled)}};Unit}
     AsyncFunction("month") Coroutine {city:String,month:String->withContext(Dispatchers.IO){EsaClient.month(context,city,month).toString()}}
     Function("configure"){settings:String->AdhanEngine.setSettings(context,settings)}

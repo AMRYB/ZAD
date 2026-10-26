@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.2 — emerald beads and optional collision sound
+
+- Recolored the stone beads in emerald green while retaining their arch, open centre, texture and movement.
+- Added an original bundled 90ms bead-tap effect, fired once at the animation's first contact knot. Reduced-motion counting plays the feedback immediately; undo, opening the page and restoring records remain silent.
+- Added a separately persisted Bead sound switch beside the existing vibration setting. Older records without this optional field remain readable and retain their counts.
+- Android uses a foreground SoundPool effect without requesting audio focus, changing phone volume or creating media notifications. Leaving the screen, backgrounding the app or muting the setting stops the effect.
+
 ## 0.12.1 — reference bead gap and transfer
 
 - Split the strand into two close-packed stone banks with a visible open centre, a stronger upward arch and a subtle curved cord.

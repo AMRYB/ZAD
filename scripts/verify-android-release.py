@@ -74,7 +74,8 @@ def main():
                      'src/core/cloud.ts', 'src/core/cloud-transport.ts', 'src/core/auth-callback.ts',
                      'src/core/recitation.ts', 'src/core/reports.ts', 'src/core/personalization.ts',
                      'src/services/pkce-crypto.native.ts', 'src/services/auth-storage.ts',
-                     'src/state/BrandingCoordinator.tsx', 'src/ui/StartupIntro.tsx', 'src/ui/TasbihBeads.tsx', 'src/ui/components.tsx']:
+                     'src/state/BrandingCoordinator.tsx', 'src/ui/StartupIntro.tsx', 'src/ui/TasbihBeads.tsx', 'src/ui/components.tsx',
+                     'src/ui/useTasbihSound.android.ts']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -83,6 +84,9 @@ def main():
         abis = {name.split('/')[1] for name in names if name.startswith('lib/') and name.endswith('.so')}
         assert abis == {'arm64-v8a'}, f'Unexpected ABIs: {abis}'
         bundle = apk.read('assets/index.android.bundle')
+        bead_sound = root / 'modules/zad-adhan/android/src/main/res/raw/tasbih_bead.wav'
+        bead_sound_sha = digest(bead_sound.read_bytes())
+        assert digest(apk.read('res/raw/tasbih_bead.wav')) == bead_sound_sha, 'Packaged bead effect differs'
         for token in [b'FontAwesome7Light', b'ZadAdhan', b'reader-immersive-tafsir', b'adhan-time-']:
             assert token in bundle, f'Missing runtime marker: {token}'
         font = root / 'assets/private/FontAwesome7-Light-300.otf'
@@ -103,12 +107,12 @@ def main():
                       b'DailyReminderReceiver', b'zad-personal-reminders-v1', b'ExpoHaptics',
                       b'AudioControlsService', b'ZadWidget', b'RecitationSleepReceiver',
                       b'ExpoSecureStore', b'ExpoCrypto', b'zad_notification', b'ExpoVideo',
-                      b'BrandingReceiver', b'BrandRefreshJob', b'MorningIcon', b'EveningIcon']:
+                      b'BrandingReceiver', b'BrandRefreshJob', b'MorningIcon', b'EveningIcon', b'playTasbihSound']:
             assert token in dex, f'Missing native release marker: {token}'
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
         mapping_file = build / 'android/app/build/outputs/mapping/release/mapping.txt'
-        residual_owners = {name: set() for name in ['AdhanAudio', 'AdhanSequence', 'IntroSystemBars']}
+        residual_owners = {name: set() for name in ['AdhanAudio', 'AdhanSequence', 'IntroSystemBars', 'TasbihSound']}
         owner = None
         for line in mapping_file.read_text(encoding='utf-8').splitlines():
             match = re.match(r'^([^\s].*) -> ([^:]+):$', line)
@@ -137,6 +141,7 @@ def main():
                       'pinnedNativeMediaPatch': audio_patch_hashes,
                       'launcherAliasesVerified': True, 'introEntry': intro_entry, 'introMatches': True,
                       'introSha256': digest(intro.read_bytes()), 'introSystemBarsVerified': True,
+                      'beadSoundSha256': bead_sound_sha, 'beadSoundMatches': True,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
 
 

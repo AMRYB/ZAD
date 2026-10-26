@@ -8,6 +8,7 @@ import {Button,Card,Choice,ConfirmDialog,Field,Row,Screen,Txt} from '../ui/compo
 import {AppIcon,type AppIconName} from '../ui/AppIcon';
 import {TasbihBeads} from '../ui/TasbihBeads';
 import {useLocalDate} from '../ui/useLocalDate';
+import {useTasbihSound} from '../ui/useTasbihSound';
 import {ReaderSheet} from './quran/ReaderSheet';
 import {IconButton} from './quran/ReaderControls';
 
@@ -20,6 +21,7 @@ function CountAction({icon,label,onPress,disabled=false,prominent=false}:{icon:A
 export function Tasbih(){
   const {state,dispatch,t,colors,rtl}=useApp();const value=state.devotion.tasbih;
   const phrase=tasbihPhrases.find(p=>p.id===value.phrase)!;
+  const impact=useTasbihSound(value.sound??true);
   const count=value.counts[value.phrase],progress=roundProgress(count,value.target),today=useLocalDate();
   const [picker,setPicker]=useState(false),[settings,setSettings]=useState(false),[reset,setReset]=useState(false),[custom,setCustom]=useState(''),[message,setMessage]=useState(''),[reduced,setReduced]=useState(false);
   useEffect(()=>{let live=true;void AccessibilityInfo.isReduceMotionEnabled().then(v=>{if(live)setReduced(v);}).catch(()=>{});const sub=AccessibilityInfo.addEventListener('reduceMotionChanged',setReduced);return()=>{live=false;sub.remove();};},[]);
@@ -27,7 +29,7 @@ export function Tasbih(){
   const openSettings=()=>{setCustom(String(value.target));setMessage('');setSettings(true);};
   return <Screen title={t('السبحة','Tasbih')} contentStyle={{flexGrow:1,paddingBottom:16}} trailing={<IconButton icon="sliders" label={t('إعدادات السبحة','Tasbih settings')} onPress={openSettings}/>}>
     <View style={{width:'100%',maxWidth:620,alignSelf:'center',gap:16,flexGrow:1}}>
-      <TasbihBeads key={value.phrase} onCount={tap} count={count} current={progress.current} target={value.target} reduced={reduced}/>
+      <TasbihBeads key={value.phrase} onCount={tap} onImpact={impact} count={count} current={progress.current} target={value.target} reduced={reduced}/>
       <Pressable testID="tasbih-phrase" accessibilityRole="button" accessibilityLabel={t('تغيير الذكر','Change remembrance')} onPress={()=>setPicker(true)} style={({pressed})=>({padding:18,borderRadius:22,backgroundColor:colors.surface,borderWidth:1,borderColor:colors.border,opacity:pressed?.75:1})}>
         <Row style={{flexWrap:'nowrap',gap:12}}><View style={{width:40,height:40,borderRadius:15,backgroundColor:colors.soft,alignItems:'center',justifyContent:'center'}}><AppIcon name="circle-nodes" color={colors.primary} size={20}/></View><View style={{flex:1,gap:2}}><Txt size={10} muted>{t('الذكر الحالي','Current remembrance')}</Txt><Txt size={23} style={{writingDirection:'rtl',textAlign:rtl?'right':'left'}}>{phrase.ar}</Txt>{state.locale==='en'?<Txt size={12} muted>{phrase.en}</Txt>:null}</View><AppIcon name="chevron-down" color={colors.muted} size={15}/></Row>
       </Pressable>
@@ -47,6 +49,7 @@ export function Tasbih(){
       <Txt size={10} muted style={{textAlign:'center'}}>{t('عدّادك محفوظ تلقائيًا','Your count is saved automatically')}</Txt>
     </View>
     <ReaderSheet visible={settings} title={t('إعدادات السبحة','Tasbih settings')} onClose={()=>setSettings(false)}>
+      <Card style={{borderWidth:0,backgroundColor:colors.soft}}><Row style={{justifyContent:'space-between',flexWrap:'nowrap'}}><View style={{flex:1}}><Txt bold>{t('صوت الخرز','Bead sound')}</Txt><Txt muted size={12}>{t('خبطة خفيفة عند وصول الخرزة','A gentle tap when the bead lands')}</Txt></View><Switch accessibilityLabel={t('صوت الخرز','Bead sound')} value={value.sound??true} trackColor={{false:colors.border,true:colors.primary}} onValueChange={sound=>dispatch({type:'devotion',action:{type:'tasbihSettings',sound}})}/></Row></Card>
       <Card style={{borderWidth:0,backgroundColor:colors.soft}}><Row style={{justifyContent:'space-between',flexWrap:'nowrap'}}><View style={{flex:1}}><Txt bold>{t('اهتزاز خفيف','Gentle vibration')}</Txt><Txt muted size={12}>{t('بعد كل تسبيحة','After each count')}</Txt></View><Switch accessibilityLabel={t('اهتزاز السبحة','Tasbih vibration')} value={value.haptics} trackColor={{false:colors.border,true:colors.primary}} onValueChange={haptics=>dispatch({type:'devotion',action:{type:'tasbihSettings',haptics}})}/></Row></Card>
       <Txt bold>{t('هدف الجولة','Round goal')}</Txt>
       <Choice value={String(value.target)} options={['33','99','100'].map(v=>({value:v,label:v}))} onChange={v=>{dispatch({type:'devotion',action:{type:'tasbihSettings',target:Number(v)}});setCustom(v);setMessage('');}}/>
