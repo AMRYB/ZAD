@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.1 — reference bead gap and transfer
+
+- Split the strand into two close-packed stone banks with a visible open centre, a stronger upward arch and a subtle curved cord.
+- A single bead crosses the gap, contacts the receiving bank and settles with a small rebound; the outer bead exits while its replacement enters at the other edge. Quick counts queue transfers; undo reverses the motion.
+- Moved the count controls below the remembrance/statistics and distributed surplus screen height around the bead/counter region instead of leaving unused space below the controls. Short screens still scroll.
+- Retained existing counters, haptic preference, daily records, reset confirmation and reduced-motion handling without migrations or additional permissions.
+
 ## 0.12.0 — a quieter Tasbih page
 
 - Replaced the oval bead loop with a curved horizontal onyx-style strand, textured native gradients, a larger centered count and slim round progress.

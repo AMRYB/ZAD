@@ -74,7 +74,7 @@ def main():
                      'src/core/cloud.ts', 'src/core/cloud-transport.ts', 'src/core/auth-callback.ts',
                      'src/core/recitation.ts', 'src/core/reports.ts', 'src/core/personalization.ts',
                      'src/services/pkce-crypto.native.ts', 'src/services/auth-storage.ts',
-                     'src/state/BrandingCoordinator.tsx', 'src/ui/StartupIntro.tsx', 'src/ui/TasbihBeads.tsx']:
+                     'src/state/BrandingCoordinator.tsx', 'src/ui/StartupIntro.tsx', 'src/ui/TasbihBeads.tsx', 'src/ui/components.tsx']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)

@@ -11,9 +11,9 @@ export function Row({children,style}: {children:React.ReactNode;style?:StyleProp
   const {rtl}=useApp();
   return <View style={[{flexDirection:rtl?'row-reverse':'row',alignItems:'center',gap:12,flexWrap:'wrap'},style]}>{children}</View>;
 }
-export function Screen({title,subtitle,children,scroll=true,trailing}: {title:string;subtitle?:string;children:React.ReactNode;scroll?:boolean;trailing?:React.ReactNode}) {
+export function Screen({title,subtitle,children,scroll=true,trailing,contentStyle}: {title:string;subtitle?:string;children:React.ReactNode;scroll?:boolean;trailing?:React.ReactNode;contentStyle?:StyleProp<ViewStyle>}) {
   const {colors,t,saving,saveError,retrySave}=useApp();
-  const content=<View style={{width:'100%',maxWidth:860,alignSelf:'center',padding:20,gap:20,paddingBottom:36}}>
+  const content=<View style={[{width:'100%',maxWidth:860,alignSelf:'center',padding:20,gap:20,paddingBottom:36},contentStyle]}>
     <Row style={{justifyContent:'space-between',flexWrap:'nowrap',marginTop:8}}>
       <View style={{flex:1}}><Txt size={11} bold style={{color:colors.primary,letterSpacing:2}}>{t('زاد','ZAD')}</Txt><Txt size={30} bold accessibilityRole="header">{title}</Txt>{subtitle?<Txt muted size={14}>{subtitle}</Txt>:null}</View>{trailing}
     </Row>

@@ -25,14 +25,9 @@ export function Tasbih(){
   useEffect(()=>{let live=true;void AccessibilityInfo.isReduceMotionEnabled().then(v=>{if(live)setReduced(v);}).catch(()=>{});const sub=AccessibilityInfo.addEventListener('reduceMotionChanged',setReduced);return()=>{live=false;sub.remove();};},[]);
   const tap=useCallback(()=>{dispatch({type:'devotion',action:{type:'tasbihTap',date:dateInZone(),change:1}});if(value.haptics)void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(()=>{});},[dispatch,value.haptics]);
   const openSettings=()=>{setCustom(String(value.target));setMessage('');setSettings(true);};
-  return <Screen title={t('السبحة','Tasbih')} trailing={<IconButton icon="sliders" label={t('إعدادات السبحة','Tasbih settings')} onPress={openSettings}/>}>
-    <View style={{width:'100%',maxWidth:620,alignSelf:'center',gap:20}}>
+  return <Screen title={t('السبحة','Tasbih')} contentStyle={{flexGrow:1,paddingBottom:16}} trailing={<IconButton icon="sliders" label={t('إعدادات السبحة','Tasbih settings')} onPress={openSettings}/>}>
+    <View style={{width:'100%',maxWidth:620,alignSelf:'center',gap:16,flexGrow:1}}>
       <TasbihBeads key={value.phrase} onCount={tap} count={count} current={progress.current} target={value.target} reduced={reduced}/>
-      <Row style={{justifyContent:'space-evenly',flexWrap:'nowrap',alignItems:'center',marginTop:2}}>
-        <CountAction icon="minus" label={t('تراجع','Undo')} disabled={!count||!value.daily[today]} onPress={()=>dispatch({type:'devotion',action:{type:'tasbihTap',date:today,change:-1}})}/>
-        <CountAction icon="plus" label={t('تسبيح','Count')} prominent onPress={tap}/>
-        <CountAction icon="rotate-right" label={t('تصفير','Reset')} disabled={!count} onPress={()=>setReset(true)}/>
-      </Row>
       <Pressable testID="tasbih-phrase" accessibilityRole="button" accessibilityLabel={t('تغيير الذكر','Change remembrance')} onPress={()=>setPicker(true)} style={({pressed})=>({padding:18,borderRadius:22,backgroundColor:colors.surface,borderWidth:1,borderColor:colors.border,opacity:pressed?.75:1})}>
         <Row style={{flexWrap:'nowrap',gap:12}}><View style={{width:40,height:40,borderRadius:15,backgroundColor:colors.soft,alignItems:'center',justifyContent:'center'}}><AppIcon name="circle-nodes" color={colors.primary} size={20}/></View><View style={{flex:1,gap:2}}><Txt size={10} muted>{t('الذكر الحالي','Current remembrance')}</Txt><Txt size={23} style={{writingDirection:'rtl',textAlign:rtl?'right':'left'}}>{phrase.ar}</Txt>{state.locale==='en'?<Txt size={12} muted>{phrase.en}</Txt>:null}</View><AppIcon name="chevron-down" color={colors.muted} size={15}/></Row>
       </Pressable>
@@ -43,6 +38,11 @@ export function Tasbih(){
         <View style={{width:1,height:30,backgroundColor:colors.border}}/>
         <Pressable accessibilityRole="button" accessibilityLabel={t('تغيير هدف الجولة','Change round goal')} onPress={openSettings} style={{flex:1,minHeight:48,alignItems:'center'}}><Txt size={20} bold style={{writingDirection:'ltr'}}>{value.target}</Txt><Txt size={10} muted>{t('هدف الجولة','Round goal')}</Txt></Pressable>
       </View>
+      <Row style={{justifyContent:'space-evenly',flexWrap:'nowrap',alignItems:'center',marginTop:2}}>
+        <CountAction icon="minus" label={t('تراجع','Undo')} disabled={!count||!value.daily[today]} onPress={()=>dispatch({type:'devotion',action:{type:'tasbihTap',date:today,change:-1}})}/>
+        <CountAction icon="plus" label={t('تسبيح','Count')} prominent onPress={tap}/>
+        <CountAction icon="rotate-right" label={t('تصفير','Reset')} disabled={!count} onPress={()=>setReset(true)}/>
+      </Row>
       {count>0&&count%value.target===0?<Txt accessibilityLiveRegion="polite" size={12} style={{textAlign:'center',color:colors.primary}}>{t('أتممت هدف الجولة. تقدر تكمل على راحتك.','Round goal reached. Continue at your own pace.')}</Txt>:null}
       <Txt size={10} muted style={{textAlign:'center'}}>{t('عدّادك محفوظ تلقائيًا','Your count is saved automatically')}</Txt>
     </View>
