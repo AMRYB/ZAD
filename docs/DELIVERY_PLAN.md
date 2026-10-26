@@ -1,5 +1,11 @@
 # Corrected delivery plan and evidence status
 
+## Tasbih reference correction 0.12.1
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-061 | Open-centre bead transfer, visible upward arch and responsive vertical distribution | Implemented; typecheck/lint/82 TS tests and production web export PASS. Final Arabic/English light/dark mobile browser interaction/layout checks, 26 native tests, build/signature/196 inputs/48 compiled-source checks PASS; owner chose APK testing later, so installation and physical-device acceptance remain pending |
+
 ## Tasbih visual revision 0.12
 
 | Ticket | Slice | Evidence state |
@@ -38,7 +44,7 @@ Scope: foundation/CI, design/locale, onboarding, local daily tracking and habits
 | RJ-004 | Arabic default and persistent English | Browser fresh start/reload verified |
 | RJ-005 | Direction-aware UI, tabs, a11y state | Browser responsive/directional checks; TalkBack pending |
 | RJ-006 | Onboarding and reconciled dashboard | Browser interactions and local persistence |
-| RJ-007 | Calendar/timezones/29–30-day mapping | Unit tests; 29-day browser grid verified |
+| RJ-007 | Calendar/timezones/29â€“30-day mapping | Unit tests; 29-day browser grid verified |
 | RJ-008 | SQLite, daily records, notes and habits | Restore/reducer tests, SQLite reopen test, browser persistence |
 | RJ-009 | Goals, multiple reading plans, catch-up | Unit tests and browser flow checks |
 | RJ-010 | KSU reader, geometry, audio, tafsir/bookmarks | 52 reference rectangles + live web flow; native QA pending |
@@ -105,7 +111,7 @@ An APK file, reproducible build, actual installation and real Android smoke resu
 | RJ-030 | Equal-sided immersive controls and arrow-free navigation card | Browser 390px geometry PASS: card and play centers both 195.2px; ayah on physical right, text-only tafsir on left; navigation chips have no page arrows. Typecheck/lint PASS; 39 existing/new TS tests PASS |
 | RJ-031 | Official ESA request contract, monthly parser and city catalogue | Live GET/POST and web relay PASS; 82 captured options and complete October table fixtures; 40 TS tests PASS including wrong city/year, DST, deduplication and backup migration |
 | RJ-032 | Native exact prayer alarms, private offline audio and stoppable foreground playback | Six native parser tests PASS; isolated real Android 16 tests PASS for source requests, reminders, screen-off playback service, notification stop and cancellation; cold-process restart and audibility confirmed separately |
-| RJ-033 | More → Adhan city/day/settings UI and sound-volume warning | Browser Arabic/English, light/dark, today/tomorrow/date and city changes PASS; typecheck/lint PASS; final product APK installation recorded separately |
+| RJ-033 | More â†’ Adhan city/day/settings UI and sound-volume warning | Browser Arabic/English, light/dark, today/tomorrow/date and city changes PASS; typecheck/lint PASS; final product APK installation recorded separately |
 | RJ-034 | ZAD 0.5.0 APK, actual installation and final product alarm test | Build/signature/91 source files/six compiled sources/font PASS; update over 0.4.1 and cold launch PASS; user completed permissions/scheduling and confirmed notification plus audible Adhan with screen locked. 40 TS + 6 native tests PASS; Expo Doctor 19/20 patch advisory retained |
 
 ## Prayer-specific audio 0.6

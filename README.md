@@ -1,12 +1,12 @@
-# ZAD | زاد
+# ZAD | Ø²Ø§Ø¯
 
 ZAD is an Arabic-first Expo / React Native application for private daily tracking, Quran reading, listening and personal reading plans.
 
 ## Current source and release status
 
-Current source and verified private Android beta: **0.12.0 / code 17**. Redesigns Tasbih around a curved horizontal onyx-style strand, a centered counter and focused controls, with vibration/goal settings in a draggable sheet. The accepted day/night artwork, silent nine-second fullscreen intro and private journey remain intact. No data migration or new dependency is introduced.
+Current source and built private Android artifact: **0.12.1 / code 18**. Corrects the Tasbih reference with an open central gap, a pronounced upward curve, individual bead transfer/rebound and replenishment from the opposite edge. The lower controls now use available screen height. No data migration or new dependency is introduced.
 
-Typecheck/clean lint, **82 TypeScript tests**, **26 native unit tests**, **7 isolated Android checks from the unchanged 0.11.2 native baseline**, **Doctor20/20 compatible dependency baseline** and production web export PASS. Browser count/gesture/settings checks pass; current native Tasbih acceptance is recorded in release metadata. Prior intro/artwork acceptance remains versioned separately. Current APK build/install/fingerprints and the current Tasbih device acceptance status are recorded in [release evidence](docs/ANDROID_APK_RELEASE.md) and [metadata](docs/BUILD_METADATA.json). See [Tasbih design](docs/TASBIH_V0_12_DESIGN.md) and [branding behavior](docs/BRANDING_V0_11.md). Five existing high audit findings and production email/signing/source/accessibility gates remain in [release readiness](docs/RELEASE_READINESS.md).
+Typecheck/clean lint, **82 TypeScript tests**, **26 native unit tests**, production web export and APK input/source/signature checks PASS. Browser tap/swipe/quick-count/undo/persistence checks pass, with Arabic Light390x844 and English Dark320x720 layouts. **This artifact has not been installed or tested on a phone; the owner chose APK testing later.** The last physically accepted version is0.12.0. Doctor20/20 and seven0.11.2 hardware checks remain unchanged baseline evidence, not fresh checks for this UI revision. See [release evidence](docs/ANDROID_APK_RELEASE.md), [metadata](docs/BUILD_METADATA.json), [revised Tasbih design](docs/TASBIH_V0_12_1_DESIGN.md) and [branding behavior](docs/BRANDING_V0_11.md). Earlier audit findings and production gates remain in [release readiness](docs/RELEASE_READINESS.md).
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. Product requirements are available in `docs/source-plan/`.
 
@@ -25,7 +25,7 @@ The private preview uses locally supplied Font Awesome Pro 7.3.1 Light icons. Li
 - Configurable 29/30-day season and calendar; no invented Ramadan date; date/timezone and Arabic-number input handling.
 - KSU original Mushaf PNGs, scaled ayah overlays, page/surah/ayah navigation, last selection, bookmarks, 41 selectable Hafs recording options, five Arabic tafsirs, pause/resume/repeat, complete-page/fill-width display, direct pinch zoom/pan, deliberate page swipes, sideways cycling control cards, freely resizable/dismissible reader sheets and split immersive controls.
 - Native SQLite persistence. Browser preview uses localStorage as a separate adapter.
-- More → Adhan: 82 saved city choices from the Egyptian Survey Authority, today/tomorrow/week and custom-date timetables, native exact prayer alarms, ten-minute reminders, offline per-prayer Tobar/Shuaisha/Husary/Rifaat recordings, MBC intros, a Friday Al-Azhar override and notification stop. The screen exposes permission, volume and schedule-coverage status.
+- More â†’ Adhan: 82 saved city choices from the Egyptian Survey Authority, today/tomorrow/week and custom-date timetables, native exact prayer alarms, ten-minute reminders, offline per-prayer Tobar/Shuaisha/Husary/Rifaat recordings, MBC intros, a Friday Al-Azhar override and notification stop. The screen exposes permission, volume and schedule-coverage status.
 - JSON backup export and validated import, with confirmation before replacing device records.
 
 ## Run

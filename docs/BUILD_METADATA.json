@@ -1,13 +1,13 @@
 {
   "package": "com.ramadanjourney.preview",
   "displayName": "ZAD",
-  "version": "0.12.0",
-  "versionCode": 17,
-  "codeRevision": "e06e1eee1179b2690c6989feab512642d62b762c",
-  "artifact": "../ZAD_v0.12.0_arm64.apk",
+  "version": "0.12.1",
+  "versionCode": 18,
+  "codeRevision": "7391f9064a609196a6ad8bec87e2f064c1453b9b",
+  "artifact": "../ZAD_v0.12.1_arm64.apk",
   "artifactPathBase": "project root",
-  "bytes": 70734092,
-  "sha256": "55186697e0fe4e978ddec6e69845139766f735031025d1b1e62c01140245f8e9",
+  "bytes": 70735296,
+  "sha256": "f6e4b29ede9f648fada4f9bad9f757c34b988ddb0f23b53a87a803f1675c27e9",
   "architecture": "arm64-v8a",
   "minSdk": 24,
   "targetSdk": 36,
@@ -81,7 +81,8 @@
       "src/services/auth-storage.ts",
       "src/state/BrandingCoordinator.tsx",
       "src/ui/StartupIntro.tsx",
-      "src/ui/TasbihBeads.tsx"
+      "src/ui/TasbihBeads.tsx",
+      "src/ui/components.tsx"
     ],
     "abi": "arm64-v8a",
     "fontEntry": "res/7V.otf",
@@ -104,22 +105,23 @@
     "introMatches": true,
     "introSha256": "6b3f6ffd5053036714b0adc5b5f05a14e18ededbb9b96b7096d1de854a3a7122",
     "introSystemBarsVerified": true,
-    "apkBytes": 70734092,
-    "apkSha256": "55186697e0fe4e978ddec6e69845139766f735031025d1b1e62c01140245f8e9"
+    "apkBytes": 70735296,
+    "apkSha256": "f6e4b29ede9f648fada4f9bad9f757c34b988ddb0f23b53a87a803f1675c27e9"
   },
   "checks": {
     "typecheck": "PASS",
     "cleanFullLint": "PASS",
     "typescriptTests": 82,
     "nativeUnitTests": 26,
-    "expoDoctor": "20/20 PASS",
-    "productionWebExport": "PASS; reference-inspired Tasbih and existing feature/API routes",
+    "expoDoctor": "Compatible dependency baseline 20/20; not rerun for unchanged dependencies",
+    "productionWebExport": "PASS; final arched bead/gap/layout revision",
     "npmAudit": {
       "high": 5,
       "critical": 0,
       "scope": "Existing Expo CLI/code-signing/node-forge/zod chain; not a clean audit claim"
     },
-    "unchangedNativeHardwareBaseline": "Seven isolated checks passed in 0.11.2; not repeated for this UI-only revision"
+    "unchangedNativeHardwareBaseline": "Seven isolated checks passed in 0.11.2; not repeated for this UI-only revision",
+    "browserTasbih": "PASS; tap, quick taps, lateral swipe each count once; undo; nonzero reload persistence; Arabic Light 390x844; English Dark 320x720 with accessible scrolling/no horizontal overflow; settings sheet; preferences/count restored; no captured console errors"
   },
   "hostedChecks": {
     "schema": "Applied manually; no CLI migration-history claim",
@@ -130,39 +132,35 @@
     "provenance": "Retained 0.10.0 evidence; not rerun for branding-only changes"
   },
   "deviceInstallationTest": {
-    "androidVersion": "16",
-    "method": "adb install -r; no ZAD uninstall/data clear",
-    "installedVersion": "0.12.0",
-    "installedVersionCode": 17,
-    "launch": {
-      "reportedState": "COLD",
-      "totalTimeMs": 2538,
-      "waitTimeMs": 2569
-    },
-    "ownProcessErrorsObserved": false,
-    "deepLink": "ramadanjourney://tasbih"
+    "status": "NOT_RUN",
+    "reason": "Owner requested APK for later testing; no phone connected during this revision",
+    "lastInstalledAndAcceptedVersion": "0.12.0"
   },
   "userAcceptance": {
-    "baseline0.11.2": {
-      "baseline0.10.0": {
+    "baseline0.12.0": {
+      "baseline0.11.2": {
         "baseline0.10.0": {
-          "homeScreenWidget": "Appeared",
-          "ishaEndTrim": "Correct cutoff",
-          "accountSignInAndPrivateSync": "Succeeded with records present",
-          "finalRepairedRecitation": "Audio plays with the requested notification appearance",
-          "method": "User-reported Android interactions; private records were not independently inspected"
+          "baseline0.10.0": {
+            "homeScreenWidget": "Appeared",
+            "ishaEndTrim": "Correct cutoff",
+            "accountSignInAndPrivateSync": "Succeeded with records present",
+            "finalRepairedRecitation": "Audio plays with the requested notification appearance",
+            "method": "User-reported Android interactions; private records were not independently inspected"
+          },
+          "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
+          "finalArtwork": "Owner confirmed the enlarged launcher icon and notification artwork size is suitable",
+          "method": "User-reported interactions; private records not independently inspected"
         },
         "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
-        "finalArtwork": "Owner confirmed the enlarged launcher icon and notification artwork size is suitable",
-        "method": "User-reported interactions; private records not independently inspected"
+        "finalArtwork": "34% enlargement installed; optional size acceptance pending",
+        "method": "User-reported interactions; private records not independently inspected",
+        "currentIntro": "Owner confirmed fullscreen video without buttons, automatic transition after about nine seconds and normal system-bar restoration"
       },
-      "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
-      "finalArtwork": "34% enlargement installed; optional size acceptance pending",
-      "method": "User-reported interactions; private records not independently inspected",
-      "currentIntro": "Owner confirmed fullscreen video without buttons, automatic transition after about nine seconds and normal system-bar restoration"
+      "tasbih0.12.0": "Owner confirmed the layout, counting, physical vibration and retained previous records on Android",
+      "method": "User-reported interactions; private records not independently inspected"
     },
-    "tasbih0.12.0": "Owner confirmed the layout, counting, physical vibration and retained previous records on Android",
-    "method": "User-reported interactions; private records not independently inspected"
+    "tasbih0.12.1": "Not tested on the phone; owner requested APK for later testing",
+    "method": "Browser checks are separate from physical-device acceptance"
   },
   "audioPatch": {
     "version": "expo-audio 58.0.10",
@@ -184,9 +182,9 @@
     "otherRecordingsUnchanged": 11
   },
   "previousBaseline": {
-    "version": "0.11.2",
-    "metadata": "BUILD_METADATA_v0.11.2.json",
-    "releaseRecord": "ANDROID_APK_RELEASE_v0.11.2.md"
+    "version": "0.12.0",
+    "metadata": "BUILD_METADATA_v0.12.0.json",
+    "releaseRecord": "ANDROID_APK_RELEASE_v0.12.0.md"
   },
   "limits": [
     "Private preview signing and ARM64 only",
@@ -195,7 +193,7 @@
     "Launcher caching, denied exact-alarm access and OEM battery restrictions may delay icon changes",
     "Physical overnight boundary transitions, alternate launchers and API24/25 rendering remain unobserved"
   ],
-  "recordedAt": "2026-10-25T17:06:00.206008+00:00",
+  "recordedAt": "2026-10-26T07:34:29.608281+00:00",
   "branding": {
     "clock": "Africa/Cairo",
     "boundaries": "ESA selected-city sunrise inclusive to Isha exclusive = morning; otherwise evening",
@@ -218,16 +216,16 @@
     "androidSystemBars": "Hidden during intro; prior visibility and behavior restored on cleanup"
   },
   "nativeBuild": {
-    "duration": "9m 44s",
+    "duration": "9m 13s",
     "tasks": "606 actionable tasks: 578 executed, 28 up-to-date"
   },
-  "nativeExpoConfigVersion": "0.12.0",
+  "nativeExpoConfigVersion": "0.12.1",
   "tasbihRevision": {
-    "renderer": "Local React Native gradients, textured stone details, highlights and shadows; no bitmap dependency",
-    "gestures": "Tap, lateral drag or downward pull adds one; release suppresses the duplicate press",
-    "controls": "Centered count/undo/reset, full-text remembrance card, draggable settings sheet",
+    "renderer": "Local stone gradients and curved cord; open centre, two close-packed banks",
+    "motion": "Single-bead gap crossing, bank contact/rebound and off-edge replenishment; queued quick counts and reverse undo; reduced-motion reset and unmount cancellation",
+    "layout": "Stronger upward arch; lower count controls; growing counter region uses available height; short screens scroll",
     "dataMigration": false,
     "existingCountersAndDailySemanticsRetained": true,
-    "imageGeneration": "Built-in generation hit usage quota; no image produced; CLI fallback not used"
+    "newPermissionsOrDependencies": false
   }
 }
