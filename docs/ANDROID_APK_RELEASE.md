@@ -1,29 +1,31 @@
-# Private Android beta artifact — 0.12.1
+# Private Android beta artifact â€” 0.12.2
 
-ZAD / زاد, package com.ramadanjourney.preview, version **0.12.1 / code 18**. Compiled runtime revision: `7391f90`. Later documentation-only commits do not alter the APK.
+ZAD / Ø²Ø§Ø¯, package com.ramadanjourney.preview, version **0.12.2 / code19**. Compiled runtime revision: `d6da5a9`. Later verification/documentation-only commits do not alter the APK.
 
-The owner's follow-up corrects the bead strand to have an open centre, a visible upward arch and individual bead transfer/contact/rebound with outer-edge replenishment. The lower count controls use the available screen height; short screens still scroll. Existing storage, counts and haptics are retained. See [design and motion](TASBIH_V0_12_1_DESIGN.md).
+Green stone beads retain the arch and centre gap. The original short bead effect plays once at forward first contact, with an independent saved Bead sound switch in Tasbih settings. Android uses SoundPool without requesting audio focus or touching global audio mode/device volume. See [sound design](TASBIH_V0_12_2_SOUND.md).
 
-**Installation and physical-device testing have not been performed for this version.** The owner explicitly chose an APK to test later. The accepted Android 0.12.0 baseline is archived separately and is not acceptance of the revised shape or animation.
+**Installation, physical audibility and simultaneous recitation/Adhan playback have not been tested for this version.** The owner chose an APK for later testing. The last physically accepted version is0.12.0;0.12.1 was also delivered for later testing.
 
 | Gate | Actual result |
 |---|---|
-| Typecheck / clean lint / TypeScript | PASS; 82 tests |
-| Native parser/policy suite | PASS; 26 tests; native implementation unchanged |
-| Production web export | PASS; final curvature and growing layout |
-| Browser interactions | PASS; tap/rapid taps/lateral drag, no duplicate count, undo, nonzero reload persistence, settings sheet |
-| Browser layout | Arabic Light390x844; English Dark320x720; lower controls accessible through scroll, no horizontal document overflow; original preferences and count restored |
-| Native build | PASS; 9m 13s, 606 actionable tasks: 578 executed, 28 up-to-date |
-| Inputs / compiled JS | PASS; 196 inputs / 48 compiled source contents, including TasbihBeads, Tasbih screen and shared Screen |
-| APK configuration/assets | PASS; embedded Expo0.12.1 and Android0.12.1/code18; exact font,12 recordings and silent9s intro; existing source-built audio/alias/immersion checks; harness excluded |
-| Signature / permissions | PASS; existing v2 preview signer, ARM64 min24/target36/compile37; blocked unused permissions remain absent |
-| Physical Android acceptance | NOT RUN for0.12.1; owner will test the APK later |
-| Unchanged baseline checks | Doctor20/20 and seven0.11.2 hardware checks retained, not rerun for this UI revision |
+| Typecheck / clean lint / source tests | PASS;83 tests, including old snapshot compatibility, false sound preference round-trip, retained nonzero records and independent haptics |
+| Native policy/parser suite | PASS;26 tests; SoundPool audibility is not covered by these JVM tests |
+| Web export | PASS; green beads, local WAV and settings |
+| Browser UI | PASS; green beads/count/undo, sound off persists across full reload while haptics stays on; initial nonzero count and enabled sound restored; Arabic Light390x844 and English Dark320x720 settings; original language/theme restored; no captured fresh-tab errors/warnings |
+| Native build | PASS;8m 32s,606 actionable tasks: 578 executed, 28 up-to-date |
+| Inputs / compiled JS | PASS;200 inputs /49 compiled sources including Android sound hook |
+| Sound asset / native helper | PASS; exact PCM bytes/hash in optimized `res/Ul.wav` and R8 helper/bridge verification; original90ms effect has no clipping or third-party source |
+| Existing assets/helpers | PASS; exact font,12 recordings and silent9s intro; source-built media patch/aliases/immersion checks; harness excluded |
+| Signature/configuration | PASS; existing v2 preview signer; Expo/Android0.12.2/code19;ARM64,min24/target36/compile37; no new permissions |
+| Physical sound/concurrency/installation | NOT RUN; owner will test APK later |
+| Baseline gates | Doctor20/20 retained for unchanged dependencies; prior seven0.11.2 hardware checks not rerun and do not validate SoundPool |
 
-Artifact beside the project: **ZAD_v0.12.1_arm64.apk**, **70,735,296 bytes**.
+Artifact: **ZAD_v0.12.2_arm64.apk**, **70,741,872 bytes**.
 
-SHA256: `f6e4b29ede9f648fada4f9bad9f757c34b988ddb0f23b53a87a803f1675c27e9`.
+SHA256: `536caed28d72ced3022632cfd7d752bec5eabbb9f3fdec2727e9b6ed31de5268`.
+
+Bead WAV SHA256: `f2608660758b7ea430bd4255dbba04831d26c9d9854640d35f7bae2858efe943`.
 
 Certificate SHA256: `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c`. Existing development/private-preview signer; no production signing claim.
 
-No permission, dependency, provider, storage identifier or schema is added. Existing production gates and five earlier high audit findings remain in RELEASE_READINESS.md. No0.12.1 GitHub Release has been published by this work.
+Existing production gates and earlier audit findings remain in RELEASE_READINESS.md. Source/docs are delivered through Git; no0.12.2 GitHub Release is published by this work.

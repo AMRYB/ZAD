@@ -86,7 +86,9 @@ def main():
         bundle = apk.read('assets/index.android.bundle')
         bead_sound = root / 'modules/zad-adhan/android/src/main/res/raw/tasbih_bead.wav'
         bead_sound_sha = digest(bead_sound.read_bytes())
-        assert digest(apk.read('res/raw/tasbih_bead.wav')) == bead_sound_sha, 'Packaged bead effect differs'
+        # Release resource optimization can shorten res/raw paths; compare exact bytes.
+        bead_sound_entry = next((n for n in names if n.endswith('.wav') and digest(apk.read(n)) == bead_sound_sha), None)
+        assert bead_sound_entry, 'Packaged bead effect differs'
         for token in [b'FontAwesome7Light', b'ZadAdhan', b'reader-immersive-tafsir', b'adhan-time-']:
             assert token in bundle, f'Missing runtime marker: {token}'
         font = root / 'assets/private/FontAwesome7-Light-300.otf'
@@ -141,7 +143,7 @@ def main():
                       'pinnedNativeMediaPatch': audio_patch_hashes,
                       'launcherAliasesVerified': True, 'introEntry': intro_entry, 'introMatches': True,
                       'introSha256': digest(intro.read_bytes()), 'introSystemBarsVerified': True,
-                      'beadSoundSha256': bead_sound_sha, 'beadSoundMatches': True,
+                      'beadSoundEntry': bead_sound_entry, 'beadSoundSha256': bead_sound_sha, 'beadSoundMatches': True,
                       'apkBytes': args.apk.stat().st_size, 'apkSha256': digest(args.apk.read_bytes())}, indent=2))
 
 

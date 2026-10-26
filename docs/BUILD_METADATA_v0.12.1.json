@@ -1,0 +1,231 @@
+{
+  "package": "com.ramadanjourney.preview",
+  "displayName": "ZAD",
+  "version": "0.12.1",
+  "versionCode": 18,
+  "codeRevision": "7391f9064a609196a6ad8bec87e2f064c1453b9b",
+  "artifact": "../ZAD_v0.12.1_arm64.apk",
+  "artifactPathBase": "project root",
+  "bytes": 70735296,
+  "sha256": "f6e4b29ede9f648fada4f9bad9f757c34b988ddb0f23b53a87a803f1675c27e9",
+  "architecture": "arm64-v8a",
+  "minSdk": 24,
+  "targetSdk": 36,
+  "compileSdk": 37,
+  "signatureVerified": true,
+  "signatureScheme": "v2",
+  "signing": "Existing Android development/debug certificate; private beta",
+  "certificateSha256": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+  "automaticAndroidBackup": false,
+  "permissions": [
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+    "android.permission.INTERNET",
+    "android.permission.MODIFY_AUDIO_SETTINGS",
+    "android.permission.VIBRATE",
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.WAKE_LOCK",
+    "android.permission.SCHEDULE_EXACT_ALARM",
+    "android.permission.POST_NOTIFICATIONS",
+    "android.permission.RECEIVE_BOOT_COMPLETED",
+    "com.ramadanjourney.preview.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
+  "unusedBiometricPermissionsRemoved": true,
+  "sourceVerification": {
+    "sourceAndAssetFilesCompared": 196,
+    "sourceMatchesBuild": true,
+    "compiledSourcesMatched": [
+      "src/screens/Quran.tsx",
+      "src/screens/Adhan.tsx",
+      "src/screens/Settings.tsx",
+      "src/state/AdhanCoordinator.tsx",
+      "src/core/adhan.ts",
+      "src/core/adhan-sequence.ts",
+      "src/services/adhan-native.ts",
+      "src/screens/Tasbih.tsx",
+      "src/screens/Adhkar.tsx",
+      "src/screens/GoodDeeds.tsx",
+      "src/screens/devotion/ReminderPreferences.tsx",
+      "src/state/PersonalReminderCoordinator.tsx",
+      "src/core/devotion.ts",
+      "src/core/adhkar.ts",
+      "src/core/personal-reminders.ts",
+      "src/core/model.ts",
+      "src/app/_layout.tsx",
+      "src/app/(tabs)/_layout.tsx",
+      "src/core/gamification.ts",
+      "src/screens/Achievements.tsx",
+      "src/ui/ParticipationCard.tsx",
+      "src/ui/useLocalDate.ts",
+      "src/screens/Home.tsx",
+      "src/screens/More.tsx",
+      "src/screens/Setup.tsx",
+      "src/screens/Reports.tsx",
+      "src/screens/Listening.tsx",
+      "src/screens/Widget.tsx",
+      "src/screens/Account.tsx",
+      "src/state/RecitationProvider.tsx",
+      "src/state/AuthProvider.tsx",
+      "src/state/SyncProvider.tsx",
+      "src/state/AppProvider.tsx",
+      "src/state/WidgetCoordinator.tsx",
+      "src/ui/RecitationBar.tsx",
+      "src/ui/NextPrayerCard.tsx",
+      "src/core/cloud.ts",
+      "src/core/cloud-transport.ts",
+      "src/core/auth-callback.ts",
+      "src/core/recitation.ts",
+      "src/core/reports.ts",
+      "src/core/personalization.ts",
+      "src/services/pkce-crypto.native.ts",
+      "src/services/auth-storage.ts",
+      "src/state/BrandingCoordinator.tsx",
+      "src/ui/StartupIntro.tsx",
+      "src/ui/TasbihBeads.tsx",
+      "src/ui/components.tsx"
+    ],
+    "abi": "arm64-v8a",
+    "fontEntry": "res/7V.otf",
+    "fontSha256": "46e24a495ff52fdbb821cfaf1a6eb033a81ecd63c3e2cb99bd14789810190392",
+    "fontMatches": true,
+    "nativeAdhanPresent": true,
+    "testHarnessExcluded": true,
+    "nativeReminderActionsPresent": true,
+    "personalReminderReceiverPresent": true,
+    "hapticsModulePresent": true,
+    "packagedRecordingsMatched": 12,
+    "r8AudioHelpersVerified": true,
+    "pinnedNativeMediaPatch": {
+      "AudioModule.kt": "5f90428c15cd65a1748ef44e1e9d38070fdaebd9bbf72d988eef93aa00cf4ddf",
+      "service/AudioControlsService.kt": "59174c2cd7d3232ee0976a7a916030b2af4eb8eab0807b2f15a65d81da3cc03b",
+      "service/MetadataInjectingPlayer.kt": "2b881ced799519c87b76385c2e83440c99e61e4612038c39f9defe0393fdb28f"
+    },
+    "launcherAliasesVerified": true,
+    "introEntry": "res/hZ.mp4",
+    "introMatches": true,
+    "introSha256": "6b3f6ffd5053036714b0adc5b5f05a14e18ededbb9b96b7096d1de854a3a7122",
+    "introSystemBarsVerified": true,
+    "apkBytes": 70735296,
+    "apkSha256": "f6e4b29ede9f648fada4f9bad9f757c34b988ddb0f23b53a87a803f1675c27e9"
+  },
+  "checks": {
+    "typecheck": "PASS",
+    "cleanFullLint": "PASS",
+    "typescriptTests": 82,
+    "nativeUnitTests": 26,
+    "expoDoctor": "Compatible dependency baseline 20/20; not rerun for unchanged dependencies",
+    "productionWebExport": "PASS; final arched bead/gap/layout revision",
+    "npmAudit": {
+      "high": 5,
+      "critical": 0,
+      "scope": "Existing Expo CLI/code-signing/node-forge/zod chain; not a clean audit claim"
+    },
+    "unchangedNativeHardwareBaseline": "Seven isolated checks passed in 0.11.2; not repeated for this UI-only revision",
+    "browserTasbih": "PASS; tap, quick taps, lateral swipe each count once; undo; nonzero reload persistence; Arabic Light 390x844; English Dark 320x720 with accessible scrolling/no horizontal overflow; settings sheet; preferences/count restored; no captured console errors"
+  },
+  "hostedChecks": {
+    "schema": "Applied manually; no CLI migration-history claim",
+    "anonymousReadAndSync": "401 denied",
+    "roleTests": "PASS with two synthetic identities in a rolled-back transaction: own-user RLS, cross-user/direct-write denial, CAS, XP replay, private board and scoped deletion",
+    "ownerEmailPkceAndSync": "User confirmed sign-in, guest import/private sync and retained records",
+    "publicEmailDelivery": "Pending verified SMTP/sender and production callback origin",
+    "provenance": "Retained 0.10.0 evidence; not rerun for branding-only changes"
+  },
+  "deviceInstallationTest": {
+    "status": "NOT_RUN",
+    "reason": "Owner requested APK for later testing; no phone connected during this revision",
+    "lastInstalledAndAcceptedVersion": "0.12.0"
+  },
+  "userAcceptance": {
+    "baseline0.12.0": {
+      "baseline0.11.2": {
+        "baseline0.10.0": {
+          "baseline0.10.0": {
+            "homeScreenWidget": "Appeared",
+            "ishaEndTrim": "Correct cutoff",
+            "accountSignInAndPrivateSync": "Succeeded with records present",
+            "finalRepairedRecitation": "Audio plays with the requested notification appearance",
+            "method": "User-reported Android interactions; private records were not independently inspected"
+          },
+          "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
+          "finalArtwork": "Owner confirmed the enlarged launcher icon and notification artwork size is suitable",
+          "method": "User-reported interactions; private records not independently inspected"
+        },
+        "initial 0.11.0": "Owner confirmed morning launcher/notification artwork and video/Skip",
+        "finalArtwork": "34% enlargement installed; optional size acceptance pending",
+        "method": "User-reported interactions; private records not independently inspected",
+        "currentIntro": "Owner confirmed fullscreen video without buttons, automatic transition after about nine seconds and normal system-bar restoration"
+      },
+      "tasbih0.12.0": "Owner confirmed the layout, counting, physical vibration and retained previous records on Android",
+      "method": "User-reported interactions; private records not independently inspected"
+    },
+    "tasbih0.12.1": "Not tested on the phone; owner requested APK for later testing",
+    "method": "Browser checks are separate from physical-device acceptance"
+  },
+  "audioPatch": {
+    "version": "expo-audio 58.0.10",
+    "buildFromSource": true,
+    "guardedConfigPlugin": "plugins/with-branded-audio.cjs",
+    "hashes": {
+      "AudioModule.kt": "5f90428c15cd65a1748ef44e1e9d38070fdaebd9bbf72d988eef93aa00cf4ddf",
+      "service/AudioControlsService.kt": "59174c2cd7d3232ee0976a7a916030b2af4eb8eab0807b2f15a65d81da3cc03b",
+      "service/MetadataInjectingPlayer.kt": "2b881ced799519c87b76385c2e83440c99e61e4612038c39f9defe0393fdb28f"
+    },
+    "timing": "Per-ayah duration and ayah number/total, as selected by the user; no surah metadata scan",
+    "artwork": "Native 256px ESA-timed morning/evening artwork, rendered at 134%; no startup image download"
+  },
+  "ishaTrim": {
+    "beginningTrimSecondsRetained": 5.6,
+    "additionalEndTrimSeconds": 57,
+    "durationSeconds": 260.830748,
+    "sha256": "193eecec5e4f80e7e66c06d31dc1bda3e1410e0de060e08b034976092202362f",
+    "otherRecordingsUnchanged": 11
+  },
+  "previousBaseline": {
+    "version": "0.12.0",
+    "metadata": "BUILD_METADATA_v0.12.0.json",
+    "releaseRecord": "ANDROID_APK_RELEASE_v0.12.0.md"
+  },
+  "limits": [
+    "Private preview signing and ARM64 only",
+    "Public SMTP/origin, production signing/source permissions and full accessibility/Doze/two-device acceptance remain separate gates",
+    "No public leaderboards/social features or bulk Quran offline download activation",
+    "Launcher caching, denied exact-alarm access and OEM battery restrictions may delay icon changes",
+    "Physical overnight boundary transitions, alternate launchers and API24/25 rendering remain unobserved"
+  ],
+  "recordedAt": "2026-10-26T07:34:29.608281+00:00",
+  "branding": {
+    "clock": "Africa/Cairo",
+    "boundaries": "ESA selected-city sunrise inclusive to Isha exclusive = morning; otherwise evening",
+    "missingOfficialData": "Retain last variant; morning on first install",
+    "scale": 1.34,
+    "newPermissionPrompt": false,
+    "physicalOvernightTransitionObserved": false
+  },
+  "startupVideo": {
+    "bytes": 17967190,
+    "durationSeconds": 9,
+    "sha256": "6b3f6ffd5053036714b0adc5b5f05a14e18ededbb9b96b7096d1de854a3a7122",
+    "audioStreams": 0,
+    "controls": false,
+    "skipButton": false,
+    "contentFit": "cover",
+    "frames": 270,
+    "allFramesMatchOriginalFirstNineSeconds": true,
+    "reencoded": false,
+    "androidSystemBars": "Hidden during intro; prior visibility and behavior restored on cleanup"
+  },
+  "nativeBuild": {
+    "duration": "9m 13s",
+    "tasks": "606 actionable tasks: 578 executed, 28 up-to-date"
+  },
+  "nativeExpoConfigVersion": "0.12.1",
+  "tasbihRevision": {
+    "renderer": "Local stone gradients and curved cord; open centre, two close-packed banks",
+    "motion": "Single-bead gap crossing, bank contact/rebound and off-edge replenishment; queued quick counts and reverse undo; reduced-motion reset and unmount cancellation",
+    "layout": "Stronger upward arch; lower count controls; growing counter region uses available height; short screens scroll",
+    "dataMigration": false,
+    "existingCountersAndDailySemanticsRetained": true,
+    "newPermissionsOrDependencies": false
+  }
+}
