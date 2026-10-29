@@ -1,6 +1,10 @@
 # Verification report
 
-## Connected journey 0.10.0 — current
+## Offline content and playback continuity0.13.0 — current
+
+Typecheck/clean lint,95 TypeScript tests,30 native policy/parser tests, production web export and final Android build pass. APK verification compares212 source/asset inputs,57 compiled sources,13 recordings and retained font/intro/native media helpers. Signature and Android/embedded Expo0.13.0/code20 pass. Browser verification covers saved page/highlights, tafsir, advancing audio, download persistence and deliberate bead drags with counter restoration. No authorized phone is connected: native filesystem integration, actual notification interruption, full intro/Adhan/dua listening and installation smoke are NOT RUN. Domain/JVM checks do not establish these device outcomes. See ANDROID_APK_RELEASE.md and the0.13 feature documents.
+
+## Connected journey 0.10.0 — historical baseline
 
 Current evidence: 81 TypeScript tests, 22 native unit tests, 5 isolated hardware checks, typecheck/clean lint, Doctor 20/20 and production web export PASS. Final APK/source/signature/asset/media-patch checks and Android 16 update PASS. User confirmed private sign-in/import/sync with retained records, widget/Isha cutoff and final repaired recitation/notification appearance. The media startup regression was repaired before final acceptance. Details and limits: ANDROID_APK_RELEASE.md, BUILD_METADATA.json and JOURNEY_V0_10.md. Historical sections below describe their original versions.
 

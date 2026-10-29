@@ -1,4 +1,4 @@
-# ZAD data flow map — 0.12.0 private beta
+# ZAD data flow map — 0.13.0 private beta
 
 | Data | Default location | Optional destination and trigger |
 |---|---|---|
@@ -7,7 +7,9 @@
 | Account cache, queued changes and conflict copies | UUID-namespaced local profile storage | Only the current snapshot syncs; archives and guest-import receipt remain local |
 | Email identity/session | Supabase Auth; native session encrypted through Expo SecureStore, web sessionStorage | User-initiated PKCE email login/refresh; never a State/export/log field |
 | Appearance, reader settings, city/Adhan controls, reminders and haptics | Device-local settings | Normalized/excluded from effective cloud restore; remote records cannot grant device permissions |
-| Requested Quran page/audio/tafsir | Original KSU content endpoints; fixed-source web relay for browser CORS | Only requested reading/playback content; no alternate provider, bulk corpus scan or analytics |
+| Requested Quran page/audio/tafsir | Original KSU content endpoints; fixed-source web relay for browser CORS | Requested reading/playback or explicit foreground download plan; no alternate provider, automatic corpus scan or analytics |
+| Offline Quran images/highlights/audio/tafsir and download progress | Private app document files and independent SQLite index; browser IndexedDB | No cloud/export copy; explicit per-plan download and confirmed removal; one paced worker, paused in background |
+| Adhan intro, recording and follow-up dua | Bundled private recordings copied to app-private files | Local playback only; no video host request at prayer time |
 | Manual prayer city/month | ESA monthly timetable request and bounded app cache | Original ESA service; no GPS/precise location permission or alternate calculation |
 | Widget | Minimal city/language/theme/last-reading preferences and existing ESA cache | Own Android launcher; no separate network fetch or account session/token |
 | Timed branding | Device-local city/language/variant and ESA cache | Bounded ESA refresh; launcher/own notification artwork, no account records or GPS |

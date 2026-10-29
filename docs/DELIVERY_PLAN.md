@@ -1,5 +1,14 @@
 # Corrected delivery plan and evidence status
 
+## Offline content and playback continuity0.13.0
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-063 | Explicit KSU offline downloader, persisted private content and reader integration | Ten domain tests plus small live eight-file267.7KB sample, reload/reopen and cached reader integration PASS; complete downloads and native offline device test NOT RUN |
+| RJ-064 | Supplied post-Adhan dua and non-destructive focus handling | Thirteen exact recording hashes, all prayer/Friday triple queues, four focus policy tests PASS;30 native tests total. Phone notification interruption and full audible sequence NOT RUN |
+| RJ-065 | Independent direct Tasbih pull capture and footer removal | Two domain tests and actual left/right/down/short browser drags PASS; original counter restored. Native touch check NOT RUN |
+| RJ-066 | Private0.13.0 artifact and release record | Build/signature/configuration,212 input comparisons/57 compiled sources,13 recordings and retained media/branding assets PASS. No connected phone; installation smoke NOT RUN |
+
 ## Emerald beads and collision sound0.12.2
 
 | Ticket | Slice | Evidence state |

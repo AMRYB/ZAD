@@ -21,3 +21,8 @@ Repository destination: [AMRYB/ZAD](https://github.com/AMRYB/ZAD). Source docume
 Prayer times are obtained exclusively from the [Egyptian Survey Authority's official page](https://www.esa.gov.eg/praytimes.aspx) and its linked monthly WebForms page. Exact source city selectors, captured public tables, parsing/validation and requests are documented in [ESA_API_DOCUMENTATION.md](ESA_API_DOCUMENTATION.md).
 
 Version 0.6 uses prayer-specific recordings and MBC intros, including the exact Friday and Al-Azhar clips supplied by the user. The source inventory, uploader labels, full hashes, decoded durations and private-asset setup are maintained in [ADHAN_AUDIO_V0_6.md](ADHAN_AUDIO_V0_6.md) and the shared `src/data/adhan-audio.json` catalogue. Prepared media is excluded from public Git and included only in the private preview APK. This supersedes the original single Rifaat download; availability is not a public redistribution-license claim. Quran recitation sourcing remains unchanged.
+
+
+## Post-Adhan dua —0.13.0
+
+The owner supplied [this Sha'rawy dua video](https://www.youtube.com/watch?v=mC0AcX-ACOo), uploaded by X-Team. Exact local preparation/source metadata are documented in ADHAN_DUA_AND_FOCUS_V0_13.md and src/data/adhan-audio.json. Attribution is based on the uploader title. The MP3 and signed stream metadata stay outside Git; public media redistribution permission is not established.

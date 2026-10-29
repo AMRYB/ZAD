@@ -17,6 +17,7 @@
 | `/plans` | Independent page plans, explicit completion/undo | Local records |
 | `/more` | Companions and journey feature grid | Real route links; optional account entry when configured |
 | `/settings` | Appearance, locale, season, privacy, export/import | Local preferences and explicit backup adapter |
+| `/downloads?kind=mushaf`, `audio` or `tafsir` | Selected offline content, progress, pause/resume, confirmed deletion | Exact KSU URLs; private files/SQLite or IndexedDB; explicit foreground worker |
 | `/setup` | Optional companions, city and reminders | Persisted personalization; no automatic Adhan activation |
 | `/reports` | 7/30-day dated activity, totals and day links | Private recorded activity; no inferred historical dates |
 | `/listening` | Persistent queue, controls, repeat and sleep timer | Original KSU audio and native media service |

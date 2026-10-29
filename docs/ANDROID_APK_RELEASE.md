@@ -1,31 +1,38 @@
-# Private Android beta artifact â€” 0.12.2
+# Private Android beta artifact — 0.13.0
 
-ZAD / Ø²Ø§Ø¯, package com.ramadanjourney.preview, version **0.12.2 / code19**. Compiled runtime revision: `d6da5a9`. Later verification/documentation-only commits do not alter the APK.
+ZAD / زاد, package `com.ramadanjourney.preview`, version **0.13.0 / code20**. Compiled runtime revision: `bdde9a9`. Later documentation-only commits do not alter this APK.
 
-Green stone beads retain the arch and centre gap. The original short bead effect plays once at forward first contact, with an independent saved Bead sound switch in Tasbih settings. Android uses SoundPool without requesting audio focus or touching global audio mode/device volume. See [sound design](TASBIH_V0_12_2_SOUND.md).
+This build adds original KSU offline content downloads from More → Settings, the supplied Sha'rawy dua after every Adhan, retained duck/pause/resume handling for audio-focus loss, and independent finger-following Tasbih pull capture. The automatic-save footer is removed. Both accepted Isha trims, existing counters, account data, icon size and silent nine-second intro are retained.
 
-**Installation, physical audibility and simultaneous recitation/Adhan playback have not been tested for this version.** The owner chose an APK for later testing. The last physically accepted version is0.12.0;0.12.1 was also delivered for later testing.
+**Installation smoke and physical playback/touch/offline testing have not been performed for this version.** No authorized ADB phone is connected; the owner previously chose an APK for later testing. The last physically accepted version is0.12.0. Policy tests are not evidence of real notification interruption or audibility.
 
 | Gate | Actual result |
 |---|---|
-| Typecheck / clean lint / source tests | PASS;83 tests, including old snapshot compatibility, false sound preference round-trip, retained nonzero records and independent haptics |
-| Native policy/parser suite | PASS;26 tests; SoundPool audibility is not covered by these JVM tests |
-| Web export | PASS; green beads, local WAV and settings |
-| Browser UI | PASS; green beads/count/undo, sound off persists across full reload while haptics stays on; initial nonzero count and enabled sound restored; Arabic Light390x844 and English Dark320x720 settings; original language/theme restored; no captured fresh-tab errors/warnings |
-| Native build | PASS;8m 32s,606 actionable tasks: 578 executed, 28 up-to-date |
-| Inputs / compiled JS | PASS;200 inputs /49 compiled sources including Android sound hook |
-| Sound asset / native helper | PASS; exact PCM bytes/hash in optimized `res/Ul.wav` and R8 helper/bridge verification; original90ms effect has no clipping or third-party source |
-| Existing assets/helpers | PASS; exact font,12 recordings and silent9s intro; source-built media patch/aliases/immersion checks; harness excluded |
-| Signature/configuration | PASS; existing v2 preview signer; Expo/Android0.12.2/code19;ARM64,min24/target36/compile37; no new permissions |
-| Physical sound/concurrency/installation | NOT RUN; owner will test APK later |
-| Baseline gates | Doctor20/20 retained for unchanged dependencies; prior seven0.11.2 hardware checks not rerun and do not validate SoundPool |
+| Typecheck / clean full lint | PASS |
+| TypeScript source suite | PASS;95 tests, including10 offline and2 direct-pull tests |
+| Native parser/policy suite | PASS;30 tests, including4 audio-focus policy tests |
+| Production web export | PASS; new screen, strict relay and local-media paths |
+| Browser downloads | PASS;8 files /267.7KB: page602 PNG/highlights, Husary108 and Ibn Katheer108; complete after reload and later reopen; no bulk download |
+| Cached reader integration | PASS; page602 uses a local blob with overlays, saved tafsir108:1 opens, Husary108:1 time advances0–8seconds; original observed106:1 selection restored |
+| Tasbih browser input | PASS; short20px drag adds zero; left/right/down each add one; original21 count/zero current-day total restored; sentence absent at390×844 |
+| Browser logs | No captured reader application errors; one browser touch-end warning during viewport change, not treated as a clean warning-free session |
+| Final native incremental build | PASS;1m53s;606 tasks:39 executed,567 up-to-date; includes final explicit-stop callback guard |
+| Source/assets / compiled JavaScript | PASS;212 compared inputs /57 compiled sources |
+| Private recordings | PASS;13 exact hashes including30.174354-second dua; preceding12 recordings unchanged |
+| Retained native/assets checks | PASS; original font, bead WAV, silent9s intro, native media patch, branding aliases, R8 helpers including focus policy, harness exclusion |
+| Signature/configuration | PASS; v2 existing preview signer, Android/embedded Expo0.13.0/code20;ARM64,min24/target36/compile37; no new permissions or dependencies |
+| Device installation / locked-screen notification interruption / full audible queue | NOT RUN |
+| Native offline files / native direct touch / airplane mode / full Quran transfers | NOT RUN |
+| Baseline advisory gates | Doctor20/20 retained for unchanged dependencies; five pre-existing high audit findings remain; no new clean-audit claim |
 
-Artifact: **ZAD_v0.12.2_arm64.apk**, **70,741,872 bytes**.
+Artifact: **ZAD_v0.13.0_arm64.apk**, **71,153,583 bytes**.
 
-SHA256: `536caed28d72ced3022632cfd7d752bec5eabbb9f3fdec2727e9b6ed31de5268`.
+SHA256: `971d0cff28805f61cb9bc408ff0655deeaeec8134aff48eb79ec8f96ee1c6712`.
 
-Bead WAV SHA256: `f2608660758b7ea430bd4255dbba04831d26c9d9854640d35f7bae2858efe943`.
+Certificate SHA256: `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c`. Existing development/private-preview signer; no production-signing claim.
 
-Certificate SHA256: `fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c`. Existing development/private-preview signer; no production signing claim.
+Source details: [Offline downloads](OFFLINE_QURAN_V0_13.md), [Dua and focus](ADHAN_DUA_AND_FOCUS_V0_13.md), [Direct bead pulling](TASBIH_PULL_V0_13.md), and [machine-readable metadata](BUILD_METADATA.json). Previous evidence is archived in BUILD_METADATA_v0.12.2.json and ANDROID_APK_RELEASE_v0.12.2.md.
 
-Existing production gates and earlier audit findings remain in RELEASE_READINESS.md. Source/docs are delivered through Git; no0.12.2 GitHub Release is published by this work.
+Phone acceptance should cover update without clearing records; saved reader content in airplane mode; an ordinary audible notification while Adhan plays; manual mute, stop and late focus gain; full intro/Adhan/dua including Friday; and actual bead drag/sound/haptics. These checks remain pending rather than inferred from compilation.
+
+The source/docs are delivered through Git. Private licensed fonts/audio, private stream metadata and the APK are not added to repository history. This work does not publish a new GitHub Release. Public distribution still has the existing source-rights, production signing, SMTP and accessibility/Doze gates in RELEASE_READINESS.md.

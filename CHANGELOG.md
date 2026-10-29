@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.0 — offline Quran, follow-up dua and direct bead pulling
+
+- Added More → Settings downloads for original Mushaf pages/highlights, a chosen reciter and a chosen tafsir, with bounded foreground requests, progress, pause/resume, private storage, safe validation and shared-file-aware removal. The reader prefers saved content.
+- Appended the supplied Sha'rawy dua after each prayer/Friday Adhan. Existing recordings and both Isha trims remain unchanged.
+- Replaced destructive audio-focus loss with ducking or retained pause/resume, preserving manual mute/stop and rejecting stale callbacks.
+- Fixed actual bead-drag capture and finger-following motion, with one count per deliberate pull; removed the automatic-save footer and reduced bottom padding.
+- Typecheck/lint,95 TypeScript tests,30 native policy tests, web export and release verification pass. Physical installation, interruption, full sequence and native offline tests remain pending; see the release record.
+
 ## 0.12.2 — emerald beads and optional collision sound
 
 - Recolored the stone beads in emerald green while retaining their arch, open centre, texture and movement.

@@ -1,4 +1,4 @@
-# Private beta release readiness — 0.12.0
+# Private beta release readiness — 0.13.0
 
 The active target is a private, ARM64 Android preview. A built/installed beta is not a Play Store production release.
 
@@ -11,7 +11,7 @@ Personalized Home/setup, separate Explore/Settings, date-aware 7/30-day reports,
 ## Public distribution gates still open
 
 - Configure owner-controlled production Android signing, an AAB build, store listing, current target/device compatibility and distribution channel. The preview uses the existing development signer.
-- Obtain/record the required source and redistribution permissions for Quran service use, requested private Adhan clips/intros and licensed Pro assets. An endpoint capture is not a license grant. No bulk Quran download is enabled.
+- Obtain/record the required source and redistribution permissions for Quran service use, requested private Adhan clips/intros/dua and licensed Pro assets. An endpoint capture is not a license grant. Explicit foreground full-Quran download plans are available in this private build; only a small eight-file sample was transferred during verification. No automatic corpus scan runs.
 - Configure a verified email sender/custom SMTP and owned production callback origin. Owner-account PKCE and private sync acceptance do not establish public email delivery. Do not disable Auth protections to bypass delivery limits.
 - Publish an owner-reviewed privacy/data-deletion contact and retention policy. PRIVACY_DATA_MAP.md records the actual data flows to support that review; it is not a published policy or a declaration of legal compliance.
 - Finish full TalkBack, large system text, alternate launchers, Bluetooth/headphone interruptions, Android/OEM battery restrictions, long Doze/reboot and two-device conflict acceptance. Unit/hosted authorization checks are narrower than these physical scenarios.
@@ -26,3 +26,7 @@ References: [Expo config plugins](https://docs.expo.dev/config-plugins/plugins/)
 ## Tasbih visual revision
 
 The page is redesigned using local native gradient/textured beads and existing counting/storage rules. Browser gesture/count, settings and RTL/LTR layout checks pass. Physical count/haptic/gesture acceptance is recorded separately in release metadata; full TalkBack, large system text and broader OEM interaction testing remain separate gates.
+
+## Current device acceptance
+
+The0.13.0 artifact is built and statically verified but has no installation smoke. Phone notification interruption, full intro/Adhan/dua playback, native private-file offline reads and the new direct bead responder need physical verification. Browser and JVM tests do not close those gates. See ANDROID_APK_RELEASE.md.
