@@ -1,6 +1,6 @@
 {
   "name": "zad",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "main": "expo-router/entry",
   "dependencies": {
     "@expo-google-fonts/cairo": "^0.4.2",
@@ -20,6 +20,7 @@
     "expo-linear-gradient": "~58.0.3",
     "expo-linking": "~58.0.14",
     "expo-localization": "~58.0.5",
+    "expo-location": "~58.0.20",
     "expo-router": "~58.0.26",
     "expo-secure-store": "~58.0.2",
     "expo-sharing": "~58.0.20",
@@ -27,6 +28,7 @@
     "expo-status-bar": "~58.0.4",
     "expo-system-ui": "~58.0.6",
     "expo-video": "~58.0.12",
+    "geographiclib-geodesic": "^2.2.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-native": "0.88.0",

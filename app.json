@@ -2,7 +2,7 @@
   "expo": {
     "name": "ZAD",
     "slug": "zad",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "orientation": "default",
     "icon": "./assets/branding/morning.png",
     "userInterfaceStyle": "automatic",
@@ -16,7 +16,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.ramadanjourney.preview",
-      "versionCode": 20,
+      "versionCode": 21,
       "allowBackup": false,
       "permissions": [],
       "blockedPermissions": [
@@ -60,7 +60,19 @@
       "expo-secure-store",
       "./plugins/with-branded-audio.cjs",
       "expo-video",
-      "./plugins/with-day-night-brand.cjs"
+      "./plugins/with-day-night-brand.cjs",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "يستخدم زاد موقعك أثناء صفحة القبلة لحساب اتجاهها على جهازك.",
+          "locationAlwaysAndWhenInUsePermission": false,
+          "locationAlwaysPermission": false,
+          "motionUsagePermission": false,
+          "isIosBackgroundLocationEnabled": false,
+          "isAndroidBackgroundLocationEnabled": false,
+          "isAndroidForegroundServiceEnabled": false
+        }
+      ]
     ],
     "scheme": "ramadanjourney"
   }

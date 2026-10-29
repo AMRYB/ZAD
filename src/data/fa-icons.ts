@@ -4,7 +4,7 @@ export const iconCodepoints={
   'rotate-right':0xf2f9,play:0xf04b,pause:0xf04c,headphones:0xf025,bookmark:0xf02e,
   ellipsis:0xf141,repeat:0xf363,'forward-step':0xf051,'backward-step':0xf048,
   minus:0xf068,plus:0x2b,file:0xf15b,music:0xf001,xmark:0xf00d,
-  'circle-check':0xf058,circle:0xf111,
+  'circle-check':0xf058,circle:0xf111,compass:0xf14e,'arrow-up':0xf062,'chevron-up':0xf077,
   'circle-nodes':0xe4e2,'hand-holding-heart':0xf4be,heart:0xf004,phone:0xf095,utensils:0xf2e7,comment:0xf075,moon:0xf186,bell:0xf0f3,'bell-slash':0xf1f6,star:0xf005,check:0xf00c,
 } as const;
 export type AppIconName=keyof typeof iconCodepoints;
