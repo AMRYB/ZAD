@@ -77,7 +77,10 @@ def main():
                      'src/state/BrandingCoordinator.tsx', 'src/ui/StartupIntro.tsx', 'src/ui/TasbihBeads.tsx', 'src/ui/components.tsx',
                      'src/ui/useTasbihSound.android.ts', 'src/core/offline-quran.ts', 'src/screens/Downloads.tsx',
                      'src/services/quran-downloads.ts', 'src/services/offline-store.native.ts', 'src/services/ksu.ts',
-                     'src/state/OfflineDownloadCoordinator.tsx', 'src/screens/quran/MushafCanvas.tsx', 'src/core/tasbih-pull.ts']:
+                     'src/state/OfflineDownloadCoordinator.tsx', 'src/screens/quran/MushafCanvas.tsx', 'src/core/tasbih-pull.ts',
+                     'src/screens/Qibla.tsx', 'src/screens/AdhanSettings.tsx', 'src/core/qibla.ts',
+                     'src/core/prayer-display.ts', 'src/services/useQibla.ts', 'src/ui/PrayerDayArc.tsx',
+                     'src/ui/PrayerIllustration.tsx', 'src/ui/useAmbientMotion.ts']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
