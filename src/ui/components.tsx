@@ -25,9 +25,9 @@ export function Screen({title,subtitle,children,scroll=true,trailing,contentStyl
     {scroll?<ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{flexGrow:1}}>{content}</ScrollView>:content}
   </SafeAreaView>;
 }
-export function Card({children,style}: {children:React.ReactNode;style?:StyleProp<ViewStyle>}) {
+export function Card({children,style,testID}: {children:React.ReactNode;style?:StyleProp<ViewStyle>;testID?:string}) {
   const {colors}=useApp();
-  return <View style={[{backgroundColor:colors.surface,borderWidth:1,borderColor:colors.border,borderRadius:22,padding:20,gap:12},style]}>{children}</View>;
+  return <View testID={testID} style={[{backgroundColor:colors.surface,borderWidth:1,borderColor:colors.border,borderRadius:22,padding:20,gap:12},style]}>{children}</View>;
 }
 export function Button({label,onPress,secondary=false,disabled=false,small=false,danger=false,testID}: {label:string;onPress:()=>void;secondary?:boolean;disabled?:boolean;small?:boolean;danger?:boolean;testID?:string}) {
   const {colors}=useApp();

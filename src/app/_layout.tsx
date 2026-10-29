@@ -17,6 +17,7 @@ import {AuthProvider} from '../state/AuthProvider';
 import {SyncProvider} from '../state/SyncProvider';
 import {BrandingCoordinator} from '../state/BrandingCoordinator';
 import {StartupIntro} from '../ui/StartupIntro';
+import {OfflineDownloadCoordinator} from '../state/OfflineDownloadCoordinator';
 const queryClient=new QueryClient({defaultOptions:{queries:{retry:false,staleTime:300000,gcTime:300000,refetchOnWindowFocus:false}}});
 function Gate({introDone,onIntroDone}:{introDone:boolean;onIntroDone:()=>void}){
   const {state,dark,colors,restoreEpoch}=useApp();
@@ -26,5 +27,5 @@ export default function RootLayout(){
   const [introDone,setIntroDone]=useState(false);const finishIntro=useCallback(()=>setIntroDone(true),[]);
   const [loaded,error]=useFonts({Cairo_400Regular,Cairo_700Bold,...iconFonts});
   if(!loaded&&!error)return <View style={{flex:1,backgroundColor:'#080E13'}}/>;
-  return <QueryClientProvider client={queryClient}><AuthProvider><AppProvider><SyncProvider><RecitationProvider><BrandingCoordinator/><AdhanCoordinator/><PersonalReminderCoordinator/><WidgetCoordinator/><Gate introDone={introDone} onIntroDone={finishIntro}/></RecitationProvider></SyncProvider></AppProvider></AuthProvider></QueryClientProvider>;
+  return <QueryClientProvider client={queryClient}><AuthProvider><AppProvider><SyncProvider><RecitationProvider><OfflineDownloadCoordinator/><BrandingCoordinator/><AdhanCoordinator/><PersonalReminderCoordinator/><WidgetCoordinator/><Gate introDone={introDone} onIntroDone={finishIntro}/></RecitationProvider></SyncProvider></AppProvider></AuthProvider></QueryClientProvider>;
 }

@@ -1,9 +1,11 @@
 import {Platform} from 'react-native';
 import {BASE} from '../core/ksu';
+import {offlineText} from './quran-downloads';
 // Native uses KSU directly. Browsers require the same-origin, allowlisted relay
 // because KSU does not send Access-Control-Allow-Origin on interface.php.
 export async function readKsuText(url:string,signal:AbortSignal):Promise<string>{
   const source=new URL(url);if(source.origin!==BASE||source.pathname!=='/interface.php')throw new Error('KSU_ONLY');
+  const saved=await offlineText(url);if(signal.aborted)throw new Error('ABORTED');if(saved!==null)return saved;
   const controller=new AbortController();const abort=()=>controller.abort();
   signal.addEventListener('abort',abort,{once:true});if(signal.aborted)controller.abort();
   const timeout=setTimeout(abort,15000);

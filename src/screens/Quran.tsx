@@ -5,11 +5,12 @@ import {useQuery} from '@tanstack/react-query';
 import {StatusBar} from 'expo-status-bar';
 import {SafeAreaView,useSafeAreaInsets} from 'react-native-safe-area-context';
 import {AppIcon} from '../ui/AppIcon';
-import {adjacentAya,hilitesUrl,pageStart,plainTafsir,splitTafsir,tafsirUrl,versePage,type Coordinates} from '../core/ksu';
+import {adjacentAya,hilitesUrl,pageImage,pageStart,plainTafsir,splitTafsir,tafsirUrl,versePage,type Coordinates} from '../core/ksu';
 import {normalizeDigits} from '../core/calendar';
 import {quran,surahEnglish} from '../data/quran';
 import {KSU_RECITERS,KSU_TAFSIRS,reciterById,tafsirById} from '../data/ksu-readers';
 import {readKsuText} from '../services/ksu';
+import {offlineUri} from '../services/quran-downloads';
 import {useApp} from '../state/AppContext';
 import {Button,Card,Choice,Field,Row,Txt} from '../ui/components';
 import {IconButton,OptionRow,ReaderChip} from './quran/ReaderControls';
@@ -66,7 +67,11 @@ function QuranReader({initialSelection}:{initialSelection?:{sura:number;aya:numb
     const data=JSON.parse(await readKsuText(hilitesUrl(page),signal));return validatePoints(data[String(page)]);
   }});
   const tafsirQuery=useQuery({queryKey:['ksu-tafsir',author.id,selection.sura,selection.aya],enabled:sheet==='tafsir',queryFn:async({signal})=>splitTafsir(await readKsuText(tafsirUrl(author.id,selection.sura,selection.aya),signal))});
+  const imageQuery=useQuery({queryKey:['ksu-page-uri',page,retry],queryFn:async()=>await offlineUri(pageImage(page))??pageImage(page)});
+  const refreshImage=imageQuery.refetch,refreshPoints=pageQuery.refetch;
+  useFocusEffect(useCallback(()=>{void refreshImage();void refreshPoints();},[refreshImage,refreshPoints]));
   const onImageError=useCallback(()=>setFailedImage(`${page}-${retry}`),[page,retry]);
+  const onImageLoad=useCallback(()=>setFailedImage(null),[]);
   const imageFailed=failedImage===`${page}-${retry}`;
   const bookmarked=state.bookmarks.some(b=>b.sura===selection.sura&&b.aya===selection.aya);
   const selectedPlan=state.plans.find(p=>p.id===planId)??state.plans[0];
@@ -92,8 +97,8 @@ function QuranReader({initialSelection}:{initialSelection?:{sura:number;aya:numb
       </Row>
       {saveError?<Row style={{paddingHorizontal:14}}><Txt size={12} style={{color:colors.danger}}>{t('لم تُحفظ التغييرات بعد','Changes have not been saved')}</Txt><ReaderChip label={t('إعادة الحفظ','Retry saving')} onPress={retrySave}/></Row>:null}
       <View style={{flex:1,marginHorizontal:8}}>
-        <MushafCanvas page={page} selection={selection} points={pageQuery.data} fit={state.reader.fit} zoom={zoom} onZoomChange={setZoom} onMovePage={movePage} retry={retry} onSelect={select} onImageError={onImageError} imageFailed={imageFailed}/>
-        {pageQuery.isPending?<View pointerEvents="none" style={{position:'absolute',top:10,left:0,right:0,alignItems:'center'}}><View style={{padding:8,borderRadius:20,backgroundColor:colors.surface}}><ActivityIndicator color={colors.primary}/></View></View>:null}
+        <MushafCanvas page={page} imageUri={imageQuery.data} selection={selection} points={pageQuery.data} fit={state.reader.fit} zoom={zoom} onZoomChange={setZoom} onMovePage={movePage} retry={retry} onSelect={select} onImageError={onImageError} onImageLoad={onImageLoad} imageFailed={imageFailed}/>
+        {pageQuery.isPending||imageQuery.isPending?<View pointerEvents="none" style={{position:'absolute',top:10,left:0,right:0,alignItems:'center'}}><View style={{padding:8,borderRadius:20,backgroundColor:colors.surface}}><ActivityIndicator color={colors.primary}/></View></View>:null}
         {imageFailed?<View style={{position:'absolute',top:0,bottom:0,left:0,right:0,justifyContent:'center',padding:20}}><Card><Txt>{t('تعذّر تحميل صورة الصفحة.','Could not load the page image.')}</Txt><Button label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Card></View>:null}
       </View>
       {pageQuery.isError?<Row style={{paddingHorizontal:14,justifyContent:'center'}}><Txt muted size={12}>{t('تحديد الآيات غير متاح حاليًا','Ayah selection is currently unavailable')}</Txt><IconButton icon="rotate-right" label={t('إعادة المحاولة','Retry')} onPress={retryPage}/></Row>:null}
