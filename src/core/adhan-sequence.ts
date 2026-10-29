@@ -11,9 +11,9 @@ export function audioSlot(date:string,prayer:string):AudioSlot {
   if(!adhanPrayers.includes(prayer as AdhanPrayer))throw new Error('INVALID_ADHAN_PRAYER');
   return prayer==='dhuhr'&&day===5?'friday':prayer as AdhanPrayer;
 }
-export function adhanSequence(date:string,prayer:string):readonly [ClipId,ClipId] {
+export function adhanSequence(date:string,prayer:string):readonly [ClipId,ClipId,ClipId] {
   const sequence=catalogue.sequences[audioSlot(date,prayer)];
-  return [sequence.intro as ClipId,sequence.adhan as ClipId];
+  return [sequence.intro as ClipId,sequence.adhan as ClipId,catalogue.afterAdhan as ClipId];
 }
 export function clipId(value:string|null):ClipId|null {
   return value!==null&&Object.hasOwn(adhanClips,value)?value as ClipId:null;

@@ -24,4 +24,4 @@ if args.source and source != destination.resolve():
         temporary = destination / (key + '.tmp')
         shutil.copyfile(source / (key + '.mp3'), temporary)
         temporary.replace(destination / (key + '.mp3'))
-print('PASS: all twelve source-pinned private recordings match the catalogue')
+print(f'PASS: all {len(catalogue["clips"])} source-pinned private recordings match the catalogue')

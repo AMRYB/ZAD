@@ -1,7 +1,7 @@
 import {Platform} from 'react-native';
 import {requireOptionalNativeModule} from 'expo';
 import type {AdhanPreferences,PrayerMonth} from '../core/adhan';
-export interface AdhanStatus {available:boolean;exact:boolean;notifications:boolean;audio:boolean;count:number;until:string;error:string;playing:boolean;muted:boolean;clip:string;enabled:boolean;alarmVolume:number;alarmMuted:boolean}
+export interface AdhanStatus {available:boolean;exact:boolean;notifications:boolean;audio:boolean;count:number;until:string;error:string;playing:boolean;muted:boolean;suspended?:boolean;clip:string;enabled:boolean;alarmVolume:number;alarmMuted:boolean}
 interface AdhanModule {
   prepareTasbihSound?():void;
   playTasbihSound?():boolean;

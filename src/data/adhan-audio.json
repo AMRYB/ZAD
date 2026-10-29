@@ -137,6 +137,17 @@
       "mediaUrl": "https://quran-fjamfcbbeybteyat.z01.azurefd.net/Audio3/Adan/1027.mp3",
       "channel": "Islamweb",
       "title": "محمد رفعت"
+    },
+    "shaarawy-dua": {
+      "source": "https://www.youtube.com/watch?v=mC0AcX-ACOo",
+      "title": "Du'a after Adhan دعاء ما بعد الآذان للشيخ محمد متولي الشعراوي",
+      "channel": "X-Team",
+      "sha256": "8d6344a2f74b2b32826d9b19993c5e21a748cb6359dca7d07e8e96fae56e738a",
+      "bytes": 363041,
+      "duration": 30.174354,
+      "kind": "dua",
+      "ar": "دعاء ما بعد الأذان · الشيخ الشعراوي",
+      "en": "Post-Adhan dua · Muhammad Metwally Al-Sha'rawi"
     }
   },
   "sequences": {
@@ -164,5 +175,6 @@
       "intro": "intro-friday",
       "adhan": "azhar-friday"
     }
-  }
+  },
+  "afterAdhan": "shaarawy-dua"
 }

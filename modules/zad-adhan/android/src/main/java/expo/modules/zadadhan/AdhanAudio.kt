@@ -10,8 +10,8 @@ object AdhanAudio {
   private fun catalogue(c:Context)=JSONObject(c.assets.open("zad-adhan/catalogue.json").bufferedReader().use { it.readText() })
   fun clips(c:Context)=catalogue(c).getJSONObject("clips")
   fun sequence(c:Context,date:String,prayer:String):List<String> {
-    val entry=catalogue(c).getJSONObject("sequences").getJSONObject(AdhanSequence.slot(date,prayer))
-    return listOf(entry.getString("intro"),entry.getString("adhan"))
+    val data=catalogue(c);val entry=data.getJSONObject("sequences").getJSONObject(AdhanSequence.slot(date,prayer))
+    return listOf(entry.getString("intro"),entry.getString("adhan"),data.getString("afterAdhan"))
   }
   private fun hash(bytes:ByteArray)=MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") {"%02x".format(it)}
   private fun file(c:Context,id:String)=File(File(c.filesDir,"adhan-audio-v1"),"$id.mp3")
