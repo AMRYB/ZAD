@@ -27,7 +27,7 @@ export function Tasbih(){
   useEffect(()=>{let live=true;void AccessibilityInfo.isReduceMotionEnabled().then(v=>{if(live)setReduced(v);}).catch(()=>{});const sub=AccessibilityInfo.addEventListener('reduceMotionChanged',setReduced);return()=>{live=false;sub.remove();};},[]);
   const tap=useCallback(()=>{dispatch({type:'devotion',action:{type:'tasbihTap',date:dateInZone(),change:1}});if(value.haptics)void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(()=>{});},[dispatch,value.haptics]);
   const openSettings=()=>{setCustom(String(value.target));setMessage('');setSettings(true);};
-  return <Screen title={t('السبحة','Tasbih')} contentStyle={{flexGrow:1,paddingBottom:16}} trailing={<IconButton icon="sliders" label={t('إعدادات السبحة','Tasbih settings')} onPress={openSettings}/>}>
+  return <Screen title={t('السبحة','Tasbih')} contentStyle={{flexGrow:1,paddingBottom:4}} trailing={<IconButton icon="sliders" label={t('إعدادات السبحة','Tasbih settings')} onPress={openSettings}/>}>
     <View style={{width:'100%',maxWidth:620,alignSelf:'center',gap:16,flexGrow:1}}>
       <TasbihBeads key={value.phrase} onCount={tap} onImpact={impact} count={count} current={progress.current} target={value.target} reduced={reduced}/>
       <Pressable testID="tasbih-phrase" accessibilityRole="button" accessibilityLabel={t('تغيير الذكر','Change remembrance')} onPress={()=>setPicker(true)} style={({pressed})=>({padding:18,borderRadius:22,backgroundColor:colors.surface,borderWidth:1,borderColor:colors.border,opacity:pressed?.75:1})}>
@@ -46,7 +46,6 @@ export function Tasbih(){
         <CountAction icon="rotate-right" label={t('تصفير','Reset')} disabled={!count} onPress={()=>setReset(true)}/>
       </Row>
       {count>0&&count%value.target===0?<Txt accessibilityLiveRegion="polite" size={12} style={{textAlign:'center',color:colors.primary}}>{t('أتممت هدف الجولة. تقدر تكمل على راحتك.','Round goal reached. Continue at your own pace.')}</Txt>:null}
-      <Txt size={10} muted style={{textAlign:'center'}}>{t('عدّادك محفوظ تلقائيًا','Your count is saved automatically')}</Txt>
     </View>
     <ReaderSheet visible={settings} title={t('إعدادات السبحة','Tasbih settings')} onClose={()=>setSettings(false)}>
       <Card style={{borderWidth:0,backgroundColor:colors.soft}}><Row style={{justifyContent:'space-between',flexWrap:'nowrap'}}><View style={{flex:1}}><Txt bold>{t('صوت الخرز','Bead sound')}</Txt><Txt muted size={12}>{t('خبطة خفيفة عند وصول الخرزة','A gentle tap when the bead lands')}</Txt></View><Switch accessibilityLabel={t('صوت الخرز','Bead sound')} value={value.sound??true} trackColor={{false:colors.border,true:colors.primary}} onValueChange={sound=>dispatch({type:'devotion',action:{type:'tasbihSettings',sound}})}/></Row></Card>

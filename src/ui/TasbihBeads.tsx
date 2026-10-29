@@ -3,6 +3,7 @@ import {Animated,Easing,PanResponder,Platform,Pressable,View,useWindowDimensions
 import {LinearGradient} from 'expo-linear-gradient';
 import {useApp} from '../state/AppContext';
 import {Txt} from './components';
+import {TasbihPull} from '../core/tasbih-pull';
 
 /** A stone bead rendered locally; no remote image or generated-image dependency. */
 const EmeraldBead=memo(function EmeraldBead({size,dark}:{size:number;dark:boolean}){
@@ -23,26 +24,30 @@ export function TasbihBeads({onCount,onImpact,count,current,target,reduced}:{onC
   const gap=Math.min(112,size*.25),left=size/2-(gap+bead)/2,right=size/2+(gap+bead)/2;
   const [travel]=useState(()=>new Animated.Value(0));
   const previous=useRef(count),pending=useRef(0),running=useRef(false),generation=useRef(0),dragged=useRef(false);
+  const [pull]=useState(()=>new TasbihPull());
+  const releaseMotion=useRef<{direction:1|-1;progress:number}|null>(null);
   const impact=useRef(onImpact);
   useEffect(()=>{impact.current=onImpact;},[onImpact]);
   useEffect(()=>{
     const delta=count-previous.current;previous.current=count;
-    if(reduced||Math.abs(delta)!==1){generation.current++;pending.current=0;running.current=false;travel.stopAnimation();travel.setValue(0);if(reduced&&delta===1)impact.current();return;}
+    if(reduced||Math.abs(delta)!==1){generation.current++;pending.current=0;running.current=false;releaseMotion.current=null;travel.stopAnimation();travel.setValue(0);if(reduced&&delta===1)impact.current();return;}
     pending.current+=delta;
     // Finish each transfer before starting another; quick taps never restart a bead mid-gap.
     function advance(){
       if(running.current||!pending.current)return;
-      const direction=Math.sign(pending.current),token=generation.current;
-      pending.current-=direction;running.current=true;travel.setValue(direction>0?0:1);
+      const step=Math.sign(pending.current),token=generation.current,motion=step>0?releaseMotion.current:null;
+      releaseMotion.current=null;pending.current-=step;running.current=true;
+      const direction=motion?.direction??(step>0?1:-1),start=direction>0?motion?.progress??0:1-(motion?.progress??0);
+      travel.setValue(start);
       const duration=Math.abs(pending.current)>2?260:520;
       const finish=({finished}:{finished:boolean})=>{
         if(token!==generation.current)return;
         running.current=false;travel.setValue(0);if(finished)advance();
       };
       const animate=(toValue:number,ms:number)=>Animated.timing(travel,{toValue,duration:ms,easing:Easing.linear,useNativeDriver:Platform.OS!=='web'});
-      if(direction<0){animate(0,duration).start(finish);return;}
+      if(direction<0){animate(0,duration*start).start(result=>{if(result.finished&&step>0&&token===generation.current)impact.current();finish(result);});return;}
       // .55 is the first contact knot. Play once here, before the bank's rebound.
-      animate(.55,duration*.55).start(({finished})=>{
+      animate(.55,duration*Math.max(0,.55-start)).start(({finished})=>{
         if(token!==generation.current||!finished)return;
         impact.current();animate(1,duration*.45).start(finish);
       });
@@ -52,11 +57,19 @@ export function TasbihBeads({onCount,onImpact,count,current,target,reduced}:{onC
   useEffect(()=>()=>{generation.current++;pending.current=0;travel.stopAnimation();},[travel]);
   // eslint-disable-next-line react-hooks/refs -- PanResponder registers callbacks without invoking them during render.
   const pan=useMemo(()=>PanResponder.create({
-    onMoveShouldSetPanResponder:(_,g)=>g.numberActiveTouches===1&&(Math.abs(g.dx)>12&&Math.abs(g.dx)>Math.abs(g.dy)*1.3||g.dy>14&&Math.abs(g.dy)>Math.abs(g.dx)*1.5),
-    onPanResponderGrant:()=>{dragged.current=true;},
-    onPanResponderRelease:(_,g)=>{if(Math.abs(g.dx)>28&&Math.abs(g.dx)>Math.abs(g.dy)*1.3||g.dy>28&&Math.abs(g.dx)<70)onCount();},
-    onPanResponderTerminationRequest:()=>true,
-  }),[onCount]);
+    onStartShouldSetPanResponderCapture:event=>event.nativeEvent.touches.length>1,
+    onMoveShouldSetPanResponderCapture:(_,g)=>pull.capture(g.dx,g.dy,g.numberActiveTouches),
+    onPanResponderGrant:()=>{dragged.current=true;generation.current++;pending.current=0;running.current=false;releaseMotion.current=null;travel.stopAnimation();travel.setValue(0);pull.begin();},
+    onPanResponderMove:(_,g)=>{pull.update(g.dx,g.dy,g.numberActiveTouches);if(!reduced)travel.setValue(pull.direction>0?pull.progress:1-pull.progress);},
+    onPanResponderStart:(_,g)=>{if(g.numberActiveTouches>1)pull.update(g.dx,g.dy,g.numberActiveTouches);},
+    onPanResponderRelease:(_,g)=>{
+      pull.update(g.dx,g.dy,1);const result=pull.finish();
+      if(result.count){releaseMotion.current=result;onCount();}
+      else {const token=++generation.current;Animated.timing(travel,{toValue:result.direction>0?0:1,duration:140,useNativeDriver:Platform.OS!=='web'}).start(()=>{if(token===generation.current)travel.setValue(0);});}
+    },
+    onPanResponderTerminate:()=>{pull.finish(true);generation.current++;travel.stopAnimation();travel.setValue(0);},
+    onPanResponderTerminationRequest:()=>false,onShouldBlockNativeResponder:()=>true,
+  }),[onCount,pull,reduced,travel]);
   // The reference arches upward: low outer banks rise toward the open centre.
   const y=(x:number)=>18+58*Math.pow((x-size/2)/(size/2),2);
   const text=count.toLocaleString('en-US'),font=Math.min(64,(size-56)/Math.max(1,text.length*.62));
@@ -73,8 +86,9 @@ export function TasbihBeads({onCount,onImpact,count,current,target,reduced}:{onC
     ]}}><EmeraldBead size={bead} dark={dark}/></Animated.View>;
   }
   const web:ViewStyle&{touchAction?:'none';userSelect?:'none'}=Platform.OS==='web'?{touchAction:'none',userSelect:'none'}:{};
-  return <Pressable {...pan.panHandlers} testID="tasbih-count" accessibilityRole="button" accessibilityLabel={t(`سبّح. العدد ${count}. اضغط لإضافة تسبيحة.`,`Count ${count}. Tap to add one remembrance.`)} accessibilityHint={t('اسحب الخرز للجانب أو لأسفل، أو اضغط للعدّ','Slide the beads sideways or down, or tap to count')}
-    onPressIn={()=>{dragged.current=false;}} onPress={()=>{if(!dragged.current)onCount();}} style={[{width:size,minHeight:300,flexGrow:1,alignSelf:'center'},web]}>
+  return <View {...pan.panHandlers} style={[{width:size,minHeight:300,flexGrow:1,alignSelf:'center'},web]}>
+    <Pressable testID="tasbih-count" accessibilityRole="button" accessibilityLabel={t(`سبّح. العدد ${count}. اضغط لإضافة تسبيحة.`,`Count ${count}. Tap to add one remembrance.`)} accessibilityHint={t('اسحب الخرز للجانب أو لأسفل، أو اضغط للعدّ','Slide the beads sideways or down, or tap to count')}
+    onPressIn={()=>{dragged.current=false;}} onPress={()=>{if(!dragged.current)onCount();}} style={{flex:1,width:'100%',minHeight:300}}>
     <View testID="tasbih-strand" accessible={false} pointerEvents="none" style={{position:'absolute',left:0,right:0,top:0,height:144,overflow:'hidden',direction:'ltr'}}>
       {Array.from({length:32},(_,i)=>{const x=size*i/31,next=size*(i+1)/31,dy=y(next)-y(x);return <View key={i} style={{position:'absolute',left:x,top:y(x)+bead/2,width:Math.hypot(next-x,dy)+1,height:1,borderRadius:1,backgroundColor:dark?'#736E5C':'#CBC8BD',transformOrigin:'left center',transform:[{rotate:`${Math.atan2(dy,next-x)*180/Math.PI}deg`}]}}/>;})}
       {Array.from({length:bankCount},(_,i)=>animatedBead(`left-${i}`,leftShift.map(shift=>left-i*spacing-shift)))}
@@ -88,5 +102,6 @@ export function TasbihBeads({onCount,onImpact,count,current,target,reduced}:{onC
       <View accessibilityRole="progressbar" accessibilityLabel={t('هدف الجولة','Round goal')} accessibilityValue={{min:0,max:target,now:current}} aria-valuemin={0} aria-valuemax={target} aria-valuenow={current} style={{height:3,width:80,marginTop:8,borderRadius:3,backgroundColor:colors.border,overflow:'hidden'}}><View style={{height:3,width:`${Math.min(100,current/target*100)}%`,backgroundColor:colors.primary,borderRadius:3}}/></View>
     </View>
     <Txt size={11} muted style={{position:'absolute',bottom:0,left:20,right:20,textAlign:'center'}}>{t('اسحب الخرز… أو اضغط وسبّح','Slide the beads… or tap to count')}</Txt>
-  </Pressable>;
+    </Pressable>
+  </View>;
 }
