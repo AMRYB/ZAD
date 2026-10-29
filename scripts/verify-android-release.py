@@ -75,7 +75,9 @@ def main():
                      'src/core/recitation.ts', 'src/core/reports.ts', 'src/core/personalization.ts',
                      'src/services/pkce-crypto.native.ts', 'src/services/auth-storage.ts',
                      'src/state/BrandingCoordinator.tsx', 'src/ui/StartupIntro.tsx', 'src/ui/TasbihBeads.tsx', 'src/ui/components.tsx',
-                     'src/ui/useTasbihSound.android.ts']:
+                     'src/ui/useTasbihSound.android.ts', 'src/core/offline-quran.ts', 'src/screens/Downloads.tsx',
+                     'src/services/quran-downloads.ts', 'src/services/offline-store.native.ts', 'src/services/ksu.ts',
+                     'src/state/OfflineDownloadCoordinator.tsx', 'src/screens/quran/MushafCanvas.tsx', 'src/core/tasbih-pull.ts']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -114,7 +116,7 @@ def main():
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
         mapping_file = build / 'android/app/build/outputs/mapping/release/mapping.txt'
-        residual_owners = {name: set() for name in ['AdhanAudio', 'AdhanSequence', 'IntroSystemBars', 'TasbihSound']}
+        residual_owners = {name: set() for name in ['AdhanAudio', 'AdhanSequence', 'IntroSystemBars', 'TasbihSound', 'AdhanFocusPolicy']}
         owner = None
         for line in mapping_file.read_text(encoding='utf-8').splitlines():
             match = re.match(r'^([^\s].*) -> ([^:]+):$', line)
