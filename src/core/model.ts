@@ -5,6 +5,7 @@ import {defaultAdhan,validAdhan,type AdhanPreferences} from './adhan.ts';
 import {initialDevotion,reduceDevotion,validateDevotion,type DevotionState,type DevotionAction} from './devotion.ts';
 import {initialGamification,reconcileParticipation,validateGamification,type GamificationState} from './gamification.ts';
 import {initialPersonalization,validPersonalization,type Personalization} from './personalization.ts';
+import {initialRecall,validRecall,validRecallRange,validRecallAttempt,type RecallState,type RecallRange,type RecallAttempt} from './written-recall.ts';
 export type Locale = 'ar' | 'en';
 export type ThemeMode = 'system' | 'light' | 'dark';
 export const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
@@ -27,13 +28,16 @@ export interface State {
   devotion:DevotionState;
   gamification:GamificationState;
   personalization:Personalization;
+  recall:RecallState;
 }
 export function initialState(): State {
   return { version: 1, onboarded: false, locale: 'ar', theme: 'system',
-    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan},devotion:initialDevotion(),gamification:initialGamification(),personalization:initialPersonalization() };
+    season: { start: null, length: 30, adjustment: 0 }, days: {}, goals: [], plans: [], habits: [], bookmarks: [], lastRead: { sura: 1, aya: 1 },reader:{reciter:'husary',tafsir:'sa3dy',fit:'page'},adhan:{...defaultAdhan},devotion:initialDevotion(),gamification:initialGamification(),personalization:initialPersonalization(),recall:initialRecall() };
 }
 export function emptyDay(): DayRecord { return { prayers: {}, fast: 'unlogged', note: '' }; }
 export type Action =
+  | {type:'recallRange';value:RecallRange}
+  | {type:'recallAttempt';value:RecallAttempt}
   | {type:'personalization';value:Personalization}
   | {type:'devotion';action:DevotionAction}
   | { type: 'settings'; locale?: Locale; theme?: ThemeMode }
@@ -65,6 +69,8 @@ export function reducer(state: State, action: Action,today=dateInZone()): State 
 }
 function reduceActivity(state: State, action: Action): State {
   switch (action.type) {
+    case 'recallRange':return validRecallRange(action.value)?{...state,recall:{...state.recall,last:{surah:action.value.surah,from:action.value.from,to:action.value.to,current:action.value.current,completed:action.value.completed}}}:state;
+    case 'recallAttempt':return validRecallAttempt(action.value)&&state.recall.last?.surah===action.value.surah&&state.recall.last.current===action.value.ayah&&!state.recall.attempts.some(a=>a.id===action.value.id)?{...state,recall:{...state.recall,attempts:[...state.recall.attempts,action.value].slice(-100)}}:state;
     case 'personalization':return validPersonalization(action.value)?{...state,personalization:action.value}:state;
     case 'devotion':{const devotion=reduceDevotion(state.devotion,action.action);return devotion===state.devotion?state:{...state,devotion};}
     case 'adhanSettings':return validAdhan(action.value)?{...state,adhan:action.value}:state;
@@ -112,6 +118,8 @@ function reduceActivity(state: State, action: Action): State {
 // Fail closed on an unknown schema; never replace unreadable user data silently.
 export function restoreState(text: string): State {
   const value = JSON.parse(text);
+  if(value&&value.version===1&&value.recall===undefined)value.recall=initialRecall();
+  if(value&&!validRecall(value.recall))throw new Error('INVALID_STORAGE');
   if(value&&value.version===1&&value.habits===undefined)value.habits=[];
   if(value&&value.version===1&&value.reader===undefined)value.reader=initialState().reader;
   if(value&&value.version===1&&value.adhan===undefined)value.adhan={...defaultAdhan};

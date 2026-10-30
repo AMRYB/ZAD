@@ -1,6 +1,6 @@
 # Quran source attribution and provenance
 
-The Quran integration in Ramadan Journey uses the King Saud University Electronic Mushaf at <https://quran.ksu.edu.sa> exclusively for original Hafs page PNGs, verse audio recordings, Arabic tafsir, verse highlight coordinates and Quran navigation metadata. No alternate Quran content provider is used.
+The Quran integration in Ramadan Journey uses the King Saud University Electronic Mushaf at <https://quran.ksu.edu.sa> exclusively for original Hafs page PNGs, verse audio recordings, Arabic tafsir, verse highlight coordinates and Quran navigation metadata. The written-recall exception below is separate from the reader.
 
 The university/provider name is documented here instead of the application interface, as part of the application presentation. This is a presentation decision: it does not change endpoint hosts, rewrite the original artwork, remove reciter/tafsir author names, or claim ownership of upstream content.
 
@@ -26,3 +26,7 @@ Version 0.6 uses prayer-specific recordings and MBC intros, including the exact 
 ## Post-Adhan dua —0.13.0
 
 The owner supplied [this Sha'rawy dua video](https://www.youtube.com/watch?v=mC0AcX-ACOo), uploaded by X-Team. Exact local preparation/source metadata are documented in ADHAN_DUA_AND_FOCUS_V0_13.md and src/data/adhan-audio.json. Attribution is based on the uploader title. The MP3 and signed stream metadata stay outside Git; public media redistribution permission is not established.
+
+## Written recall —0.15.0
+
+The user-authorized typed-recall feature uses the unchanged official King Fahd Complex Hafs JSON/font from its developer platform, with published archive SHA256 verification. It does not replace the KSU reader or add speech recognition. See [WRITTEN_RECALL.md](WRITTEN_RECALL.md) for original URLs, byte hashes, developer availability, spelling rules and the distinction between source provenance and government endorsement.

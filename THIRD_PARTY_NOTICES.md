@@ -27,3 +27,7 @@ The current npm dependency audit reports inherited high-severity findings involv
 - [node-forge: CVE-2026-85393](https://github.com/advisories/GHSA-86w9-cpqp-85rv)
 
 A non-breaking `npm audit fix` was attempted. A forced downgrade of Expo/React Native was not performed. Keep this item open for release review; passing functional checks does not erase dependency advisories. Do not expose a development Metro server as a public production service.
+
+## King Fahd Complex Hafs Unicode resources
+
+Written recall bundles the unchanged official Hafs JSON and font from https://qurancomplex.gov.sa/quran-dev/ and the linked kfgqpc_hafs_v30.zip. The official developer page makes these resources available for application/software development. Published archive SHA256 and selected original file hashes are pinned in src/data/recall-source.json. No separate license file is present in the archive; this notice does not assert a broad waiver or government endorsement. See docs/WRITTEN_RECALL.md.

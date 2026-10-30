@@ -15,6 +15,8 @@ You are implementing **ZAD (زاد)**, formerly Ramadan Journey, a large Arabic-
 - User chooses Light / Dark / System in Settings; retain setting across launches.
 
 ## Quran content invariant
+
+- User-authorized exception (2026-10-30): written recall uses the exact official King Fahd Complex Hafs JSON/font from its developer platform. Pin the published archive SHA256 and retain original bytes, source metadata and separate ordinary/Uthmanic text. This exception does not replace the existing KSU reader content endpoints and does not imply ministry endorsement of ZAD. No microphone or speech-recognition service is part of written recall.
 - `https://quran.ksu.edu.sa` is the **exclusive network content source** for Quran page images, audio, tafsir and hilites. Reuse verified endpoint builders, fixtures and KSU-specific parser, not alternative Quran APIs.
 - NO fabricated Quran or tafsir content, auto-correction, third-party audio or hidden fallback. A content-source failure must show a clear retry/error message.
 - Preserve PNG pixel values. Render highlights as a view overlay; no recoloring of the source image.

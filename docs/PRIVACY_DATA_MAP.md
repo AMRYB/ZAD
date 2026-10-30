@@ -1,4 +1,4 @@
-# ZAD data flow map — 0.14.0 private beta
+# ZAD data flow map — 0.15.0 private beta
 
 | Data | Default location | Optional destination and trigger |
 |---|---|---|
@@ -25,3 +25,5 @@ Cloud records are private by default and protected by own-user RLS/CAS RPCs. Per
 KSU, ESA and Supabase receive ordinary service requests, including network-level information required to answer them. This app does not assert those operators' retention rules. Production publication requires an owner-reviewed policy, retention/contact details and source agreements; see RELEASE_READINESS.md.
 
 Tasbih0.12 changes presentation and local gesture handling only. Beads are rendered in code without an external image host. Counter, phrase, goal and haptic settings retain the existing storage/sync boundaries; no new device permission or telemetry was added.
+
+Written recall: typed answers/comparison details are temporary screen memory only. Last position and up to 100 result summaries stay in the local guest/account cache, are excluded from cloud sync, and are preserved when applying remote snapshots. Explicit local guest import/export may include summaries, never typed text. The official reference and font are bundled; there is no microphone permission, audio capture, inference service or background corpus download.

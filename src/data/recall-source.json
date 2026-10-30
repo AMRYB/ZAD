@@ -1,0 +1,20 @@
+{
+  "publisher": "King Fahd Glorious Quran Printing Complex",
+  "landingPage": "https://qurancomplex.gov.sa/quran-dev/",
+  "archiveUrl": "https://download.qurancomplex.gov.sa/resources_dev/kfgqpc_hafs_v30.zip",
+  "publishedUpdate": "15.0",
+  "publishedDate": "2026-09-30",
+  "archiveSha256": "227e6b1564d980f2bd09c2c35ebfb0330ac268c79a7c247cd1ab665bc635f245",
+  "archiveBytes": 10155774,
+  "jsonEntry": "kfgqpc_hafs_v30-data/kfgqpc_hafs_v30.json",
+  "jsonSha256": "d7adf8aeeef5a7b6798060706a55735dffbcdb542b290a3907bd9f70c498f4d3",
+  "jsonBytes": 3691596,
+  "fontEntry": "kfgqpc_hafs_v30-font/kfgqpc_hafs_v30.ttf",
+  "fontSha256": "9ccd82324319bfe9e57efd34c830770ce86655f01661ca06b50e3b0c20073c57",
+  "fontBytes": 301204,
+  "surahs": 114,
+  "ayahs": 6236,
+  "purpose": "Written recall only; user explicitly requested official Saudi text on2026-10-30",
+  "endorsement": false,
+  "originalFilesUnmodified": true
+}

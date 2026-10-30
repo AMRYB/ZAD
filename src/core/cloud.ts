@@ -1,14 +1,15 @@
 import {initialState,restoreState,type State} from './model.ts';
 import {DAILY_XP_CAP,xpRules,participationStillRecorded,type XpEvent} from './gamification.ts';
+import {initialRecall,mergeRecall} from './written-recall.ts';
 export interface Archive {at:string;reason:string;state:State}
 export interface Profile {version:1;state:State;revision:number;synced:string|null;pending:string|null;enabled:boolean;lastSync:string|null;guestReceipt:string|null;archives:Archive[]}
 export function newProfile(state:State=initialState()):Profile{return {version:1,state,revision:0,synced:null,pending:null,enabled:false,lastSync:null,guestReceipt:null,archives:[]};}
 /** Device alarms, appearance, reciter and haptics never enable themselves on another device. */
 export function cloudDocument(state:State):string{
   const defaults=initialState();
-  return JSON.stringify({...state,onboarded:true,locale:'ar',theme:'system',reader:defaults.reader,adhan:defaults.adhan,devotion:{...state.devotion,tasbih:{...state.devotion.tasbih,haptics:true},reminders:defaults.devotion.reminders}} satisfies State);
+  return JSON.stringify({...state,onboarded:true,locale:'ar',theme:'system',reader:defaults.reader,adhan:defaults.adhan,recall:initialRecall(),devotion:{...state.devotion,tasbih:{...state.devotion.tasbih,haptics:true},reminders:defaults.devotion.reminders}} satisfies State);
 }
-export function applyCloud(local:State,remote:State):State{return {...remote,onboarded:true,locale:local.locale,theme:local.theme,reader:local.reader,adhan:local.adhan,devotion:{...remote.devotion,tasbih:{...remote.devotion.tasbih,haptics:local.devotion.tasbih.haptics},reminders:local.devotion.reminders}};}
+export function applyCloud(local:State,remote:State):State{return {...remote,onboarded:true,locale:local.locale,theme:local.theme,reader:local.reader,adhan:local.adhan,recall:local.recall,devotion:{...remote.devotion,tasbih:{...remote.devotion.tasbih,haptics:local.devotion.tasbih.haptics},reminders:local.devotion.reminders}};}
 export function parseProfile(text:string):Profile{
   const v=JSON.parse(text) as Profile;
   if(!v||v.version!==1||!Number.isSafeInteger(v.revision)||v.revision<0||typeof v.enabled!=='boolean'||!Array.isArray(v.archives)||v.lastSync!==null&&typeof v.lastSync!=='string'||v.guestReceipt!==null&&typeof v.guestReceipt!=='string')throw new Error('INVALID_PROFILE');
@@ -22,7 +23,7 @@ export function acknowledge(profile:Profile,sent:string,revision:number,at:strin
   if(revision<profile.revision)return profile;
   return {...profile,revision,synced:sent,lastSync:at,pending:profile.pending===sent?null:profile.pending};
 }
-export function hasRecords(s:State){return Object.keys(s.days).length>0||s.goals.length>0||s.plans.length>0||s.habits.length>0||s.bookmarks.length>0||s.devotion.adhkar.favorites.length>0||Object.keys(s.devotion.tasbih.daily).length>0||Object.keys(s.devotion.deeds.days).length>0||s.devotion.deeds.custom.length>0||Object.keys(s.devotion.adhkar.counts).length>0||s.lastRead.sura!==1||s.lastRead.aya!==1;}
+export function hasRecords(s:State){return s.recall.attempts.length>0||Object.keys(s.days).length>0||s.goals.length>0||s.plans.length>0||s.habits.length>0||s.bookmarks.length>0||s.devotion.adhkar.favorites.length>0||Object.keys(s.devotion.tasbih.daily).length>0||Object.keys(s.devotion.deeds.days).length>0||s.devotion.deeds.custom.length>0||Object.keys(s.devotion.adhkar.counts).length>0||s.lastRead.sura!==1||s.lastRead.aya!==1;}
 /** Merge new entities only; conflicting originals remain available in local archives. */
 export function mergeGuest(account:State,guest:State):State{
   const entities=<T extends {id:string}>(a:T[],b:T[])=>[...a,...b.filter(v=>!a.some(x=>x.id===v.id))];
@@ -36,7 +37,7 @@ export function mergeGuest(account:State,guest:State):State{
     deeds:{...account.devotion.deeds,custom:entities(account.devotion.deeds.custom,guest.devotion.deeds.custom),days:{...guest.devotion.deeds.days,...account.devotion.deeds.days},selected:[...new Set([...account.devotion.deeds.selected,...guest.devotion.deeds.selected])]},
   };
   devotion.deeds.selected=devotion.deeds.selected.filter(id=>!devotion.deeds.custom.some(d=>d.id===id&&d.archived));
-  const merged={...account,days:mergeDays,goals:entities(account.goals,guest.goals),plans:entities(account.plans,guest.plans),habits:entities(account.habits,guest.habits),bookmarks:[...account.bookmarks,...guest.bookmarks.filter(b=>!account.bookmarks.some(a=>a.sura===b.sura&&a.aya===b.aya))],lastRead:hasRecords(account)?account.lastRead:guest.lastRead,devotion,gamification:{ruleVersion:1 as const,events}};
+  const merged={...account,recall:mergeRecall(account.recall,guest.recall),days:mergeDays,goals:entities(account.goals,guest.goals),plans:entities(account.plans,guest.plans),habits:entities(account.habits,guest.habits),bookmarks:[...account.bookmarks,...guest.bookmarks.filter(b=>!account.bookmarks.some(a=>a.sura===b.sura&&a.aya===b.aya))],lastRead:hasRecords(account)?account.lastRead:guest.lastRead,devotion,gamification:{ruleVersion:1 as const,events}};
   merged.gamification.events=merged.gamification.events.map(e=>account.gamification.events.some(a=>a.kind===e.kind&&a.source===e.source)?e:{...e,active:e.active&&participationStillRecorded(merged,e)});
   return restoreState(JSON.stringify(merged));
 }
