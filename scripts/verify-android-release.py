@@ -50,6 +50,10 @@ def main():
     assert sum(a.get(ns + 'enabled') == 'true' for a in aliases) == 1, 'Multiple default launcher icons'
     main = next(a for a in application.findall('activity') if a.get(ns + 'name') in ['.MainActivity', package + '.MainActivity'])
     assert not any(c.get(ns + 'name') == 'android.intent.category.LAUNCHER' for c in main.findall('intent-filter/category')), 'Duplicate MainActivity launcher'
+    merged = ET.parse(build / 'android/app/build/intermediates/merged_manifests/release/processReleaseManifest/AndroidManifest.xml').getroot()
+    permissions = {p.get(ns + 'name') for p in merged.findall('uses-permission')}
+    assert {'android.permission.ACCESS_FINE_LOCATION', 'android.permission.ACCESS_COARSE_LOCATION'} <= permissions, 'Missing foreground Qibla permissions'
+    assert not {'android.permission.ACCESS_BACKGROUND_LOCATION', 'android.permission.FOREGROUND_SERVICE_LOCATION'} & permissions, 'Unexpected background/foreground-service location permission'
     mapping_path = build / 'android/app/build/intermediates/sourcemaps/react/release/index.android.bundle.packager.map'
     mapping = json.loads(mapping_path.read_text(encoding='utf-8'))
     compiled = {}
@@ -80,7 +84,7 @@ def main():
                      'src/state/OfflineDownloadCoordinator.tsx', 'src/screens/quran/MushafCanvas.tsx', 'src/core/tasbih-pull.ts',
                      'src/screens/Qibla.tsx', 'src/screens/AdhanSettings.tsx', 'src/core/qibla.ts',
                      'src/core/prayer-display.ts', 'src/services/useQibla.ts', 'src/ui/PrayerDayArc.tsx',
-                     'src/ui/PrayerIllustration.tsx', 'src/ui/useAmbientMotion.ts']:
+                     'src/ui/PrayerIllustration.tsx', 'src/ui/useAmbientMotion.ts', 'src/core/qibla-session.ts']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -114,7 +118,7 @@ def main():
                       b'DailyReminderReceiver', b'zad-personal-reminders-v1', b'ExpoHaptics',
                       b'AudioControlsService', b'ZadWidget', b'RecitationSleepReceiver',
                       b'ExpoSecureStore', b'ExpoCrypto', b'zad_notification', b'ExpoVideo',
-                      b'BrandingReceiver', b'BrandRefreshJob', b'MorningIcon', b'EveningIcon', b'playTasbihSound']:
+                      b'BrandingReceiver', b'BrandRefreshJob', b'MorningIcon', b'EveningIcon', b'playTasbihSound', b'ExpoLocation']:
             assert token in dex, f'Missing native release marker: {token}'
         # R8 renames/merges the Kotlin helpers. Verify their residual owners instead
         # of requiring original class-name strings that release optimization removes.
@@ -145,6 +149,7 @@ def main():
                       'personalReminderReceiverPresent': True, 'hapticsModulePresent': True,
                       'packagedRecordingsMatched': len(catalogue['clips']),
                       'r8AudioHelpersVerified': True,
+                      'qiblaNativeModuleVerified': True, 'foregroundOnlyLocationPermissions': True,
                       'pinnedNativeMediaPatch': audio_patch_hashes,
                       'launcherAliasesVerified': True, 'introEntry': intro_entry, 'introMatches': True,
                       'introSha256': digest(intro.read_bytes()), 'introSystemBarsVerified': True,
