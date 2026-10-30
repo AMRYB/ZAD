@@ -10,6 +10,7 @@ export function More(){const {t}=useApp();return <Screen title={t('المزيد'
     <FeatureTile title={t('الأذكار','Adhkar')} detail={t('وردك بمصادره','Your sourced remembrance')} icon="sun" href="/adhkar"/>
     <FeatureTile title={t('أعمال الخير','Good deeds')} detail={t('خطوات تختارها لنفسك','Steps you choose yourself')} icon="heart" href="/good-deeds"/>
     <FeatureTile title={t('خطط القراءة','Reading plans')} detail={t('ورد يناسب وقتك','Reading that fits your time')} icon="book-open" href="/plans"/>
+    <FeatureTile title={t('تسميع بالكتابة','Written recall')} detail={t('راجع الحروف من حفظك','Check letters from memory')} icon="keyboard" href="/recall"/>
     <FeatureTile title={t('التلاوة','Listening')} detail={t('التشغيل ومؤقت الإيقاف','Playback & sleep timer')} icon="headphones" href="/listening"/>
   </Row>
   <Section title={t('رحلتك','Your journey')}/><Row style={{alignItems:'stretch'}}>

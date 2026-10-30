@@ -84,7 +84,8 @@ def main():
                      'src/state/OfflineDownloadCoordinator.tsx', 'src/screens/quran/MushafCanvas.tsx', 'src/core/tasbih-pull.ts',
                      'src/screens/Qibla.tsx', 'src/screens/AdhanSettings.tsx', 'src/core/qibla.ts',
                      'src/core/prayer-display.ts', 'src/services/useQibla.ts', 'src/ui/PrayerDayArc.tsx',
-                     'src/ui/PrayerIllustration.tsx', 'src/ui/useAmbientMotion.ts', 'src/core/qibla-session.ts']:
+                     'src/ui/PrayerIllustration.tsx', 'src/ui/useAmbientMotion.ts', 'src/core/qibla-session.ts',
+                     'src/screens/WrittenRecall.tsx', 'src/core/written-recall.ts', 'src/services/official-recall.ts']:
         found = [text for name, text in compiled.items() if name.endswith(relative)]
         assert len(found) == 1 and found[0] == (root / relative).read_text(encoding='utf-8').replace('\r\n', '\n').strip(), f'Compiled JS mismatch: {relative}'
         checked.append(relative)
@@ -104,6 +105,13 @@ def main():
         font_sha = digest(font.read_bytes())
         entry = next((name for name in names if name.endswith('.otf') and digest(apk.read(name)) == font_sha), None)
         assert entry, 'Private Light font was not packaged byte-for-byte'
+        recall_manifest = json.loads((root / 'src/data/recall-source.json').read_text(encoding='utf-8'))
+        recall_font_entry = next((name for name in names if name.endswith('.ttf') and digest(apk.read(name)) == recall_manifest['fontSha256']), None)
+        assert recall_font_entry, 'Official Hafs font was not packaged byte-for-byte'
+        assert 'android.permission.RECORD_AUDIO' not in permissions, 'Written recall must not enable microphone access'
+        reference = json.loads((root / 'assets/quran-reference/kfgqpc_hafs_v30.json').read_text(encoding='utf-8'))
+        assert len(reference) == 6236 and digest((root / 'assets/quran-reference/kfgqpc_hafs_v30.json').read_bytes()) == recall_manifest['jsonSha256']
+        assert b'recall-answer' in bundle and b'recall-review' in bundle, 'Missing written recall runtime markers'
         catalogue = json.loads((root / 'src/data/adhan-audio.json').read_text(encoding='utf-8'))
         intro = root / 'assets/branding/intro.mp4'
         intro_entry = next((n for n in names if n.endswith('.mp4') and digest(apk.read(n)) == digest(intro.read_bytes())), None)
@@ -150,6 +158,7 @@ def main():
                       'packagedRecordingsMatched': len(catalogue['clips']),
                       'r8AudioHelpersVerified': True,
                       'qiblaNativeModuleVerified': True, 'foregroundOnlyLocationPermissions': True,
+                      'recallReferencePinned': True, 'recallFontEntry': recall_font_entry, 'microphonePermissionAbsent': True,
                       'pinnedNativeMediaPatch': audio_patch_hashes,
                       'launcherAliasesVerified': True, 'introEntry': intro_entry, 'introMatches': True,
                       'introSha256': digest(intro.read_bytes()), 'introSystemBarsVerified': True,

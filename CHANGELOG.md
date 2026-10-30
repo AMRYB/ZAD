@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0 — Written Quran recall
+
+- Added More → Written recall with surah/range choice, one-ayah steps, hidden reference/hints, word/letter differences, assisted retries and resumable position.
+- Bundled exact official King Fahd Complex Hafs JSON/font, pinned to the published archive hash; existing KSU reader remains unchanged.
+- Accepts optional diacritics and either official spelling while checking hamza, ta marbuta and alif maqsura. It does not assess recitation or tajweed.
+- Typed text is temporary; last100 summary results and position stay local and are excluded from optional cloud sync. No microphone or speech service.
+-113 source tests/typecheck/lint/web export and browser flow PASS. Android build/installation evidence follows in the release record.
+
 ## 0.14.0 — Qibla guide and a clearer prayer day
 
 - Added Explore → Qibla with explicit foreground location, local WGS84 bearing, true-north compass, calibration guidance and visible accuracy limitations. Coordinates are transient and never sent to a ZAD API or synced/exported.
