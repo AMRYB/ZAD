@@ -6,7 +6,7 @@
 |---|---|---|
 | RJ-071 | Pin official Hafs source and deterministic letter/word comparison | Published ZIP hash and exact JSON/font hashes match; 6236 ayahs/114 surahs validated, all ordinary/Uthmanic self-comparisons PASS |
 | RJ-072 | Private bilingual typed-recall flow and bounded local summaries |113 TS tests, typecheck/lint/export PASS; browser390px missing-word, correction, assisted retry, original-font rendering, reload/resume and finish PASS; no microphone or cloud answer text |
-| RJ-073 | Android0.15.0 preview and release evidence | Build/device checks in progress; no installation claim yet |
+| RJ-073 | Android0.15.0 preview and release evidence | Build/signature,230 inputs/69 compiled sources,12,472 reference fields,30 native unit results and Android16 update/launch PASS; native missing-hamza review/reference font observed; prior-record owner acceptance not separately collected |
 
 ## Qibla and prayer-day display0.14.0
 

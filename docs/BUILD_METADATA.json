@@ -1,13 +1,13 @@
 {
   "package": "com.ramadanjourney.preview",
   "displayName": "ZAD",
-  "version": "0.14.0",
-  "versionCode": 21,
-  "codeRevision": "89fbb99cf1db7a77faca06196722b03b7b987310",
-  "artifact": "../ZAD_v0.14.0_arm64.apk",
+  "version": "0.15.0",
+  "versionCode": 22,
+  "codeRevision": "9dadb0d9018a3507090d9a752629fe86079dd37c",
+  "artifact": "../ZAD_v0.15.0_arm64.apk",
   "artifactPathBase": "project root",
-  "bytes": 71445053,
-  "sha256": "40ac0658094325c02beb419a7d57bb0fddafa6bacd99a43937017d3d9efcfbde",
+  "bytes": 74252409,
+  "sha256": "55212ab079a131e58f42bed93757226998cb4c4faa2262f6fbc3da057e30a705",
   "architecture": "arm64-v8a",
   "minSdk": 24,
   "targetSdk": 36,
@@ -34,7 +34,7 @@
   ],
   "unusedBiometricPermissionsRemoved": true,
   "sourceVerification": {
-    "sourceAndAssetFilesCompared": 223,
+    "sourceAndAssetFilesCompared": 230,
     "sourceMatchesBuild": true,
     "compiledSourcesMatched": [
       "src/screens/Quran.tsx",
@@ -102,7 +102,10 @@
       "src/ui/PrayerDayArc.tsx",
       "src/ui/PrayerIllustration.tsx",
       "src/ui/useAmbientMotion.ts",
-      "src/core/qibla-session.ts"
+      "src/core/qibla-session.ts",
+      "src/screens/WrittenRecall.tsx",
+      "src/core/written-recall.ts",
+      "src/services/official-recall.ts"
     ],
     "abi": "arm64-v8a",
     "fontEntry": "res/7V.otf",
@@ -117,6 +120,10 @@
     "r8AudioHelpersVerified": true,
     "qiblaNativeModuleVerified": true,
     "foregroundOnlyLocationPermissions": true,
+    "recallReferencePinned": true,
+    "recallFontEntry": "res/MA.ttf",
+    "microphonePermissionAbsent": true,
+    "recallPackagedTextFieldsMatched": 12472,
     "pinnedNativeMediaPatch": {
       "AudioModule.kt": "5f90428c15cd65a1748ef44e1e9d38070fdaebd9bbf72d988eef93aa00cf4ddf",
       "service/AudioControlsService.kt": "59174c2cd7d3232ee0976a7a916030b2af4eb8eab0807b2f15a65d81da3cc03b",
@@ -130,27 +137,18 @@
     "beadSoundEntry": "res/Ul.wav",
     "beadSoundSha256": "f2608660758b7ea430bd4255dbba04831d26c9d9854640d35f7bae2858efe943",
     "beadSoundMatches": true,
-    "apkBytes": 71445053,
-    "apkSha256": "40ac0658094325c02beb419a7d57bb0fddafa6bacd99a43937017d3d9efcfbde"
+    "apkBytes": 74252409,
+    "apkSha256": "55212ab079a131e58f42bed93757226998cb4c4faa2262f6fbc3da057e30a705"
   },
   "checks": {
     "typecheck": "PASS",
     "cleanFullLint": "PASS",
-    "typescriptTests": 105,
+    "typescriptTests": 113,
     "nativeUnitTests": 30,
     "productionWebExport": "PASS",
-    "expoDoctor": "19/20; patch alignment advisory for11 existing packages; not recorded as a pass",
-    "npmAudit": {
-      "high": 4,
-      "low": 5,
-      "critical": 0,
-      "total": 9,
-      "scope": "Current audit; not a clean-audit claim"
-    },
-    "browserQibla": "PASS: Arabic Light390px/English Dark320px, no fake initial heading, web unsupported guidance; no observed horizontal overflow",
-    "browserAdhan": "PASS: settings/date/city search, invalid/valid date, elapsed/future rows, next prayer and clock; Arabic/English Dark narrow view; original Arabic Light restored",
-    "nativeUI": "PASS by direct USB mirror interaction: final real Qibla arrow/fix/calibration, Stop/reacquire and blur; native day arc/current clock/gray elapsed row/illustrations/settings inspected",
-    "priorOfflineEvidence": "Retained0.13 eight-file cached browser sample and domain tests; no new full corpus download or native airplane-mode verification"
+    "browserWrittenRecall": "PASS: Arabic390px, missing word/correction, assisted retry, official-font reference, next/reload/resume and finish",
+    "nativeUI": "PASS: native passage setup/ayah5, one missing hamza reported as one letter difference, original Hafs font/reference visible. Correct-answer/reload/finish flows independently verified in browser; not claimed repeated natively.",
+    "dependencyAssessment": "No new dependencies; retained0.14 Doctor19/20 patch advisory and4 high/5 low audit findings. Not rerun or claimed clean."
   },
   "hostedChecks": {
     "schema": "Applied manually; no CLI migration-history claim",
@@ -158,25 +156,22 @@
     "roleTests": "PASS with two synthetic identities in a rolled-back transaction: own-user RLS, cross-user/direct-write denial, CAS, XP replay, private board and scoped deletion",
     "ownerEmailPkceAndSync": "User confirmed sign-in, guest import/private sync and retained records",
     "publicEmailDelivery": "Pending verified SMTP/sender and production callback origin",
-    "provenance": "Retained0.10 evidence; no cloud changes or hosted rerun in0.14"
+    "provenance": "Retained0.10 evidence; no hosted rerun in0.15. Recall cloud redaction tested locally."
   },
   "deviceInstallationTest": {
     "beforeVersion": "0.14.0",
     "androidVersion": "16",
     "install": "PASS",
-    "version": "0.14.0",
-    "versionCode": 21,
+    "version": "0.15.0",
+    "versionCode": 22,
     "dataClearOrUninstall": false,
     "permissionsAutoGranted": false,
     "launch": "PASS",
+    "ui": "PASS: native passage setup/ayah5, one missing hamza reported as one letter difference, original Hafs font/reference visible. Correct-answer/reload/finish flows independently verified in browser; not claimed repeated natively.",
+    "observedRuntimeErrorLines": 0,
+    "recordRetentionAcceptance": "In-place update; no clear/uninstall; existing owner records not independently re-confirmed in this revision.",
     "status": "PASS",
-    "initialUpdateFrom": "0.13.0",
-    "finalRepairedCandidateReinstalled": true,
-    "method": "ADB update/launch followed by Computer Use through temporary USB scrcpy window; no data clear/uninstall or automatic permission grant",
-    "processAlive": true,
-    "capturedFatalOrJsErrorMarkers": 0,
-    "directQiblaStopReacquire": true,
-    "nativePrayerDayAndSettingsObserved": true
+    "method": "ADB in-place update/launch; no clear/uninstall or automatic permission grant. UI evidence stated separately."
   },
   "userAcceptance": {
     "baseline0.12.0": {
@@ -229,19 +224,19 @@
     "otherRecordingsUnchanged": 11
   },
   "previousBaseline": {
-    "version": "0.13.0",
-    "metadata": "BUILD_METADATA_v0.13.0.json",
-    "releaseRecord": "ANDROID_APK_RELEASE_v0.13.0.md"
+    "version": "0.14.0",
+    "metadata": "BUILD_METADATA_v0.14.0.json",
+    "releaseRecord": "ANDROID_APK_RELEASE_v0.14.0.md"
   },
   "limits": [
     "Private preview signing and ARM64 only",
-    "Live compass is approximate; surveyed-direction comparison, fresh first-permission prompt after repair, interference/tilt and OEM matrix remain open",
-    "No background location; no coordinates stored in journey, cloud, export or logs",
-    "Expo Doctor19/20 patch advisory and current4 high/5 low audit findings remain",
-    "Native offline airplane mode, full corpus download, audible Adhan notification-focus matrix and broader release gates remain separate checks",
-    "Public SMTP/origin, source permissions, production signing and accessibility/Doze/two-device acceptance remain open"
+    "Written recall checks spelling, not recitation, tajweed or memorization certification; arbitrary mixed orthographies are not guaranteed equivalent",
+    "Local-only recall results are not restored from cloud on another device; typed answers never persist",
+    "No new dependency assessment: retain0.14 patch/audit advisories",
+    "Qibla surveyed accuracy, native offline reader airplane mode, audible Adhan interruption matrix and broad accessibility/Doze/device gates remain separate",
+    "Public SMTP/origin, source-rights review and production signing remain open"
   ],
-  "recordedAt": "2026-10-30T03:37:00.957582+00:00",
+  "recordedAt": "2026-10-30T04:50:43.099812+00:00",
   "branding": {
     "clock": "Africa/Cairo",
     "boundaries": "ESA selected-city sunrise inclusive to Isha exclusive = morning; otherwise evening",
@@ -264,11 +259,10 @@
     "androidSystemBars": "Hidden during intro; prior visibility and behavior restored on cleanup"
   },
   "nativeBuild": {
-    "initialBuild": "8m30s;606 tasks executed",
-    "finalStartupRepairBuild": "1m6s;25 executed,581 up-to-date",
-    "intermediateUIBuild": "1m27s;25 executed,581 up-to-date"
+    "result": "PASS",
+    "details": "in 1m 15s\n606 actionable tasks: 25 executed, 581 up-to-date"
   },
-  "nativeExpoConfigVersion": "0.14.0",
+  "nativeExpoConfigVersion": "0.15.0",
   "tasbihRevision": {
     "renderer": "Emerald gradients retain arch and centre gap",
     "sound": "Original90ms PCM effect; first-contact animation callback; Android one-stream SoundPool without audio-focus requests or global volume/session changes",
@@ -354,5 +348,24 @@
     "illustrations": "Native emerald/gold sun/crescent/hills with scoped ambient motion",
     "domainTests": 4,
     "recordSchemaChanged": false
+  },
+  "writtenRecall": {
+    "officialManifest": "../src/data/recall-source.json",
+    "sourceScope": "Original official King Fahd Complex Hafs JSON/font; no government endorsement",
+    "sourceCounts": {
+      "ayahs": 6236,
+      "surahs": 114
+    },
+    "sourceBytesUnmodified": true,
+    "comparison": "Ordinary/Uthmanic word alignment plus character differences; optional diacritics; preserves hamza/ta marbuta/alif maqsura distinctions",
+    "microphone": false,
+    "speechRecognition": false,
+    "networkComparison": false,
+    "typedTextStored": false,
+    "localSummaryLimit": 100,
+    "cloudResults": false,
+    "newDomainTests": 8,
+    "allCorpusSelfComparisons": "PASS in both official spellings",
+    "physicalMemorizationOrTajweedAssessment": false
   }
 }

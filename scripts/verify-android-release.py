@@ -111,6 +111,14 @@ def main():
         assert 'android.permission.RECORD_AUDIO' not in permissions, 'Written recall must not enable microphone access'
         reference = json.loads((root / 'assets/quran-reference/kfgqpc_hafs_v30.json').read_text(encoding='utf-8'))
         assert len(reference) == 6236 and digest((root / 'assets/quran-reference/kfgqpc_hafs_v30.json').read_bytes()) == recall_manifest['jsonSha256']
+        # Hermes stores non-ASCII literals in its UTF-16 string table. Verify every
+        # original text field survived bundling, not just a few example ayahs.
+        recall_fields_matched = 0
+        for verse in reference:
+            for field in ['aya_text_emlaey', 'aya_text_unicode']:
+                value = verse[field]
+                assert value.encode('utf-16-le') in bundle or value.encode('utf-8') in bundle, f'Missing bundled reference field: {verse["sura_no"]}:{verse["aya_no"]} {field}'
+                recall_fields_matched += 1
         assert b'recall-answer' in bundle and b'recall-review' in bundle, 'Missing written recall runtime markers'
         catalogue = json.loads((root / 'src/data/adhan-audio.json').read_text(encoding='utf-8'))
         intro = root / 'assets/branding/intro.mp4'
@@ -159,6 +167,7 @@ def main():
                       'r8AudioHelpersVerified': True,
                       'qiblaNativeModuleVerified': True, 'foregroundOnlyLocationPermissions': True,
                       'recallReferencePinned': True, 'recallFontEntry': recall_font_entry, 'microphonePermissionAbsent': True,
+                      'recallPackagedTextFieldsMatched': recall_fields_matched,
                       'pinnedNativeMediaPatch': audio_patch_hashes,
                       'launcherAliasesVerified': True, 'introEntry': intro_entry, 'introMatches': True,
                       'introSha256': digest(intro.read_bytes()), 'introSystemBarsVerified': True,

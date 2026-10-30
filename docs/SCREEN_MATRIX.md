@@ -4,6 +4,7 @@
 |---|---|---|
 | First-launch gate | Welcome, privacy, locale, theme | Local snapshot |
 | `/` | Actual today totals and continue-reading | Local records |
+| `/recall` | Written Quran recall: range, hidden reference/hint, word/letter review, retry/resume/history | Bundled official Hafs text/font; local summaries only, no mic/cloud answer |
 | `/quran` | Original PNG, selection, audio, bookmarks | KSU + local selection/bookmarks |
 | Quran picker: surah | Arabic or transliterated names, search | Captured KSU metadata |
 | Quran picker: page | Validated 1–604 input | Captured KSU metadata |

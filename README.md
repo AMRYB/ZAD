@@ -4,9 +4,9 @@ ZAD is an Arabic-first Expo / React Native application for private daily trackin
 
 ## Current source and release status
 
-Current source and built private Android artifact: **0.14.0 / code21**. Adds a local opt-in Qibla guide with true-north/quality instructions, centralized Adhan settings, and an animated official-time prayer-day arc with current clock, next prayer and gray elapsed rows.
+Current source and built private Android artifact: **0.15.0 / code22**. Adds More → Written recall using the unchanged official King Fahd Complex Hafs text/font, with letter/word differences, hints, local summaries and resumable passages. No microphone or speech service; source provenance does not imply government endorsement.
 
-Typecheck/clean lint, **105 TypeScript tests**, **30 native unit tests**, web export, APK verification and Android16 update/startup PASS. Direct phone interaction verified the corrected real compass arrow, Stop/reacquire and prayer-day UI. An initial no-arrow candidate was repaired before delivery. **Physical compass accuracy is not guaranteed or surveyed.** Doctor19/20 has patch-alignment advisories; the audit retains4 high/5 low findings. See [release evidence](docs/ANDROID_APK_RELEASE.md), [metadata](docs/BUILD_METADATA.json), [Qibla design](docs/QIBLA_V0_14.md), [prayer-day design](docs/PRAYER_DAY_V0_14.md) and [release readiness](docs/RELEASE_READINESS.md).
+Typecheck/clean lint, **113 TypeScript tests**, **30 native unit results**, final web export, APK verification and Android16 update/launch PASS. Direct phone inspection verified a missing-hamza difference and original reference font. Browser390px verified correction, assisted retry, reload/resume and finish. See [written recall](docs/WRITTEN_RECALL.md), [release evidence](docs/ANDROID_APK_RELEASE.md), [metadata](docs/BUILD_METADATA.json), and [release readiness](docs/RELEASE_READINESS.md). No new dependency; prior Doctor19/20 and4 high/5 low audit advisories remain. Physical Qibla accuracy and broader device/release gates remain open.
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. Product requirements are available in `docs/source-plan/`.
 

@@ -1,6 +1,12 @@
 # Verification report
 
-## Qibla and prayer day0.14.0 — current
+## Written recall0.15.0 — current
+
+Typecheck/clean lint,113 TypeScript tests,30 native JUnit results and final web export PASS. Eight new tests pin source bytes/full numbering, compare both official spellings across all6,236 ayahs, check actual hamza/letter errors, alignment/limits, old-state migration, bounded summaries/no XP and cloud exclusion/guest merge. Arabic390px browser flow verified missing-word review, corrected match, assisted retry, exact-font reference, next/reload/resume and finish.
+
+Final Android build/signature/config and230 input/69 compiled-source checks PASS. All12,472 official text-field literals and the exact supplied font are in the APK. Android16 updated0.14.0 to0.15.0/code22 without clear/uninstall or auto-granted permissions. Direct phone observation verified setup/ayah5, one missing hamza as one letter difference and original-font reference display. Correct-answer/reload/finish were not claimed repeated natively; prior-record owner acceptance not separately collected. Current-process filtered runtime error count was zero. No microphone permission or new dependency. Prior dependency advisories and broader release gates remain open. See WRITTEN_RECALL.md and ANDROID_APK_RELEASE.md.
+
+## Qibla and prayer day0.14.0 — historical baseline
 
 Typecheck/clean lint,105 TypeScript tests,30 native tests, final web export, Android build and APK verification pass.223 input files/66 compiled sources, native location wiring, foreground-only permissions,13 audio hashes and retained media/branding assets match. The APK updates0.13.0 without clearing data on Android16. The initial candidate's missing arrow was reported by the owner and observed directly; after the startup repair, USB-mirrored phone interaction shows real direction/quality readings, Stop and reacquire, plus native clock/arc/elapsed rows/settings. No surveyed accuracy or fresh first-permission prompt after repair is claimed. Doctor is19/20 with11 patch advisories; current audit is4 high/5 low/0 critical. Previous sections are version-specific evidence.
 

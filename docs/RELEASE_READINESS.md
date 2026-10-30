@@ -30,3 +30,7 @@ The page is redesigned using local native gradient/textured beads and existing c
 ## Current device acceptance
 
 The0.14.0 artifact has a real Android16 update/startup check and direct final Qibla/clock/arc/settings interaction. Surveyed compass accuracy, fresh permission-dialog retest after the repair, native offline airplane mode, full audible Adhan interruption and broad device/Doze/TalkBack acceptance remain separate gates. Current Doctor19/20 patch advisories and4 high/5 low audit findings are not a clean dependency assessment. See ANDROID_APK_RELEASE.md.
+
+## Written recall0.15.0
+
+Private Android16 update/launch and missing-hamza review/original-font rendering observed. Browser correction/retry/reload/resume/finish and source/state/privacy tests PASS. This is spelling review, not voice/tajweed assessment. Source availability/provenance and official byte hashes are documented in WRITTEN_RECALL.md; no government app endorsement. No new dependency or permission. Prior production/signing/source review, accessibility/Doze/device and dependency gates remain open.
