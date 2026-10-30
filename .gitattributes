@@ -1,2 +1,4 @@
 # Keep archived website file bytes unchanged.
 legacy-web/** -text
+# Preserve the official source bytes, including line endings, on every platform.
+assets/quran-reference/** -text
