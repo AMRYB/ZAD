@@ -1,5 +1,7 @@
 # Third-party notices and provenance
 
+- Qibla0.14 uses [GeographicLib JS Geodesic2.2.0](https://github.com/geographiclib/geographiclib-js), MIT/X11 licensed, and Expo Location58.0.20 under its upstream Expo license. Preserve their installed license files when redistributing. The direction calculation stays local; no additional Quran or prayer timetable provider is introduced.
+
 - Expo/React Native and supporting packages, including Expo Video, retain their respective upstream licenses. The generated template LICENSE is preserved.
 - Day/night artwork and source startup MP4 were supplied by the owner as local files. Icon PNGs remain unchanged; native rendering enlarges them. At the owner's request, the MP4 is stream-copied to its original first nine seconds with its audio stream removed. Fingerprints and behavior are in docs/BRANDING_V0_11.md; public redistribution rights require owner review.
 - Cairo UI fonts: bundled by `@expo-google-fonts/cairo`; the package contains the upstream SIL Open Font License. Preserve it when redistributing font assets. [Cairo source](https://github.com/google/fonts/tree/main/ofl/cairo).

@@ -4,9 +4,9 @@ ZAD is an Arabic-first Expo / React Native application for private daily trackin
 
 ## Current source and release status
 
-Current source and built private Android artifact: **0.13.0 / code20**. Adds Settings downloads for Mushaf pages, selected recitation and tafsir, the supplied post-Adhan Sha'rawy dua, retained playback on audio-focus interruption, and actual finger-following bead pulls without the automatic-save footer.
+Current source and built private Android artifact: **0.14.0 / code21**. Adds a local opt-in Qibla guide with true-north/quality instructions, centralized Adhan settings, and an animated official-time prayer-day arc with current clock, next prayer and gray elapsed rows.
 
-Typecheck/clean lint, **95 TypeScript tests**, **30 native unit tests**, production web export and APK input/source/signature/asset checks PASS. Small browser offline-cache/reader flows and deliberate bead drags pass. **This artifact has not been installed or physically tested on a phone.** Native offline reads, notification interruption and the full audible Adhan/dua queue remain pending. The last physically accepted version is0.12.0. See [release evidence](docs/ANDROID_APK_RELEASE.md), [metadata](docs/BUILD_METADATA.json), [offline design](docs/OFFLINE_QURAN_V0_13.md), [dua/focus handling](docs/ADHAN_DUA_AND_FOCUS_V0_13.md), [bead pull design](docs/TASBIH_PULL_V0_13.md) and [release readiness](docs/RELEASE_READINESS.md).
+Typecheck/clean lint, **105 TypeScript tests**, **30 native unit tests**, web export, APK verification and Android16 update/startup PASS. Direct phone interaction verified the corrected real compass arrow, Stop/reacquire and prayer-day UI. An initial no-arrow candidate was repaired before delivery. **Physical compass accuracy is not guaranteed or surveyed.** Doctor19/20 has patch-alignment advisories; the audit retains4 high/5 low findings. See [release evidence](docs/ANDROID_APK_RELEASE.md), [metadata](docs/BUILD_METADATA.json), [Qibla design](docs/QIBLA_V0_14.md), [prayer-day design](docs/PRAYER_DAY_V0_14.md) and [release readiness](docs/RELEASE_READINESS.md).
 
 The original Android package `com.ramadanjourney.preview`, deep-link scheme and local storage identifiers are retained to preserve existing preview data. Product requirements are available in `docs/source-plan/`.
 

@@ -1,4 +1,4 @@
-# Private beta release readiness — 0.13.0
+# Private beta release readiness — 0.14.0
 
 The active target is a private, ARM64 Android preview. A built/installed beta is not a Play Store production release.
 
@@ -15,7 +15,7 @@ Personalized Home/setup, separate Explore/Settings, date-aware 7/30-day reports,
 - Configure a verified email sender/custom SMTP and owned production callback origin. Owner-account PKCE and private sync acceptance do not establish public email delivery. Do not disable Auth protections to bypass delivery limits.
 - Publish an owner-reviewed privacy/data-deletion contact and retention policy. PRIVACY_DATA_MAP.md records the actual data flows to support that review; it is not a published policy or a declaration of legal compliance.
 - Finish full TalkBack, large system text, alternate launchers, Bluetooth/headphone interruptions, Android/OEM battery restrictions, long Doze/reboot and two-device conflict acceptance. Unit/hosted authorization checks are narrower than these physical scenarios.
-- Review the five existing high npm audit findings through the Expo CLI/code-signing/node-forge/zod chain before public release. Compatible SDK patch alignment and Doctor 20/20 do not mean a clean security audit. No forced breaking dependency upgrade was applied.
+- Review the current four high/five low npm audit findings before public release. Doctor is19/20 with patch-alignment advisories; functional verification is not a clean security audit. No forced unrelated dependency upgrade was applied.
 
 ## Reproducible media patch
 
@@ -29,4 +29,4 @@ The page is redesigned using local native gradient/textured beads and existing c
 
 ## Current device acceptance
 
-The0.13.0 artifact is built and statically verified but has no installation smoke. Phone notification interruption, full intro/Adhan/dua playback, native private-file offline reads and the new direct bead responder need physical verification. Browser and JVM tests do not close those gates. See ANDROID_APK_RELEASE.md.
+The0.14.0 artifact has a real Android16 update/startup check and direct final Qibla/clock/arc/settings interaction. Surveyed compass accuracy, fresh permission-dialog retest after the repair, native offline airplane mode, full audible Adhan interruption and broad device/Doze/TalkBack acceptance remain separate gates. Current Doctor19/20 patch advisories and4 high/5 low audit findings are not a clean dependency assessment. See ANDROID_APK_RELEASE.md.

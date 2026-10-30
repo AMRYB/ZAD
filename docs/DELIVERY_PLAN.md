@@ -1,5 +1,14 @@
 # Corrected delivery plan and evidence status
 
+## Qibla and prayer-day display0.14.0
+
+| Ticket | Slice | Evidence state |
+|---|---|---|
+| RJ-067 | Foreground local WGS84 Qibla and honest quality guidance | Six calculation/session tests PASS; browser Arabic/English layouts PASS; real Android arrow/Stop/reacquire observed after startup repair; surveyed accuracy and fresh permission-dialog retest NOT RUN |
+| RJ-068 | Centralize prayer city/date/alerts/audio in Settings | Existing controls moved; browser valid/invalid date and city search, and native settings navigation PASS; no data clear or schema change |
+| RJ-069 | Official-time progress arc, next prayer and animated sky rows | Four boundary/DST/month-rollover tests and browser/native presentation PASS; elapsed time does not record worship completion |
+| RJ-070 | Verified0.14.0 preview and retained-data update |105 TS/30 native tests, lint/typecheck/export,223 input/66 compiled-source checks,13 recordings/signature/configuration and Android16 update/launch PASS; Doctor19/20 advisory and accuracy limits documented |
+
 ## Offline content and playback continuity0.13.0
 
 | Ticket | Slice | Evidence state |

@@ -1,0 +1,13 @@
+# Prayer-day display and settings separation —0.14.0
+
+The Adhan route now displays selected-city official times, daily navigation, current Cairo time, the next prayer/countdown, a Fajr-to-Isha progress arc, and six illustrated time rows. City selection, the custom-date form, enable/reminder switches, recordings/previews, permission recovery and the existing test-alarm button live in Settings → Adhan (`/adhan-settings`). A header shortcut reaches the same page. The general setup no longer has a second city picker; first-run setup explains its Settings location.
+
+The physical left-to-right arch represents elapsed time, **not a calculated astronomical solar trajectory**. It uses official Fajr/Isha timestamps and marker times, with a percentage and distinct upcoming prayer card. There is no “between Dhuhr and Asr” label. Sunrise is displayed but never selected as the next prayer. At night the next actual official day's Fajr is used; no timetable is fabricated when that day is unavailable. The page follows today's date after Cairo midnight unless a day was explicitly selected.
+
+Past rows use muted gray illustrations, backgrounds and text with Time has passed. This is a clock state, not a worship-completion record; viewing times never checks off prayers or awards XP. Each upcoming row has a native emerald/gold sky illustration: rising/setting sun, daylight or crescent/stars. Ambient motion stops off-screen, in the background and with reduced motion; past rows are static. Existing Font Awesome Light navigation icons remain in use.
+
+The moved audio handlers retain the private intro/Adhan/dua sequences, Friday override, manual controls, test scheduling and permissions behavior. Native scheduled playback is not stopped by leaving the settings page; only an explicitly started preview is stopped on blur. No schedule, journey schema or account data migration is introduced by this layout change.
+
+Four new domain tests cover exact prayer boundaries, excluding sunrise, next-day Fajr, clamped arc geometry, Cairo's repeated23:30 during DST fallback, and month rollover. The complete source suite passes105 tests. Browser checks cover current/past gray rows, future rows, current clock/countdown, the custom-date form rejecting invalid dates and opening the selected valid day, searchable city selection retaining Cairo, and Arabic390px/English Dark320px layouts. Physical appearance and actual new sensor acceptance are recorded separately in release metadata.
+
+ESA remains the sole prayer timetable source; see ESA_API_DOCUMENTATION.md. Existing source-provided Hijri text remains unchanged. There is no new location-based prayer calculation or alternative timetable service.

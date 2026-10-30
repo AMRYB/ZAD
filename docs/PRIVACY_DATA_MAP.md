@@ -1,4 +1,4 @@
-# ZAD data flow map — 0.13.0 private beta
+# ZAD data flow map — 0.14.0 private beta
 
 | Data | Default location | Optional destination and trigger |
 |---|---|---|
@@ -11,6 +11,7 @@
 | Offline Quran images/highlights/audio/tafsir and download progress | Private app document files and independent SQLite index; browser IndexedDB | No cloud/export copy; explicit per-plan download and confirmed removal; one paced worker, paused in background |
 | Adhan intro, recording and follow-up dua | Bundled private recordings copied to app-private files | Local playback only; no video host request at prayer time |
 | Manual prayer city/month | ESA monthly timetable request and bounded app cache | Original ESA service; no GPS/precise location permission or alternate calculation |
+| Optional Qibla coordinates, true heading and calibration | Transient screen memory after pressing Use my location and granting foreground permission | Local WGS84 calculation only; no ZAD API, cloud/export, analytics or coordinate persistence; watchers stop on blur/background/Stop; OS provider may use normal system services |
 | Widget | Minimal city/language/theme/last-reading preferences and existing ESA cache | Own Android launcher; no separate network fetch or account session/token |
 | Timed branding | Device-local city/language/variant and ESA cache | Bounded ESA refresh; launcher/own notification artwork, no account records or GPS |
 | Startup video | Bundled nine-second MP4 with no audio stream | Local playback only; no network, background audio or media notification |

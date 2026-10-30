@@ -1,6 +1,10 @@
 # Verification report
 
-## Offline content and playback continuity0.13.0 — current
+## Qibla and prayer day0.14.0 — current
+
+Typecheck/clean lint,105 TypeScript tests,30 native tests, final web export, Android build and APK verification pass.223 input files/66 compiled sources, native location wiring, foreground-only permissions,13 audio hashes and retained media/branding assets match. The APK updates0.13.0 without clearing data on Android16. The initial candidate's missing arrow was reported by the owner and observed directly; after the startup repair, USB-mirrored phone interaction shows real direction/quality readings, Stop and reacquire, plus native clock/arc/elapsed rows/settings. No surveyed accuracy or fresh first-permission prompt after repair is claimed. Doctor is19/20 with11 patch advisories; current audit is4 high/5 low/0 critical. Previous sections are version-specific evidence.
+
+## Offline content and playback continuity0.13.0 — historical baseline
 
 Typecheck/clean lint,95 TypeScript tests,30 native policy/parser tests, production web export and final Android build pass. APK verification compares212 source/asset inputs,57 compiled sources,13 recordings and retained font/intro/native media helpers. Signature and Android/embedded Expo0.13.0/code20 pass. Browser verification covers saved page/highlights, tafsir, advancing audio, download persistence and deliberate bead drags with counter restoration. No authorized phone is connected: native filesystem integration, actual notification interruption, full intro/Adhan/dua listening and installation smoke are NOT RUN. Domain/JVM checks do not establish these device outcomes. See ANDROID_APK_RELEASE.md and the0.13 feature documents.
 

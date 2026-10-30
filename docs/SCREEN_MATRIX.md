@@ -18,12 +18,14 @@
 | `/more` | Companions and journey feature grid | Real route links; optional account entry when configured |
 | `/settings` | Appearance, locale, season, privacy, export/import | Local preferences and explicit backup adapter |
 | `/downloads?kind=mushaf`, `audio` or `tafsir` | Selected offline content, progress, pause/resume, confirmed deletion | Exact KSU URLs; private files/SQLite or IndexedDB; explicit foreground worker |
+| `/adhan` | Official time rows, gray elapsed times, animated day arc, current Cairo clock and next prayer | Sole ESA monthly source/cache; no prayer-record check-ins |
+| `/adhan-settings` | City, custom date, reminders, audio/previews and permissions | Existing saved Adhan settings and native scheduling service |
+| `/qibla` | Explicit foreground compass, calibration guide and limitations | Optional transient location/true heading; local WGS84 computation; no coordinate storage or app API |
 | `/setup` | Optional companions, city and reminders | Persisted personalization; no automatic Adhan activation |
 | `/reports` | 7/30-day dated activity, totals and day links | Private recorded activity; no inferred historical dates |
 | `/listening` | Persistent queue, controls, repeat and sleep timer | Original KSU audio and native media service |
 | `/widget` | Native launcher pin and cache instructions | Android RemoteViews widget; no browser pin claim |
 | `/account`, `/auth/callback` | Optional email PKCE, opt-in sync/import/conflict/archive/deletion | Private hosted Supabase, UUID local cache and secure session storage |
-| `/adhan` | Saved city, today/tomorrow/week/date timetables, next prayer, permissions and five intro/voice previews with Friday override | ESA monthly source, private cache and native Android exact alarms |
 | Adhan city sheet | Search 82 authoritative city options; freely resize/dismiss sheet | Captured ESA selectors and local preferences |
 | `/achievements` | Personal XP/levels, twelve badges, filters, rules and corrected/recent allocations; reachable from Home and More | Private local participation ledger; no server/trusted XP writes |
 | `/calendar` | Configured 29/30-day grid and day links | Local season + date-keyed records |

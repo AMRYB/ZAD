@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.0 — Qibla guide and a clearer prayer day
+
+- Added Explore → Qibla with explicit foreground location, local WGS84 bearing, true-north compass, calibration guidance and visible accuracy limitations. Coordinates are transient and never sent to a ZAD API or synced/exported.
+- Hardened initial acquisition after actual Android feedback: preserve the requested session through permission dialogs, skip already-granted prompts, use only a bounded recent system fix, and expose permission/location/heading states. Stop, blur, background and errors clear readings and subscriptions.
+- Moved city/custom-date/alert/audio controls to Settings → Adhan; removed the duplicate setup city picker.
+- Added current Cairo clock, upcoming prayer/countdown, elapsed Fajr–Isha arc/percentage, animated native sky illustrations and gray elapsed-time rows without marking prayers performed. Sunrise remains a displayed time without an Adhan.
+-105 source tests,30 native tests, typecheck/lint, web export, signed APK verification and Android16 update/startup pass. Direct final phone observation confirms a real compass arrow, stop/reacquire, and the new prayer-day UI. No100% physical compass-accuracy claim.
+
 ## 0.13.0 — offline Quran, follow-up dua and direct bead pulling
 
 - Added More → Settings downloads for original Mushaf pages/highlights, a chosen reciter and a chosen tafsir, with bounded foreground requests, progress, pause/resume, private storage, safe validation and shared-file-aware removal. The reader prefers saved content.
